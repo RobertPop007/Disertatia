@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Extensions;
 using Proiect_licenta.Interfaces;
+using Proiect_licenta.Middleware;
 using Proiect_licenta.Services;
 using System;
 using System.Collections.Generic;
@@ -53,27 +54,33 @@ namespace Proiect_licenta
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proiect_licenta v1"));
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(x => x
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .SetIsOriginAllowed(origin => true) // allow any origin  
+              .AllowCredentials()); // allow credentials  
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseCors(x => x
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .WithOrigins("https://localhost:4200") // allow any origin
-                                                        //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
-                    .AllowCredentials()); // allow credentials
+            //app.UseCors(x => x
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader().AllowAnyOrigin()
+            //        /*.WithOrigins("https://localhost:4200")*/ // allow any origin
+            //                                            //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
+            //        .AllowCredentials()); // allow credentials
 
             app.UseEndpoints(endpoints =>
             {
