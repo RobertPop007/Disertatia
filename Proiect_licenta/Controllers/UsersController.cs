@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.DatabaseContext;
+using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +13,31 @@ using System.Threading.Tasks;
 
 namespace Proiect_licenta.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController //BaseApiController e un controller parinte, are el proprietatile necease
     {
-        private readonly DataContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UsersController(DataContext context)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            this._context = context;
+            this._userRepository = userRepository;
+            this._mapper = mapper;
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userRepository.GetMembersAsync();
+
+            return Ok(users);
         }
 
         //api/users/3
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")]
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _context.Users.FindAsync(id);
+            return await _userRepository.GetMemberAsync(username);
         }
     }
 }
