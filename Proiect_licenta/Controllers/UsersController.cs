@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Proiect_licenta.Controllers
 {
     [Authorize]
-    public class UsersController : BaseApiController //BaseApiController e un controller parinte, are el proprietatile necease
+    public class UsersController : BaseApiController //BaseApiController e un controller parinte, are el proprietatile necesare
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
