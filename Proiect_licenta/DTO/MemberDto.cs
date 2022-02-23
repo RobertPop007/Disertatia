@@ -20,6 +20,6 @@ namespace Proiect_licenta.DTO
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public ICollection<PhotoDto> Photos { get; set; }
+        public PhotoDto ProfilePicture { get; set; }
     }
 }

@@ -39,4 +39,8 @@ export class MembersService {
       })
     )
   }
+
+  deletePhoto(){
+    return this.http.delete(this.baseUrl + 'users/delete-photo');
+  }
 }
