@@ -21,6 +21,8 @@ namespace Proiect_licenta.Helpers
             CreateMap<Photo, PhotoDto>();
 
             CreateMap<MemberUpdateDto, AppUser>();
+
+            CreateMap<RegisterDto, AppUser>();
         }
     }
 }

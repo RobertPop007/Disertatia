@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { of, take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
+import { Photo } from 'src/app/_models/photo';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
@@ -37,8 +38,6 @@ export class PhotoEditorComponent implements OnInit {
   }
 
   initializeUploader(){
-    console.log('hello');
-    
     this.uploader = new FileUploader({
       url: this.baseUrl + 'users/add-photo',
       authToken: 'Bearer ' + this.user.token,
@@ -57,6 +56,10 @@ export class PhotoEditorComponent implements OnInit {
       if(response){
         const photo = JSON.parse(response);
         this.member.photo = photo;
+
+        this.user.photoUrl = photo.url;
+        this.member.photoUrl = photo.url;
+        this.accountService.setCurrentUser(this.user);
       }
     }
   }
