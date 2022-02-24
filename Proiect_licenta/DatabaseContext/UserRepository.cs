@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
+using Proiect_licenta.Helpers;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -30,11 +31,25 @@ namespace Proiect_licenta.DatabaseContext
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+            var query = _context.Users.AsQueryable();
+
+            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+
+            if(!string.IsNullOrWhiteSpace(userParams.SearchedUsername))
+                query = query.Where(u => u.UserName.Contains(userParams.SearchedUsername));
+
+            query = userParams.OrderBy switch
+            {
+                "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
+                "lookingFor" => query.OrderBy(u => u.LookingFor).OrderByDescending(u => u.LastActive),
+                _ => query.OrderByDescending(u => u.Interests)
+                
+            };
+
+            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+                userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

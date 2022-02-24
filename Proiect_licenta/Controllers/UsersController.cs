@@ -7,6 +7,7 @@ using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Extensions;
+using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,13 @@ namespace Proiect_licenta.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync();
+            userParams.CurrentUsername = User.GetUsername();
+
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
         }

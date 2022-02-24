@@ -2,7 +2,7 @@
     <div class="col-1">
         <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.photoUrl}}" class="img-thumbnail p-1">
 
-        <div class="text-center">
+        <div class="text-center" *ngIf="member.photoUrl">
             <button (click)="deletePhoto()" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
         </div>
     </div>
