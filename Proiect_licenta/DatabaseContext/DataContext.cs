@@ -14,5 +14,26 @@ namespace Proiect_licenta.DatabaseContext
         }
 
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserFriend> Friends { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<UserFriend>()
+                .HasKey(k => new { k.AddedByUserId, k.AddedUserId });
+
+            builder.Entity<UserFriend>()
+                .HasOne(s => s.AddedByUser)
+                .WithMany(l => l.AddedUsers)
+                .HasForeignKey(s => s.AddedByUserId)
+                .OnDelete(DeleteBehavior.NoAction);  
+
+            builder.Entity<UserFriend>()
+                .HasOne(s => s.AddedUser)
+                .WithMany(l => l.AddedByUsers)
+                .HasForeignKey(s => s.AddedUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }

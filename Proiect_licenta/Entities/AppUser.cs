@@ -23,10 +23,7 @@ namespace Proiect_licenta.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public Photo ProfilePicture { get; set; }
-
-        //public int GetAge()
-        //{
-        //    return DateOfBirth.CalculateAge();
-        //}
+        public ICollection<UserFriend> AddedByUsers { get; set; }
+        public ICollection<UserFriend> AddedUsers { get; set; }
     }
 }
