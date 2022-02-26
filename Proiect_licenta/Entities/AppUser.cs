@@ -25,5 +25,7 @@ namespace Proiect_licenta.Entities
         public Photo ProfilePicture { get; set; }
         public ICollection<UserFriend> AddedByUsers { get; set; }
         public ICollection<UserFriend> AddedUsers { get; set; }
+        public ICollection<Message> MessagesSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
     }
 }
