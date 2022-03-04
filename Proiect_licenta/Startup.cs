@@ -1,25 +1,12 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Extensions;
-using Proiect_licenta.Interfaces;
 using Proiect_licenta.Middleware;
-using Proiect_licenta.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Proiect_licenta.SignalR;
 
 namespace Proiect_licenta
 {
@@ -42,6 +29,8 @@ namespace Proiect_licenta
             services.AddCors();
 
             services.AddIdentityServices(Configuration);
+
+            services.AddSignalR();
 
             services.AddSwaggerGen(c =>
             {
@@ -71,20 +60,23 @@ namespace Proiect_licenta
               .SetIsOriginAllowed(origin => true) // allow any origin  
               .AllowCredentials()); // allow credentials  
 
+            
+
+            app.UseCors(x => x.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials() // allow credentials
+                    .WithOrigins("https://localhost:4200")); // allow any origin
+                                                             //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
+
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            //app.UseCors(x => x
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader().AllowAnyOrigin()
-            //        /*.WithOrigins("https://localhost:4200")*/ // allow any origin
-            //                                            //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
-            //        .AllowCredentials()); // allow credentials
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PresenceHub>("hubs/presence");
+                endpoints.MapHub<MessageHub>("hubs/message");
             });
         }
     }

@@ -2,15 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Proiect_licenta.Controllers

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Proiect_licenta.Errors
+﻿namespace Proiect_licenta.Errors
 {
     public class ApiException
     {

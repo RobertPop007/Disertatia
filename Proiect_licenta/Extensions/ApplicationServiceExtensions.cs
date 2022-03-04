@@ -5,10 +5,7 @@ using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
 using Proiect_licenta.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Proiect_licenta.SignalR;
 
 namespace Proiect_licenta.Extensions
 {
@@ -16,6 +13,7 @@ namespace Proiect_licenta.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            services.AddSingleton<PresenceTracker>();
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<ITokenService, TokenService>();

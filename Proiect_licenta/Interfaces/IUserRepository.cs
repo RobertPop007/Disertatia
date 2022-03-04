@@ -1,9 +1,7 @@
 ﻿using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Helpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Proiect_licenta.Interfaces

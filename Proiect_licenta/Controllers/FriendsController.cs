@@ -5,9 +5,7 @@ using Proiect_licenta.Entities;
 using Proiect_licenta.Extensions;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Proiect_licenta.Controllers

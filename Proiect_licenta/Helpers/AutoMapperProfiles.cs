@@ -3,9 +3,6 @@ using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Proiect_licenta.Helpers
 {
@@ -29,6 +26,8 @@ namespace Proiect_licenta.Helpers
                     src.Sender.ProfilePicture.Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
                     src.Recipient.ProfilePicture.Url));
+
+            //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
     }
 }
