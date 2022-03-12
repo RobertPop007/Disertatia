@@ -19,6 +19,7 @@ namespace Proiect_licenta.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAddFriendsRepository, AddFriendsRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IMoviesRepository, MoviesRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

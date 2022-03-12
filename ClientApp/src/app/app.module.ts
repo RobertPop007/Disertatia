@@ -34,6 +34,14 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './_modals/roles-modal/roles-modal.component';
+import { MoviesListComponent } from './movies/movies-list/movies-list.component';
+import { AnimeListComponent } from './anime/anime-list/anime-list.component';
+import { TvShowsListComponent } from './tvShows/tv-shows-list/tv-shows-list.component';
+import { MangaListComponent } from './manga/manga-list/manga-list.component';
+import { BooksListComponent } from './books/books-list/books-list.component';
+import { MusicListComponent } from './music/music-list/music-list.component';
+import { ContactPageComponent } from './contact-page/contact-page.component';
+import { MovieCardComponent } from './movies/movie-card/movie-card.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +66,15 @@ import { RolesModalComponent } from './_modals/roles-modal/roles-modal.component
     HasRoleDirective,
     UserManagementComponent,
     PhotoManagementComponent,
-    RolesModalComponent
+    RolesModalComponent,
+    MoviesListComponent,
+    AnimeListComponent,
+    TvShowsListComponent,
+    MangaListComponent,
+    BooksListComponent,
+    MusicListComponent,
+    ContactPageComponent,
+    MovieCardComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,9 @@ using Microsoft.OpenApi.Models;
 using Proiect_licenta.Extensions;
 using Proiect_licenta.Middleware;
 using Proiect_licenta.SignalR;
+using Proiect_licenta.Services;
+using Proiect_licenta.DatabaseContext;
+using Proiect_licenta.Entities.Movies;
 
 namespace Proiect_licenta
 {
@@ -27,6 +30,8 @@ namespace Proiect_licenta
 
             services.AddControllers();
             services.AddCors();
+
+            services.AddCrud<MovieItem, DataContext>();
 
             services.AddIdentityServices(Configuration);
 

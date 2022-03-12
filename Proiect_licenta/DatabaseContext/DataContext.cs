@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Entities.Movies;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -16,6 +17,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<MovieItem> Top250Movies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

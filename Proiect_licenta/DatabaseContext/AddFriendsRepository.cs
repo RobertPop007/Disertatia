@@ -18,7 +18,6 @@ namespace Proiect_licenta.DatabaseContext
             this._context = context;
         }
 
-
         public async Task<UserFriend> GetUserFriend(int addedByUserId, int addedUserId)
         {
             return await _context.Friends.FindAsync(addedByUserId, addedUserId);
