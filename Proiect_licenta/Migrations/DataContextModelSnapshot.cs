@@ -322,6 +322,9 @@ namespace Proiect_licenta.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Crew")
                         .HasColumnType("nvarchar(max)");
 
@@ -347,6 +350,8 @@ namespace Proiect_licenta.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Top250Movies");
                 });
@@ -471,6 +476,13 @@ namespace Proiect_licenta.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.MovieItem", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.AppUser", null)
+                        .WithMany("Movies")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Proiect_licenta.Entities.Photo", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
@@ -515,6 +527,8 @@ namespace Proiect_licenta.Migrations
                     b.Navigation("MessagesReceived");
 
                     b.Navigation("MessagesSent");
+
+                    b.Navigation("Movies");
 
                     b.Navigation("ProfilePicture");
 

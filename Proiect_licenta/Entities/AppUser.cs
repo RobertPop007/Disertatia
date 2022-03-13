@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Proiect_licenta.Entities.Movies;
 using System;
 using System.Collections.Generic;
 
@@ -22,5 +23,7 @@ namespace Proiect_licenta.Entities
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
+
+        public ICollection<MovieItem> Movies { get; set; }
     }
 }

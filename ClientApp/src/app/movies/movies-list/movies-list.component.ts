@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Movie } from 'src/app/_models/movie';
-import { MoviesService } from 'src/app/_services/movies.service';
+import { MoviesService } from 'api/movies.service';
+import { MovieItem } from 'model/movieItem';
 
 @Component({
   selector: 'app-movies-list',
@@ -8,16 +8,32 @@ import { MoviesService } from 'src/app/_services/movies.service';
   styleUrls: ['./movies-list.component.css']
 })
 export class MoviesListComponent implements OnInit {
-  movies!: Movie[];
+  movies!: MovieItem[];
 
   constructor(private moviesService: MoviesService) { }
 
   ngOnInit(): void {
-    //this.loadMovies();
+    this.loadMovies();
+    this.movies = this.shuffleArray(this.movies);
   }
 
   loadMovies(){
-    //return this.moviesService.getTop250Movies();
+    this.moviesService.top250MoviesGet().subscribe(response => {
+      this.movies = response;
+    })
   }
+
+  shuffleArray(array: MovieItem[]) {
+    var m = array.length, t, i;
+ 
+    while (m) {    
+     i = Math.floor(Math.random() * m--);
+     t = array[m];
+     array[m] = array[i];
+     array[i] = t;
+    }
+ 
+   return array;
+ }
 
 }
