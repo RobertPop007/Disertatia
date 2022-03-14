@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Extensions;
+using Proiect_licenta.Entities;
 
 namespace Proiect_licenta.Controllers
 {
@@ -48,10 +49,37 @@ namespace Proiect_licenta.Controllers
             var movie = _moviesRepository.Get(movieId);
             if (movie == null) return NotFound("Movie not found");
 
-            user.Movies.Add(movie);
-            _context.Users.Update(user);
+            var appUserMovieItem = new AppUserMovieItem
+            {
+                AppUserId = user.Id,
+                MovieItemId = movieId
+            };
 
+            await _context.AppUserMovieItems.AddAsync(appUserMovieItem);
+            user.AppUserMovieItems.Add(appUserMovieItem);
+
+            await _userRepository.SaveAllAsync();
+
+            await _context.SaveChangesAsync();
+            
             return Ok(user);
+        }
+
+        [HttpGet("GetMoviesFor/{username}")]
+        public async Task<ActionResult> GetMoviesForUser([FromRoute] string username)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            var moviesIds = _context.AppUserMovieItems.Select(t => t.MovieItemId).ToList();
+            var movies = new List<MovieItem>();
+
+            foreach (var movieId in moviesIds)
+            {
+                var movie = _moviesRepository.Get(movieId);
+                movies.Add(movie);
+            }
+
+            return Ok(movies);
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class MovieItemDto
     {
-        public string Id { get; set; }
+        public string MovieItemId { get; set; }
         public string Rank { get; set; }
         public string Title { get; set; }
         public string FullTitle { get; set; }
@@ -11,5 +11,6 @@
         public string Crew { get; set; }
         public string ImDbRating { get; set; }
         public string ImDbRatingCount { get; set; }
+
     }
 }

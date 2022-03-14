@@ -18,6 +18,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<MovieItem> Top250Movies { get; set; }
+        public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -59,6 +60,17 @@ namespace Proiect_licenta.DatabaseContext
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessagesSent)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<AppUserMovieItem>()
+                .HasKey(bc => new { bc.AppUserId, bc.MovieItemId });
+            builder.Entity<AppUserMovieItem>()
+                .HasOne(bc => bc.AppUser)
+                .WithMany(b => b.AppUserMovieItems)
+                .HasForeignKey(bc => bc.AppUserId);
+            builder.Entity<AppUserMovieItem>()
+                .HasOne(bc => bc.MovieItem)
+                .WithMany(c => c.AppUserMovieItems)
+                .HasForeignKey(bc => bc.MovieItemId);
         }
     }
 }

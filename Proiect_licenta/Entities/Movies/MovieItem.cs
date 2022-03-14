@@ -1,8 +1,10 @@
-﻿namespace Proiect_licenta.Entities.Movies
+﻿using System.Collections.Generic;
+
+namespace Proiect_licenta.Entities.Movies
 {
     public class MovieItem
     {
-        public string Id { get; set; }
+        public string MovieItemId { get; set; }
         public string Rank { get; set; }
         public string Title { get; set; }
         public string FullTitle { get; set; }
@@ -11,5 +13,7 @@
         public string Crew { get; set; }
         public string ImDbRating { get; set; }
         public string ImDbRatingCount { get; set; }
+
+        public IList<AppUserMovieItem> AppUserMovieItems { get; set; }
     }
 }
