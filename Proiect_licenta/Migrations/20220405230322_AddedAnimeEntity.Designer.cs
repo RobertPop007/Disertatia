@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_licenta.DatabaseContext;
 
 namespace Proiect_licenta.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220405230322_AddedAnimeEntity")]
+    partial class AddedAnimeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,10 +176,10 @@ namespace Proiect_licenta.Migrations
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Episodes")
+                    b.Property<int>("Episodes")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Favorites")
+                    b.Property<int>("Favorites")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("ImagesId")
@@ -186,19 +188,19 @@ namespace Proiect_licenta.Migrations
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Members")
+                    b.Property<int>("Members")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Popularity")
+                    b.Property<int>("Popularity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Rank")
+                    b.Property<int>("Rank")
                         .HasColumnType("int");
 
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Score")
+                    b.Property<double>("Score")
                         .HasColumnType("float");
 
                     b.Property<int>("Scored_by")

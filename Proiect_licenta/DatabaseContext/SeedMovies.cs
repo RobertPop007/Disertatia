@@ -17,25 +17,39 @@ namespace Proiect_licenta.DatabaseContext
         {
             if (!context.Top250Movies.Any())
             {
-                var urlMovies = "https://imdb-api.com/en/API/Top250Movies/k_k49hz8mt";
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/Top250Movies/k_k49hz8mt");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020043828");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls060044601");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls053951083");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls002712620");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls036694571");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020828441");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls023836170");
+            }
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlMovies);
-                request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedMoviesList(DataContext context, string url)
+        {
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                using (Stream stream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(stream))
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string returnedUrl = reader.ReadToEnd();
+                var movies = JsonConvert.DeserializeObject<MovieGeneralInfo>(returnedUrl);
+
+                foreach (var movie in movies.Items)
                 {
-                    string returnedUrl = reader.ReadToEnd();
-                    var movies = JsonConvert.DeserializeObject<MovieGeneralInfo>(returnedUrl);
-
-                    foreach (var movie in movies.Items)
+                    if (context.Top250Movies.FirstOrDefault(x => x.Id == movie.Id) == null)
                     {
                         await context.Top250Movies.AddAsync(movie);
                     }
-
-                    await context.SaveChangesAsync();
                 }
             }
         }

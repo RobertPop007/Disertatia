@@ -32,14 +32,6 @@ namespace Proiect_licenta.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("Top250Movies")]
-        public async Task<ActionResult<IEnumerable<MovieItem>>> GetTop250Movies()
-        {
-            var top250Movies = _moviesRepository.Get();
-
-            return Ok(top250Movies);
-        }
-
         [HttpPost("AddMovie/{movieId}")]
         public async Task<ActionResult> AddMovieForUser([FromRoute] string movieId)
         {

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Entities.Anime;
 using Proiect_licenta.Entities.Movies;
+using Proiect_licenta.Entities.TvShows;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -19,6 +21,9 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<Connection> Connections { get; set; }
         public DbSet<MovieItem> Top250Movies { get; set; }
         public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
+        public DbSet<TvShowItem> TvShows { get; set; }
+        public DbSet<Datum> Anime { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

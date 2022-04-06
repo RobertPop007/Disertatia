@@ -28,6 +28,8 @@ namespace Proiect_licenta
                 await context.Database.MigrateAsync();
                 await Seed.SeedUsers(userManager, roleManager);
                 await SeedMovies.SeedAllMovies(context);
+                await SeedTvShows.SeedAllTvShows(context);
+                await SeedAnime.SeedAllAnime(context);
             }
             catch (Exception ex)
             {

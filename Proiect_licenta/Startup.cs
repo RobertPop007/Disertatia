@@ -10,6 +10,8 @@ using Proiect_licenta.SignalR;
 using Proiect_licenta.Services;
 using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Entities.Movies;
+using AspNetCoreRateLimit;
+using System.Collections.Generic;
 
 namespace Proiect_licenta
 {
