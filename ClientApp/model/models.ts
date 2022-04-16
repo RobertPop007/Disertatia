@@ -1,5 +1,6 @@
 export * from './appRole';
 export * from './appUser';
+export * from './appUserMovieItem';
 export * from './appUserRole';
 export * from './createMessageDto';
 export * from './friendsDto';

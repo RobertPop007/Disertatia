@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Extensions;
 using System;
 
@@ -28,6 +29,8 @@ namespace Proiect_licenta.Helpers
                     src.Recipient.ProfilePicture.Url));
 
             //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
+
+            CreateMap<MovieItem, MovieItem>();
         }
     }
 }

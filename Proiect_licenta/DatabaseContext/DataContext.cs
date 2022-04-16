@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Entities.Anime;
+using Proiect_licenta.Entities.Manga;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Entities.TvShows;
 
@@ -23,6 +24,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
         public DbSet<TvShowItem> TvShows { get; set; }
         public DbSet<Datum> Anime { get; set; }
+        public DbSet<DatumManga> Manga { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

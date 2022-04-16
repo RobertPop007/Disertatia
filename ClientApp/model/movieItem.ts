@@ -9,11 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { AppUserMovieItem } from './appUserMovieItem';
 
 
 export interface MovieItem { 
     id?: string | null;
-    rank?: string | null;
     title?: string | null;
     fullTitle?: string | null;
     year?: string | null;
@@ -21,5 +21,6 @@ export interface MovieItem {
     crew?: string | null;
     imDbRating?: string | null;
     imDbRatingCount?: string | null;
+    appUserMovieItems?: Array<AppUserMovieItem> | null;
 }
 

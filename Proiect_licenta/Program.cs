@@ -30,6 +30,7 @@ namespace Proiect_licenta
                 await SeedMovies.SeedAllMovies(context);
                 await SeedTvShows.SeedAllTvShows(context);
                 await SeedAnime.SeedAllAnime(context);
+                await SeedManga.SeedAllManga(context);
             }
             catch (Exception ex)
             {

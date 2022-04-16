@@ -13,20 +13,20 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Extensions;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Helpers;
 
 namespace Proiect_licenta.Controllers
 {
-    [Authorize]
-    public class MoviesController : ControllerBase
+    public class MoviesController : BaseApiController
     {
-        private readonly IBaseRepository<MovieItem, DataContext> _moviesRepository;
+        private readonly IMoviesRepository _moviesRepository;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public MoviesController(DataContext context, IServiceProvider serviceProvider, IMapper mapper, IUserRepository userRepository)
+        public MoviesController(DataContext context, IMoviesRepository moviesRepository, IMapper mapper, IUserRepository userRepository)
         {
-            _moviesRepository = serviceProvider.GetService<IBaseRepository<MovieItem, DataContext>>();
+            _moviesRepository = moviesRepository;
             _context = context;
             _mapper = mapper;
             _userRepository = userRepository;
@@ -38,7 +38,7 @@ namespace Proiect_licenta.Controllers
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var movie = _moviesRepository.Get(movieId);
+            var movie = await _moviesRepository.GetMovieByIdAsync(movieId);
             if (movie == null) return NotFound("Movie not found");
 
             var appUserMovieItem = new AppUserMovieItem
@@ -67,11 +67,28 @@ namespace Proiect_licenta.Controllers
 
             foreach (var movieId in moviesIds)
             {
-                var movie = _moviesRepository.Get(movieId);
+                var movie = await _moviesRepository.GetMovieByIdAsync(movieId);
                 movies.Add(movie);
             }
 
             return Ok(movies);
         }
+
+        [HttpGet("GetAllMovies")]
+        public async Task<ActionResult> GetMovies([FromQuery] MovieParams movieParams)
+        {
+            var movies = await _moviesRepository.GetMoviesAsync(movieParams);
+
+            Response.AddPaginationHeader(movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages);
+
+            return Ok(movies);
+        }
+
+        [HttpGet("{fullTitle}", Name = "GetMovie")]
+        public async Task<ActionResult<MovieItem>> GetMovie(string fullTitle)
+        {
+            return await _moviesRepository.GetMovieByFullTitleAsync(fullTitle);
+        }
+
     }
 }

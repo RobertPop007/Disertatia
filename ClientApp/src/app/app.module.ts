@@ -42,6 +42,7 @@ import { BooksListComponent } from './books/books-list/books-list.component';
 import { MusicListComponent } from './music/music-list/music-list.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { MovieCardComponent } from './movies/movie-card/movie-card.component';
+import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { MovieCardComponent } from './movies/movie-card/movie-card.component';
     BooksListComponent,
     MusicListComponent,
     ContactPageComponent,
-    MovieCardComponent
+    MovieCardComponent,
+    MovieDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,6 @@ using Proiect_licenta.SignalR;
 using Proiect_licenta.Services;
 using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Entities.Movies;
-using AspNetCoreRateLimit;
 using System.Collections.Generic;
 
 namespace Proiect_licenta
@@ -47,6 +46,11 @@ namespace Proiect_licenta
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect_licenta", Version = "v1" });
+
+                c.AddServer(new OpenApiServer()
+                {
+                    Url = "https://localhost:5001/"
+                });
             });
         }
 

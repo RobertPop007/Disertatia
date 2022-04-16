@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { MovieItem } from 'model/movieItem';
+import { MovieParams } from 'src/app/_models/movieParams';
+import { Pagination } from 'src/app/_models/pagination';
+import { User } from 'src/app/_models/user';
+import { UserParams } from 'src/app/_models/userParams';
+import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
 @Component({
   selector: 'app-movies-list',
@@ -9,31 +14,36 @@ import { MovieItem } from 'model/movieItem';
 })
 export class MoviesListComponent implements OnInit {
   movies!: MovieItem[];
+  pagination!: Pagination;
+  movieParams!: MovieParams;
+  user!: User;
+  searchedMovie = "";
 
-  constructor(private moviesService: MoviesService) { }
+  constructor(private moviesAngularService: MoviesAngularService, private moviesService: MoviesService) {
+    this.movieParams = this.moviesAngularService.getMovieParams();
+   }
 
   ngOnInit(): void {
     this.loadMovies();
-    this.movies = this.shuffleArray(this.movies);
   }
 
   loadMovies(){
-    this.moviesService.top250MoviesGet().subscribe(response => {
-      this.movies = response;
+    this.moviesAngularService.setMovieParams(this.movieParams);
+
+    this.moviesAngularService.getMovies(this.movieParams).subscribe(response => {
+      this.movies = response.result!;
+      this.pagination = response.pagination!;
     })
   }
 
-  shuffleArray(array: MovieItem[]) {
-    var m = array.length, t, i;
- 
-    while (m) {    
-     i = Math.floor(Math.random() * m--);
-     t = array[m];
-     array[m] = array[i];
-     array[i] = t;
-    }
- 
-   return array;
- }
+  resetFilters(){ 
+    this.movieParams = this.moviesAngularService.resetMovieParams();
+    this.loadMovies();
+  }
 
+  pageChanged(event: any){
+    this.movieParams.pageNumber = event.page;
+    this.moviesAngularService.setMovieParams(this.movieParams);
+    this.loadMovies();
+  }
 }

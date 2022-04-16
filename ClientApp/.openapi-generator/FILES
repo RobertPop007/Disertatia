@@ -15,6 +15,7 @@ git_push.sh
 index.ts
 model/appRole.ts
 model/appUser.ts
+model/appUserMovieItem.ts
 model/appUserRole.ts
 model/createMessageDto.ts
 model/friendsDto.ts

@@ -32,7 +32,7 @@ import { Configuration }                                     from '../configurat
 })
 export class FriendsService {
 
-    protected basePath = 'http://localhost';
+    protected basePath = 'https://localhost:5001';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

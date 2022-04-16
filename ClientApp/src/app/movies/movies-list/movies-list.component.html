@@ -1,22 +1,22 @@
-<!-- <div class="text-center mt-3">
+<div class="text-center mt-3">
     <h2>Your search - {{pagination?.totalItems}} found</h2>
 </div>
 
 <div class="container" mt-3>
-    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
         <div class="form-group">
             <label>Username: </label>
-            <input type="text" class="form-control ml-1" style="width: 70px;" name="searchedUsername" [(ngModel)]="userParams.searchedUsername">
+            <input type="text" class="form-control ml-1" style="width: 70px;" name="searchedUsername" [(ngModel)]="movieParams.searchedMovie">
         </div>
 
         <button class="btn btn-primary ml-1" type="submit">Search</button>
         <button (click)="resetFilters()" class="btn btn-info ml-1">Reset searching</button>
 
         <div class="btn-group float-right">
-            <button class="btn btn-primary" name='orderBy' (click)="loadMembers()" btnRadio="lookingFor" type="button" [(ngModel)]="userParams.orderBy">Search by looking for</button>
+            <button class="btn btn-primary" name='orderBy' (click)="loadMovies()" btnRadio="lookingFor" type="button" [(ngModel)]="movieParams.orderBy">Search by looking for</button>
         </div>
     </form>
-</div>  -->
+</div> 
 
 <div class="row">
     <div *ngFor="let movie of movies" class="col-2">
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<!-- <div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" *ngIf="pagination">
     <pagination 
         [boundaryLinks]="true" 
         [totalItems]="pagination.totalItems"
@@ -36,4 +36,4 @@
         firstText="&laquo;" 
         lastText="&raquo;">
     </pagination>
-</div> -->
+</div>

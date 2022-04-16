@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 import { UserFriend } from './userFriend';
+import { AppUserMovieItem } from './appUserMovieItem';
 import { Message } from './message';
-import { MovieItem } from './movieItem';
 import { AppUserRole } from './appUserRole';
 import { Photo } from './photo';
 
@@ -48,6 +48,6 @@ export interface AppUser {
     messagesSent?: Array<Message> | null;
     messagesReceived?: Array<Message> | null;
     userRoles?: Array<AppUserRole> | null;
-    movies?: Array<MovieItem> | null;
+    appUserMovieItems?: Array<AppUserMovieItem> | null;
 }
 

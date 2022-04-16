@@ -4,6 +4,11 @@
     "title": "Proiect_licenta",
     "version": "v1"
   },
+  "servers": [
+    {
+      "url": "https://localhost:5001/"
+    }
+  ],
   "paths": {
     "/api/Account/register": {
       "post": {
@@ -12,6 +17,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterDto"
@@ -60,6 +70,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginDto"
@@ -370,6 +385,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMessageDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateMessageDto"
@@ -550,44 +570,6 @@
         }
       }
     },
-    "/Top250Movies": {
-      "get": {
-        "tags": [
-          "Movies"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MovieItem"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MovieItem"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MovieItem"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/AddMovie/{movieId}": {
       "post": {
         "tags": [
@@ -606,6 +588,112 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/GetMoviesFor/{username}": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/GetAllMovies": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "SearchedMovie",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/{fullTitle}": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "operationId": "GetMovie",
+        "parameters": [
+          {
+            "name": "fullTitle",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieItem"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieItem"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieItem"
+                }
+              }
+            }
           }
         }
       }
@@ -692,6 +780,11 @@
         ],
         "requestBody": {
           "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberUpdateDto"
+              }
+            },
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/MemberUpdateDto"
@@ -987,12 +1080,32 @@
             },
             "nullable": true
           },
-          "movies": {
+          "appUserMovieItems": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MovieItem"
+              "$ref": "#/components/schemas/AppUserMovieItem"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppUserMovieItem": {
+        "type": "object",
+        "properties": {
+          "appUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "movieItemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "movieItem": {
+            "$ref": "#/components/schemas/MovieItem"
           }
         },
         "additionalProperties": false
@@ -1267,10 +1380,6 @@
             "type": "string",
             "nullable": true
           },
-          "rank": {
-            "type": "string",
-            "nullable": true
-          },
           "title": {
             "type": "string",
             "nullable": true
@@ -1297,6 +1406,13 @@
           },
           "imDbRatingCount": {
             "type": "string",
+            "nullable": true
+          },
+          "appUserMovieItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppUserMovieItem"
+            },
             "nullable": true
           }
         },
