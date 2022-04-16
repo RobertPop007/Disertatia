@@ -1,7 +1,3 @@
-<div class="text-center mt-3">
-    <h2>Your search - {{pagination?.totalItems}} found</h2>
-</div>
-
 <div class="container" mt-3>
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
         <div class="form-group">
@@ -13,7 +9,7 @@
         <button (click)="resetFilters()" class="btn btn-info ml-1">Reset searching</button>
 
         <div class="btn-group float-right">
-            <button class="btn btn-primary" name='orderBy' (click)="loadMovies()" btnRadio="lookingFor" type="button" [(ngModel)]="movieParams.orderBy">Search by looking for</button>
+            <button class="btn btn-primary" name='orderBy' (click)="loadMovies()" btnRadio="lookingFor" type="button" [(ngModel)]="movieParams.orderBy">Newest movies</button>
         </div>
     </form>
 </div> 

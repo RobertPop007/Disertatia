@@ -33,7 +33,7 @@ namespace Proiect_licenta.DatabaseContext
             {
                 "fulltitle" => query.OrderBy(u => u.FullTitle).OrderBy(u => u.Year),
                 "imdbRating" => query.OrderByDescending(u => u.ImDbRating),
-                _ => query.OrderBy(u => u.Id)
+                _ => query.OrderByDescending(u => u.Year)
 
             };
 
