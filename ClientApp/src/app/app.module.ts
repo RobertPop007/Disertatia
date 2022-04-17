@@ -43,6 +43,7 @@ import { MusicListComponent } from './music/music-list/music-list.component';
 import { ContactPageComponent } from './contact-page/contact-page.component';
 import { MovieCardComponent } from './movies/movie-card/movie-card.component';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { MovieDetailComponent } from './movies/movie-detail/movie-detail.compone
     SharedModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    MatSlideToggleModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

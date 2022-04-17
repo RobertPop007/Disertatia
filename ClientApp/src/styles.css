@@ -1,4 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+
+body.dark-mode {
+  background-color: #2d3436;
+  color: #dfe6e9;
+}
+
+body.light-mode {
+  background-color: #94999b;
+  color: #2d3436;
+}
+
 .tab-panel {
     border: 1px solid #ddd;
     padding: 10px;
@@ -45,3 +58,7 @@
     padding: 15px 0;
   }
   
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
