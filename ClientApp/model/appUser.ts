@@ -48,6 +48,6 @@ export interface AppUser {
     messagesSent?: Array<Message> | null;
     messagesReceived?: Array<Message> | null;
     userRoles?: Array<AppUserRole> | null;
-    appUserMovieItems?: Array<AppUserMovieItem> | null;
+    appUserMovie?: Array<AppUserMovieItem> | null;
 }
 

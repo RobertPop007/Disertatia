@@ -1,4 +1,6 @@
-﻿using Proiect_licenta.Entities.Movies;
+﻿using Proiect_licenta.DTO.Movies;
+using Proiect_licenta.Entities;
+using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Helpers;
 using System;
 using System.Collections.Generic;
@@ -9,8 +11,12 @@ namespace Proiect_licenta.Interfaces
 {
     public interface IMoviesRepository
     {
-        Task<PagedList<MovieItem>> GetMoviesAsync(MovieParams userParams);
-        Task<MovieItem> GetMovieByIdAsync(string id);
-        Task<MovieItem> GetMovieByFullTitleAsync(string fullTitle);
+        Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams userParams);
+        Task<Movie> GetMovieByIdAsync(string id);
+        Task<Movie> GetMovieByFullTitleAsync(string fullTitle);
+        Task<List<Movie>> GetUserMovies(int userId);
+        bool IsMovieAlreadyAdded(int userId, string movieId);
+        void DeleteMovieForUser(int userId, string movieId);
+        Task<bool> SaveAllAsync();
     }
 }

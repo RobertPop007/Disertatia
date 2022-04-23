@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MovieItem } from 'model/movieItem';
 import { MoviesService } from 'api/movies.service';
+import { Movie } from 'model/movie';
+import { MovieItem } from 'model/movieItem';
+import { listenToTriggers } from 'ngx-bootstrap/utils';
 import { ToastrService } from 'ngx-toastr';
-import { Movie } from 'src/app/_models/movie';
-import { PresenceService } from 'src/app/_services/presence.service';
+import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
 @Component({
   selector: 'app-movie-card',
@@ -11,17 +12,25 @@ import { PresenceService } from 'src/app/_services/presence.service';
   styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent implements OnInit {
-  @Input() movie!: MovieItem;
+  @Input() movie!: Movie;
 
-  constructor(private movieService: MoviesService,
-    private toastr: ToastrService,
-    public presence: PresenceService) { }
+  constructor(private movieAngularService: MoviesAngularService,
+    private movieService: MoviesService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
-  addMovie(movie: MovieItem){
-
+  addMovie(movie: Movie){
+    this.movieAngularService.addMovie(movie.id!).subscribe(() => {
+      this.toastr.success("You have added " + movie.fullTitle);
+    })
   }
 
+  isMovieAlreadyAdded(movieId: string): boolean{
+    this.movieService.apiMoviesMovieAlreadyAddedGet(movieId).subscribe((response) => {
+      return response;
+    })
+    return false;
+  }
 }

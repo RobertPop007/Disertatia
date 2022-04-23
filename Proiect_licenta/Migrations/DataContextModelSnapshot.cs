@@ -711,10 +711,15 @@ namespace Proiect_licenta.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("MovieItemId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AppUserId", "MovieItemId");
+                    b.HasKey("AppUserId", "MovieId");
+
+                    b.HasIndex("MovieId");
 
                     b.HasIndex("MovieItemId");
 
@@ -746,14 +751,17 @@ namespace Proiect_licenta.Migrations
                     b.Property<int>("AppUserId1")
                         .HasColumnType("int");
 
-                    b.Property<string>("TvShowItemId")
+                    b.Property<int>("TvShowItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TvShowItemId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AppUserId");
 
                     b.HasIndex("AppUserId1");
 
-                    b.HasIndex("TvShowItemId");
+                    b.HasIndex("TvShowItemId1");
 
                     b.ToTable("AppUserTvShowItem");
                 });
@@ -1194,6 +1202,302 @@ namespace Proiect_licenta.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.ActorList", b =>
+                {
+                    b.Property<Guid>("ActorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AsCharacter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ActorId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("ActorList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.BoxOffice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Budget")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CumulativeWorldwideGross")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GrossUSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OpeningWeekendUSA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BoxOffice");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.CompanyList", b =>
+                {
+                    b.Property<Guid>("CompanyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompanyId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("CompanyList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.CountryList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("CountryList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.DirectorList", b =>
+                {
+                    b.Property<Guid>("DirectorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DirectorId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("DirectorList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.GenreList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("GenreList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("MoviesImagesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MoviesImagesId");
+
+                    b.ToTable("Item");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.LanguageList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("LanguageList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Movie", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Awards")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("BoxOfficeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Companies")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentRating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Countries")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Directors")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Genres")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbRating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbRatingVotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ImagesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Keywords")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Languages")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetacriticRating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginalTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Plot")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlotLocal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PlotLocalIsRtl")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("RatingsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReleaseDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RuntimeMins")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RuntimeStr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stars")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tagline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TrailerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("WikipediaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Writers")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoxOfficeId");
+
+                    b.HasIndex("ImagesId");
+
+                    b.HasIndex("RatingsId");
+
+                    b.HasIndex("TrailerId");
+
+                    b.HasIndex("WikipediaId");
+
+                    b.ToTable("Movies");
+                });
+
             modelBuilder.Entity("Proiect_licenta.Entities.Movies.MovieItem", b =>
                 {
                     b.Property<string>("Id")
@@ -1223,6 +1527,280 @@ namespace Proiect_licenta.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Top250Movies");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.MoviesImages", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MoviesImages");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.MoviesTrailer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkEmbed")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MoviesTrailer");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.PlotFull", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Html")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlainText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlotFull");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.PlotShort", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Html")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlainText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlotShort");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Ratings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilmAffinity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Metacritic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RottenTomatoes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TheMovieDb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Similar", b =>
+                {
+                    b.Property<Guid>("SimilarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbRating")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SimilarId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Similar");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.StarList", b =>
+                {
+                    b.Property<Guid>("StarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StarId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("StarList");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Wikipedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImDbId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PlotFullId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PlotShortId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleInLanguage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlotFullId");
+
+                    b.HasIndex("PlotShortId");
+
+                    b.ToTable("Wikipedia");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.WriterList", b =>
+                {
+                    b.Property<Guid>("WriterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WriterId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("WriterList");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Photo", b =>
@@ -1451,16 +2029,20 @@ namespace Proiect_licenta.Migrations
             modelBuilder.Entity("Proiect_licenta.Entities.AppUserMovieItem", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
-                        .WithMany("AppUserMovieItems")
+                        .WithMany("AppUserMovie")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Proiect_licenta.Entities.Movies.MovieItem", "MovieItem")
-                        .WithMany("AppUserMovieItems")
-                        .HasForeignKey("MovieItemId")
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", "MovieItem")
+                        .WithMany("AppUserMovie")
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.MovieItem", null)
+                        .WithMany("AppUserMovieItems")
+                        .HasForeignKey("MovieItemId");
 
                     b.Navigation("AppUser");
 
@@ -1496,7 +2078,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasOne("Proiect_licenta.Entities.TvShows.TvShowItem", "TvShowItem")
                         .WithMany("AppUserTvShowItems")
-                        .HasForeignKey("TvShowItemId");
+                        .HasForeignKey("TvShowItemId1");
 
                     b.Navigation("AppUser");
 
@@ -1618,6 +2200,124 @@ namespace Proiect_licenta.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.ActorList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("ActorList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.CompanyList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("CompanyList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.CountryList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("CountryList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.DirectorList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("DirectorList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.GenreList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("GenreList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Item", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.MoviesImages", null)
+                        .WithMany("Items")
+                        .HasForeignKey("MoviesImagesId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.LanguageList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("LanguageList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Movie", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.BoxOffice", "BoxOffice")
+                        .WithMany()
+                        .HasForeignKey("BoxOfficeId");
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.MoviesImages", "Images")
+                        .WithMany()
+                        .HasForeignKey("ImagesId");
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.Ratings", "Ratings")
+                        .WithMany()
+                        .HasForeignKey("RatingsId");
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.MoviesTrailer", "Trailer")
+                        .WithMany()
+                        .HasForeignKey("TrailerId");
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.Wikipedia", "Wikipedia")
+                        .WithMany()
+                        .HasForeignKey("WikipediaId");
+
+                    b.Navigation("BoxOffice");
+
+                    b.Navigation("Images");
+
+                    b.Navigation("Ratings");
+
+                    b.Navigation("Trailer");
+
+                    b.Navigation("Wikipedia");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Similar", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("Similars")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.StarList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("StarList")
+                        .HasForeignKey("MovieId");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Wikipedia", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.PlotFull", "PlotFull")
+                        .WithMany()
+                        .HasForeignKey("PlotFullId");
+
+                    b.HasOne("Proiect_licenta.Entities.Movies.PlotShort", "PlotShort")
+                        .WithMany()
+                        .HasForeignKey("PlotShortId");
+
+                    b.Navigation("PlotFull");
+
+                    b.Navigation("PlotShort");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.WriterList", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Movies.Movie", null)
+                        .WithMany("WriterList")
+                        .HasForeignKey("MovieId");
+                });
+
             modelBuilder.Entity("Proiect_licenta.Entities.Photo", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
@@ -1674,7 +2374,7 @@ namespace Proiect_licenta.Migrations
 
                     b.Navigation("AddedUsers");
 
-                    b.Navigation("AppUserMovieItems");
+                    b.Navigation("AppUserMovie");
 
                     b.Navigation("MessagesReceived");
 
@@ -1703,9 +2403,37 @@ namespace Proiect_licenta.Migrations
                     b.Navigation("Themes");
                 });
 
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.Movie", b =>
+                {
+                    b.Navigation("ActorList");
+
+                    b.Navigation("AppUserMovie");
+
+                    b.Navigation("CompanyList");
+
+                    b.Navigation("CountryList");
+
+                    b.Navigation("DirectorList");
+
+                    b.Navigation("GenreList");
+
+                    b.Navigation("LanguageList");
+
+                    b.Navigation("Similars");
+
+                    b.Navigation("StarList");
+
+                    b.Navigation("WriterList");
+                });
+
             modelBuilder.Entity("Proiect_licenta.Entities.Movies.MovieItem", b =>
                 {
                     b.Navigation("AppUserMovieItems");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.Movies.MoviesImages", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.TvShows.TvShowItem", b =>

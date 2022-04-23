@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MovieItem } from './movieItem';
+import { Movie } from './movie';
 import { AppUser } from './appUser';
 
 
 export interface AppUserMovieItem { 
     appUserId?: number;
     appUser?: AppUser;
-    movieItemId?: string | null;
-    movieItem?: MovieItem;
+    movieId?: string | null;
+    movieItem?: Movie;
 }
 

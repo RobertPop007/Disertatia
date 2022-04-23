@@ -1,1 +1,45 @@
-<p>movie-detail works!</p>
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <img src="{{movie.image || './assets/user.png'}}" alt="{{movie.fullTitle}}" class="card-img-top img-thumbnail">
+
+            <div class="card-body">
+                <div>
+                    <strong>Full title:</strong>
+                    <p>{{movie.title}}</p>
+                </div>
+
+                <div>
+                    <strong>Imdb rating:</strong>
+                    <p>{{movie.imDbRating}}</p>
+                </div>
+
+                <div>
+                    <strong>Imdb rating count:</strong>
+                    <p>{{movie.imDbRatingVotes}}</p>
+                </div>
+
+                <div>
+                    <strong>Release date:</strong>
+                    <p>{{movie.year | date: 'dd MMMM YYYY'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset" #memberTabs>
+            <tab heading="About {{movie.title}}" (selectTab)="onTabsActivated($event)">
+                <h4>Description</h4>
+                <p>{{movie.plot}}</p>
+                <h4>Looking for</h4>
+                <p>{{movie.genres}}</p>
+            </tab>
+
+            <tab heading="Interests" (selectTab)="onTabsActivated($event)">
+                <h4>Interests</h4>
+                <p>{{movie.stars}}</p>
+            </tab>
+        </tabset>
+    </div>
+</div>

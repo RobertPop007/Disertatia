@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
+import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { MovieParams } from 'src/app/_models/movieParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -13,7 +14,7 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
   styleUrls: ['./movies-list.component.css']
 })
 export class MoviesListComponent implements OnInit {
-  movies!: MovieItem[];
+  movies!: Movie[];
   pagination!: Pagination;
   movieParams!: MovieParams;
   user!: User;

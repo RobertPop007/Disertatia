@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MoviesService } from 'api/movies.service';
 import { map, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Movie } from '../_models/movie';
@@ -22,7 +23,7 @@ export class MoviesAngularService{
   userParams!: UserParams;
   searchedMovie = "";
 
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(private http: HttpClient, private accountService: AccountService, private movieService: MoviesService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe((user: User) => {
       this.user = user;
       this.movieParams = new MovieParams(user, this.searchedMovie);
@@ -71,11 +72,11 @@ export class MoviesAngularService{
       return of(movie);
     }
 
-    return this.http.get<Movie>(this.baseUrl + fullTitle);
+    return this.http.get<Movie>(this.baseUrl + "Movies/" + fullTitle);
   }
 
   addMovie(movieId: string){
-    return this.http.post(this.baseUrl + 'AddMovie/' + movieId, {});
+    return this.movieService.apiMoviesAddMovieMovieIdPost(movieId);
   }
 
   getMoviesForUser(predicate: string, pageNumber: number, pageSize: number){
@@ -83,6 +84,10 @@ export class MoviesAngularService{
 
     params = params.append('predicate', predicate);
 
-    return getPaginatedResult<Partial<Movie[]>>(this.baseUrl + 'GetMoviesFor', params, this.http);
+    return getPaginatedResult<Partial<Movie[]>>(this.baseUrl + 'Movies/GetMoviesFor', params, this.http);
+  }
+
+  deleteMovieForUser(movieId: string){
+    return this.http.delete(this.baseUrl + 'Movies/' + movieId);
   }
 }

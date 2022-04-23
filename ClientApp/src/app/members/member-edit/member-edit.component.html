@@ -43,6 +43,36 @@
 
     <div class="col-8">
         <tabset class="member-tabset">
+            <tab heading="Watchlist">
+                <form #editForm="ngForm" id="editForm" (ngSubmit)="updateWatchList()">
+                    <tabset class="member-tabset">
+                        <tab heading="Movies">
+                            <div class="groups row">
+                                <div *ngFor="let movie of watchedMovies" class="col-3">
+                                    <app-movie-card-added (deleteEvent)="updateWatchList()" [movie]="movie!"></app-movie-card-added> 
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Tv Shows">
+                            <div class="groups row">
+                            </div>
+                        </tab>
+
+                        <tab heading="Anime">
+                            <div class="groups row">
+                            </div>
+                        </tab>
+
+                        <tab heading="Manga">
+                            <div class="groups row">
+                            </div>
+                        </tab>
+                
+            </tabset>
+                </form>
+            </tab>
+
             <tab heading="About {{member.knownAs}}">
 
                 <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">

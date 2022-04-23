@@ -1,11 +1,8 @@
-<ngx-spinner show="loading" type="pacman">
-  <h3 class="mt-5">Loading...</h3>
-</ngx-spinner>
-
+<ngx-spinner size = "large" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: #000; margin-top: 70px;" > Loading... </p></ngx-spinner>
 <app-nav></app-nav>
 
 <div style="float: right; position: relative; margin-right: 20px;">
-  <mat-slide-toggle [(ngModel)]="isDarkMode" (toggleChange)="onToggle()" color="primary"> {{currentMode}} </mat-slide-toggle>
+  <mat-slide-toggle [(ngModel)]="isDarkMode" (toggleChange)="onToggle()"> {{currentMode}} </mat-slide-toggle>
 </div>
 
 <div class="container" style="margin-top: 100px;">

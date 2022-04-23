@@ -10,7 +10,7 @@ namespace Proiect_licenta.Entities
     {
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public string MovieItemId { get; set; }
-        public MovieItem MovieItem { get; set; }
+        public string MovieId { get; set; }
+        public Movie MovieItem { get; set; }
     }
 }

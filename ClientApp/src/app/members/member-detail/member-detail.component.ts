@@ -30,10 +30,12 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
               private router: Router) {
                 this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-               }
+              }
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
+      console.log(data);
+      
       this.member = data['member'];
     })
 

@@ -570,7 +570,7 @@
         }
       }
     },
-    "/AddMovie/{movieId}": {
+    "/api/Movies/AddMovie/{movieId}": {
       "post": {
         "tags": [
           "Movies"
@@ -592,7 +592,7 @@
         }
       }
     },
-    "/GetMoviesFor/{username}": {
+    "/api/Movies/GetMoviesFor/{username}": {
       "get": {
         "tags": [
           "Movies"
@@ -614,7 +614,7 @@
         }
       }
     },
-    "/GetAllMovies": {
+    "/api/Movies/GetAllMovies": {
       "get": {
         "tags": [
           "Movies"
@@ -658,7 +658,7 @@
         }
       }
     },
-    "/{fullTitle}": {
+    "/api/Movies/{fullTitle}": {
       "get": {
         "tags": [
           "Movies"
@@ -680,20 +680,80 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieItem"
+                  "$ref": "#/components/schemas/Movie"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieItem"
+                  "$ref": "#/components/schemas/Movie"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieItem"
+                  "$ref": "#/components/schemas/Movie"
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Movies/MovieAlreadyAdded": {
+      "get": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Movies/{movieId}": {
+      "delete": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         }
       }
@@ -913,6 +973,32 @@
   },
   "components": {
     "schemas": {
+      "ActorList": {
+        "type": "object",
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "asCharacter": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AppRole": {
         "type": "object",
         "properties": {
@@ -1080,7 +1166,7 @@
             },
             "nullable": true
           },
-          "appUserMovieItems": {
+          "appUserMovie": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppUserMovieItem"
@@ -1100,12 +1186,12 @@
           "appUser": {
             "$ref": "#/components/schemas/AppUser"
           },
-          "movieItemId": {
+          "movieId": {
             "type": "string",
             "nullable": true
           },
           "movieItem": {
-            "$ref": "#/components/schemas/MovieItem"
+            "$ref": "#/components/schemas/Movie"
           }
         },
         "additionalProperties": false
@@ -1130,6 +1216,68 @@
         },
         "additionalProperties": false
       },
+      "BoxOffice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "budget": {
+            "type": "string",
+            "nullable": true
+          },
+          "openingWeekendUSA": {
+            "type": "string",
+            "nullable": true
+          },
+          "grossUSA": {
+            "type": "string",
+            "nullable": true
+          },
+          "cumulativeWorldwideGross": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanyList": {
+        "type": "object",
+        "properties": {
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CountryList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateMessageDto": {
         "type": "object",
         "properties": {
@@ -1138,6 +1286,24 @@
             "nullable": true
           },
           "content": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DirectorList": {
+        "type": "object",
+        "properties": {
+          "directorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
             "type": "string",
             "nullable": true
           }
@@ -1168,6 +1334,60 @@
             "nullable": true
           },
           "city": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenreList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LanguageList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
             "type": "string",
             "nullable": true
           }
@@ -1373,7 +1593,7 @@
         },
         "additionalProperties": false
       },
-      "MovieItem": {
+      "Movie": {
         "type": "object",
         "properties": {
           "id": {
@@ -1384,7 +1604,15 @@
             "type": "string",
             "nullable": true
           },
+          "originalTitle": {
+            "type": "string",
+            "nullable": true
+          },
           "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
             "type": "string",
             "nullable": true
           },
@@ -1396,7 +1624,118 @@
             "type": "string",
             "nullable": true
           },
-          "crew": {
+          "releaseDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "runtimeMins": {
+            "type": "string",
+            "nullable": true
+          },
+          "runtimeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "plot": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotLocal": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotLocalIsRtl": {
+            "type": "boolean"
+          },
+          "awards": {
+            "type": "string",
+            "nullable": true
+          },
+          "directors": {
+            "type": "string",
+            "nullable": true
+          },
+          "directorList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DirectorList"
+            },
+            "nullable": true
+          },
+          "writers": {
+            "type": "string",
+            "nullable": true
+          },
+          "writerList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WriterList"
+            },
+            "nullable": true
+          },
+          "stars": {
+            "type": "string",
+            "nullable": true
+          },
+          "starList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StarList"
+            },
+            "nullable": true
+          },
+          "actorList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ActorList"
+            },
+            "nullable": true
+          },
+          "genres": {
+            "type": "string",
+            "nullable": true
+          },
+          "genreList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenreList"
+            },
+            "nullable": true
+          },
+          "companies": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompanyList"
+            },
+            "nullable": true
+          },
+          "countries": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CountryList"
+            },
+            "nullable": true
+          },
+          "languages": {
+            "type": "string",
+            "nullable": true
+          },
+          "languageList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LanguageList"
+            },
+            "nullable": true
+          },
+          "contentRating": {
             "type": "string",
             "nullable": true
           },
@@ -1404,15 +1743,148 @@
             "type": "string",
             "nullable": true
           },
-          "imDbRatingCount": {
+          "imDbRatingVotes": {
             "type": "string",
             "nullable": true
           },
-          "appUserMovieItems": {
+          "metacriticRating": {
+            "type": "string",
+            "nullable": true
+          },
+          "ratings": {
+            "$ref": "#/components/schemas/Ratings"
+          },
+          "wikipedia": {
+            "$ref": "#/components/schemas/Wikipedia"
+          },
+          "images": {
+            "$ref": "#/components/schemas/MoviesImages"
+          },
+          "trailer": {
+            "$ref": "#/components/schemas/MoviesTrailer"
+          },
+          "boxOffice": {
+            "$ref": "#/components/schemas/BoxOffice"
+          },
+          "tagline": {
+            "type": "string",
+            "nullable": true
+          },
+          "keywords": {
+            "type": "string",
+            "nullable": true
+          },
+          "similars": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Similar"
+            },
+            "nullable": true
+          },
+          "appUserMovie": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AppUserMovieItem"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MoviesImages": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MoviesTrailer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "link": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkEmbed": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -1457,6 +1929,96 @@
         },
         "additionalProperties": false
       },
+      "PlotFull": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "plainText": {
+            "type": "string",
+            "nullable": true
+          },
+          "html": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlotShort": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "plainText": {
+            "type": "string",
+            "nullable": true
+          },
+          "html": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ratings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDb": {
+            "type": "string",
+            "nullable": true
+          },
+          "metacritic": {
+            "type": "string",
+            "nullable": true
+          },
+          "theMovieDb": {
+            "type": "string",
+            "nullable": true
+          },
+          "rottenTomatoes": {
+            "type": "string",
+            "nullable": true
+          },
+          "filmAffinity": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterDto": {
         "required": [
           "city",
@@ -1492,6 +2054,50 @@
             "maxLength": 100,
             "minLength": 6,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Similar": {
+        "type": "object",
+        "properties": {
+          "similarId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDbRating": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StarList": {
+        "type": "object",
+        "properties": {
+          "starId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1538,6 +2144,76 @@
           "addedUserId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Wikipedia": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "titleInLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotShort": {
+            "$ref": "#/components/schemas/PlotShort"
+          },
+          "plotFull": {
+            "$ref": "#/components/schemas/PlotFull"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "WriterList": {
+        "type": "object",
+        "properties": {
+          "writerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

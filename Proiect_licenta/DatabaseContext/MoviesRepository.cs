@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Proiect_licenta.DTO.Movies;
+using Proiect_licenta.Entities;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -22,9 +25,9 @@ namespace Proiect_licenta.DatabaseContext
             _mapper = mapper;
         }
 
-        public async Task<PagedList<MovieItem>> GetMoviesAsync(MovieParams movieParams)
+        public async Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams movieParams)
         {
-            var query = _context.Top250Movies.AsQueryable();
+            var query = _context.Movies.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(movieParams.SearchedMovie))
                 query = query.Where(u => u.FullTitle.Contains(movieParams.SearchedMovie));
@@ -37,18 +40,69 @@ namespace Proiect_licenta.DatabaseContext
 
             };
 
-            return await PagedList<MovieItem>.CreateAsync(query.ProjectTo<MovieItem>(_mapper.ConfigurationProvider).AsNoTracking(),
+            return await PagedList<MovieCard>.CreateAsync(query.ProjectTo<MovieCard>(_mapper.ConfigurationProvider).AsNoTracking(),
                 movieParams.PageNumber, movieParams.PageSize);
         }
 
-        public async Task<MovieItem> GetMovieByIdAsync(string id)
+        public async Task<Movie> GetMovieByIdAsync(string id)
         {
-            return await _context.Top250Movies.FindAsync(id);
+            return await _context.Movies.FindAsync(id);
         }
-        public async Task<MovieItem> GetMovieByFullTitleAsync(string fullTitle)
+        public async Task<Movie> GetMovieByFullTitleAsync(string fullTitle)
         {
-            return await _context.Top250Movies
-                .SingleOrDefaultAsync(x => x.FullTitle == fullTitle);
+            return await _context.Movies
+                .Where(t => t.FullTitle == fullTitle)
+                .IncludeOptimized(o => o.DirectorList)
+                .IncludeOptimized(o => o.WriterList)
+                .IncludeOptimized(o => o.ActorList)
+                .IncludeOptimized(o => o.StarList)
+                .IncludeOptimized(o => o.GenreList)
+                .IncludeOptimized(o => o.CompanyList)
+                .IncludeOptimized(o => o.CountryList)
+                .IncludeOptimized(o => o.LanguageList)
+                .IncludeOptimized(o => o.Ratings)
+                .IncludeOptimized(o => o.Wikipedia)
+                .IncludeOptimized(o => o.Images)
+                .IncludeOptimized(o => o.Trailer)
+                .IncludeOptimized(o => o.BoxOffice)
+                .IncludeOptimized(o => o.Similars)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Movie>> GetUserMovies(int userId)
+        {
+            var listOfMoviesIdForUser = _context.AppUserMovieItems.Where(o => o.AppUserId == userId).Select(o => o.MovieId).AsEnumerable();
+
+            var listOfMoviesForUser = new List<Movie>();
+
+            foreach (var movieId in listOfMoviesIdForUser)
+            {
+                var movie = await _context.Movies.FindAsync(movieId);
+
+                if (movie != null) listOfMoviesForUser.Add(movie);
+            }
+
+            return listOfMoviesForUser;
+        }
+
+        public bool IsMovieAlreadyAdded(int userId, string movieId)
+        {
+            var listOfMoviesIdForUser = _context.AppUserMovieItems.Where(o => o.AppUserId == userId).Select(o => o.MovieId).AsEnumerable();
+
+            var isMovieAlreadyAdded = listOfMoviesIdForUser.Contains(movieId);
+            if (isMovieAlreadyAdded == true) return true;
+            return false;
+        }
+
+        public void DeleteMovieForUser(int userId, string movieId)
+        {
+            var appUserMovieItem = _context.AppUserMovieItems.FirstOrDefault(o => o.AppUserId == userId && o.MovieId == movieId);
+            _context.AppUserMovieItems.Remove(appUserMovieItem);
+        }
+
+        public async Task<bool> SaveAllAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<TvShowItem> TvShows { get; set; }
         public DbSet<Datum> Anime { get; set; }
         public DbSet<DatumManga> Manga { get; set; }
+        public DbSet<Movie> Movies { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -69,15 +70,15 @@ namespace Proiect_licenta.DatabaseContext
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<AppUserMovieItem>()
-                .HasKey(bc => new { bc.AppUserId, bc.MovieItemId });
+                .HasKey(bc => new { bc.AppUserId, bc.MovieId });
             builder.Entity<AppUserMovieItem>()
                 .HasOne(bc => bc.AppUser)
-                .WithMany(b => b.AppUserMovieItems)
+                .WithMany(b => b.AppUserMovie)
                 .HasForeignKey(bc => bc.AppUserId);
             builder.Entity<AppUserMovieItem>()
                 .HasOne(bc => bc.MovieItem)
-                .WithMany(c => c.AppUserMovieItems)
-                .HasForeignKey(bc => bc.MovieItemId);
+                .WithMany(c => c.AppUserMovie)
+                .HasForeignKey(bc => bc.MovieId);
         }
     }
 }

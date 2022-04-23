@@ -33,7 +33,7 @@ namespace Proiect_licenta.Controllers
         }
 
         [HttpPost("AddMovie/{movieId}")]
-        public async Task<ActionResult> AddMovieForUser([FromRoute] string movieId)
+        public async Task<ActionResult> AddMovieForUser(string movieId)
         {
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
@@ -44,11 +44,15 @@ namespace Proiect_licenta.Controllers
             var appUserMovieItem = new AppUserMovieItem
             {
                 AppUserId = user.Id,
-                MovieItemId = movieId
+                MovieId = movieId
             };
 
+            var alreadyAdded = await _context.AppUserMovieItems.AnyAsync(o => o.AppUserId == user.Id && o.MovieId == movieId);
+
+            if (alreadyAdded == true) return BadRequest("You have already added this movie to your list");
+
             await _context.AppUserMovieItems.AddAsync(appUserMovieItem);
-            user.AppUserMovieItems.Add(appUserMovieItem);
+            user.AppUserMovie.Add(appUserMovieItem);
 
             await _userRepository.SaveAllAsync();
 
@@ -62,16 +66,8 @@ namespace Proiect_licenta.Controllers
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var moviesIds = _context.AppUserMovieItems.Select(t => t.MovieItemId).ToList();
-            var movies = new List<MovieItem>();
-
-            foreach (var movieId in moviesIds)
-            {
-                var movie = await _moviesRepository.GetMovieByIdAsync(movieId);
-                movies.Add(movie);
-            }
-
-            return Ok(movies);
+            var listOfMovies = await _moviesRepository.GetUserMovies(user.Id);
+            return Ok(listOfMovies);
         }
 
         [HttpGet("GetAllMovies")]
@@ -85,10 +81,35 @@ namespace Proiect_licenta.Controllers
         }
 
         [HttpGet("{fullTitle}", Name = "GetMovie")]
-        public async Task<ActionResult<MovieItem>> GetMovie(string fullTitle)
+        public async Task<ActionResult<Movie>> GetMovie(string fullTitle)
         {
             return await _moviesRepository.GetMovieByFullTitleAsync(fullTitle);
         }
 
+        [HttpGet("MovieAlreadyAdded")]
+        public bool IsMovieAlreadyAdded(string movieId)
+        {
+            var userId = User.GetUserId();
+
+            return _moviesRepository.IsMovieAlreadyAdded(userId, movieId);
+        }
+
+        [HttpDelete("{movieId}")]
+        public async Task<IActionResult> DeleteMovieForUser(string movieId)
+        {
+            var userId = User.GetUserId();
+
+            var movie = await _context.Movies.FindAsync(movieId);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            _moviesRepository.DeleteMovieForUser(userId, movieId);
+
+            if (await _moviesRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Problem deleting the movie for this user");
+        }
     }
 }

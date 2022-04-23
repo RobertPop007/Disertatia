@@ -8,7 +8,7 @@ namespace Proiect_licenta.Entities
         [Key]
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public string TvShowItemId { get; set; }
+        public int TvShowItemId { get; set; }
         public TvShowItem TvShowItem { get; set; }
     }
 }

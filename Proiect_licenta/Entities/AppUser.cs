@@ -24,6 +24,6 @@ namespace Proiect_licenta.Entities
         public ICollection<Message> MessagesReceived { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
 
-        public IList<AppUserMovieItem> AppUserMovieItems { get; set; }
+        public IList<AppUserMovieItem> AppUserMovie { get; set; }
     }
 }

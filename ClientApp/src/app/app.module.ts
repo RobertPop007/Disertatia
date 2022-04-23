@@ -44,6 +44,7 @@ import { ContactPageComponent } from './contact-page/contact-page.component';
 import { MovieCardComponent } from './movies/movie-card/movie-card.component';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MovieCardAddedComponent } from './movies/movie-card-added/movie-card-added.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MusicListComponent,
     ContactPageComponent,
     MovieCardComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    MovieCardAddedComponent
   ],
   imports: [
     BrowserModule,
