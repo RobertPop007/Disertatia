@@ -6,6 +6,7 @@ using Proiect_licenta.Entities.Anime;
 using Proiect_licenta.Entities.Manga;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Entities.TvShows;
+using System;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -26,6 +27,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<Datum> Anime { get; set; }
         public DbSet<DatumManga> Manga { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<TvShow> TrueTvShow { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -79,6 +81,12 @@ namespace Proiect_licenta.DatabaseContext
                 .HasOne(bc => bc.MovieItem)
                 .WithMany(c => c.AppUserMovie)
                 .HasForeignKey(bc => bc.MovieId);
+
+            builder.Entity<TvSeriesInfo>()
+            .Property(e => e.Seasons)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
         }
     }
 }

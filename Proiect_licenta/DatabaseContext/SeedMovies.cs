@@ -25,9 +25,16 @@ namespace Proiect_licenta.DatabaseContext
                 await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls036694571");
                 await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020828441");
                 await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls023836170");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls041805722");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000028602");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls094143100");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000068347");
+                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls006153007");
+
+                
             }
 
-            //var idList = context.Top250Movies.Select(x => x.Id).Skip(1300).Take(0).ToList();
+            //var idList = context.Top250Movies.Select(x => x.Id).Skip(1000).Take(400).ToList();
 
             //foreach (var id in idList)
             //{

@@ -45,6 +45,8 @@ import { MovieCardComponent } from './movies/movie-card/movie-card.component';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MovieCardAddedComponent } from './movies/movie-card-added/movie-card-added.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { MovieCardAddedComponent } from './movies/movie-card-added/movie-card-ad
     NgxSpinnerModule,
     ReactiveFormsModule,
     BsDatepickerModule.forRoot(),
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgbModule,
+    MdbCheckboxModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

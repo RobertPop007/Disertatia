@@ -31,7 +31,27 @@ namespace Proiect_licenta.DatabaseContext
                 await SeedTvShowsList(context, "https://imdb-api.com/en/api/imdblist/k_nmakg2ch/ls079394864");
                 await SeedTvShowsList(context, "https://imdb-api.com/en/api/imdblist/k_nmakg2ch/ls093287916");
                 await SeedTvShowsList(context, "https://imdb-api.com/en/api/imdblist/k_nmakg2ch/ls093287496"); //take(500)
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls095473628");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls500220439");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls046013528");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls065015622");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls065925054");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls065505948");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls065577238");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls065095546");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls067532771");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls067565700");
+                await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls067561033");
             }
+
+            
+
+            //var idList = context.Top250Movies.Select(x => x.Id).Skip(0).Take(200).ToList();
+
+            //foreach (var id in idList)
+            //{
+            //    await SeedTrueTvShowList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
+            //}
 
             await context.SaveChangesAsync();
         }
@@ -57,6 +77,25 @@ namespace Proiect_licenta.DatabaseContext
                         await context.TvShows.AddAsync(tvShow);
                     }
                 }
+            }
+        }
+
+        public static async Task SeedTrueTvShowList(DataContext context, string url)
+        {
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string returnedUrl = reader.ReadToEnd();
+                var movie = JsonConvert.DeserializeObject<Movie>(returnedUrl);
+
+                await context.Movies.AddAsync(movie);
+
             }
         }
     }

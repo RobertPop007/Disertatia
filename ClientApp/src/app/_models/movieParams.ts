@@ -4,7 +4,7 @@ import { User } from "./user";
 export class MovieParams{
     username!: string;
     pageNumber = 1;
-    pageSize = 60;
+    pageSize = 100;
     searchedMovie!: string;
     orderBy = "imdbRating";
 

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 import { PresenceService } from './_services/presence.service';
 import { Observable } from 'rxjs';
 import { DarkModeService } from 'angular-dark-mode';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { DarkModeService } from 'angular-dark-mode';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  theme: Theme = 'light-theme';
   title = 'The dating app';
   users: any;
   isDarkMode!: boolean;
@@ -20,7 +22,9 @@ export class AppComponent implements OnInit {
 
   constructor(private accountService: AccountService, 
               private presence: PresenceService,
-              private darkModeService: DarkModeService) {}
+              private darkModeService: DarkModeService,
+              @Inject(DOCUMENT) private document: Document,
+              private renderer: Renderer2) {}
 
   ngOnInit() {
     this.setCurrentUser();
@@ -32,7 +36,20 @@ export class AppComponent implements OnInit {
     {
       this.darkModeService.enable();
     }
+
+    this.initializeTheme();
   }
+
+  switchTheme(){
+    this.document.body.classList.replace(
+      this.theme, 
+      this.theme === 'light-theme' 
+      ? (this.theme = 'dark-theme') 
+      : (this.theme = 'light-theme'))
+  }
+
+  initializeTheme = (): void =>
+      this.renderer.addClass(this.document.body, this.theme);
 
   setDisplayMode(mode: string) {
     localStorage.setItem("currentMode", mode);
@@ -58,3 +75,5 @@ export class AppComponent implements OnInit {
     
   }
 }
+
+export type Theme = 'light-theme' | 'dark-theme';

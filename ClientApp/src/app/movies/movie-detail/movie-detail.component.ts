@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ActivationStart, ChildActivationEnd, NavigationEnd, ResolveStart, Router } from '@angular/router';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
@@ -16,9 +16,14 @@ import { AccountService } from 'src/app/_services/account.service';
 export class MovieDetailComponent implements OnInit {
 
   @ViewChild('memberTabs', {static: true}) memberTabs!: TabsetComponent;
+  @ViewChild('videoPlayer') videoplayer!: ElementRef;
+
+
   movie!: Movie;
   activeTabs!: TabDirective;
   user!: User;
+
+  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   
   constructor(private movieService: MoviesService, 
     private route: ActivatedRoute, 
@@ -31,6 +36,8 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.movie = data['movie'];
+      
+      this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!));
     })
 
     this.route.queryParams.subscribe(params => {
@@ -43,6 +50,8 @@ export class MovieDetailComponent implements OnInit {
     
     this.movieService.getMovie(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(movie => {
       this.movie = movie;
+      console.log(this.movie);
+      
     })
   }
 
@@ -53,5 +62,9 @@ export class MovieDetailComponent implements OnInit {
   selectTab(tabId: number){
     this.memberTabs.tabs[tabId].active = true;
   }
+
+  toggleVideo() {
+    this.videoplayer.nativeElement.play();
+}
 
 }
