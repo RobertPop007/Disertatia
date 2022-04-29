@@ -11,7 +11,7 @@ namespace Proiect_licenta.Interfaces
 {
     public interface IMoviesRepository
     {
-        Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams userParams);
+        Task<List<Movie>> GetMoviesAsync(MovieParams userParams);
         Task<Movie> GetMovieByIdAsync(string id);
         Task<Movie> GetMovieByFullTitleAsync(string fullTitle);
         Task<List<Movie>> GetUserMovies(int userId);

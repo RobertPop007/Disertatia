@@ -1,0 +1,55 @@
+.icon{
+    display: inline-block;
+    font-size: 44px;
+    animation: float 5s ease-in-out infinite;
+    padding-top: 25px;
+    padding-bottom: 10px;
+}
+
+.fa-instagram {
+    color: transparent;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  .fa-facebook {
+    color:#3b5998;
+    background:
+     linear-gradient(transparent,transparent) 14% 14%/16% 16% no-repeat,
+     radial-gradient(transparent 60%,transparent 0);
+  }
+
+  .fa-whatsapp  {
+    color:#25d366;
+    background:
+     linear-gradient(transparent,transparent) 14% 84%/16% 16% no-repeat,
+     radial-gradient(transparent 60%,transparent 0);
+  }
+
+.fa-facebook{
+    animation-delay: 1s;
+}
+
+.fa-whatsapp{
+    animation-delay: 2s;
+}
+
+.icons-wrapper{
+    background-color: black;
+}
+
+@keyframes float{
+    0%{
+        transform: translateY(0);
+    }
+
+    50%{
+        transform: translateY(-15px);
+    }
+
+    100%{
+        transform: translateY(0);
+    }
+}

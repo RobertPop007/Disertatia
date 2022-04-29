@@ -75,7 +75,7 @@ namespace Proiect_licenta.Controllers
         {
             var movies = await _moviesRepository.GetMoviesAsync(movieParams);
 
-            Response.AddPaginationHeader(movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages);
+            //Response.AddPaginationHeader(movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages);
 
             return Ok(movies);
         }

@@ -47,7 +47,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MovieCardAddedComponent } from './movies/movie-card-added/movie-card-added.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
-
+import { SafePipe } from './_pipes/safe.pipe';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { FooterComponent } from './footer/footer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +84,9 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
     ContactPageComponent,
     MovieCardComponent,
     MovieDetailComponent,
-    MovieCardAddedComponent
+    MovieCardAddedComponent,
+    SafePipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +101,9 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
     BsDatepickerModule.forRoot(),
     MatSlideToggleModule,
     NgbModule,
-    MdbCheckboxModule
+    MdbCheckboxModule,
+    IvyCarouselModule,
+    NgxPaginationModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

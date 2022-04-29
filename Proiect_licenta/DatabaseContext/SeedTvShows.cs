@@ -44,9 +44,9 @@ namespace Proiect_licenta.DatabaseContext
                 await SeedTvShowsList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls067561033");
             }
 
-            
 
-            //var idList = context.Top250Movies.Select(x => x.Id).Skip(0).Take(200).ToList();
+
+            //var idList = context.TvShows.Select(x => x.Id).Skip(0).Take(200).ToList();
 
             //foreach (var id in idList)
             //{
@@ -92,9 +92,9 @@ namespace Proiect_licenta.DatabaseContext
             using (StreamReader reader = new StreamReader(stream))
             {
                 string returnedUrl = reader.ReadToEnd();
-                var movie = JsonConvert.DeserializeObject<Movie>(returnedUrl);
+                var tvShow = JsonConvert.DeserializeObject<TvShow>(returnedUrl);
 
-                await context.Movies.AddAsync(movie);
+                await context.TrueTvShow.AddAsync(tvShow);
 
             }
         }

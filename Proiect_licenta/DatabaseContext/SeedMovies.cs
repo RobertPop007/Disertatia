@@ -34,7 +34,7 @@ namespace Proiect_licenta.DatabaseContext
                 
             }
 
-            //var idList = context.Top250Movies.Select(x => x.Id).Skip(1000).Take(400).ToList();
+            //var idList = context.Top250Movies.Select(x => x.Id).Skip(3000).Take(318).ToList();
 
             //foreach (var id in idList)
             //{

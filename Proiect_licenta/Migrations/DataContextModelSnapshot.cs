@@ -744,26 +744,21 @@ namespace Proiect_licenta.Migrations
             modelBuilder.Entity("Proiect_licenta.Entities.AppUserTvShowItem", b =>
                 {
                     b.Property<int>("AppUserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AppUserId1")
                         .HasColumnType("int");
 
-                    b.Property<int>("TvShowItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TvShowItemId1")
+                    b.Property<string>("TvShowId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AppUserId");
+                    b.Property<string>("TvShowItemId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("AppUserId1");
+                    b.HasKey("AppUserId", "TvShowId");
 
-                    b.HasIndex("TvShowItemId1");
+                    b.HasIndex("TvShowId");
 
-                    b.ToTable("AppUserTvShowItem");
+                    b.HasIndex("TvShowItemId");
+
+                    b.ToTable("AppUserTvShowItems");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Connection", b =>
@@ -2624,14 +2619,20 @@ namespace Proiect_licenta.Migrations
             modelBuilder.Entity("Proiect_licenta.Entities.AppUserTvShowItem", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId1")
+                        .WithMany("AppUserTvShow")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Proiect_licenta.Entities.TvShows.TvShowItem", "TvShowItem")
+                    b.HasOne("Proiect_licenta.Entities.TvShows.TvShow", "TvShowItem")
+                        .WithMany("AppUserTvShow")
+                        .HasForeignKey("TvShowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proiect_licenta.Entities.TvShows.TvShowItem", null)
                         .WithMany("AppUserTvShowItems")
-                        .HasForeignKey("TvShowItemId1");
+                        .HasForeignKey("TvShowItemId");
 
                     b.Navigation("AppUser");
 
@@ -3046,6 +3047,8 @@ namespace Proiect_licenta.Migrations
 
                     b.Navigation("AppUserMovie");
 
+                    b.Navigation("AppUserTvShow");
+
                     b.Navigation("MessagesReceived");
 
                     b.Navigation("MessagesSent");
@@ -3114,6 +3117,8 @@ namespace Proiect_licenta.Migrations
             modelBuilder.Entity("Proiect_licenta.Entities.TvShows.TvShow", b =>
                 {
                     b.Navigation("ActorList");
+
+                    b.Navigation("AppUserTvShow");
 
                     b.Navigation("CompanyList");
 

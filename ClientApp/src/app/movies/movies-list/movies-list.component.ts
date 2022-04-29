@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MovieParams } from 'src/app/_models/movieParams';
 import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
@@ -18,9 +19,10 @@ export class MoviesListComponent implements OnInit {
   pagination!: Pagination;
   movieParams!: MovieParams;
   user!: User;
+  p?: string | number | undefined = 1;
   searchedMovie = "";
 
-  constructor(private moviesAngularService: MoviesAngularService, private moviesService: MoviesService) {
+  constructor(private moviesAngularService: MoviesAngularService) {
     this.movieParams = this.moviesAngularService.getMovieParams();
    }
 
@@ -34,6 +36,8 @@ export class MoviesListComponent implements OnInit {
     this.moviesAngularService.getMovies(this.movieParams).subscribe(response => {
       this.movies = response.result!;
       this.pagination = response.pagination!;
+      console.log(this.movies.length);
+      
     })
   }
 
@@ -47,4 +51,5 @@ export class MoviesListComponent implements OnInit {
     this.moviesAngularService.setMovieParams(this.movieParams);
     this.loadMovies();
   }
+
 }

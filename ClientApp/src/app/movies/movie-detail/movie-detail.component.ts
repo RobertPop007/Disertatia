@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, ActivationStart, ChildActivationEnd, NavigationEnd, ResolveStart, Router } from '@angular/router';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
@@ -18,17 +19,19 @@ export class MovieDetailComponent implements OnInit {
   @ViewChild('memberTabs', {static: true}) memberTabs!: TabsetComponent;
   @ViewChild('videoPlayer') videoplayer!: ElementRef;
 
+  images : any;
 
+  sanit!: DomSanitizer;
   movie!: Movie;
   activeTabs!: TabDirective;
   user!: User;
-
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   
   constructor(private movieService: MoviesService, 
     private route: ActivatedRoute, 
     private accountService: AccountService,
-    private router: Router) {
+    private router: Router,
+    private sanitizer: DomSanitizer) {
+      this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      }
@@ -38,10 +41,9 @@ export class MovieDetailComponent implements OnInit {
       this.movie = data['movie'];
       
       this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!));
-    })
 
-    this.route.queryParams.subscribe(params => {
-      params['tab'] ? this.selectTab(params['tab']) : this.selectTab(0);
+      this.images = this.movie.actorList?.map((n) => n.image);
+
     })
   }
 
@@ -50,21 +52,15 @@ export class MovieDetailComponent implements OnInit {
     
     this.movieService.getMovie(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(movie => {
       this.movie = movie;
-      console.log(this.movie);
-      
     })
-  }
-
-  onTabsActivated(data: TabDirective){
-    this.activeTabs = data;
-  }
-
-  selectTab(tabId: number){
-    this.memberTabs.tabs[tabId].active = true;
   }
 
   toggleVideo() {
     this.videoplayer.nativeElement.play();
+}
+
+cleanURL(oldURL: string): SafeResourceUrl {
+  return this.sanit.bypassSecurityTrustResourceUrl(oldURL);
 }
 
 }

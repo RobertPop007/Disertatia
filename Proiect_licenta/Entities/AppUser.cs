@@ -25,5 +25,6 @@ namespace Proiect_licenta.Entities
         public ICollection<AppUserRole> UserRoles { get; set; }
 
         public IList<AppUserMovieItem> AppUserMovie { get; set; }
+        public IList<AppUserTvShowItem> AppUserTvShow { get; set; }
     }
 }

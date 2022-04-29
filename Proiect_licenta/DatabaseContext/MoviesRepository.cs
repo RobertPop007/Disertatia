@@ -25,7 +25,7 @@ namespace Proiect_licenta.DatabaseContext
             _mapper = mapper;
         }
 
-        public async Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams movieParams)
+        public async Task<List<Movie>> GetMoviesAsync(MovieParams movieParams)
         {
             var query = _context.Movies.AsQueryable();
 
@@ -40,8 +40,7 @@ namespace Proiect_licenta.DatabaseContext
 
             };
 
-            return await PagedList<MovieCard>.CreateAsync(query.ProjectTo<MovieCard>(_mapper.ConfigurationProvider).AsNoTracking(),
-                movieParams.PageNumber, movieParams.PageSize);
+            return await query.ToListAsync();
         }
 
         public async Task<Movie> GetMovieByIdAsync(string id)

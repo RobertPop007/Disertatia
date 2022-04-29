@@ -23,6 +23,7 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<Connection> Connections { get; set; }
         public DbSet<MovieItem> Top250Movies { get; set; }
         public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
+        public DbSet<AppUserTvShowItem> AppUserTvShowItems { get; set; }
         public DbSet<TvShowItem> TvShows { get; set; }
         public DbSet<Datum> Anime { get; set; }
         public DbSet<DatumManga> Manga { get; set; }
@@ -81,6 +82,17 @@ namespace Proiect_licenta.DatabaseContext
                 .HasOne(bc => bc.MovieItem)
                 .WithMany(c => c.AppUserMovie)
                 .HasForeignKey(bc => bc.MovieId);
+
+            builder.Entity<AppUserTvShowItem>()
+                .HasKey(bc => new { bc.AppUserId, bc.TvShowId });
+            builder.Entity<AppUserTvShowItem>()
+                .HasOne(bc => bc.AppUser)
+                .WithMany(b => b.AppUserTvShow)
+                .HasForeignKey(bc => bc.AppUserId);
+            builder.Entity<AppUserTvShowItem>()
+                .HasOne(bc => bc.TvShowItem)
+                .WithMany(c => c.AppUserTvShow)
+                .HasForeignKey(bc => bc.TvShowId);
 
             builder.Entity<TvSeriesInfo>()
             .Property(e => e.Seasons)

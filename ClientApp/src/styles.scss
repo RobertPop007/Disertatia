@@ -73,9 +73,9 @@
   }
  
   .toggle {
-   position: absolute;
-   top: 9%;
-   right: 1%;
+   position: fixed;
+   top: 5em;
+   right: 1em;
    outline: none;
    border: 0;
    cursor: pointer;
@@ -132,3 +132,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}

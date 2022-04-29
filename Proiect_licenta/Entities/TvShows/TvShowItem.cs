@@ -12,7 +12,7 @@ namespace Proiect_licenta.Entities.TvShows
         public string Crew { get; set; }
         public string ImDbRating { get; set; }
         public string ImDbRatingCount { get; set; }
-
         public IList<AppUserTvShowItem> AppUserTvShowItems { get; set; }
+
     }
 }

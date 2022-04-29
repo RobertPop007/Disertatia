@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Proiect_licenta.Entities.TvShows
 {
     public class TvShow
     {
+        [Key]
+        public string TvShowId { get; set; }
         public string Id { get; set; }
         public string Title { get; set; }
         public string OriginalTitle { get; set; }
@@ -45,5 +48,6 @@ namespace Proiect_licenta.Entities.TvShows
         public string Keywords { get; set; }
         public List<TvShowSimilar> Similars { get; set; }
         public TvSeriesInfo TvSeriesInfo { get; set; }
+        public IList<AppUserTvShowItem> AppUserTvShow { get; set; }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using Proiect_licenta.Entities.TvShows;
-using System.ComponentModel.DataAnnotations;
 
 namespace Proiect_licenta.Entities
 {
     public class AppUserTvShowItem
     {
-        [Key]
         public int AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public int TvShowItemId { get; set; }
-        public TvShowItem TvShowItem { get; set; }
+        public string TvShowId { get; set; }
+        public TvShow TvShowItem { get; set; }
     }
 }
