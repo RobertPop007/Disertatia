@@ -3,6 +3,7 @@ import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MovieCard } from 'src/app/_models/movieCard';
 import { MovieParams } from 'src/app/_models/movieParams';
 import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
@@ -15,7 +16,7 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
   styleUrls: ['./movies-list.component.css']
 })
 export class MoviesListComponent implements OnInit {
-  movies!: Movie[];
+  movies!: MovieCard[];
   pagination!: Pagination;
   movieParams!: MovieParams;
   user!: User;
@@ -36,7 +37,7 @@ export class MoviesListComponent implements OnInit {
     this.moviesAngularService.getMovies(this.movieParams).subscribe(response => {
       this.movies = response.result!;
       this.pagination = response.pagination!;
-      console.log(this.movies.length);
+      console.log(this.movies);
       
     })
   }

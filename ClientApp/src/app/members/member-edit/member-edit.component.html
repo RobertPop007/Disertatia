@@ -97,6 +97,21 @@
             <tab heading="Edit Photo">
                 <app-photo-editor [member]="member"></app-photo-editor>
             </tab>
+
+            <tab heading="General settings">
+                <div class="ml-2" style="display: flex;
+                flex-direction: row;">
+                    <p class="mr-3">Dark mode: {{theme === 'dark-theme' ? "On" : "Off"}}</p>
+                    <span>
+                        <mat-slide-toggle
+                            class="example-margin"
+                            [checked]="checked"
+                            (toggleChange)="switchTheme()"
+                            [disabled]="disabled">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+            </tab>
         </tabset>
     </div>
 </div>

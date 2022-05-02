@@ -5,6 +5,7 @@ import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { filter, map, take } from 'rxjs';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
@@ -57,10 +58,34 @@ export class MovieDetailComponent implements OnInit {
 
   toggleVideo() {
     this.videoplayer.nativeElement.play();
-}
+  }
 
-cleanURL(oldURL: string): SafeResourceUrl {
-  return this.sanit.bypassSecurityTrustResourceUrl(oldURL);
-}
+  cleanURL(oldURL: string): SafeResourceUrl {
+    return this.sanit.bypassSecurityTrustResourceUrl(oldURL);
+  }
 
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    navSpeed: 700,
+    navText: ['&#8249', '&#8250;'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
 }

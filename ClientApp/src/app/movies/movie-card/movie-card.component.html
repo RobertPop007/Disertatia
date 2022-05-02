@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3" *ngIf="movie.title">
     <div class="card-img-wrapper">
         <img src="{{movie.image || './assets/user.png'}}" alt="{{movie.fullTitle}}" class="card-img-top">
         
@@ -13,7 +13,7 @@
     </div>
 
     <div class="card-body p-1">
-        <p class="card-text text-muted text-center">{{movie.fullTitle}}</p>
+        <p class="card-text text-muted text-center">{{movie.title}}</p>
         <p class="card-text text-muted text-center">{{movie.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
     </div>
 </div>

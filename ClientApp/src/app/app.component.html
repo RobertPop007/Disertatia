@@ -1,17 +1,26 @@
 <ngx-spinner size = "large" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: #000; margin-top: 70px;" > Loading... </p></ngx-spinner>
 <app-nav></app-nav>
 
-<!-- <div style="float: right; position: relative; margin-right: 20px;">
-  <mat-slide-toggle [(ngModel)]="isDarkMode" (toggleChange)="onToggle()"> {{currentMode}} </mat-slide-toggle>
-</div> -->
-
-<button class="toggle" (click)="switchTheme()">
+<!-- <button class="toggle" (click)="switchTheme()">
   {{ theme === "light-theme" ? "Switch to dark" : "Switch to light"}}
-</button>
+</button> -->
+
+<!-- <input type="checkbox" id="toggle"> -->
+<!-- <label for="toggle" class="switch"></label> -->
+<!-- 
+<label class="switch">
+  <input type="checkbox" (click)="switchTheme()">
+  <span class="slider round"></span>
+</label> -->
 
 <div class="container" style="margin-top: 100px;">
   
   <router-outlet></router-outlet>
-  <!-- <app-footer style="padding-top: 100px;"></app-footer> -->
+  <app-scroll-to-top></app-scroll-to-top>
 </div>
 
+
+<br><br>
+<br><br>
+
+<app-footer></app-footer>

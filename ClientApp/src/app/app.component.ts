@@ -28,11 +28,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.setCurrentUser();
-
-    this.currentMode = localStorage.getItem("currentMode")!;
+    
     this.isDarkMode = (this.currentMode == "Dark mode") ? true : false;
 
-    if(this.isDarkMode == true)
+    if(this.isDarkMode === true)
     {
       this.darkModeService.enable();
     }
@@ -46,6 +45,8 @@ export class AppComponent implements OnInit {
       this.theme === 'light-theme' 
       ? (this.theme = 'dark-theme') 
       : (this.theme = 'light-theme'))
+
+      this.setDisplayMode(this.theme);
   }
 
   initializeTheme = (): void =>
@@ -53,7 +54,6 @@ export class AppComponent implements OnInit {
 
   setDisplayMode(mode: string) {
     localStorage.setItem("currentMode", mode);
-    
     this.currentMode = mode;
   }
 

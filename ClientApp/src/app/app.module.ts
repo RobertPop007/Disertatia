@@ -51,6 +51,10 @@ import { SafePipe } from './_pipes/safe.pipe';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 import { FooterComponent } from './footer/footer.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxFixedFooterModule } from 'ngx-fixed-footer';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -86,7 +90,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MovieDetailComponent,
     MovieCardAddedComponent,
     SafePipe,
-    FooterComponent
+    FooterComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +108,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgbModule,
     MdbCheckboxModule,
     IvyCarouselModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxFixedFooterModule,
+    CarouselModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

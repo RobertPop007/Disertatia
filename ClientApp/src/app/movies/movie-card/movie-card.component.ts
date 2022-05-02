@@ -4,6 +4,7 @@ import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { listenToTriggers } from 'ngx-bootstrap/utils';
 import { ToastrService } from 'ngx-toastr';
+import { MovieCard } from 'src/app/_models/movieCard';
 import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
 @Component({
