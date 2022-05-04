@@ -46,7 +46,7 @@ namespace Proiect_licenta.DatabaseContext
 
 
 
-            //var idList = context.TvShows.Select(x => x.Id).Skip(2700).Take(153).ToList();
+            //var idList = context.TvShows.Select(x => x.Id).Skip(2850).Take(3).ToList();
 
             //foreach (var id in idList)
             //{
