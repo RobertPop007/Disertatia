@@ -41,9 +41,12 @@ export class MovieDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.movie = data['movie'];
       
-      this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!));
+      this.movie.actorList = this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
       this.images = this.movie.actorList?.map((n) => n.image);
+
+      console.log(this.movie);
+      
 
     })
   }
