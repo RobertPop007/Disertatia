@@ -9,14 +9,17 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TvShowItems } from './tvShowItems';
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
+export interface TvShowImages { 
+    tvShowImagesId?: string;
+    imDbId?: string | null;
     title?: string | null;
     fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+    type?: string | null;
+    year?: string | null;
+    items?: Array<TvShowItems> | null;
+    errorMessage?: string | null;
 }
 

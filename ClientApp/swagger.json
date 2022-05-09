@@ -1172,6 +1172,13 @@
               "$ref": "#/components/schemas/AppUserMovieItem"
             },
             "nullable": true
+          },
+          "appUserTvShow": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppUserTvShowItem"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1212,6 +1219,26 @@
           },
           "role": {
             "$ref": "#/components/schemas/AppRole"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppUserTvShowItem": {
+        "type": "object",
+        "properties": {
+          "appUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "tvShowId": {
+            "type": "string",
+            "nullable": true
+          },
+          "tvShowItem": {
+            "$ref": "#/components/schemas/TvShow"
           }
         },
         "additionalProperties": false
@@ -2073,6 +2100,10 @@
             "type": "string",
             "nullable": true
           },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
           "image": {
             "type": "string",
             "nullable": true
@@ -2096,6 +2127,666 @@
             "nullable": true
           },
           "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvSeriesInfo": {
+        "type": "object",
+        "properties": {
+          "tvShowInfoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "yearEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "creators": {
+            "type": "string",
+            "nullable": true
+          },
+          "creatorList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowCreatorList"
+            },
+            "nullable": true
+          },
+          "seasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "releaseDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "runtimeMins": {
+            "type": "string",
+            "nullable": true
+          },
+          "runtimeStr": {
+            "type": "string",
+            "nullable": true
+          },
+          "plot": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotLocal": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotLocalIsRtl": {
+            "type": "boolean"
+          },
+          "awards": {
+            "type": "string",
+            "nullable": true
+          },
+          "directors": {
+            "type": "string",
+            "nullable": true
+          },
+          "writers": {
+            "type": "string",
+            "nullable": true
+          },
+          "stars": {
+            "type": "string",
+            "nullable": true
+          },
+          "starList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowStarList"
+            },
+            "nullable": true
+          },
+          "actorList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowActorList"
+            },
+            "nullable": true
+          },
+          "genres": {
+            "type": "string",
+            "nullable": true
+          },
+          "genreList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowGenreList"
+            },
+            "nullable": true
+          },
+          "companies": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowCompanyList"
+            },
+            "nullable": true
+          },
+          "countries": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowCountryList"
+            },
+            "nullable": true
+          },
+          "languages": {
+            "type": "string",
+            "nullable": true
+          },
+          "languageList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowLanguageList"
+            },
+            "nullable": true
+          },
+          "contentRating": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDbRating": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDbRatingVotes": {
+            "type": "string",
+            "nullable": true
+          },
+          "metacriticRating": {
+            "type": "string",
+            "nullable": true
+          },
+          "ratings": {
+            "$ref": "#/components/schemas/TvShowRatings"
+          },
+          "wikipedia": {
+            "$ref": "#/components/schemas/TvShowWikipedia"
+          },
+          "images": {
+            "$ref": "#/components/schemas/TvShowImages"
+          },
+          "trailer": {
+            "$ref": "#/components/schemas/TvShowTrailer"
+          },
+          "boxOffice": {
+            "$ref": "#/components/schemas/TvShowBoxOffice"
+          },
+          "keywords": {
+            "type": "string",
+            "nullable": true
+          },
+          "similars": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowSimilar"
+            },
+            "nullable": true
+          },
+          "tvSeriesInfo": {
+            "$ref": "#/components/schemas/TvSeriesInfo"
+          },
+          "appUserTvShow": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppUserTvShowItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowActorList": {
+        "type": "object",
+        "properties": {
+          "tvShowActorListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "asCharacter": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowBoxOffice": {
+        "type": "object",
+        "properties": {
+          "tvShowBoxOfficeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "budget": {
+            "type": "string",
+            "nullable": true
+          },
+          "openingWeekendUSA": {
+            "type": "string",
+            "nullable": true
+          },
+          "grossUSA": {
+            "type": "string",
+            "nullable": true
+          },
+          "cumulativeWorldwideGross": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowCompanyList": {
+        "type": "object",
+        "properties": {
+          "tvShowCompanyListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowCountryList": {
+        "type": "object",
+        "properties": {
+          "tvShowCountryListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowCreatorList": {
+        "type": "object",
+        "properties": {
+          "tvShowCreatorListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowGenreList": {
+        "type": "object",
+        "properties": {
+          "tvShowGenreListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowImages": {
+        "type": "object",
+        "properties": {
+          "tvShowImagesId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowItems"
+            },
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowItems": {
+        "type": "object",
+        "properties": {
+          "tvShowItemsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowLanguageList": {
+        "type": "object",
+        "properties": {
+          "tvShowLanguageListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowPlotFull": {
+        "type": "object",
+        "properties": {
+          "tvShowPlotFullId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "plainText": {
+            "type": "string",
+            "nullable": true
+          },
+          "html": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowPlotShort": {
+        "type": "object",
+        "properties": {
+          "tvShowPlotShortId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "plainText": {
+            "type": "string",
+            "nullable": true
+          },
+          "html": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowRatings": {
+        "type": "object",
+        "properties": {
+          "tvShowRatingsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDb": {
+            "type": "string",
+            "nullable": true
+          },
+          "metacritic": {
+            "type": "string",
+            "nullable": true
+          },
+          "theMovieDb": {
+            "type": "string",
+            "nullable": true
+          },
+          "rottenTomatoes": {
+            "type": "string",
+            "nullable": true
+          },
+          "filmAffinity": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowSimilar": {
+        "type": "object",
+        "properties": {
+          "tvShowSimilarId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "imDbRating": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowStarList": {
+        "type": "object",
+        "properties": {
+          "tvShowStarListId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowTrailer": {
+        "type": "object",
+        "properties": {
+          "tvShowTrailerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnailUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "link": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkEmbed": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowWikipedia": {
+        "type": "object",
+        "properties": {
+          "tvShowWikipediaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imDbId": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "year": {
+            "type": "string",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
+            "nullable": true
+          },
+          "titleInLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "plotShort": {
+            "$ref": "#/components/schemas/TvShowPlotShort"
+          },
+          "plotFull": {
+            "$ref": "#/components/schemas/TvShowPlotFull"
+          },
+          "errorMessage": {
             "type": "string",
             "nullable": true
           }

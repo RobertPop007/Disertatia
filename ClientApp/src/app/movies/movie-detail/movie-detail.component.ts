@@ -6,9 +6,11 @@ import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { filter, map, take } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { filter, first, map, take } from 'rxjs';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
+import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -26,11 +28,14 @@ export class MovieDetailComponent implements OnInit {
   movie!: Movie;
   activeTabs!: TabDirective;
   user!: User;
+  res!: boolean;
   
   constructor(private movieService: MoviesService, 
     private route: ActivatedRoute, 
     private accountService: AccountService,
     private router: Router,
+    private movieAngularService: MoviesAngularService,
+    private toastr: ToastrService,
     private sanitizer: DomSanitizer) {
       this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
@@ -45,11 +50,25 @@ export class MovieDetailComponent implements OnInit {
 
       this.images = this.movie.actorList?.map((n) => n.image);
 
-      console.log(this.movie);
-      
-
+      this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.id!).pipe(take(1)).subscribe(res => {
+        this.res = res;
+      })
     })
   }
+
+  movieAlreadyAdded(movieId: string): boolean{
+    
+
+    return false;
+  }
+
+  deleteMovie(movie: Movie){
+    this.movieAngularService.deleteMovieForUser(movie.id!).subscribe(() => {
+      this.toastr.success("You have deleted " + movie.fullTitle);
+    })
+
+    this.res = false;
+  };
 
   loadMovie(){
     console.log(this.route.snapshot.paramMap.get('fullTitle'));
@@ -57,6 +76,14 @@ export class MovieDetailComponent implements OnInit {
     this.movieService.getMovie(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(movie => {
       this.movie = movie;
     })
+  }
+
+  addMovie(movie: Movie){
+    this.movieAngularService.addMovie(movie.id!).subscribe(() => {
+      this.toastr.success("You have added " + movie.fullTitle);
+    })
+
+    this.res = true;
   }
 
   toggleVideo() {

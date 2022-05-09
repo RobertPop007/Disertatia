@@ -11,12 +11,19 @@
  */
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
+export interface TvShowTrailer { 
+    tvShowTrailerId?: string;
+    imDbId?: string | null;
     title?: string | null;
     fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+    type?: string | null;
+    year?: string | null;
+    videoId?: string | null;
+    videoTitle?: string | null;
+    videoDescription?: string | null;
+    thumbnailUrl?: string | null;
+    link?: string | null;
+    linkEmbed?: string | null;
+    errorMessage?: string | null;
 }
 

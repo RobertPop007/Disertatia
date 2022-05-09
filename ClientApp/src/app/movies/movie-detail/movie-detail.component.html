@@ -1,6 +1,6 @@
 <div class="row">
     <h1 style="size: 15rem;">{{movie.title}}</h1>
-    
+
     <div class="d-flex justify-content-between">
       <div>
         <p>{{movie.year}} <span *ngIf="movie.runtimeStr"><i class="far fa-dot-circle"></i> </span> {{movie.runtimeStr}}
@@ -13,7 +13,21 @@
         <div *ngIf="movie.tagline">
           <i style="font-weight: initial;">"{{movie.tagline}}"</i>
         </div>
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addMovie(movie)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button> Add movie</li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteMovie(movie)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button> Delete movie</li>
+        </div>
+        <br>
       </div>
+      
     <div>
       <div class="text-end">
         <p style="font-size: 20px;">Imdb Rating</p>
@@ -34,12 +48,13 @@
     <div class="col-8">
 
     <div *ngIf="movie.trailer!.linkEmbed!" class="embed-responsive embed-responsive-4by3">
-        <iframe allow="autoplay" allowfullscreen class="embed-responsive-item" [src]="movie.trailer?.linkEmbed!+'?autoplay=true' | safe"></iframe>
+        <iframe allowfullscreen class="embed-responsive-item" [src]="movie.trailer?.linkEmbed! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
         </div>
     </div>
 </div>
   
 <br><br>
+
 <h1>Plot</h1>
 <p class="indent">{{movie.plot}}</p>
 
@@ -136,12 +151,10 @@
 <owl-carousel-o [options]="customOptions">
   
     <ng-container *ngFor="let movie of movie.similars">
-      <ng-template *ngIf="movie.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="movie.id!" style="margin-left: 20px;">
-        <img style="cursor: pointer;" [src]="movie.image" routerLink="/movies/{{movie.title}}" width="100px" height="400px">
-        <div style="align-items: center;">
-          <p class="card-text text-muted text-center">{{movie.title}}</p>
-        <p class="card-text text-muted text-center">{{movie.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
-        </div>
+      <ng-template *ngIf="movie.fullTitle && movie.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="movie.id!" style="margin-left: 20px;">
+        <div class="d-flex justify-content-start" style="width: 18rem;">
+            <app-movie-card [movie]="movie"></app-movie-card>
+      </div>
       </ng-template>
     </ng-container>
 </owl-carousel-o>

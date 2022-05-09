@@ -377,7 +377,8 @@ export class MoviesService {
             }
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Movies/${encodeURIComponent(String(movieId))}`
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Movies/${encodeURIComponent(String(movieId))}`,
+            
         );
     }
 

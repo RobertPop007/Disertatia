@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TvShow } from './tvShow';
+import { AppUser } from './appUser';
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
-    title?: string | null;
-    fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+export interface AppUserTvShowItem { 
+    appUserId?: number;
+    appUser?: AppUser;
+    tvShowId?: string | null;
+    tvShowItem?: TvShow;
 }
 

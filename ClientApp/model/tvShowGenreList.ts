@@ -11,12 +11,9 @@
  */
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
-    title?: string | null;
-    fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+export interface TvShowGenreList { 
+    tvShowGenreListId?: string;
+    key?: string | null;
+    value?: string | null;
 }
 

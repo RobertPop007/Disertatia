@@ -13,6 +13,7 @@ import { UserFriend } from './userFriend';
 import { AppUserMovieItem } from './appUserMovieItem';
 import { Message } from './message';
 import { AppUserRole } from './appUserRole';
+import { AppUserTvShowItem } from './appUserTvShowItem';
 import { Photo } from './photo';
 
 
@@ -49,5 +50,6 @@ export interface AppUser {
     messagesReceived?: Array<Message> | null;
     userRoles?: Array<AppUserRole> | null;
     appUserMovie?: Array<AppUserMovieItem> | null;
+    appUserTvShow?: Array<AppUserTvShowItem> | null;
 }
 

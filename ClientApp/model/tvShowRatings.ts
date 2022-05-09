@@ -11,12 +11,18 @@
  */
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
+export interface TvShowRatings { 
+    tvShowRatingsId?: string;
+    imDbId?: string | null;
     title?: string | null;
     fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+    type?: string | null;
+    year?: string | null;
+    imDb?: string | null;
+    metacritic?: string | null;
+    theMovieDb?: string | null;
+    rottenTomatoes?: string | null;
+    filmAffinity?: string | null;
+    errorMessage?: string | null;
 }
 

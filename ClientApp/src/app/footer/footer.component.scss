@@ -21,20 +21,25 @@
      radial-gradient(transparent 60%,transparent 0);
   }
 
-  .fa-whatsapp  {
-    color:#25d366;
+  .fa-linkedin  {
+    color:#0072b1;
     background:
      linear-gradient(transparent,transparent) 14% 84%/16% 16% no-repeat,
      radial-gradient(transparent 60%,transparent 0);
   }
 
 .fa-facebook{
-    animation-delay: 1s;
+    animation-delay: 0.2s;
 }
 
-.fa-whatsapp{
-    animation-delay: 2s;
+.fa-linkedin{
+    animation-delay: 0.4s;
 }
+
+.fa-github{
+    animation-delay: 0.6s;
+}
+
 
 @keyframes float{
     0%{

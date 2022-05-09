@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Proiect_licenta.DTO.Movies;
 using Proiect_licenta.Entities.Movies;
 using System;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -39,6 +41,29 @@ namespace Proiect_licenta.DatabaseContext
             //foreach (var id in idList)
             //{
             //    await SeedTrueMoviesList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
+            //}
+
+            //foreach (var movie in context.Movies.Skip(1).IncludeOptimized(o => o.DirectorList)
+            //    .IncludeOptimized(o => o.WriterList)
+            //    .IncludeOptimized(o => o.ActorList)
+            //    .IncludeOptimized(o => o.StarList)
+            //    .IncludeOptimized(o => o.GenreList)
+            //    .IncludeOptimized(o => o.CompanyList)
+            //    .IncludeOptimized(o => o.CountryList)
+            //    .IncludeOptimized(o => o.LanguageList)
+            //    .IncludeOptimized(o => o.Ratings)
+            //    .IncludeOptimized(o => o.Wikipedia)
+            //    .IncludeOptimized(o => o.Images)
+            //    .IncludeOptimized(o => o.Trailer)
+            //    .IncludeOptimized(o => o.BoxOffice)
+            //    .IncludeOptimized(o => o.Similars))
+            //{
+            //    foreach (var similarMovie in movie.Similars)
+            //    {
+            //        var fullTitleToAdd = context.Movies.FirstOrDefault(x => x.Title == similarMovie.Title);
+
+            //        if (fullTitleToAdd != null) similarMovie.FullTitle = fullTitleToAdd.FullTitle;
+            //    }
             //}
 
             await context.SaveChangesAsync();

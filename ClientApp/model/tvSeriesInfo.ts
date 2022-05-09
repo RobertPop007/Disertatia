@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TvShowCreatorList } from './tvShowCreatorList';
 
 
-export interface Similar { 
-    similarId?: string;
-    id?: string | null;
-    title?: string | null;
-    fullTitle?: string | null;
-    image?: string | null;
-    imDbRating?: string | null;
+export interface TvSeriesInfo { 
+    tvShowInfoId?: string;
+    yearEnd?: string | null;
+    creators?: string | null;
+    creatorList?: Array<TvShowCreatorList> | null;
+    seasons?: Array<string> | null;
 }
 
