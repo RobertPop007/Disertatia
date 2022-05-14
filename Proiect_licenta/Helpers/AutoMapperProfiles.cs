@@ -5,6 +5,8 @@ using Proiect_licenta.Entities;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Proiect_licenta.Helpers
 {

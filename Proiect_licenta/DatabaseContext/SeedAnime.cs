@@ -16,16 +16,24 @@ namespace Proiect_licenta.DatabaseContext
     {
         public static async Task SeedAllAnime(DataContext context)
         {
-            if (!context.Anime.Any())
-            {
-                await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
+            //if (!context.Anime.Any())
+            //{
+            //    await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
 
-                for (var i = 2; i < 100; i++)
-                {
-                    System.Threading.Thread.Sleep(5000);
-                    await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
-                }
-            }
+            //    for (var i = 2; i < 10; i++)
+            //    {
+            //        System.Threading.Thread.Sleep(5000);
+            //        await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            //    }
+            //}
+
+            //await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
+
+            //for (var i = 100; i < 150; i++)
+            //{
+            //    System.Threading.Thread.Sleep(5000);
+            //    await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            //}
 
             await context.SaveChangesAsync();
         }
@@ -41,7 +49,7 @@ namespace Proiect_licenta.DatabaseContext
             {
                 string returnedUrl = reader.ReadToEnd();
                 var allAnime = JsonConvert.DeserializeObject<Anime>(returnedUrl);
-                
+
                 foreach (var anime in allAnime.Data)
                 {
                     var animeAlreadyExists = context.Anime.Any(x => x.Mal_id == anime.Mal_id);

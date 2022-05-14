@@ -54,6 +54,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxFixedFooterModule } from 'ngx-fixed-footer';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { TvShowDetailComponent } from './tvShows/tv-show-detail/tv-show-detail.component';
+import { TvShowCardAddedComponent } from './tvShows/tv-show-card-added/tv-show-card-added.component';
+import { TvShowCardComponent } from './tvShows/tv-show-card/tv-show-card.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +94,10 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
     MovieCardAddedComponent,
     SafePipe,
     FooterComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    TvShowDetailComponent,
+    TvShowCardAddedComponent,
+    TvShowCardComponent
   ],
   imports: [
     BrowserModule,

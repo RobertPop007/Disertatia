@@ -8,6 +8,7 @@ import { BuggyService } from './api/buggy.service';
 import { FriendsService } from './api/friends.service';
 import { MessagesService } from './api/messages.service';
 import { MoviesService } from './api/movies.service';
+import { TvShowsService } from './api/tvShows.service';
 import { UsersService } from './api/users.service';
 
 @NgModule({

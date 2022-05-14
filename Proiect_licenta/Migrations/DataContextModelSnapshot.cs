@@ -155,9 +155,8 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Datum", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Mal_id")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("AiredId")
                         .HasColumnType("uniqueidentifier");
@@ -182,9 +181,6 @@ namespace Proiect_licenta.Migrations
 
                     b.Property<Guid?>("ImagesId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Mal_id")
-                        .HasColumnType("int");
 
                     b.Property<int?>("Members")
                         .HasColumnType("int");
@@ -237,7 +233,7 @@ namespace Proiect_licenta.Migrations
                     b.Property<int?>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Mal_id");
 
                     b.HasIndex("AiredId");
 
@@ -256,8 +252,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -273,7 +269,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Demographic");
                 });
@@ -304,8 +300,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -321,7 +317,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Genre");
                 });
@@ -388,8 +384,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -405,7 +401,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Licensor");
                 });
@@ -416,8 +412,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -433,7 +429,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Producer");
                 });
@@ -465,8 +461,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -482,7 +478,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Studio");
                 });
@@ -493,8 +489,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -510,7 +506,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumId");
+                    b.HasIndex("DatumMal_id");
 
                     b.ToTable("Theme");
                 });
@@ -706,6 +702,51 @@ namespace Proiect_licenta.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserAnimeItem", b =>
+                {
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AnimeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "AnimeId");
+
+                    b.HasIndex("AnimeId");
+
+                    b.ToTable("AppUserAnimeItems");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserGameItem", b =>
+                {
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "GameId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("AppUserGameItems");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserMangaItem", b =>
+                {
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MangaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "MangaId");
+
+                    b.HasIndex("MangaId");
+
+                    b.ToTable("AppUserMangaItems");
+                });
+
             modelBuilder.Entity("Proiect_licenta.Entities.AppUserMovieItem", b =>
                 {
                     b.Property<int>("AppUserId")
@@ -814,8 +855,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Games_count")
                         .HasColumnType("int");
@@ -861,9 +902,8 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Games.Game.Game", b =>
                 {
-                    b.Property<Guid>("GameId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Achievements_count")
                         .HasColumnType("int");
@@ -899,9 +939,6 @@ namespace Proiect_licenta.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Game_series_count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int?>("Metacritic")
@@ -988,7 +1025,7 @@ namespace Proiect_licenta.Migrations
                     b.Property<int>("Youtube_count")
                         .HasColumnType("int");
 
-                    b.HasKey("GameId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Added_by_statusAddedByStatusGameId");
 
@@ -1003,8 +1040,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Games_count")
                         .HasColumnType("int");
@@ -1034,8 +1071,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("PlatformChildGameId")
                         .HasColumnType("uniqueidentifier");
@@ -1110,8 +1147,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("PlatformGameId")
                         .HasColumnType("uniqueidentifier");
@@ -1139,8 +1176,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Games_count")
                         .HasColumnType("int");
@@ -1173,8 +1210,8 @@ namespace Proiect_licenta.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -1244,8 +1281,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -1271,8 +1308,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Games_count")
                         .HasColumnType("int");
@@ -1329,8 +1366,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumMangaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMangaMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -1346,16 +1383,15 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumMangaId");
+                    b.HasIndex("DatumMangaMal_id");
 
                     b.ToTable("AuthorManga");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.DatumManga", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Mal_id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Background")
                         .HasColumnType("nvarchar(max)");
@@ -1368,9 +1404,6 @@ namespace Proiect_licenta.Migrations
 
                     b.Property<Guid?>("ImagesId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Mal_id")
-                        .HasColumnType("int");
 
                     b.Property<int>("Members")
                         .HasColumnType("int");
@@ -1420,7 +1453,7 @@ namespace Proiect_licenta.Migrations
                     b.Property<int?>("Volumes")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Mal_id");
 
                     b.HasIndex("ImagesId");
 
@@ -1435,8 +1468,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumMangaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMangaMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_Id")
                         .HasColumnType("int");
@@ -1452,7 +1485,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumMangaId");
+                    b.HasIndex("DatumMangaMal_id");
 
                     b.ToTable("DemographicManga");
                 });
@@ -1483,8 +1516,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumMangaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMangaMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -1500,7 +1533,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumMangaId");
+                    b.HasIndex("DatumMangaMal_id");
 
                     b.ToTable("GenreManga");
                 });
@@ -1598,8 +1631,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumMangaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMangaMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -1615,7 +1648,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumMangaId");
+                    b.HasIndex("DatumMangaMal_id");
 
                     b.ToTable("SerializationManga");
                 });
@@ -1626,8 +1659,8 @@ namespace Proiect_licenta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DatumMangaId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("DatumMangaMal_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Mal_id")
                         .HasColumnType("int");
@@ -1643,7 +1676,7 @@ namespace Proiect_licenta.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DatumMangaId");
+                    b.HasIndex("DatumMangaMal_id");
 
                     b.ToTable("ThemeManga");
                 });
@@ -3051,14 +3084,14 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Demographics")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Genre", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Genres")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Images", b =>
@@ -3080,14 +3113,14 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Licensors")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Producer", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Producers")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Prop", b =>
@@ -3109,14 +3142,14 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Studios")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Theme", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.Anime.Datum", null)
                         .WithMany("Themes")
-                        .HasForeignKey("DatumId");
+                        .HasForeignKey("DatumMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Trailer", b =>
@@ -3126,6 +3159,63 @@ namespace Proiect_licenta.Migrations
                         .HasForeignKey("ImagesId");
 
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserAnimeItem", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.Anime.Datum", "AnimeItem")
+                        .WithMany("AppUserAnime")
+                        .HasForeignKey("AnimeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
+                        .WithMany("AppUserAnime")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnimeItem");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserGameItem", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
+                        .WithMany("AppUserGame")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proiect_licenta.Entities.Games.Game.Game", "GameItem")
+                        .WithMany("AppUserGame")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("GameItem");
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUserMangaItem", b =>
+                {
+                    b.HasOne("Proiect_licenta.Entities.AppUser", "AppUser")
+                        .WithMany("AppUserManga")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", "MangaItem")
+                        .WithMany("AppUserManga")
+                        .HasForeignKey("MangaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("MangaItem");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.AppUserMovieItem", b =>
@@ -3299,7 +3389,7 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", null)
                         .WithMany("Authors")
-                        .HasForeignKey("DatumMangaId");
+                        .HasForeignKey("DatumMangaMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.DatumManga", b =>
@@ -3321,14 +3411,14 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", null)
                         .WithMany("Demographics")
-                        .HasForeignKey("DatumMangaId");
+                        .HasForeignKey("DatumMangaMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.GenreManga", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", null)
                         .WithMany("Genres")
-                        .HasForeignKey("DatumMangaId");
+                        .HasForeignKey("DatumMangaMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.ImagesManga", b =>
@@ -3374,14 +3464,14 @@ namespace Proiect_licenta.Migrations
                 {
                     b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", null)
                         .WithMany("Serializations")
-                        .HasForeignKey("DatumMangaId");
+                        .HasForeignKey("DatumMangaMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.ThemeManga", b =>
                 {
                     b.HasOne("Proiect_licenta.Entities.Manga.DatumManga", null)
                         .WithMany("Themes")
-                        .HasForeignKey("DatumMangaId");
+                        .HasForeignKey("DatumMangaMal_id");
                 });
 
             modelBuilder.Entity("Proiect_licenta.Entities.Message", b =>
@@ -3670,6 +3760,8 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Anime.Datum", b =>
                 {
+                    b.Navigation("AppUserAnime");
+
                     b.Navigation("Demographics");
 
                     b.Navigation("Genres");
@@ -3694,6 +3786,12 @@ namespace Proiect_licenta.Migrations
 
                     b.Navigation("AddedUsers");
 
+                    b.Navigation("AppUserAnime");
+
+                    b.Navigation("AppUserGame");
+
+                    b.Navigation("AppUserManga");
+
                     b.Navigation("AppUserMovie");
 
                     b.Navigation("AppUserTvShow");
@@ -3709,6 +3807,8 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Games.Game.Game", b =>
                 {
+                    b.Navigation("AppUserGame");
+
                     b.Navigation("Developers");
 
                     b.Navigation("Genres");
@@ -3733,6 +3833,8 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Manga.DatumManga", b =>
                 {
+                    b.Navigation("AppUserManga");
+
                     b.Navigation("Authors");
 
                     b.Navigation("Demographics");

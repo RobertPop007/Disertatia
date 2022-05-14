@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proiect_licenta.Entities.Anime
 {
     public class Datum
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Mal_id { get; set; }
         public string Url { get; set; }
         public Images Images { get; set; }
@@ -39,5 +41,6 @@ namespace Proiect_licenta.Entities.Anime
         public IList<Genre> Genres { get; set; }
         public IList<Theme> Themes { get; set; }
         public IList<Demographic> Demographics { get; set; }
+        public IList<AppUserAnimeItem> AppUserAnime { get; set; }
     }
 }

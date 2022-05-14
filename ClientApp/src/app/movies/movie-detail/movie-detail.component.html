@@ -153,7 +153,7 @@
     <ng-container *ngFor="let movie of movie.similars">
       <ng-template *ngIf="movie.fullTitle && movie.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="movie.id!" style="margin-left: 20px;">
         <div class="d-flex justify-content-start" style="width: 18rem;">
-            <app-movie-card [movie]="movie"></app-movie-card>
+            <!-- <app-movie-card [movie]="movie"></app-movie-card> -->
       </div>
       </ng-template>
     </ng-container>

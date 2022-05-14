@@ -758,6 +758,178 @@
         }
       }
     },
+    "/api/TvShows/AddTvShow/{tvShowId}": {
+      "post": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "tvShowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TvShows/GetTvShowsFor/{username}": {
+      "get": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TvShows/GetAllTvShows": {
+      "get": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "SearchedTvShow",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TvShows/{fullTitle}": {
+      "get": {
+        "tags": [
+          "TvShows"
+        ],
+        "operationId": "GetTvShow",
+        "parameters": [
+          {
+            "name": "fullTitle",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TvShow"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TvShow"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TvShow"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TvShows/TvShowAlreadyAdded": {
+      "get": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "tvShowId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TvShows/{tvShowId}": {
+      "delete": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "tvShowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Users": {
       "get": {
         "tags": [

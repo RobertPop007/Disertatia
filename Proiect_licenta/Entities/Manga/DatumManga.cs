@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proiect_licenta.Entities.Manga
 {
     public class DatumManga
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Mal_id { get; set; }
         public string Url { get; set; }
         public ImagesManga Images { get; set; }
@@ -32,5 +35,6 @@ namespace Proiect_licenta.Entities.Manga
         public IList<GenreManga> Genres { get; set; }
         public IList<ThemeManga> Themes { get; set; }
         public IList<DemographicManga> Demographics { get; set; }
+        public IList<AppUserMangaItem> AppUserManga { get; set; }
     }
 }

@@ -17,12 +17,14 @@ import { MessagesComponent } from './messages/messages.component';
 import { MovieDetailComponent } from './movies/movie-detail/movie-detail.component';
 import { MoviesListComponent } from './movies/movies-list/movies-list.component';
 import { MusicListComponent } from './music/music-list/music-list.component';
+import { TvShowDetailComponent } from './tvShows/tv-show-detail/tv-show-detail.component';
 import { TvShowsListComponent } from './tvShows/tv-shows-list/tv-shows-list.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { MovieDetailedResolver } from './_resolvers/movie-detailed.resolver';
+import { TvShowDetailedResolver } from './_resolvers/tvShow-detailed.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -34,6 +36,7 @@ const routes: Routes = [
       {path: 'members', component: MemberListComponent},
       {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
       {path: 'movies/:fullTitle', component: MovieDetailComponent, resolve: {movie: MovieDetailedResolver}},
+      {path: 'tvShows/:fullTitle', component: TvShowDetailComponent, resolve: {tvShow: TvShowDetailedResolver}},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},

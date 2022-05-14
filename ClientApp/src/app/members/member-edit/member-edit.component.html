@@ -56,6 +56,9 @@
 
                         <tab heading="Tv Shows">
                             <div class="groups row">
+                                <div *ngFor="let tvShow of watchedTvShows" class="col-3">
+                                    <app-tv-show-card-added (deleteEvent)="updateWatchList()" [tvShow]="tvShow!"></app-tv-show-card-added> 
+                                </div>
                             </div>
                         </tab>
 

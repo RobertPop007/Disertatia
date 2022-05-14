@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proiect_licenta.Entities.Games.Game
 {
     public class Game
     {
         [Key]
-        public Guid GameId { get; set; } = Guid.NewGuid();
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Slug { get; set; }
         public string Name { get; set; }
@@ -57,5 +58,6 @@ namespace Proiect_licenta.Entities.Games.Game
         public List<PublisherGame> Publishers { get; set; }
         public EsrbRatingGame Esrb_rating { get; set; }
         public string Description_raw { get; set; }
+        public IList<AppUserGameItem> AppUserGame { get; set; }
     }
 }

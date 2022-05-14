@@ -4,8 +4,10 @@ import { NgForm } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { DarkModeService } from 'angular-dark-mode';
 import { MoviesService } from 'api/movies.service';
+import { TvShowsService } from 'api/tvShows.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
+import { TvShow } from 'model/tvShow';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Theme } from 'src/app/app.component';
@@ -27,6 +29,7 @@ export class MemberEditComponent implements OnInit {
   user!: User;
   theme: Theme = 'light-theme';
   watchedMovies?: Movie[];
+  watchedTvShows?: TvShow[];
   predicate = 'added';
   pageNumber = 1;
   isDarkMode!: boolean;
@@ -45,6 +48,7 @@ export class MemberEditComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private memberService: MembersService,
+              private tvShowsService: TvShowsService,
               private moviesService: MoviesService,
               private toastr: ToastrService,
               private darkModeService: DarkModeService,
@@ -102,6 +106,10 @@ export class MemberEditComponent implements OnInit {
   updateWatchList(){
     this.moviesService.apiMoviesGetMoviesForUsernameGet(this.user.username).subscribe(response => {
       this.watchedMovies = response;
+    })
+
+    this.tvShowsService.apiTvShowsGetTvShowsForUsernameGet(this.user.username).subscribe(response => {
+      this.watchedTvShows = response;
     })
   }
 }

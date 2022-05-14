@@ -25,9 +25,19 @@ namespace Proiect_licenta.DatabaseContext
             _mapper = mapper;
         }
 
-        public async Task<List<Movie>> GetMoviesAsync(MovieParams movieParams)
+        public async Task<List<MovieCard>> GetMoviesAsync(MovieParams movieParams)
         {
-            var query = _context.Movies.AsQueryable();
+            var query = _context.Movies
+                .Select(movie => new MovieCard
+                {
+                    FullTitle = movie.FullTitle,
+                    Id = movie.Id,
+                    ImDbRating = movie.ImDbRating,
+                    Image = movie.Image,
+                    Year = movie.Year
+                })
+                .AsQueryable();
+
 
             if (!string.IsNullOrWhiteSpace(movieParams.SearchedMovie))
                 query = query.Where(u => u.FullTitle.Contains(movieParams.SearchedMovie));

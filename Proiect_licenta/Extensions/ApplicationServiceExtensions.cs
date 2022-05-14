@@ -20,6 +20,10 @@ namespace Proiect_licenta.Extensions
             services.AddScoped<IAddFriendsRepository, AddFriendsRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IMoviesRepository, MoviesRepository>();
+            services.AddScoped<ITvShowsRepository, TvShowsRepository>();
+            services.AddScoped<IAnimeRepository, AnimeRepository>();
+            services.AddScoped<IMangaRepository, MangaRepository>();
+            services.AddScoped<IGamesRepository, GameRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

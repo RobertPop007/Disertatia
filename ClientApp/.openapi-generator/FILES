@@ -8,6 +8,7 @@ api/buggy.service.ts
 api/friends.service.ts
 api/messages.service.ts
 api/movies.service.ts
+api/tvShows.service.ts
 api/users.service.ts
 configuration.ts
 encoder.ts

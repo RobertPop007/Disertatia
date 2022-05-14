@@ -26,5 +26,8 @@ namespace Proiect_licenta.Entities
 
         public IList<AppUserMovieItem> AppUserMovie { get; set; }
         public IList<AppUserTvShowItem> AppUserTvShow { get; set; }
+        public IList<AppUserAnimeItem> AppUserAnime { get; set; }
+        public IList<AppUserMangaItem> AppUserManga { get; set; }
+        public IList<AppUserGameItem> AppUserGame { get; set; }
     }
 }

@@ -56,12 +56,6 @@ export class MovieDetailComponent implements OnInit {
     })
   }
 
-  movieAlreadyAdded(movieId: string): boolean{
-    
-
-    return false;
-  }
-
   deleteMovie(movie: Movie){
     this.movieAngularService.deleteMovieForUser(movie.id!).subscribe(() => {
       this.toastr.success("You have deleted " + movie.fullTitle);
@@ -71,8 +65,6 @@ export class MovieDetailComponent implements OnInit {
   };
 
   loadMovie(){
-    console.log(this.route.snapshot.paramMap.get('fullTitle'));
-    
     this.movieService.getMovie(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(movie => {
       this.movie = movie;
     })

@@ -26,6 +26,9 @@ namespace Proiect_licenta.DatabaseContext
         public DbSet<MovieItem> Top250Movies { get; set; }
         public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
         public DbSet<AppUserTvShowItem> AppUserTvShowItems { get; set; }
+        public DbSet<AppUserAnimeItem> AppUserAnimeItems { get; set; }
+        public DbSet<AppUserMangaItem> AppUserMangaItems { get; set; }
+        public DbSet<AppUserGameItem> AppUserGameItems { get; set; }
         public DbSet<TvShowItem> TvShows { get; set; }
         public DbSet<Datum> Anime { get; set; }
         public DbSet<DatumManga> Manga { get; set; }
@@ -97,6 +100,39 @@ namespace Proiect_licenta.DatabaseContext
                 .HasOne(bc => bc.TvShowItem)
                 .WithMany(c => c.AppUserTvShow)
                 .HasForeignKey(bc => bc.TvShowId);
+
+            builder.Entity<AppUserAnimeItem>()
+                .HasKey(bc => new { bc.AppUserId, bc.AnimeId });
+            builder.Entity<AppUserAnimeItem>()
+                .HasOne(bc => bc.AppUser)
+                .WithMany(b => b.AppUserAnime)
+                .HasForeignKey(bc => bc.AppUserId);
+            builder.Entity<AppUserAnimeItem>()
+                .HasOne(bc => bc.AnimeItem)
+                .WithMany(c => c.AppUserAnime)
+                .HasForeignKey(bc => bc.AnimeId);
+
+            builder.Entity<AppUserMangaItem>()
+                .HasKey(bc => new { bc.AppUserId, bc.MangaId });
+            builder.Entity<AppUserMangaItem>()
+                .HasOne(bc => bc.AppUser)
+                .WithMany(b => b.AppUserManga)
+                .HasForeignKey(bc => bc.AppUserId);
+            builder.Entity<AppUserMangaItem>()
+                .HasOne(bc => bc.MangaItem)
+                .WithMany(c => c.AppUserManga)
+                .HasForeignKey(bc => bc.MangaId);
+
+            builder.Entity<AppUserGameItem>()
+                .HasKey(bc => new { bc.AppUserId, bc.GameId });
+            builder.Entity<AppUserGameItem>()
+                .HasOne(bc => bc.AppUser)
+                .WithMany(b => b.AppUserGame)
+                .HasForeignKey(bc => bc.AppUserId);
+            builder.Entity<AppUserGameItem>()
+                .HasOne(bc => bc.GameItem)
+                .WithMany(c => c.AppUserGame)
+                .HasForeignKey(bc => bc.GameId);
 
             builder.Entity<TvSeriesInfo>()
             .Property(e => e.Seasons)

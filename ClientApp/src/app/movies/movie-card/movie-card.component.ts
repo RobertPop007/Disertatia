@@ -13,7 +13,7 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
   styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent implements OnInit {
-  @Input() movie!: Movie;
+  @Input() movie!: MovieCard;
 
   constructor(private movieAngularService: MoviesAngularService,
     private movieService: MoviesService,
