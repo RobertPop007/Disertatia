@@ -35,8 +35,8 @@ const routes: Routes = [
     children: [
       {path: 'members', component: MemberListComponent},
       {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
-      {path: 'movies/:fullTitle', component: MovieDetailComponent, resolve: {movie: MovieDetailedResolver}},
-      {path: 'tvShows/:fullTitle', component: TvShowDetailComponent, resolve: {tvShow: TvShowDetailedResolver}},
+      {path: 'movies/:title', component: MovieDetailComponent, resolve: {movie: MovieDetailedResolver}},
+      {path: 'tvShows/:title', component: TvShowDetailComponent, resolve: {tvShow: TvShowDetailedResolver}},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},

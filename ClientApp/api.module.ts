@@ -4,8 +4,11 @@ import { HttpClient } from '@angular/common/http';
 
 import { AccountService } from './api/account.service';
 import { AdminService } from './api/admin.service';
+import { AnimeService } from './api/anime.service';
 import { BuggyService } from './api/buggy.service';
 import { FriendsService } from './api/friends.service';
+import { GameService } from './api/game.service';
+import { MangaService } from './api/manga.service';
 import { MessagesService } from './api/messages.service';
 import { MoviesService } from './api/movies.service';
 import { TvShowsService } from './api/tvShows.service';

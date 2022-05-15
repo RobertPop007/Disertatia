@@ -7,5 +7,6 @@
         public int Id { get; set; }
         public double Rating { get; set; }
         public string Background_image { get; set; }
+        public string Year { get; set; }
     }
 }

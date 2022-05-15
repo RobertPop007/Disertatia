@@ -148,13 +148,12 @@
 </owl-carousel-o>
 
 <h1>Similar movies</h1>
-<owl-carousel-o [options]="customOptions">
-  
-    <ng-container *ngFor="let movie of movie.similars">
-      <ng-template *ngIf="movie.fullTitle && movie.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="movie.id!" style="margin-left: 20px;">
-        <div class="d-flex justify-content-start" style="width: 18rem;">
-            <!-- <app-movie-card [movie]="movie"></app-movie-card> -->
-      </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let similar of movie.similars" class="col-3 mb-2">
+        <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
+        <p class="card-text text-muted text-center">{{similar.title}}</p>
+        <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+    </div>
+  </div>
+</div>

@@ -372,16 +372,16 @@ export class TvShowsService {
     }
 
     /**
-     * @param fullTitle 
+     * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTvShow(fullTitle: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<TvShow>;
-    public getTvShow(fullTitle: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<TvShow>>;
-    public getTvShow(fullTitle: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<TvShow>>;
-    public getTvShow(fullTitle: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
-        if (fullTitle === null || fullTitle === undefined) {
-            throw new Error('Required parameter fullTitle was null or undefined when calling getTvShow.');
+    public getTvShow(title: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<TvShow>;
+    public getTvShow(title: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<TvShow>>;
+    public getTvShow(title: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<TvShow>>;
+    public getTvShow(title: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getTvShow.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -417,7 +417,7 @@ export class TvShowsService {
             }
         }
 
-        return this.httpClient.get<TvShow>(`${this.configuration.basePath}/api/TvShows/${encodeURIComponent(String(fullTitle))}`,
+        return this.httpClient.get<TvShow>(`${this.configuration.basePath}/api/TvShows/${encodeURIComponent(String(title))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

@@ -382,16 +382,16 @@ export class MoviesService {
     }
 
     /**
-     * @param fullTitle 
+     * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMovie(fullTitle: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Movie>;
-    public getMovie(fullTitle: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Movie>>;
-    public getMovie(fullTitle: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Movie>>;
-    public getMovie(fullTitle: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
-        if (fullTitle === null || fullTitle === undefined) {
-            throw new Error('Required parameter fullTitle was null or undefined when calling getMovie.');
+    public getMovie(title: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Movie>;
+    public getMovie(title: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Movie>>;
+    public getMovie(title: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Movie>>;
+    public getMovie(title: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getMovie.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -427,7 +427,7 @@ export class MoviesService {
             }
         }
 
-        return this.httpClient.get<Movie>(`${this.configuration.basePath}/api/Movies/${encodeURIComponent(String(fullTitle))}`,
+        return this.httpClient.get<Movie>(`${this.configuration.basePath}/api/Movies/${encodeURIComponent(String(title))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

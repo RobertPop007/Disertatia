@@ -74,10 +74,10 @@ namespace Proiect_licenta.Controllers
             return Ok(animes);
         }
 
-        [HttpGet("{fullTitle}", Name = "GetAnime")]
-        public async Task<ActionResult<Datum>> Getanime(string fullTitle)
+        [HttpGet("{title}", Name = "GetAnime")]
+        public async Task<ActionResult<Datum>> GetAnime(string title)
         {
-            return await _animesRepository.GetAnimeByFullTitleAsync(fullTitle);
+            return await _animesRepository.GetAnimeByFullTitleAsync(title);
         }
 
         [HttpGet("AnimeAlreadyAdded")]

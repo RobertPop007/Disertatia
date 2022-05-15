@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Proiect_licenta.DTO.Game;
 using Proiect_licenta.Entities.Games.Game;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,10 +29,10 @@ namespace Proiect_licenta.DatabaseContext
             _context.AppUserGameItems.Remove(appUserGameItem);
         }
 
-        public async Task<Game> GetGameByFullTitleAsync(string fullTitle)
+        public async Task<Game> GetGameByFullTitleAsync(string title)
         {
             return await _context.Games
-                .Where(t => t.Name == fullTitle)
+                .Where(t => t.Name == title)
                 .IncludeOptimized(o => o.Ratings)
                 .IncludeOptimized(o => o.Added_by_status)
                 .IncludeOptimized(o => o.Parent_platforms)
@@ -49,9 +51,18 @@ namespace Proiect_licenta.DatabaseContext
             return await _context.Games.FindAsync(id);
         }
 
-        public async Task<List<Game>> GetGamesAsync(GameParams gameParams)
+        public async Task<List<GameCard>> GetGamesAsync(GameParams gameParams)
         {
-            var query = _context.Games.AsQueryable();
+            var query = _context.Games
+                .Select(game => new GameCard
+                {
+                    Name = game.Name,
+                    Released = game.Released,
+                    Id = game.Id,
+                    Rating = game.Rating,
+                    Background_image = game.Background_image,
+                    Year = game.Released.Substring(0, 4)
+                }).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(gameParams.SearchedGame))
                 query = query.Where(u => u.Name.Contains(gameParams.SearchedGame));

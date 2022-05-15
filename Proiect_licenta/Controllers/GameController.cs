@@ -74,10 +74,10 @@ namespace Proiect_licenta.Controllers
             return Ok(games);
         }
 
-        [HttpGet("{fullTitle}", Name = "GetGame")]
-        public async Task<ActionResult<Game>> Getgame(string fullTitle)
+        [HttpGet("{title}", Name = "GetGame")]
+        public async Task<ActionResult<Game>> GetGame(string title)
         {
-            return await _gamesRepository.GetGameByFullTitleAsync(fullTitle);
+            return await _gamesRepository.GetGameByFullTitleAsync(title);
         }
 
         [HttpGet("GameAlreadyAdded")]

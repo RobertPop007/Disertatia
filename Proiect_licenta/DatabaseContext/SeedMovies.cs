@@ -44,11 +44,11 @@ namespace Proiect_licenta.DatabaseContext
             //foreach (var movie in context.Movies
             //    .IncludeOptimized(o => o.Similars))
             //{
-            //    foreach (var similarMovie in movie.Similars)
+            //    foreach (var similarMovie in movie.Similars.ToList())
             //    {
             //        var fullTitleToAdd = context.Movies.FirstOrDefault(x => x.Title == similarMovie.Title);
 
-            //        if (fullTitleToAdd != null) similarMovie.Year = fullTitleToAdd.Year;
+            //        if (fullTitleToAdd == null) movie.Similars.Remove(similarMovie);
             //    }
             //}
 

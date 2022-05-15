@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Proiect_licenta.DTO.Manga;
 using Proiect_licenta.Entities.Manga;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
@@ -27,10 +28,10 @@ namespace Proiect_licenta.DatabaseContext
             _context.AppUserMangaItems.Remove(appUserMangaItem);
         }
 
-        public async Task<DatumManga> GetMangaByFullTitleAsync(string fullTitle)
+        public async Task<DatumManga> GetMangaByFullTitleAsync(string title)
         {
             return await _context.Manga
-                .Where(t => t.Title_english == fullTitle)
+                .Where(t => t.Title == title)
                 .IncludeOptimized(o => o.Images)
                 .IncludeOptimized(o => o.Published)
                 .IncludeOptimized(o => o.Authors)
@@ -46,16 +47,25 @@ namespace Proiect_licenta.DatabaseContext
             return await _context.Manga.FindAsync(id);
         }
 
-        public async Task<List<DatumManga>> GetMangasAsync(MangaParams mangaParams)
+        public async Task<List<MangaCard>> GetMangasAsync(MangaParams mangaParams)
         {
-            var query = _context.Manga.AsQueryable();
+            var query = _context.Manga
+                .Select(manga => new MangaCard
+                {
+                    Title = manga.Title,
+                    Popularity = manga.Popularity.ToString(),
+                    Mal_id = manga.Mal_id,
+                    Score = manga.Score,
+                    Image = manga.Images.Webp.Image_url,
+                    Year = manga.Published.From.Value.Year.ToString()
+                }).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(mangaParams.SearchedManga))
-                query = query.Where(u => u.Title_english.Contains(mangaParams.SearchedManga));
+                query = query.Where(u => u.Title.Contains(mangaParams.SearchedManga));
 
             query = mangaParams.OrderBy switch
             {
-                "title_english" => query.OrderBy(u => u.Title_english).OrderByDescending(u => u.Popularity),
+                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
                 "score" => query.OrderByDescending(u => u.Score),
                 _ => query.OrderByDescending(u => u.Popularity)
 

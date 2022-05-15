@@ -16,7 +16,7 @@ export class MovieDetailedResolver implements Resolve<Movie>{
     }
 
     resolve(route: ActivatedRouteSnapshot): Observable<Movie>{
-        return this.movieService.getMovie(route.paramMap.get('fullTitle')!);
+        return this.movieService.getMovie(route.paramMap.get('title')!);
     }
 
 }

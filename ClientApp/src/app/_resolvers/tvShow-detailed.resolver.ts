@@ -18,7 +18,7 @@ export class TvShowDetailedResolver implements Resolve<TvShow>{
     }
 
     resolve(route: ActivatedRouteSnapshot): Observable<TvShow>{
-        return this.tvShowService.getTvShow(route.paramMap.get('fullTitle')!);
+        return this.tvShowService.getTvShow(route.paramMap.get('title')!);
     }
 
 }

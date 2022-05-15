@@ -65,7 +65,7 @@ namespace Proiect_licenta.Controllers
         }
 
         [HttpGet("GetAllmangas")]
-        public async Task<ActionResult> Getmangas([FromQuery] MangaParams mangaParams)
+        public async Task<ActionResult> GetMangas([FromQuery] MangaParams mangaParams)
         {
             var mangas = await _mangasRepository.GetMangasAsync(mangaParams);
 
@@ -74,10 +74,10 @@ namespace Proiect_licenta.Controllers
             return Ok(mangas);
         }
 
-        [HttpGet("{fullTitle}", Name = "Getmanga")]
-        public async Task<ActionResult<DatumManga>> Getmanga(string fullTitle)
+        [HttpGet("{title}", Name = "Getmanga")]
+        public async Task<ActionResult<DatumManga>> GetManga(string title)
         {
-            return await _mangasRepository.GetMangaByFullTitleAsync(fullTitle);
+            return await _mangasRepository.GetMangaByFullTitleAsync(title);
         }
 
         [HttpGet("MangaAlreadyAdded")]

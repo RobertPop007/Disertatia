@@ -13,7 +13,7 @@ namespace Proiect_licenta.Interfaces
     {
         Task<List<MovieCard>> GetMoviesAsync(MovieParams userParams);
         Task<Movie> GetMovieByIdAsync(string id);
-        Task<Movie> GetMovieByFullTitleAsync(string fullTitle);
+        Task<Movie> GetMovieByTitleAsync(string title);
         Task<List<Movie>> GetUserMovies(int userId);
         bool IsMovieAlreadyAdded(int userId, string movieId);
         void DeleteMovieForUser(int userId, string movieId);

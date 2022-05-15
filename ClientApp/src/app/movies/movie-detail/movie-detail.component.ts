@@ -45,6 +45,9 @@ export class MovieDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.movie = data['movie'];
+
+      console.log(this.movie);
+      
       
       this.movie.actorList = this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
@@ -65,7 +68,7 @@ export class MovieDetailComponent implements OnInit {
   };
 
   loadMovie(){
-    this.movieService.getMovie(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(movie => {
+    this.movieService.getMovie(this.route.snapshot.paramMap.get('title')!).subscribe(movie => {
       this.movie = movie;
     })
   }

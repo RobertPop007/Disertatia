@@ -30,6 +30,7 @@ namespace Proiect_licenta.DatabaseContext
             var query = _context.Movies
                 .Select(movie => new MovieCard
                 {
+                    Title = movie.Title,
                     FullTitle = movie.FullTitle,
                     Id = movie.Id,
                     ImDbRating = movie.ImDbRating,
@@ -57,10 +58,10 @@ namespace Proiect_licenta.DatabaseContext
         {
             return await _context.Movies.FindAsync(id);
         }
-        public async Task<Movie> GetMovieByFullTitleAsync(string fullTitle)
+        public async Task<Movie> GetMovieByTitleAsync(string title)
         {
             return await _context.Movies
-                .Where(t => t.FullTitle == fullTitle)
+                .Where(t => t.Title == title)
                 .IncludeOptimized(o => o.DirectorList)
                 .IncludeOptimized(o => o.WriterList)
                 .IncludeOptimized(o => o.ActorList)

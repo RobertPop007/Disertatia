@@ -74,10 +74,10 @@ namespace Proiect_licenta.Controllers
             return Ok(tvShows);
         }
 
-        [HttpGet("{fullTitle}", Name = "GetTvShow")]
-        public async Task<ActionResult<TvShow>> GetTvShow(string fullTitle)
+        [HttpGet("{title}", Name = "GetTvShow")]
+        public async Task<ActionResult<TvShow>> GetTvShow(string title)
         {
-            return await _tvShowsRepository.GetTvShowByFullTitleAsync(fullTitle);
+            return await _tvShowsRepository.GetTvShowByFullTitleAsync(title);
         }
 
         [HttpGet("TvShowAlreadyAdded")]

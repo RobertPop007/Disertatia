@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Proiect_licenta.DTO.TvShows;
 using Proiect_licenta.Entities.TvShows;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
@@ -27,10 +28,10 @@ namespace Proiect_licenta.DatabaseContext
             _context.AppUserTvShowItems.Remove(appUserTvShowItem);
         }
 
-        public async Task<TvShow> GetTvShowByFullTitleAsync(string fullTitle)
+        public async Task<TvShow> GetTvShowByFullTitleAsync(string title)
         {
             return await _context.TrueTvShow
-                .Where(t => t.FullTitle == fullTitle)
+                .Where(t => t.Title == title)
                 .IncludeOptimized(o => o.ActorList)
                 .IncludeOptimized(o => o.StarList)
                 .IncludeOptimized(o => o.GenreList)
@@ -52,9 +53,19 @@ namespace Proiect_licenta.DatabaseContext
             return await _context.TrueTvShow.FindAsync(id);
         }
 
-        public async Task<List<TvShow>> GetTvShowsAsync(TvShowParams tvShowParams)
+        public async Task<List<TvShowCard>> GetTvShowsAsync(TvShowParams tvShowParams)
         {
-            var query = _context.TrueTvShow.AsQueryable();
+            var query = _context.TrueTvShow
+                .Select(tvShow => new TvShowCard
+                {
+                    Title = tvShow.Title,
+                    FullTitle = tvShow.FullTitle,
+                    Id = tvShow.Id,
+                    ImDbRating = tvShow.ImDbRating,
+                    Image = tvShow.Image,
+                    Year = tvShow.Year
+                })
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(tvShowParams.SearchedTvShow))
                 query = query.Where(u => u.FullTitle.Contains(tvShowParams.SearchedTvShow));

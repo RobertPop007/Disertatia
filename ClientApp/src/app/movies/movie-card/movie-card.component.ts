@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
+import { Similar } from 'model/similar';
 import { listenToTriggers } from 'ngx-bootstrap/utils';
 import { ToastrService } from 'ngx-toastr';
 import { MovieCard } from 'src/app/_models/movieCard';
@@ -17,9 +18,12 @@ export class MovieCardComponent implements OnInit {
 
   constructor(private movieAngularService: MoviesAngularService,
     private movieService: MoviesService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+    }
 
   ngOnInit(): void {
+    
+    
   }
 
   addMovie(movie: Movie){

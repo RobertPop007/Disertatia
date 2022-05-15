@@ -80,10 +80,10 @@ namespace Proiect_licenta.Controllers
             return Ok(movies);
         }
 
-        [HttpGet("{fullTitle}", Name = "GetMovie")]
-        public async Task<ActionResult<Movie>> GetMovie(string fullTitle)
+        [HttpGet("{title}", Name = "GetMovie")]
+        public async Task<ActionResult<Movie>> GetMovie(string title)
         {
-            return await _moviesRepository.GetMovieByFullTitleAsync(fullTitle);
+            return await _moviesRepository.GetMovieByTitleAsync(title);
         }
 
         [HttpGet("MovieAlreadyAdded")]

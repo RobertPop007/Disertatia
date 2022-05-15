@@ -38,6 +38,9 @@ export class TvShowDetailComponent implements OnInit {
     private tvShowAngularService: TvShowsAngularService,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer) {
+      this.sanitizer = sanitizer;
+      this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      }
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class TvShowDetailComponent implements OnInit {
   };
 
   loadTvShow(){
-    this.tvShowService.getTvShow(this.route.snapshot.paramMap.get('fullTitle')!).subscribe(tvShow => {
+    this.tvShowService.getTvShow(this.route.snapshot.paramMap.get('title')!).subscribe(tvShow => {
       this.tvShow = tvShow;
     })
   }

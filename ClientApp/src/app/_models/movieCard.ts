@@ -4,4 +4,5 @@ export interface MovieCard{
     year: string;
     image: string;
     imDbRating: string;
+    title: string;
 }
