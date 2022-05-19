@@ -57,6 +57,16 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { TvShowDetailComponent } from './tvShows/tv-show-detail/tv-show-detail.component';
 import { TvShowCardAddedComponent } from './tvShows/tv-show-card-added/tv-show-card-added.component';
 import { TvShowCardComponent } from './tvShows/tv-show-card/tv-show-card.component';
+import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
+import { AnimeCardAddedComponent } from './anime/anime-card-added/anime-card-added.component';
+import { AnimeDetailComponent } from './anime/anime-detail/anime-detail.component';
+import { MangaCardComponent } from './manga/manga-card/manga-card.component';
+import { MangaCardAddedComponent } from './manga/manga-card-added/manga-card-added.component';
+import { GameCardAddedComponent } from './games/game-card-added/game-card-added.component';
+import { GameCardComponent } from './games/game-card/game-card.component';
+import { GameListComponent } from './games/game-list/game-list.component';
+import { GameDetailComponent } from './games/game-detail/game-detail.component';
+import { MangaDetailComponent } from './manga/manga-detail/manga-detail.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +107,17 @@ import { TvShowCardComponent } from './tvShows/tv-show-card/tv-show-card.compone
     ScrollToTopComponent,
     TvShowDetailComponent,
     TvShowCardAddedComponent,
-    TvShowCardComponent
+    TvShowCardComponent,
+    AnimeCardComponent,
+    AnimeCardAddedComponent,
+    AnimeDetailComponent,
+    MangaCardComponent,
+    MangaCardAddedComponent,
+    MangaDetailComponent,
+    GameCardAddedComponent,
+    GameCardComponent,
+    GameListComponent,
+    GameDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -242,7 +242,7 @@
         }
       }
     },
-    "/api/Anime/{fullTitle}": {
+    "/api/Anime/{title}": {
       "get": {
         "tags": [
           "Anime"
@@ -250,7 +250,7 @@
         "operationId": "GetAnime",
         "parameters": [
           {
-            "name": "fullTitle",
+            "name": "title",
             "in": "path",
             "required": true,
             "schema": {
@@ -626,7 +626,7 @@
         }
       }
     },
-    "/api/Game/{fullTitle}": {
+    "/api/Game/{title}": {
       "get": {
         "tags": [
           "Game"
@@ -634,7 +634,7 @@
         "operationId": "GetGame",
         "parameters": [
           {
-            "name": "fullTitle",
+            "name": "title",
             "in": "path",
             "required": true,
             "schema": {
@@ -801,7 +801,7 @@
         }
       }
     },
-    "/api/Manga/{fullTitle}": {
+    "/api/Manga/{title}": {
       "get": {
         "tags": [
           "Manga"
@@ -809,7 +809,7 @@
         "operationId": "Getmanga",
         "parameters": [
           {
-            "name": "fullTitle",
+            "name": "title",
             "in": "path",
             "required": true,
             "schema": {

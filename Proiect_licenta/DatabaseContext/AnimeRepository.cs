@@ -29,9 +29,11 @@ namespace Proiect_licenta.DatabaseContext
 
         public async Task<Datum> GetAnimeByFullTitleAsync(string title)
         {
-            return await _context.Anime
+            var x = await _context.Anime
                 .Where(t => t.Title == title)
                 .IncludeOptimized(o => o.Images)
+                .IncludeOptimized(o => o.Images.Jpg)
+                .IncludeOptimized(o => o.Images.Webp)
                 .IncludeOptimized(o => o.Trailer)
                 .IncludeOptimized(o => o.Aired)
                 .IncludeOptimized(o => o.Broadcast)
@@ -42,6 +44,7 @@ namespace Proiect_licenta.DatabaseContext
                 .IncludeOptimized(o => o.Themes)
                 .IncludeOptimized(o => o.Demographics)
                 .FirstOrDefaultAsync();
+            return x;
         }
 
         public async Task<Datum> GetAnimeByIdAsync(int id)
@@ -78,13 +81,17 @@ namespace Proiect_licenta.DatabaseContext
 
         public async Task<List<Datum>> GetUserAnimes(int userId)
         {
-            var listOAnimesIdForUser = _context.AppUserAnimeItems.Where(o => o.AppUserId == userId).Select(o => o.AnimeId).AsEnumerable();
+            var listOfAnimesIdForUser = _context.AppUserAnimeItems.Where(o => o.AppUserId == userId).Select(o => o.AnimeId).AsEnumerable();
 
             var listOfAnimesForUser = new List<Datum>();
 
-            foreach (var animeId in listOAnimesIdForUser)
+            foreach (var animeId in listOfAnimesIdForUser)
             {
-                var anime = await _context.Anime.FindAsync(animeId);
+                var anime = await _context.Anime.Where(o => o.Mal_id == animeId)
+                    .IncludeOptimized(o => o.Images)
+                    .IncludeOptimized(o => o.Images.Jpg)
+                    .IncludeOptimized(o => o.Images.Webp)
+                    .FirstOrDefaultAsync();
 
                 if (anime != null) listOfAnimesForUser.Add(anime);
             }

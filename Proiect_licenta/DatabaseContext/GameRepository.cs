@@ -84,11 +84,11 @@ namespace Proiect_licenta.DatabaseContext
 
             var listOfGamesForUser = new List<Game>();
 
-            foreach (var movieId in listOfGamesIdForUser)
+            foreach (var gameId in listOfGamesIdForUser)
             {
-                var movie = await _context.Games.FindAsync(userId);
+                var game = await _context.Games.FindAsync(gameId);
 
-                if (movie != null) listOfGamesForUser.Add(movie);
+                if (game != null) listOfGamesForUser.Add(game);
             }
 
             return listOfGamesForUser;

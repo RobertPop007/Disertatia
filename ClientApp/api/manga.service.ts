@@ -372,16 +372,16 @@ export class MangaService {
     }
 
     /**
-     * @param fullTitle 
+     * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getmanga(fullTitle: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<DatumManga>;
-    public getmanga(fullTitle: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<DatumManga>>;
-    public getmanga(fullTitle: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<DatumManga>>;
-    public getmanga(fullTitle: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
-        if (fullTitle === null || fullTitle === undefined) {
-            throw new Error('Required parameter fullTitle was null or undefined when calling getmanga.');
+    public getmanga(title: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<DatumManga>;
+    public getmanga(title: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<DatumManga>>;
+    public getmanga(title: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<DatumManga>>;
+    public getmanga(title: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getmanga.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -417,7 +417,7 @@ export class MangaService {
             }
         }
 
-        return this.httpClient.get<DatumManga>(`${this.configuration.basePath}/api/Manga/${encodeURIComponent(String(fullTitle))}`,
+        return this.httpClient.get<DatumManga>(`${this.configuration.basePath}/api/Manga/${encodeURIComponent(String(title))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

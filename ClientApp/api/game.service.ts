@@ -372,16 +372,16 @@ export class GameService {
     }
 
     /**
-     * @param fullTitle 
+     * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGame(fullTitle: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Game>;
-    public getGame(fullTitle: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Game>>;
-    public getGame(fullTitle: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Game>>;
-    public getGame(fullTitle: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
-        if (fullTitle === null || fullTitle === undefined) {
-            throw new Error('Required parameter fullTitle was null or undefined when calling getGame.');
+    public getGame(title: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Game>;
+    public getGame(title: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Game>>;
+    public getGame(title: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Game>>;
+    public getGame(title: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getGame.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -417,7 +417,7 @@ export class GameService {
             }
         }
 
-        return this.httpClient.get<Game>(`${this.configuration.basePath}/api/Game/${encodeURIComponent(String(fullTitle))}`,
+        return this.httpClient.get<Game>(`${this.configuration.basePath}/api/Game/${encodeURIComponent(String(title))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

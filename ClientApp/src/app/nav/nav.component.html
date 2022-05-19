@@ -22,16 +22,13 @@
           <a class="navbar-brand" routerLink="/tvShows" routerLinkActive="active">TV Shows</a>
         </li>
         <li *appHasRole='["Member"]' class="nav-item">
-          <a class="navbar-brand" routerLink="/books" routerLinkActive="active">Books</a>
+          <a class="navbar-brand" routerLink="/games" routerLinkActive="active">Games</a>
         </li>
         <li *appHasRole='["Member"]' class="nav-item">
           <a class="navbar-brand" routerLink="/anime" routerLinkActive="active">Anime</a>
         </li>
         <li *appHasRole='["Member"]' class="nav-item">
           <a class="navbar-brand" routerLink="/manga" routerLinkActive="active">Manga</a>
-        </li>
-        <li *appHasRole='["Member"]' class="nav-item">
-          <a class="navbar-brand" routerLink="/music" routerLinkActive="active">Music</a>
         </li>
         <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
           <a class="navbar-brand" routerLink="/admin" routerLinkActive="active">Admin</a>

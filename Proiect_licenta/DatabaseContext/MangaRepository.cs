@@ -33,6 +33,8 @@ namespace Proiect_licenta.DatabaseContext
             return await _context.Manga
                 .Where(t => t.Title == title)
                 .IncludeOptimized(o => o.Images)
+                .IncludeOptimized(o => o.Images.Webp)
+                .IncludeOptimized(o => o.Images.Jpg)
                 .IncludeOptimized(o => o.Published)
                 .IncludeOptimized(o => o.Authors)
                 .IncludeOptimized(o => o.Serializations)
@@ -82,7 +84,12 @@ namespace Proiect_licenta.DatabaseContext
 
             foreach (var mangaId in listOfMangasIdForUser)
             {
-                var manga = await _context.Manga.FindAsync(mangaId);
+                var manga = await _context.Manga
+                    .Where(o => o.Mal_id == mangaId)
+                    .IncludeOptimized(o => o.Images)
+                    .IncludeOptimized(o => o.Images.Webp)
+                    .IncludeOptimized(o => o.Images.Jpg)
+                    .FirstOrDefaultAsync();
 
                 if (manga != null) listOfMangasForUser.Add(manga);
             }

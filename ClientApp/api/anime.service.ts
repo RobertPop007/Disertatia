@@ -372,16 +372,16 @@ export class AnimeService {
     }
 
     /**
-     * @param fullTitle 
+     * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAnime(fullTitle: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Datum>;
-    public getAnime(fullTitle: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Datum>>;
-    public getAnime(fullTitle: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Datum>>;
-    public getAnime(fullTitle: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
-        if (fullTitle === null || fullTitle === undefined) {
-            throw new Error('Required parameter fullTitle was null or undefined when calling getAnime.');
+    public getAnime(title: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<Datum>;
+    public getAnime(title: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<Datum>>;
+    public getAnime(title: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<Datum>>;
+    public getAnime(title: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getAnime.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -417,7 +417,7 @@ export class AnimeService {
             }
         }
 
-        return this.httpClient.get<Datum>(`${this.configuration.basePath}/api/Anime/${encodeURIComponent(String(fullTitle))}`,
+        return this.httpClient.get<Datum>(`${this.configuration.basePath}/api/Anime/${encodeURIComponent(String(title))}`,
             {
                 context: localVarHttpContext,
                 responseType: <any>responseType_,

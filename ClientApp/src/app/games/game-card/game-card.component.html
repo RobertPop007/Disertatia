@@ -1,0 +1,19 @@
+<div class="card mb-3" *ngIf="game.name">
+    <div class="card-img-wrapper">
+        <img src="{{game.background_image || './assets/user.png'}}" alt="{{game.name}}" class="card-img-top">
+        
+        <ul class="list-inline member-icons animate text-center">
+
+            <li class="list-inline-item"><button routerLink="/games/{{game.name}}" class="btn btn-primary">
+                <i class="fa fa-film"></i></button></li>
+                
+            <li class="list-inline-item"><button (click)="addGame(game)" class="btn btn-primary">
+                <i class="fa fa-plus"></i></button></li>
+        </ul>
+    </div>
+
+    <div class="card-body p-1">
+        <p class="card-text text-muted text-center">{{game.name}}</p>
+        <p class="card-text text-muted text-center">{{game.rating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+    </div>
+</div>

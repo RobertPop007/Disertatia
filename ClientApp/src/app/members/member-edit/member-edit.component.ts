@@ -3,14 +3,21 @@ import { Component, HostListener, Inject, OnInit, Renderer2, ViewChild } from '@
 import { NgForm } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { DarkModeService } from 'angular-dark-mode';
+import { AnimeService } from 'api/anime.service';
+import { GameService } from 'api/game.service';
+import { MangaService } from 'api/manga.service';
 import { MoviesService } from 'api/movies.service';
 import { TvShowsService } from 'api/tvShows.service';
+import { Datum } from 'model/datum';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
 import { TvShow } from 'model/tvShow';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Theme } from 'src/app/app.component';
+import { AnimeCard } from 'src/app/_models/animeCard';
+import { GameCard } from 'src/app/_models/gameCard';
+import { MangaCard } from 'src/app/_models/mangaCard';
 import { Member } from 'src/app/_models/member';
 import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
@@ -30,6 +37,9 @@ export class MemberEditComponent implements OnInit {
   theme: Theme = 'light-theme';
   watchedMovies?: Movie[];
   watchedTvShows?: TvShow[];
+  watchedAnime?: AnimeCard[];
+  watchedManga?: MangaCard[];
+  watchedGame?: GameCard[];
   predicate = 'added';
   pageNumber = 1;
   isDarkMode!: boolean;
@@ -50,6 +60,9 @@ export class MemberEditComponent implements OnInit {
               private memberService: MembersService,
               private tvShowsService: TvShowsService,
               private moviesService: MoviesService,
+              private animesService: AnimeService,
+              private gamesService: GameService,
+              private mangaService: MangaService,
               private toastr: ToastrService,
               private darkModeService: DarkModeService,
               private renderer: Renderer2,
@@ -110,6 +123,18 @@ export class MemberEditComponent implements OnInit {
 
     this.tvShowsService.apiTvShowsGetTvShowsForUsernameGet(this.user.username).subscribe(response => {
       this.watchedTvShows = response;
+    })
+
+    this.animesService.apiAnimeGetAnimesForUsernameGet(this.user.username).subscribe(response => {
+      this.watchedAnime = response;
+    })
+
+    this.mangaService.apiMangaGetMangasForUsernameGet(this.user.username).subscribe(response => {
+      this.watchedManga = response;
+    })
+
+    this.gamesService.apiGameGetGamesForUsernameGet(this.user.username).subscribe(response => {
+      this.watchedGame = response;
     })
   }
 }

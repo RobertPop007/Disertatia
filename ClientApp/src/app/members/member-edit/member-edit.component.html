@@ -64,11 +64,25 @@
 
                         <tab heading="Anime">
                             <div class="groups row">
+                                <div *ngFor="let anime of watchedAnime" class="col-3">
+                                    <app-anime-card-added (deleteEvent)="updateWatchList()" [anime]="anime!"></app-anime-card-added> 
+                                </div>
                             </div>
                         </tab>
 
                         <tab heading="Manga">
                             <div class="groups row">
+                                <div *ngFor="let manga of watchedManga" class="col-3">
+                                    <app-manga-card-added (deleteEvent)="updateWatchList()" [manga]="manga!"></app-manga-card-added> 
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Game">
+                            <div class="groups row">
+                                <div *ngFor="let game of watchedGame" class="col-3">
+                                    <app-game-card-added (deleteEvent)="updateWatchList()" [game]="game!"></app-game-card-added> 
+                                </div>
                             </div>
                         </tab>
                 

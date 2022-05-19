@@ -1,0 +1,170 @@
+<div class="row">
+    <h1 style="size: 15rem;">{{game.name}}</h1>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>{{game.released}}<span *ngIf="game.esrb_rating"><i class="far fa-dot-circle"></i></span> {{game.esrb_rating}}
+          </p>
+
+        <div class="d-inline-block" *ngFor="let genre of game.genres">
+          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+        </div>
+
+        <!-- <div *ngIf="movie.tagline">
+          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
+        </div> -->
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addGame(game)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button> Add game</li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteGame(game)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button> Delete game</li>
+        </div>
+        <br>
+      </div>
+      
+    <div>
+      <div class="text-end">
+        <p style="font-size: 20px;">Rating</p>
+          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
+          <div class="d-inline-block">
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{game.rating}}</span>/5<br>{{game.ratings_count}} votes</p>
+          </div>
+
+          <div *ngIf="game.metacritic">
+            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{game.metacritic}} metascore</span></p>
+          </div>
+    </div>
+  </div>
+      
+    </div>
+
+    <div class="col-4"><img src="{{game.background_image || './assets/user.png'}}" alt="{{game.name}}" class="img-fluid"></div>
+    <div class="col-8">
+
+</div>
+  
+<br><br>
+
+<h1>Plot</h1>
+<p class="indent">{{game.description_raw}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+
+<div *ngIf="game.platforms!.length > 0">
+<h1>Platforme</h1>
+<div *ngFor="let platform of game.platforms">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{platform.platform?.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.stores">
+<h1>Magazine online</h1>
+<div *ngFor="let store of game.stores">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{store.store?.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.developers">
+    <h1>Developers</h1>
+    <div *ngFor="let developer of game.developers">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{developer.name}}</span></p>
+      </div>
+    
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.developers">
+    <h1>Genuri</h1>
+    <div *ngFor="let genre of game.genres">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{genre.name}}</span></p>
+        </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.developers">
+    <h1>Tag-uri</h1>
+    <div *ngFor="let tag of game.tags">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tag.name}}</span></p>
+        </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.developers">
+    <h1>Editori</h1>
+    <div *ngFor="let publisher of game.publishers">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{publisher.name}}</span></p>
+        </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<!-- <div *ngIf="movie.countryList!.length > 0">
+<h1>Countries</h1>
+<div *ngFor="let country of movie.countryList">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{country.value}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="movie.languageList!.length > 0">
+<h1>Languages</h1>
+<div *ngFor="let language of movie.languageList">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{language.value}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="movie.boxOffice">
+<h1>Box office</h1>
+<p *ngIf="movie.boxOffice.budget"><span style="font-weight: bolder;">Bugdet</span><br>{{movie.boxOffice!.budget}}</p>
+<p *ngIf="movie.boxOffice!.openingWeekendUSA"><span style="font-weight: bolder;">Opening weekend USA</span><br>{{movie.boxOffice!.openingWeekendUSA}}</p>
+<p *ngIf="movie.boxOffice!.grossUSA"><span style="font-weight: bolder;">Gross USA</span><br>{{movie.boxOffice!.grossUSA}}</p>
+<p *ngIf="movie.boxOffice!.cumulativeWorldwideGross"><span style="font-weight: bolder;">Cumulative worldwide gross</span><br>{{movie.boxOffice!.cumulativeWorldwideGross}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="movie.keywords">
+  <h1>Keywords</h1>
+  <p>{{movie.keywords}}</p>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+<h1>Actor list</h1>
+<owl-carousel-o [options]="customOptions">
+  
+    <ng-container *ngFor="let actor of movie.actorList">
+      <ng-template *ngIf="actor.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="actor.id!" style="margin-left: 20px;">
+        <img [src]="actor.image" width="100px" height="400px">
+        <div style="align-items: center;">
+            <p>{{actor.name}}<br><span style="color: gray;">as {{actor.asCharacter}}</span></p>
+        </div>
+      </ng-template>
+    </ng-container>
+</owl-carousel-o>
+
+<h1>Similar movies</h1>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let similar of movie.similars" class="col-3 mb-2">
+        <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
+        <p class="card-text text-muted text-center">{{similar.title}}</p>
+        <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+    </div>
+  </div>
+</div> -->
