@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{tvShow.title}}</h1>
+    <h1 style="size: 15rem;">{{tvShow.title}} ({{tvShow.fullTitle}})</h1>
 
     <div class="d-flex justify-content-between">
       <div>
@@ -14,12 +14,12 @@
 
         <div *ngIf="res == false">
           <li class="list-inline-item"><button (click)="addTvShow(tvShow)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> Add TV show</li>
+          <i class="fa fa-plus"></i></button><p>Add TV show</p></li>
         </div>
         
         <div *ngIf="res == true">
           <li class="list-inline-item"><button (click)="deleteTvShow(tvShow)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> Delete movie</li>
+          <i class="fa fa-minus"></i></button><p>Delete TV show</p></li>
         </div>
         <br>
       </div>
@@ -120,6 +120,14 @@
   
   <hr style="width:50%;text-align:left;margin-left:0">
   </div>
+
+  <div *ngIf="tvShow.wikipedia">
+    <h1>External links</h1>
+    <a style="color: #0096FF;" target="_blank" href="{{tvShow.wikipedia.url}}">
+    {{tvShow.title}} Wikipedia</a>
+    
+    <hr style="width:50%;text-align:left;margin-left:0">
+    </div>
 
 <h1>Actor list</h1>
 <owl-carousel-o [options]="customOptions">

@@ -13,6 +13,7 @@
 
 export interface RegisterDto { 
     username: string;
+    email: string;
     knownAs: string;
     gender: string;
     dateOfBirth: string;

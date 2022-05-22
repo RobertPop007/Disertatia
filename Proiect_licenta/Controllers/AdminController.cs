@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +22,11 @@ namespace Proiect_licenta.Controllers
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
+            var username = User.GetUsername();
+
             var users = await _userManager.Users
+                .Where(u => u.UserName != username)
+                .Where(u => u.UserName != "admin")
                 .Include(r => r.UserRoles)
                 .ThenInclude(r => r.Role)
                 .OrderBy(u => u.UserName)

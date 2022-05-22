@@ -19,7 +19,8 @@ namespace Proiect_licenta.Helpers
             var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
 
             var user = await repo.GetUserByIdAsync(userId);
-            user.LastActive = DateTime.Now;
+
+            if(user != null) user.LastActive = DateTime.Now;
 
             await repo.SaveAllAsync();
         }

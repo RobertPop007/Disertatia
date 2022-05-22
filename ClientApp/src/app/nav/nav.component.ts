@@ -22,10 +22,19 @@ export class NavComponent implements OnInit {
   }
 
   login(){
-    this.acccountService.login(this.model).subscribe(response => {
-      this.router.navigateByUrl('/members');
-      this.toastr.success("Login successfully!");
-    });
+    var username = (<HTMLInputElement>document.getElementById("username")).value;
+    var password = (<HTMLInputElement>document.getElementById("password")).value;
+
+    if(username !== "" && password !== ""){
+      this.acccountService.login(this.model).subscribe(response => {
+        this.router.navigateByUrl('/members');
+  
+        console.log(response);
+        
+        this.toastr.success("Login successfully!");
+      });
+    }
+    
   }
 
   logout(){

@@ -2,6 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DarkModeService } from 'angular-dark-mode';
 import { AnimeService } from 'api/anime.service';
 import { GameService } from 'api/game.service';
@@ -15,6 +17,7 @@ import { TvShow } from 'model/tvShow';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Theme } from 'src/app/app.component';
+import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
 import { AnimeCard } from 'src/app/_models/animeCard';
 import { GameCard } from 'src/app/_models/gameCard';
 import { MangaCard } from 'src/app/_models/mangaCard';
@@ -23,7 +26,6 @@ import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
-import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
 @Component({
   selector: 'app-member-edit',
@@ -56,18 +58,20 @@ export class MemberEditComponent implements OnInit {
     }
   }
 
-  constructor(private accountService: AccountService,
+  constructor(private accountAngularService: AccountService,
               private memberService: MembersService,
               private tvShowsService: TvShowsService,
+              private router: Router,
               private moviesService: MoviesService,
               private animesService: AnimeService,
               private gamesService: GameService,
               private mangaService: MangaService,
+              public dialog: MatDialog,
               private toastr: ToastrService,
               private darkModeService: DarkModeService,
               private renderer: Renderer2,
               @Inject(DOCUMENT) private document: Document) {
-                this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+                this.accountAngularService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
                }
 
   ngOnInit(): void {
@@ -82,6 +86,24 @@ export class MemberEditComponent implements OnInit {
     }
 
     this.initializeTheme();
+  }
+
+  deleteAccount(username: string){
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: "Confirm",
+        message: "Are you sure you want to delete your own account?"
+      }
+    })
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        
+        this.accountAngularService.deleteAccount(username);
+        this.accountAngularService.logout();
+        this.router.navigateByUrl('/');
+      }
+    });
   }
 
   initializeTheme = (): void =>

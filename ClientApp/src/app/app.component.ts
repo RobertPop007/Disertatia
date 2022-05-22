@@ -14,7 +14,6 @@ import { DOCUMENT } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   theme: Theme = 'light-theme';
-  title = 'The dating app';
   users: any;
   isDarkMode!: boolean;
   darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
@@ -64,11 +63,11 @@ export class AppComponent implements OnInit {
 
   setCurrentUser(){
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
-
-    if(user){
-      if(user.username || user.token) //pentru ca la refresh cand nu esti logat, te loga instant
+    
+    if(user.username !== undefined){ //if(user) - asa era inainte
+      if(user.username !== undefined) //pentru ca la refresh cand nu esti logat, te loga instant
         this.accountService.setCurrentUser(user);
-      
+
       this.presence.createHubConnection(user);
     }
 

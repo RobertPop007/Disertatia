@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
@@ -27,7 +28,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
               private messageService: MessageService,
               public presence: PresenceService,
               private accountService: AccountService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
                 this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               }
@@ -71,6 +73,12 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   loadMessages(){
     this.messageService.getMessageThread(this.member.username).subscribe(messages => {
       this.messages = messages;
+    })
+  }
+
+  addFriend(member: Member){
+    this.memberService.addFriend(member.username).subscribe(() => {
+      this.toastr.success('You have added ' + member.username);
     })
   }
 

@@ -67,6 +67,11 @@ import { GameCardComponent } from './games/game-card/game-card.component';
 import { GameListComponent } from './games/game-list/game-list.component';
 import { GameDetailComponent } from './games/game-detail/game-detail.component';
 import { MangaDetailComponent } from './manga/manga-detail/manga-detail.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -117,7 +122,8 @@ import { MangaDetailComponent } from './manga/manga-detail/manga-detail.componen
     GameCardAddedComponent,
     GameCardComponent,
     GameListComponent,
-    GameDetailComponent
+    GameDetailComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -136,7 +142,15 @@ import { MangaDetailComponent } from './manga/manga-detail/manga-detail.componen
     IvyCarouselModule,
     NgxPaginationModule,
     NgxFixedFooterModule,
-    CarouselModule
+    CarouselModule,
+    MdbCheckboxModule,
+    MatIconModule,
+    MatCardModule,
+    MatDialogModule,
+    MatRadioModule
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

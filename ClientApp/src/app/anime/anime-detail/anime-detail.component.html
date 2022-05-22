@@ -1,10 +1,12 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{anime.title}}</h1>
+    <h1 style="size: 15rem;">{{anime.title}} ({{anime.title_japanese}})</h1>
 
     <div class="d-flex justify-content-between">
       <div>
         <p>{{anime.year}} <span *ngIf="anime.duration"><i class="far fa-dot-circle"></i> </span> {{anime.duration}}
-          <span *ngIf="anime.rating"><i class="far fa-dot-circle"></i></span> {{anime.rating}}</p>
+          <span *ngIf="anime.rating"><i class="far fa-dot-circle"></i></span> {{anime.rating}}
+          <span *ngIf="anime.status"><i class="far fa-dot-circle"></i></span> {{anime.status}}</p>
+          
 
         <div class="d-inline-block" *ngFor="let genre of anime.genres">
           <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
@@ -18,12 +20,12 @@
 
         <div *ngIf="res == false">
           <li class="list-inline-item"><button (click)="addAnime(anime)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> Add anime</li>
+          <i class="fa fa-plus"></i></button> <p>Add anime</p></li>
         </div>
         
         <div *ngIf="res == true">
           <li class="list-inline-item"><button (click)="deleteAnime(anime)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> Delete movie</li>
+          <i class="fa fa-minus"></i></button> <p>Delete movie</p></li>
         </div>
         <br>
       </div>
@@ -36,9 +38,6 @@
             <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{anime.score}}</span>/10<br>{{anime.scored_by}} votes</p>
           </div>
 
-          <!-- <div *ngIf="movie.metacriticRating">
-            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{movie.metacriticRating}} metascore</span></p>
-          </div> -->
     </div>
   </div>
       
@@ -96,61 +95,42 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-<!-- <div *ngIf="movie.countryList!.length > 0">
-<h1>Countries</h1>
-<div *ngFor="let country of movie.countryList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{country.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.languageList!.length > 0">
-<h1>Languages</h1>
-<div *ngFor="let language of movie.languageList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{language.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.boxOffice">
-<h1>Box office</h1>
-<p *ngIf="movie.boxOffice.budget"><span style="font-weight: bolder;">Bugdet</span><br>{{movie.boxOffice!.budget}}</p>
-<p *ngIf="movie.boxOffice!.openingWeekendUSA"><span style="font-weight: bolder;">Opening weekend USA</span><br>{{movie.boxOffice!.openingWeekendUSA}}</p>
-<p *ngIf="movie.boxOffice!.grossUSA"><span style="font-weight: bolder;">Gross USA</span><br>{{movie.boxOffice!.grossUSA}}</p>
-<p *ngIf="movie.boxOffice!.cumulativeWorldwideGross"><span style="font-weight: bolder;">Cumulative worldwide gross</span><br>{{movie.boxOffice!.cumulativeWorldwideGross}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.keywords">
-  <h1>Keywords</h1>
-  <p>{{movie.keywords}}</p>
+<div *ngIf="anime.rank">
+  <h1>Additional informations</h1>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Rank: {{anime.rank}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Popularity: {{anime.popularity}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Members: {{anime.members}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Favorites: {{anime.favorites}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Episodes: {{anime.episodes}}</span></p>
   
   <hr style="width:50%;text-align:left;margin-left:0">
   </div>
 
-<h1>Actor list</h1>
-<owl-carousel-o [options]="customOptions">
+<div *ngIf="anime.url">
+  <h1>External links</h1>
+  <a style="color: #0096FF;" target="_blank" href="{{anime.url}}">
+  {{anime.title}} MyAnimeList</a>
   
-    <ng-container *ngFor="let actor of movie.actorList">
-      <ng-template *ngIf="actor.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="actor.id!" style="margin-left: 20px;">
-        <img [src]="actor.image" width="100px" height="400px">
-        <div style="align-items: center;">
-            <p>{{actor.name}}<br><span style="color: gray;">as {{actor.asCharacter}}</span></p>
-        </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o>
-
-<h1>Similar movies</h1>
-<div class="container">
-  <div class="row">
-    <div *ngFor="let similar of movie.similars" class="col-3 mb-2">
-        <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
-        <p class="card-text text-muted text-center">{{similar.title}}</p>
-        <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
-    </div>
+  <hr style="width:50%;text-align:left;margin-left:0">
   </div>
-</div> -->
+
+  <div *ngIf="anime.broadcast!.string !== 'Unknow' && anime.broadcast!.string">
+    <h1>Broadcast</h1>
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">
+      Rank: {{anime.broadcast!.string}}</span></p>
+
+      <hr style="width:50%;text-align:left;margin-left:0">
+    </div>
+
+    <div *ngIf="anime.demographics!.length > 0">
+      <h1>Similar animes on MyAnimeList</h1>
+
+      <h2>Links:</h2>
+
+      <div *ngFor="let demographic of anime.demographics">
+      <a style="color: #0096FF;" target="_blank" href="{{demographic.url}}">
+      Similar {{demographic.name}} on MyAnimeList</a>
+    </div>
+      
+      <hr style="width:50%;text-align:left;margin-left:0">
+      </div>

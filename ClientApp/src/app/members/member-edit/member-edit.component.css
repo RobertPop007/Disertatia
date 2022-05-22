@@ -4,8 +4,23 @@
     height: 85%;
 }
 
+.tab{
+    background-color: skyblue;
+    margin-top: -20px; 
+    margin-bottom: -20px; 
+    padding-top: 20px;
+}
+
+.card{
+    background-color: skyblue;
+}
+
 .card-body{
-    padding: 0 25px;
+    background-color: skyblue;
+}
+
+.member-tabset{
+    background-color: skyblue;
 }
 
 .card-footer{
@@ -18,7 +33,7 @@
 }
 
 ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-    background-color: skyblue;  /*replace with your color*/
+    background-color: orange;  /*replace with your color*/
 }
 
 /* CSS to change 'Primary' color */

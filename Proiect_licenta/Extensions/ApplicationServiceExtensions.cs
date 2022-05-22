@@ -25,6 +25,7 @@ namespace Proiect_licenta.Extensions
             services.AddScoped<IMangaRepository, MangaRepository>();
             services.AddScoped<IGamesRepository, GameRepository>();
             services.AddScoped<LogUserActivity>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 

@@ -2,10 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
+using Proiect_licenta.Extensions;
 using Proiect_licenta.Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Proiect_licenta.Controllers
 {
@@ -15,13 +19,17 @@ namespace Proiect_licenta.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
+        private readonly IEmailSender _emailSender;
+        private readonly DataContext _context;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender, DataContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _mapper = mapper;
+            _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -41,13 +49,82 @@ namespace Proiect_licenta.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", "Your account has been created! Welcome to our community!");
+            await _emailSender.SendEmailAsync(message, user.UserName);
+
             return new UserDto
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 KnownAs = user.KnownAs,
-                Gender = user.Gender
+                Gender = user.Gender,
+                Email = user.Email
             };
+        }
+
+        [HttpDelete("deleteUser/{username}")]
+        public async Task DeleteUser([FromRoute] string username)
+        {
+            var user = await _context.Users.Where(u => u.UserName == username)
+                .IncludeOptimized(o => o.AppUserMovie)
+                .IncludeOptimized(o => o.AppUserAnime)
+                .IncludeOptimized(o => o.AppUserGame)
+                .IncludeOptimized(o => o.AppUserTvShow)
+                .IncludeOptimized(o => o.AppUserManga)
+                .FirstOrDefaultAsync();
+
+            foreach(var item in _context.AppUserAnimeItems)
+            {
+                if(item.AppUser == user) _context.AppUserAnimeItems.Remove(item);
+            }
+
+            foreach (var item in _context.AppUserGameItems)
+            {
+                if (item.AppUser == user) _context.AppUserGameItems.Remove(item);
+            }
+
+            foreach (var item in _context.AppUserMangaItems)
+            {
+                if (item.AppUser == user) _context.AppUserMangaItems.Remove(item);
+            }
+
+            foreach (var item in _context.AppUserMovieItems)
+            {
+                if (item.AppUser == user) _context.AppUserMovieItems.Remove(item);
+            }
+
+            foreach (var item in _context.AppUserTvShowItems)
+            {
+                if (item.AppUser == user) _context.AppUserTvShowItems.Remove(item);
+            }
+
+            foreach (var item in _context.UserRoles)
+            {
+                if (item.User == user) _context.UserRoles.Remove(item);
+            }
+
+            foreach (var item in _context.UserLogins)
+            {
+                if (item.UserId == user.Id) _context.UserLogins.Remove(item);
+            }
+
+            foreach (var item in _context.UserClaims)
+            {
+                if (item.UserId == user.Id) _context.UserClaims.Remove(item);
+            }
+
+            foreach (var item in _context.Friends)
+            {
+                if (item.AddedByUser == user || item.AddedUser == user) _context.Friends.Remove(item);
+            }
+
+            foreach (var item in _context.Messages)
+            {
+                if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
 
         private async Task<bool> UserExists(string username)

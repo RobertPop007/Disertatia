@@ -55,7 +55,7 @@ namespace Proiect_licenta.Extensions
 
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin", "Moderator"));
                 opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
             });
 

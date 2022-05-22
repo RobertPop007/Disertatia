@@ -11,6 +11,7 @@ using Proiect_licenta.Services;
 using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Entities.Movies;
 using System.Collections.Generic;
+using Proiect_licenta.Entities;
 
 namespace Proiect_licenta
 {
@@ -27,6 +28,11 @@ namespace Proiect_licenta
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
             services.AddApplicationServices(Configuration);
 
             services.AddControllers();
