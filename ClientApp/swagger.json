@@ -63,6 +63,28 @@
         }
       }
     },
+    "/api/Account/newsletter/{username}": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Account/deleteUser/{username}": {
       "delete": {
         "tags": [
@@ -484,6 +506,26 @@
     },
     "/api/Friends/{username}": {
       "post": {
+        "tags": [
+          "Friends"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
         "tags": [
           "Friends"
         ],
@@ -1979,6 +2021,9 @@
               "$ref": "#/components/schemas/AppUserGameItem"
             },
             "nullable": true
+          },
+          "isSubscribedToNewsletter": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -3285,6 +3330,9 @@
           },
           "profilePicture": {
             "$ref": "#/components/schemas/PhotoDto"
+          },
+          "isSubscribedToNewsletter": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

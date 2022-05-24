@@ -12,6 +12,9 @@ using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Entities.Movies;
 using System.Collections.Generic;
 using Proiect_licenta.Entities;
+using Hangfire;
+using Proiect_licenta.Hangfire;
+using Proiect_licenta.Interfaces;
 
 namespace Proiect_licenta
 {
@@ -40,6 +43,14 @@ namespace Proiect_licenta
 
             services.AddCrud<MovieItem, DataContext>();
 
+
+            var connectionString = Configuration.GetConnectionString("HangfireConnection");
+            services.AddHangfire(config => config.SetDataCompatibilityLevel((CompatibilityLevel.Version_170))
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseDefaultTypeSerializer()
+                .UseSqlServerStorage(connectionString));
+            services.AddHangfireServer();
+
             services.AddIdentityServices(Configuration);
 
             services.AddSignalR();
@@ -61,7 +72,7 @@ namespace Proiect_licenta
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecuringHangfireJob recurringRecomandationEmail)
         {
             if (env.IsDevelopment())
             {
@@ -93,6 +104,13 @@ namespace Proiect_licenta
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+            {
+                Authorization = new[] { new CustomAuthorizeFilter() }
+            });
+
+            RecurringJob.AddOrUpdate("Recommandation emails", () => recurringRecomandationEmail.SendRecomandationsEmails(), Cron.Daily(10));
 
             app.UseEndpoints(endpoints =>
             {

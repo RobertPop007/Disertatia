@@ -28,6 +28,7 @@ namespace Proiect_licenta.Extensions
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddTransient<IRecuringHangfireJob, RecuringHangfireJob>();
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 

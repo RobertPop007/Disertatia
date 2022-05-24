@@ -29,5 +29,7 @@ namespace Proiect_licenta.Entities
         public IList<AppUserAnimeItem> AppUserAnime { get; set; }
         public IList<AppUserMangaItem> AppUserManga { get; set; }
         public IList<AppUserGameItem> AppUserGame { get; set; }
+
+        public bool IsSubscribedToNewsletter { get; set; }
     }
 }

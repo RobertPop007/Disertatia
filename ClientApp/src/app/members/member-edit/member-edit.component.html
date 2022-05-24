@@ -50,13 +50,13 @@
                     <tabset class="member-tabset">
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Movies">
                             <div class="groups row">
-                                <div *ngIf="watchedMovies!.length > 0">
+                                <!-- <div *ngIf="watchedMovies!.length > 0"> -->
                                     <div  *ngFor="let movie of watchedMovies" class="col-3">
                                         <app-movie-card-added (deleteEvent)="updateWatchList()" [movie]="movie!"></app-movie-card-added> 
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
-                                <div *ngIf="watchedMovies!.length === 0">
+                                <div *ngIf="watchedMovies?.length === 0">
                                     <p>No movies added yet</p>
                                 </div>
                             </div>
@@ -65,13 +65,13 @@
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Tv Shows">
                             <div class="groups row">
 
-                                <div *ngIf="watchedTvShows!.length > 0">
+                                <!-- <div *ngIf="watchedTvShows!.length > 0"> -->
                                     <div  *ngFor="let tvShow of watchedTvShows" class="col-3">
                                         <app-tv-show-card-added (deleteEvent)="updateWatchList()" [tvShow]="tvShow!"></app-tv-show-card-added> 
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
-                                <div *ngIf="watchedTvShows!.length === 0">
+                                <div *ngIf="watchedTvShows?.length === 0">
                                     <p>No TV shows added yet</p>
                                 </div>
                             </div>
@@ -79,13 +79,13 @@
 
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Anime">
                             <div class="groups row">
-                                <div *ngIf="watchedAnime!.length > 0">
+                                <!-- <div *ngIf="watchedAnime!.length > 0"> -->
                                     <div *ngFor="let anime of watchedAnime" class="col-3">
                                         <app-anime-card-added (deleteEvent)="updateWatchList()" [anime]="anime!"></app-anime-card-added> 
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
-                                <div *ngIf="watchedAnime!.length === 0">
+                                <div *ngIf="watchedAnime?.length === 0">
                                     <p>No anime added yet</p>
                                 </div>
                             </div>
@@ -93,13 +93,13 @@
 
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Manga">
                             <div class="groups row">
-                                <div *ngIf="watchedManga!.length > 0">
+                                <!-- <div *ngIf="watchedManga!.length > 0"> -->
                                     <div *ngFor="let manga of watchedManga" class="col-3">
                                         <app-manga-card-added (deleteEvent)="updateWatchList()" [manga]="manga!"></app-manga-card-added> 
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
-                                <div *ngIf="watchedManga!.length === 0">
+                                <div *ngIf="watchedManga?.length === 0">
                                     <p>No manga added yet</p>
                                 </div>
                             </div>
@@ -107,13 +107,13 @@
 
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Game">
                             <div class="groups row">
-                                <div *ngIf="watchedGame!.length > 0">
+                                <!-- <div *ngIf="watchedGame!.length > 0"> -->
                                     <div *ngFor="let game of watchedGame" class="col-3">
                                         <app-game-card-added (deleteEvent)="updateWatchList()" [game]="game!"></app-game-card-added> 
                                     </div>
-                                </div>
+                                <!-- </div> -->
 
-                                <div *ngIf="watchedGame!.length === 0">
+                                <div *ngIf="watchedGame?.length === 0">
                                     <p>No games added yet</p>
                                 </div>
                                 
@@ -156,8 +156,22 @@
                     <span>
                         <mat-slide-toggle
                             class="example-margin"
-                            [checked]="checked"
+                            [checked]="getTheme()"
                             (toggleChange)="switchTheme()"
+                            [disabled]="disabled">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+
+                <div class="ml-2" style="display: flex;
+                flex-direction: row;">
+                    <p class="mr-3">Subscribe to newsletter: </p>
+                    <span>
+                        <mat-slide-toggle
+                            id="subscribe-toggle"
+                            class="example-margin"
+                            [checked]="getState()"
+                            (toggleChange)="subcribeToNewsletter(member.username)"
                             [disabled]="disabled">
                         </mat-slide-toggle>
                     </span>

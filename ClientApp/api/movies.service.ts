@@ -260,15 +260,7 @@ export class MoviesService {
             }
         }
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/api/Movies/GetMoviesFor/${encodeURIComponent(String(username))}`,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
+        return this.httpClient.get<any>(`${this.configuration.basePath}/api/Movies/GetMoviesFor/${encodeURIComponent(String(username))}`
         );
     }
 

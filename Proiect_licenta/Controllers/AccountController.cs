@@ -62,6 +62,16 @@ namespace Proiect_licenta.Controllers
             };
         }
 
+        [HttpPost("newsletter/{username}")]
+        public async Task SubscribeToNewsletterUser([FromRoute] string username)
+        {
+            var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
+
+            user.IsSubscribedToNewsletter = !user.IsSubscribedToNewsletter;
+
+            _context.SaveChanges();
+        }
+
         [HttpDelete("deleteUser/{username}")]
         public async Task DeleteUser([FromRoute] string username)
         {

@@ -57,5 +57,6 @@ export interface AppUser {
     appUserAnime?: Array<AppUserAnimeItem> | null;
     appUserManga?: Array<AppUserMangaItem> | null;
     appUserGame?: Array<AppUserGameItem> | null;
+    isSubscribedToNewsletter?: boolean;
 }
 

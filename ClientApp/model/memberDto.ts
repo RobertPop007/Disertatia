@@ -27,5 +27,6 @@ export interface MemberDto {
     city?: string | null;
     country?: string | null;
     profilePicture?: PhotoDto;
+    isSubscribedToNewsletter?: boolean;
 }
 

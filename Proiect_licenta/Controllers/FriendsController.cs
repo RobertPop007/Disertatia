@@ -1,25 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.DTO;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Extensions;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Proiect_licenta.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class FriendsController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
+        private readonly DataContext _context;
         private readonly IAddFriendsRepository _addFriendsRepository;
 
-        public FriendsController(IUserRepository userRepository, IAddFriendsRepository addFriendsRepository)
+        public FriendsController(IUserRepository userRepository, DataContext context, IAddFriendsRepository addFriendsRepository)
         {
             this._userRepository = userRepository;
             this._addFriendsRepository = addFriendsRepository;
+            _context = context;
         }
 
         [HttpPost("{username}")]
@@ -49,6 +53,35 @@ namespace Proiect_licenta.Controllers
             if (await _userRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to like user");
+        }
+
+        [HttpDelete("{username}")]
+        public async Task<ActionResult> RemoveFriend(string username)
+        {
+            var removedByUserId = 4;
+            var removedUser = await _userRepository.GetUserByUsernameAsync(username);
+            var removedByUser = await _addFriendsRepository.GetUserWithFriends(removedByUserId);
+
+            if (removedUser == null) return NotFound();
+
+            if (removedByUser.UserName == username) return BadRequest("You cannot remove yourself");
+
+            var userFriend = await _addFriendsRepository.GetUserFriend(removedByUserId, removedUser.Id);
+
+            if (userFriend == null) return BadRequest("You are not friend with this user");
+
+            userFriend = new UserFriend
+            {
+                AddedByUserId = removedByUserId,
+                AddedUserId = removedUser.Id
+            };
+
+            var connection = _context.Friends.Where(o => o.AddedUserId == removedUser.Id && o.AddedByUserId == removedByUserId).FirstOrDefault();
+            _context.Friends.Remove(connection);
+
+            if (await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to remove user");
         }
 
         [HttpGet]

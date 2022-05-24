@@ -47,10 +47,11 @@ export class MemberEditComponent implements OnInit {
   isDarkMode!: boolean;
   pageSize = 5;
   pagination!: Pagination;
-  currentMode: string = this.isDarkMode ? "Light mode" : "Dark mode";
 
   checked = false;
+  isSubscribed!: boolean;
   disabled = false;
+  
   
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any){
     if(this.editForm.dirty){
@@ -78,7 +79,10 @@ export class MemberEditComponent implements OnInit {
     this.loadMember();
     this.updateWatchList();
 
-    this.isDarkMode = (this.currentMode == "Dark mode") ? true : false;
+    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
+
+    console.log(this.theme);
+    
 
     if(this.isDarkMode === true)
     {
@@ -86,6 +90,32 @@ export class MemberEditComponent implements OnInit {
     }
 
     this.initializeTheme();
+
+    this.document.body.classList.replace(
+      this.theme, 
+      this.isDarkMode == true
+      ? (this.theme = 'dark-theme') 
+      : (this.theme = 'light-theme'))
+
+    this.isSubscribed = localStorage.getItem('isSubscribed') == 'true';
+  }
+
+  getState(): boolean{
+    return this.isSubscribed;
+  }
+
+  getTheme(): boolean{
+    console.log(this.isDarkMode);
+    
+    return this.isDarkMode;
+  }
+
+
+  subcribeToNewsletter(username: string){
+    this.accountAngularService.subscribe(username);
+
+    this.isSubscribed = !this.isSubscribed;
+    localStorage.setItem('isSubscribed', JSON.stringify(this.isSubscribed));
   }
 
   deleteAccount(username: string){
@@ -116,12 +146,13 @@ export class MemberEditComponent implements OnInit {
       ? (this.theme = 'dark-theme') 
       : (this.theme = 'light-theme'))
 
-      this.setDisplayMode(this.theme);
+
+      this.isDarkMode = !this.isDarkMode;
+      localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode));
   }
 
   setDisplayMode(mode: string) {
-    localStorage.setItem("currentMode", mode);
-    this.currentMode = mode;
+    localStorage.setItem("isDarkMode", mode);
   }
 
 

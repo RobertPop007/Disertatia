@@ -20,6 +20,12 @@ namespace Proiect_licenta.Helpers
             await SendAsync(emailMessage);
         }
 
+        public async Task SendHtmlEmailAsync(EmailMessage message, string username)
+        {
+            var emailMessage = CreateHtmlEmailMessage(message);
+            await SendAsync(emailMessage);
+        }
+
         private MimeMessage CreateEmailMessage(EmailMessage message)
         {
             var emailMessage = new MimeMessage();
@@ -27,6 +33,17 @@ namespace Proiect_licenta.Helpers
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+            return emailMessage;
+        }
+
+        private MimeMessage CreateHtmlEmailMessage(EmailMessage message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.To.AddRange(message.To);
+            emailMessage.Subject = message.Subject;
+
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = message.Content };
             return emailMessage;
         }
 

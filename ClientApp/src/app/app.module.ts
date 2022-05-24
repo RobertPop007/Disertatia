@@ -72,6 +72,7 @@ import {MatCardModule} from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { MemberCardAddedComponent } from './members/member-card-added/member-card-added.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import {MatRadioModule} from '@angular/material/radio';
     GameCardComponent,
     GameListComponent,
     GameDetailComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MemberCardAddedComponent
   ],
   imports: [
     BrowserModule,
