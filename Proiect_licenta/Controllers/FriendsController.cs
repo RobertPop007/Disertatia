@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Proiect_licenta.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class FriendsController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
@@ -58,7 +58,7 @@ namespace Proiect_licenta.Controllers
         [HttpDelete("{username}")]
         public async Task<ActionResult> RemoveFriend(string username)
         {
-            var removedByUserId = 4;
+            var removedByUserId = User.GetUserId();
             var removedUser = await _userRepository.GetUserByUsernameAsync(username);
             var removedByUser = await _addFriendsRepository.GetUserWithFriends(removedByUserId);
 
@@ -93,6 +93,31 @@ namespace Proiect_licenta.Controllers
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
+        }
+
+        [HttpGet("CheckFriendship/{username}")]
+        public async Task<bool> CheckFriendship([FromRoute] string username)
+        {
+            var userId = User.GetUserId();
+            var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
+
+            var friend = _context.Users.Where(o => o.UserName == username).FirstOrDefault();
+
+            if(friend == null) return false;
+
+            foreach (var addedUser in currentUser.AddedUsers)
+            {
+                if (friend.Id == addedUser.AddedUserId)
+                    return true;
+            }
+            foreach (var addedUser in currentUser.AddedByUsers)
+            {
+                if (friend.Id == addedUser.AddedByUserId)
+                    return true;
+            }
+
+
+            return false;
         }
     }
 }

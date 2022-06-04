@@ -23,6 +23,18 @@
     <app-text-input [formControl]='$any(registerForm).controls["city"]' [label]='"City"'></app-text-input>
     <app-text-input [formControl]='$any(registerForm).controls["country"]' [label]='"Country"'></app-text-input>
     <app-text-input [formControl]='$any(registerForm).controls["password"]' [label]='"Password"' [type]='"password"'></app-text-input>
+        
+    
+    <div style="font-size: 10px;">
+        <p>Password must contain:</p>
+        <ul>
+            <li>At least 6 characters</li>
+            <li>At least 1 lowercase letter</li>
+            <li>At least 1 uppercase letter</li>
+            <li>At least 1 number</li>
+            <li>At least 1 special character</li>
+        </ul>
+    </div>
     <app-text-input [formControl]='$any(registerForm).controls["confirmPassword"]' [label]='"Confirm password"'  [type]='"password"'></app-text-input>
 
     <div class="row" *ngIf="validationErrors.length > 0">

@@ -53,8 +53,87 @@
                 <p>{{member.interests}}</p>
             </tab>
 
-            <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Messages" (selectTab)="onTabsActivated($event)">
+            <tab *ngIf="areUsersFriends" style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Messages" (selectTab)="onTabsActivated($event)">
                 <app-member-messages [username]="member.username"></app-member-messages>
+            </tab>
+
+            <tab *ngIf="areUsersFriends" style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Watchlist" (selectTab)="onTabsActivated($event)">
+                <form id="editForm2" (ngSubmit)="updateWatchList()">
+                    <tabset class="member-tabset">
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Movies">
+                            <div class="groups row">
+                                <!-- <div *ngIf="watchedMovies!.length > 0"> -->
+                                    <div  *ngFor="let movie of watchedMovies" class="col-3">
+                                        <app-movie-card [movie]="movie"></app-movie-card> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedMovies?.length === 0">
+                                    <p>No movies added yet</p>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Tv Shows">
+                            <div class="groups row">
+
+                                <!-- <div *ngIf="watchedTvShows!.length > 0"> -->
+                                    <div  *ngFor="let tvShow of watchedTvShows" class="col-3">
+                                        <app-tv-show-card [tvShow]="tvShow!"></app-tv-show-card> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedTvShows?.length === 0">
+                                    <p>No TV shows added yet</p>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Anime">
+                            <div class="groups row">
+                                <!-- <div *ngIf="watchedAnime!.length > 0"> -->
+                                    <div *ngFor="let anime of watchedAnime" class="col-3">
+                                        <app-anime-card [anime]="anime!"></app-anime-card> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedAnime?.length === 0">
+                                    <p>No anime added yet</p>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Manga">
+                            <div class="groups row">
+                                <!-- <div *ngIf="watchedManga!.length > 0"> -->
+                                    <div *ngFor="let manga of watchedManga" class="col-3">
+                                        <app-manga-card [manga]="manga!"></app-manga-card> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedManga?.length === 0">
+                                    <p>No manga added yet</p>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Game">
+                            <div class="groups row">
+                                <!-- <div *ngIf="watchedGame!.length > 0"> -->
+                                    <div *ngFor="let game of watchedGame" class="col-3">
+                                        <app-game-card [game]="game!"></app-game-card> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedGame?.length === 0">
+                                    <p>No games added yet</p>
+                                </div>
+                                
+                            </div>
+                        </tab>
+                
+            </tabset>
+                </form>
             </tab>
         </tabset>
             </div>

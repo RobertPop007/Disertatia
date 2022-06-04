@@ -6,6 +6,7 @@ using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -56,7 +57,8 @@ namespace Proiect_licenta.DatabaseContext
         public async Task<AppUser> GetUserWithFriends(int userId)
         {
             return await _context.Users
-                 .Include(x => x.AddedUsers)
+                 .IncludeOptimized(x => x.AddedUsers)
+                 .IncludeOptimized(x => x.AddedByUsers)
                  .FirstOrDefaultAsync(x => x.Id == userId);
         }
     }

@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}') ]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     })
   }
@@ -57,6 +57,10 @@ export class RegisterComponent implements OnInit {
     }, error => {
       this.validationErrors = error;
     })
+  }
+
+  goToSignIn(){
+    window.location.reload();
   }
 
   cancel(){
