@@ -45,13 +45,16 @@ namespace Proiect_licenta.DatabaseContext
             //}
 
 
-
-            //var idList = context.TvShows.Select(x => x.Id).Skip(2850).Take(3).ToList();
-
-            //foreach (var id in idList)
+            //if (!context.TrueTvShow.Any())
             //{
-            //    await SeedTrueTvShowList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
+            //    var idList = context.TvShows.Select(x => x.Id).Skip(0).Take(2853).ToList();
+
+            //    foreach (var id in idList)
+            //    {
+            //        await SeedTrueTvShowList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
+            //    }
             //}
+            
 
             await context.SaveChangesAsync();
         }

@@ -20,19 +20,11 @@ namespace Proiect_licenta.DatabaseContext
             //{
             //    await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
 
-            //    for (var i = 2; i < 10; i++)
+            //    for (var i = 2; i < 150; i++)
             //    {
             //        System.Threading.Thread.Sleep(5000);
             //        await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
             //    }
-            //}
-
-            //await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
-
-            //for (var i = 100; i < 150; i++)
-            //{
-            //    System.Threading.Thread.Sleep(5000);
-            //    await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
             //}
 
             await context.SaveChangesAsync();

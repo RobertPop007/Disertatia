@@ -32,6 +32,13 @@ export class AppComponent implements OnInit {
       this.darkModeService.enable();
     }
 
+    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
+    this.document.body.classList.replace(
+      this.theme, 
+      this.isDarkMode == true
+      ? (this.theme = 'dark-theme') 
+      : (this.theme = 'light-theme'))
+
     this.initializeTheme();
   }
 

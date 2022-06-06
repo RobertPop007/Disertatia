@@ -42,7 +42,6 @@ export interface AppUser {
     lastActive?: string;
     gender?: string | null;
     introduction?: string | null;
-    lookingFor?: string | null;
     interests?: string | null;
     city?: string | null;
     country?: string | null;
@@ -58,5 +57,6 @@ export interface AppUser {
     appUserManga?: Array<AppUserMangaItem> | null;
     appUserGame?: Array<AppUserGameItem> | null;
     isSubscribedToNewsletter?: boolean;
+    hasDarkMode?: boolean;
 }
 

@@ -34,23 +34,27 @@ namespace Proiect_licenta.DatabaseContext
             //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls006153007");
             //}
 
-            //var idList = context.Top250Movies.Select(x => x.Id).Skip(800).Take(100).ToList();
-
-            //foreach (var id in idList)
+            //if(!context.Movies.Any())
             //{
-            //    await SeedTrueMoviesList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
-            //}
+            //    var idList = context.Top250Movies.Select(x => x.Id).Skip(0).Take(3318).ToList();
 
-            //foreach (var movie in context.Movies
-            //    .IncludeOptimized(o => o.Similars))
-            //{
-            //    foreach (var similarMovie in movie.Similars.ToList())
+            //    foreach (var id in idList)
             //    {
-            //        var fullTitleToAdd = context.Movies.FirstOrDefault(x => x.Title == similarMovie.Title);
+            //        await SeedTrueMoviesList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
+            //    }
 
-            //        if (fullTitleToAdd == null) movie.Similars.Remove(similarMovie);
+            //    foreach (var movie in context.Movies
+            //        .IncludeOptimized(o => o.Similars))
+            //    {
+            //        foreach (var similarMovie in movie.Similars.ToList())
+            //        {
+            //            var fullTitleToAdd = context.Movies.FirstOrDefault(x => x.Title == similarMovie.Title);
+
+            //            if (fullTitleToAdd == null) movie.Similars.Remove(similarMovie);
+            //        }
             //    }
             //}
+            
 
             await context.SaveChangesAsync();
         }

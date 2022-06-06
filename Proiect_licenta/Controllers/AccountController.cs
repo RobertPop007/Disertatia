@@ -72,6 +72,16 @@ namespace Proiect_licenta.Controllers
             _context.SaveChanges();
         }
 
+        [HttpPost("darkMode/{username}")]
+        public async Task EnableDarkModeForUser([FromRoute] string username)
+        {
+            var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
+
+            user.HasDarkMode = !user.HasDarkMode;
+
+            _context.SaveChanges();
+        }
+
         [HttpDelete("deleteUser/{username}")]
         public async Task DeleteUser([FromRoute] string username)
         {

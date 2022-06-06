@@ -31,8 +31,6 @@ namespace Proiect_licenta.Helpers
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
                     src.Recipient.ProfilePicture.Url));
 
-            //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
-
             CreateMap<MovieItem, MovieItem>();
             CreateMap<Movie, Movie>();
 

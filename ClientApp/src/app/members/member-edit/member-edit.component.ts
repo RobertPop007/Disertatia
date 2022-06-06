@@ -50,6 +50,7 @@ export class MemberEditComponent implements OnInit {
 
   checked = false;
   isSubscribed!: boolean;
+  hasDarkMode!: boolean;
   disabled = false;
   
   
@@ -79,9 +80,8 @@ export class MemberEditComponent implements OnInit {
     this.loadMember();
     this.updateWatchList();
 
-    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
 
-    console.log(this.theme);
+    console.log(this.member);
     
 
     if(this.isDarkMode === true)
@@ -91,6 +91,7 @@ export class MemberEditComponent implements OnInit {
 
     this.initializeTheme();
 
+    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
     this.document.body.classList.replace(
       this.theme, 
       this.isDarkMode == true
@@ -98,6 +99,8 @@ export class MemberEditComponent implements OnInit {
       : (this.theme = 'light-theme'))
 
     this.isSubscribed = localStorage.getItem('isSubscribed') == 'true';
+    console.log(this.isSubscribed);
+    
   }
 
   getState(): boolean{
@@ -105,8 +108,6 @@ export class MemberEditComponent implements OnInit {
   }
 
   getTheme(): boolean{
-    console.log(this.isDarkMode);
-    
     return this.isDarkMode;
   }
 
@@ -116,6 +117,13 @@ export class MemberEditComponent implements OnInit {
 
     this.isSubscribed = !this.isSubscribed;
     localStorage.setItem('isSubscribed', JSON.stringify(this.isSubscribed));
+  }
+
+  enabledDarkMode(username: string){
+    this.accountAngularService.enableDarkMode(username);
+
+    this.hasDarkMode = !this.hasDarkMode;
+    localStorage.setItem('isDarkMode', JSON.stringify(this.isSubscribed));
   }
 
   deleteAccount(username: string){

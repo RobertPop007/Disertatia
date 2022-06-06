@@ -42,7 +42,7 @@ namespace Proiect_licenta.DatabaseContext
             query = userParams.OrderBy switch
             {
                 "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
-                "lookingFor" => query.OrderBy(u => u.LookingFor).OrderByDescending(u => u.LastActive),
+                "newest accounts" => query.OrderByDescending(u => u.Created).OrderByDescending(u => u.LastActive),
                 _ => query.OrderByDescending(u => u.Interests)
                 
             };

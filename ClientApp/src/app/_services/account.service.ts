@@ -32,6 +32,10 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'Account/newsletter/' + username, '').subscribe();
   }
 
+  enableDarkMode(username: string){
+    return this.http.post(this.baseUrl + 'Account/darkMode/' + username, '').subscribe();
+  }
+
   deleteAccount(username: string){
     return this.http.delete(this.baseUrl + 'Account/deleteUser/' + username).subscribe();
   }

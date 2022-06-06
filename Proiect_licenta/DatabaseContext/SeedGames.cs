@@ -12,7 +12,7 @@ namespace Proiect_licenta.DatabaseContext
     {
         public static async Task SeedAllGamesIds(DataContext context)
         {
-            //if(!context.GamesIds.Any())
+            //if (!context.GamesIds.Any())
             //{
             //    await SeedGameId(context, "https://api.rawg.io/api/games?key=ec9156999ce5466ebc0fe23b17bcf556");
 
@@ -22,17 +22,12 @@ namespace Proiect_licenta.DatabaseContext
             //    }
             //}
 
-            //if(!context.Games.Any())
+            //if (!context.Games.Any())
             //{
-            //    foreach (var gameId in context.GamesIds.Skip(3000).Take(200))
+            //    foreach (var gameId in context.GamesIds.Skip(0).Take(3200))
             //    {
             //        await SeedGame(context, $@"https://api.rawg.io/api/games/{gameId.Id}?key=ec9156999ce5466ebc0fe23b17bcf556");
             //    }
-            //}
-
-            //foreach (var gameId in context.GamesIds.Skip(2500).Take(700))
-            //{
-            //    await SeedGame(context, $@"https://api.rawg.io/api/games/{gameId.Id}?key=ec9156999ce5466ebc0fe23b17bcf556");
             //}
 
             await context.SaveChangesAsync();

@@ -85,6 +85,28 @@
         }
       }
     },
+    "/api/Account/darkMode/{username}": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Account/deleteUser/{username}": {
       "delete": {
         "tags": [
@@ -1972,10 +1994,6 @@
             "type": "string",
             "nullable": true
           },
-          "lookingFor": {
-            "type": "string",
-            "nullable": true
-          },
           "interests": {
             "type": "string",
             "nullable": true
@@ -2062,6 +2080,9 @@
             "nullable": true
           },
           "isSubscribedToNewsletter": {
+            "type": "boolean"
+          },
+          "hasDarkMode": {
             "type": "boolean"
           }
         },

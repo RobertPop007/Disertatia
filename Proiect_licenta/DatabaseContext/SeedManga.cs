@@ -15,19 +15,11 @@ namespace Proiect_licenta.DatabaseContext
             //{
             //    await SeedMangaList(context, "https://api.jikan.moe/v4/top/manga");
 
-            //    for (var i = 2; i < 100; i++)
+            //    for (var i = 2; i < 150; i++)
             //    {
             //        System.Threading.Thread.Sleep(3000);
             //        await SeedMangaList(context, $"https://api.jikan.moe/v4/top/manga?page={i}");
             //    }
-            //}
-
-            //await SeedMangaList(context, "https://api.jikan.moe/v4/top/manga");
-
-            //for (var i = 2; i < 150; i++)
-            //{
-            //    System.Threading.Thread.Sleep(3000);
-            //    await SeedMangaList(context, $"https://api.jikan.moe/v4/top/manga?page={i}");
             //}
 
             await context.SaveChangesAsync();
