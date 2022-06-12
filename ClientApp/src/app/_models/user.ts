@@ -6,4 +6,6 @@ export interface User{
     gender: string;
     email: string;
     roles: string[];
+    isSubscribed: boolean;
+    hasDarkMode: boolean;
 }

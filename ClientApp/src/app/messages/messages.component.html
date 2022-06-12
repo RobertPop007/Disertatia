@@ -46,7 +46,7 @@
  
             <td>{{message.messageSent | timeago}}</td>
             <td>
-                <button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-danger" style="color: black;">Delete</button>
+                <button *ngIf="container === 'Outbox'" (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-danger" style="color: black;">Delete</button>
             </td>
         </tr>
     </table>

@@ -150,12 +150,12 @@
             <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="General settings">
                 <div class="ml-2" style="display: flex;
                 flex-direction: row;">
-                    <p class="mr-3">Dark mode: {{theme === 'dark-theme' ? "On" : "Off"}}</p>
+                    <p class="mr-3">Dark mode: </p>
                     <span>
                         <mat-slide-toggle
                             class="example-margin"
                             [checked]="getTheme()"
-                            (toggleChange)="switchTheme()"
+                            (toggleChange)="enabledDarkMode(member.username)"
                             [disabled]="disabled">
                         </mat-slide-toggle>
                     </span>

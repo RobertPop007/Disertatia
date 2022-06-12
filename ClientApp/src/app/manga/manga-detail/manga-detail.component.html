@@ -48,7 +48,7 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 
 <div *ngIf="manga.authors!.length > 0">
-<h1>Autori</h1>
+<h1>  Authors</h1>
 <div *ngFor="let author of manga.authors">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{author.name}}</span></p>
   </div>
@@ -57,7 +57,7 @@
 </div>
 
 <div *ngIf="manga.themes">
-<h1>Teme</h1>
+<h1>Themes</h1>
 <div *ngFor="let theme of manga.themes">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
   </div>

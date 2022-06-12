@@ -43,7 +43,7 @@ namespace Proiect_licenta.DatabaseContext
             {
                 "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
                 "newest accounts" => query.OrderByDescending(u => u.Created).OrderByDescending(u => u.LastActive),
-                _ => query.OrderByDescending(u => u.Interests)
+                _ => query.OrderByDescending(u => u.Created)
                 
             };
 
@@ -60,6 +60,8 @@ namespace Proiect_licenta.DatabaseContext
         {
             return await _context.Users
                 .Include(p => p.ProfilePicture)
+                .Include(p => p.AddedByUsers)
+                .Include(p => p.AddedUsers)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 

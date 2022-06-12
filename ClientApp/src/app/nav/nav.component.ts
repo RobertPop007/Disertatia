@@ -27,14 +27,18 @@ export class NavComponent implements OnInit {
 
     if(username !== "" && password !== ""){
       this.acccountService.login(this.model).subscribe(response => {
-        this.router.navigateByUrl('/members');
-  
+        
+        this.router.navigateByUrl('/members').then(() => {
+          //window.location.reload();
+        });
         console.log(response);
         
         this.toastr.success("Login successfully!");
       });
     }
-    
+    else{
+      this.toastr.info("You have to type in your data!")
+    }
   }
 
   logout(){

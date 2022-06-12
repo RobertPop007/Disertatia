@@ -37,7 +37,13 @@ namespace Proiect_licenta.DatabaseContext
                 .IncludeOptimized(o => o.Added_by_status)
                 .IncludeOptimized(o => o.Parent_platforms)
                 .IncludeOptimized(o => o.Platforms)
+                .IncludeOptimized(o => o.Platforms.Select(q => new
+                {
+                    Requirements = q.Requirements,
+                    Platform = q.Platform
+                }))
                 .IncludeOptimized(o => o.Stores)
+                .IncludeOptimized(o => o.Stores.Select(q => q.Store))
                 .IncludeOptimized(o => o.Developers)
                 .IncludeOptimized(o => o.Genres)
                 .IncludeOptimized(o => o.Tags)

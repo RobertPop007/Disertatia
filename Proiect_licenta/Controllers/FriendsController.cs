@@ -45,10 +45,16 @@ namespace Proiect_licenta.Controllers
             {
                 AddedByUserId = addedByUserId,
                 AddedUserId = addedUser.Id
+            };
 
+            var userAddedby = new UserFriend
+            {
+                AddedByUserId = addedUser.Id,
+                AddedUserId = addedByUserId
             };
 
             addedByUser.AddedUsers.Add(userFriend);
+            addedUser.AddedUsers.Add(userAddedby);
 
             if (await _userRepository.SaveAllAsync()) return Ok();
 
