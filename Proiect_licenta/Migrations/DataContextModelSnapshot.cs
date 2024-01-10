@@ -1916,7 +1916,7 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.Movies.Movie", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("MovieId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Awards")
@@ -1954,9 +1954,6 @@ namespace Proiect_licenta.Migrations
 
                     b.Property<Guid?>("ImagesId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Keywords")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Languages")
                         .HasColumnType("nvarchar(max)");
@@ -2012,7 +2009,7 @@ namespace Proiect_licenta.Migrations
                     b.Property<string>("Year")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieId");
 
                     b.HasIndex("BoxOfficeId");
 
@@ -2381,7 +2378,7 @@ namespace Proiect_licenta.Migrations
 
             modelBuilder.Entity("Proiect_licenta.Entities.TvShows.TvShow", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("TvShowId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Awards")
@@ -2477,7 +2474,7 @@ namespace Proiect_licenta.Migrations
                     b.Property<string>("Year")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TvShowId");
 
                     b.HasIndex("BoxOfficeTvShowBoxOfficeId");
 

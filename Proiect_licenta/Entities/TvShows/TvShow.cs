@@ -6,7 +6,7 @@ namespace Proiect_licenta.Entities.TvShows
     public class TvShow
     {
         [Key]
-        public string Id { get; set; }
+        public string TvShowId { get; set; }
         public string Title { get; set; }
         public string OriginalTitle { get; set; }
         public string FullTitle { get; set; }

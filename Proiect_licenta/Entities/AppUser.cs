@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Proiect_licenta.Entities.Movies;
 using System;
 using System.Collections.Generic;
 

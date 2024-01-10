@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace Proiect_licenta.Entities.Movies
 {
     public class Movie
     {
-        public string Id { get; set; }
+        public string MovieId { get; set; }
         public string Title { get; set; }
         public string OriginalTitle { get; set; }
         public string FullTitle { get; set; }
@@ -49,7 +47,6 @@ namespace Proiect_licenta.Entities.Movies
         public MoviesTrailer Trailer { get; set; }
         public BoxOffice BoxOffice { get; set; }
         public string Tagline { get; set; }
-        public string Keywords { get; set; }
         public List<Similar> Similars { get; set; }
         public IList<AppUserMovieItem> AppUserMovie { get; set; }
     }

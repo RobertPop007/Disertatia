@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Proiect_licenta.DTO.Movies;
+﻿using Newtonsoft.Json;
 using Proiect_licenta.Entities.Movies;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Proiect_licenta.DatabaseContext
 {
@@ -17,24 +12,22 @@ namespace Proiect_licenta.DatabaseContext
 
         public static async Task SeedAllMovies(DataContext context)
         {
-            if (!context.Top250Movies.Any())
-            {
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/Top250Movies/k_k49hz8mt");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020043828");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls060044601");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls053951083");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls002712620");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls036694571");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020828441");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls023836170");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls041805722");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000028602");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls094143100");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000068347");
-                await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls006153007");
-
-                
-            }
+            //if (!context.Top250Movies.Any())
+            //{
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/Top250Movies/k_k49hz8mt");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020043828");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls060044601");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls053951083");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls002712620");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls036694571");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls020828441");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_k49hz8mt/ls023836170");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls041805722");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000028602");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls094143100");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls000068347");
+            //    await SeedMoviesList(context, "https://imdb-api.com/en/API/IMDbList/k_jac24n9w/ls006153007");
+            //}
 
             //var idList = context.Top250Movies.Select(x => x.Id).Skip(3000).Take(318).ToList();
 

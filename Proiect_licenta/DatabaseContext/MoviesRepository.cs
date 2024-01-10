@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DTO.Movies;
-using Proiect_licenta.Entities;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Helpers;
 using Proiect_licenta.Interfaces;

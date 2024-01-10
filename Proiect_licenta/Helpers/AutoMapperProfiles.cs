@@ -4,7 +4,6 @@ using Proiect_licenta.DTO.Movies;
 using Proiect_licenta.Entities;
 using Proiect_licenta.Entities.Movies;
 using Proiect_licenta.Extensions;
-using System;
 
 namespace Proiect_licenta.Helpers
 {

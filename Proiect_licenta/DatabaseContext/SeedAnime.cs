@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Proiect_licenta.DTO.Movies;
 using Proiect_licenta.Entities.Anime;
-using Proiect_licenta.Entities.Movies;
-using Proiect_licenta.Entities.TvShows;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,16 +11,16 @@ namespace Proiect_licenta.DatabaseContext
     {
         public static async Task SeedAllAnime(DataContext context)
         {
-            if (!context.Anime.Any())
-            {
-                await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
+            //if (!context.Anime.Any())
+            //{
+            //    await SeedAnimeList(context, "https://api.jikan.moe/v4/top/anime");
 
-                for (var i = 2; i < 100; i++)
-                {
-                    System.Threading.Thread.Sleep(5000);
-                    await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
-                }
-            }
+            //    for (var i = 2; i < 100; i++)
+            //    {
+            //        System.Threading.Thread.Sleep(5000);
+            //        await SeedAnimeList(context, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            //    }
+            //}
 
             await context.SaveChangesAsync();
         }
