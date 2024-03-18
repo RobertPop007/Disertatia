@@ -1,11 +1,10 @@
-﻿namespace Proiect_licenta.Helpers
+﻿namespace Proiect_licenta.Helpers;
+
+public class UserParams : PaginationParams
 {
-    public class UserParams : PaginationParams
-    {
 
-        public string CurrentUsername { get; set; }
+    public string CurrentUsername { get; set; }
 
-        public string SearchedUsername { get; set; }
-        public string OrderBy { get; set; } = "username";
-    }
+    public string SearchedUsername { get; set; }
+    public string OrderBy { get; set; } = "username";
 }

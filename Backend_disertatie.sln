@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend_disertatie", "Proiect_licenta\Backend_disertatie.csproj", "{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E80A39C-74B9-4C1C-9B2E-AB1052773AB1}
+	EndGlobalSection
+EndGlobal

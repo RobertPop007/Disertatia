@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proiect_licenta.Helpers;
 
-namespace Proiect_licenta.Controllers
+namespace Proiect_licenta.Controllers;
+
+[ServiceFilter(typeof(LogUserActivity))]
+[ApiController]
+[Route("api/[controller]")]
+public class BaseApiController : ControllerBase
 {
-    [ServiceFilter(typeof(LogUserActivity))]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class BaseApiController : ControllerBase
-    {
-    }
 }

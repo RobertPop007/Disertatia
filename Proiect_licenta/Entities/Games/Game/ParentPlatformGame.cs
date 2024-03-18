@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.Games.Game
+namespace Proiect_licenta.Entities.Games.Game;
+
+public class ParentPlatformGame
 {
-    public class ParentPlatformGame
-    {
-        [Key]
-        public Guid ParentPlatformGameId { get; set; } = Guid.NewGuid();
-        public PlatformChildGame Platform { get; set; }
-    }
+    [Key]
+    public Guid ParentPlatformGameId { get; set; } = Guid.NewGuid();
+    public PlatformChildGame Platform { get; set; }
 }

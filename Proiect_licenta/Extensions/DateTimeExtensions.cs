@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace Proiect_licenta.Extensions
+namespace Proiect_licenta.Extensions;
+
+public static class DateTimeExtensions
 {
-    public static class DateTimeExtensions
+    public static int CalculateAge(this DateTime dob)
     {
-        public static int CalculateAge(this DateTime dob)
-        {
-            var today = DateTime.Today;
-            var age = today.Year - dob.Year;
+        var today = DateTime.Today;
+        var age = today.Year - dob.Year;
 
-            if (dob.Date > today.AddYears(-age)) age--;
+        if (dob.Date > today.AddYears(-age)) age--;
 
-            return age;
-        }
+        return age;
     }
 }
