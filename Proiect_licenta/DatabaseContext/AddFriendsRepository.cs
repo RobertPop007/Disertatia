@@ -7,57 +7,56 @@ using Proiect_licenta.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Proiect_licenta.DatabaseContext;
+
+public class AddFriendsRepository : IAddFriendsRepository
 {
-    public class AddFriendsRepository : IAddFriendsRepository
+    private readonly DataContext _context;
+
+    public AddFriendsRepository(DataContext context)
     {
-        private readonly DataContext _context;
+        this._context = context;
+    }
 
-        public AddFriendsRepository(DataContext context)
+    public async Task<UserFriend> GetUserFriend(int addedByUserId, int addedUserId)
+    {
+        return await _context.Friends.FindAsync(addedByUserId, addedUserId);
+    }
+
+    public async Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams friendsParams)
+    {
+        var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+        var friends = _context.Friends.AsQueryable();
+
+        if(friendsParams.Predicate == "added")
         {
-            this._context = context;
+            friends = friends.Where(friend => friend.AddedByUserId == friendsParams.UserId);
+            users = friends.Select(friend => friend.AddedUser);
         }
 
-        public async Task<UserFriend> GetUserFriend(int addedByUserId, int addedUserId)
+        if(friendsParams.Predicate == "addedBy")
         {
-            return await _context.Friends.FindAsync(addedByUserId, addedUserId);
+            friends = friends.Where(friend => friend.AddedUserId == friendsParams.UserId);
+            users = friends.Select(friend => friend.AddedByUser);
         }
 
-        public async Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams friendsParams)
+        var addedUsers = users.Select(user => new FriendsDto
         {
-            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
-            var friends = _context.Friends.AsQueryable();
+            Username = user.UserName,
+            KnownAs = user.KnownAs,
+            Age = user.DateOfBirth.CalculateAge(),
+            PhotoUrl = user.ProfilePicture.Url,
+            City = user.City,
+            Id = user.Id
+        });
 
-            if(friendsParams.Predicate == "added")
-            {
-                friends = friends.Where(friend => friend.AddedByUserId == friendsParams.UserId);
-                users = friends.Select(friend => friend.AddedUser);
-            }
+        return await PagedList<FriendsDto>.CreateAsync(addedUsers, friendsParams.PageNumber, friendsParams.PageSize);
+    }
 
-            if(friendsParams.Predicate == "addedBy")
-            {
-                friends = friends.Where(friend => friend.AddedUserId == friendsParams.UserId);
-                users = friends.Select(friend => friend.AddedByUser);
-            }
-
-            var addedUsers = users.Select(user => new FriendsDto
-            {
-                Username = user.UserName,
-                KnownAs = user.KnownAs,
-                Age = user.DateOfBirth.CalculateAge(),
-                PhotoUrl = user.ProfilePicture.Url,
-                City = user.City,
-                Id = user.Id
-            });
-
-            return await PagedList<FriendsDto>.CreateAsync(addedUsers, friendsParams.PageNumber, friendsParams.PageSize);
-        }
-
-        public async Task<AppUser> GetUserWithFriends(int userId)
-        {
-            return await _context.Users
-                 .Include(x => x.AddedUsers)
-                 .FirstOrDefaultAsync(x => x.Id == userId);
-        }
+    public async Task<AppUser> GetUserWithFriends(int userId)
+    {
+        return await _context.Users
+             .Include(x => x.AddedUsers)
+             .FirstOrDefaultAsync(x => x.Id == userId);
     }
 }

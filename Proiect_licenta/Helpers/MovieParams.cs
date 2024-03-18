@@ -1,8 +1,7 @@
-﻿namespace Proiect_licenta.Helpers
+﻿namespace Proiect_licenta.Helpers;
+
+public class MovieParams : PaginationParams
 {
-    public class MovieParams : PaginationParams
-    {
-        public string SearchedMovie { get; set; }
-        public string OrderBy { get; set; } = "ImDbRating";
-    }
+    public string SearchedMovie { get; set; }
+    public string OrderBy { get; set; } = "ImDbRating";
 }

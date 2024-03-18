@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Proiect_licenta.Entities.Movies
+namespace Proiect_licenta.Entities.Movies;
+
+public class MovieGeneralInfo
 {
-    public class MovieGeneralInfo
-    {
-        public List<MovieItem> Items { get; set; }
-        public string ErrorMessage { get; set; }
-    }
+    public List<MovieItem> Items { get; set; }
+    public string ErrorMessage { get; set; }
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.Movies
+namespace Proiect_licenta.Entities.Movies;
+
+public class WriterList
 {
-    public class WriterList
-    {
-        [Key]
-        public Guid WriterId { get; set; } = Guid.NewGuid();
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+    [Key]
+    public Guid WriterId { get; set; } = Guid.NewGuid();
+    public string Id { get; set; }
+    public string Name { get; set; }
 }

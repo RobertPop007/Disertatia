@@ -8,58 +8,57 @@ using Proiect_licenta.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Controllers
+namespace Proiect_licenta.Controllers;
+
+[Authorize]
+public class FriendsController : BaseApiController
 {
-    [Authorize]
-    public class FriendsController : BaseApiController
+    private readonly IUserRepository _userRepository;
+    private readonly IAddFriendsRepository _addFriendsRepository;
+
+    public FriendsController(IUserRepository userRepository, IAddFriendsRepository addFriendsRepository)
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IAddFriendsRepository _addFriendsRepository;
+        this._userRepository = userRepository;
+        this._addFriendsRepository = addFriendsRepository;
+    }
 
-        public FriendsController(IUserRepository userRepository, IAddFriendsRepository addFriendsRepository)
+    [HttpPost("{username}")]
+    public async Task<ActionResult> AddFriend(string username)
+    {
+        var addedByUserId = User.GetUserId();
+        var addedUser = await _userRepository.GetUserByUsernameAsync(username);
+        var addedByUser = await _addFriendsRepository.GetUserWithFriends(addedByUserId);
+
+        if (addedUser == null) return NotFound();
+
+        if (addedByUser.UserName == username) return BadRequest("You cannot like yourself");
+
+        var userFriend = await _addFriendsRepository.GetUserFriend(addedByUserId, addedUser.Id);
+
+        if (userFriend != null) return BadRequest("You are already friend with this user");
+
+        userFriend = new UserFriend
         {
-            this._userRepository = userRepository;
-            this._addFriendsRepository = addFriendsRepository;
-        }
+            AddedByUserId = addedByUserId,
+            AddedUserId = addedUser.Id
 
-        [HttpPost("{username}")]
-        public async Task<ActionResult> AddFriend(string username)
-        {
-            var addedByUserId = User.GetUserId();
-            var addedUser = await _userRepository.GetUserByUsernameAsync(username);
-            var addedByUser = await _addFriendsRepository.GetUserWithFriends(addedByUserId);
+        };
 
-            if (addedUser == null) return NotFound();
+        addedByUser.AddedUsers.Add(userFriend);
 
-            if (addedByUser.UserName == username) return BadRequest("You cannot like yourself");
+        if (await _userRepository.SaveAllAsync()) return Ok();
 
-            var userFriend = await _addFriendsRepository.GetUserFriend(addedByUserId, addedUser.Id);
+        return BadRequest("Failed to like user");
+    }
 
-            if (userFriend != null) return BadRequest("You are already friend with this user");
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<FriendsDto>>> GetUserFriends([FromQuery] AddFriendParams addFriendParams)
+    {
+        addFriendParams.UserId = User.GetUserId();
+        var users =  await _addFriendsRepository.GetUserFriends(addFriendParams);
 
-            userFriend = new UserFriend
-            {
-                AddedByUserId = addedByUserId,
-                AddedUserId = addedUser.Id
+        Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
-            };
-
-            addedByUser.AddedUsers.Add(userFriend);
-
-            if (await _userRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Failed to like user");
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<FriendsDto>>> GetUserFriends([FromQuery] AddFriendParams addFriendParams)
-        {
-            addFriendParams.UserId = User.GetUserId();
-            var users =  await _addFriendsRepository.GetUserFriends(addFriendParams);
-
-            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
-
-            return Ok(users);
-        }
+        return Ok(users);
     }
 }

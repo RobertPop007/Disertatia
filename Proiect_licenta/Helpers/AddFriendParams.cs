@@ -1,8 +1,7 @@
-﻿namespace Proiect_licenta.Helpers
+﻿namespace Proiect_licenta.Helpers;
+
+public class AddFriendParams : PaginationParams
 {
-    public class AddFriendParams : PaginationParams
-    {
-        public int UserId { get; set; }
-        public string Predicate { get; set; }
-    }
+    public int UserId { get; set; }
+    public string Predicate { get; set; }
 }

@@ -9,75 +9,74 @@ using AutoMapper.QueryableExtensions;
 using AutoMapper;
 using Proiect_licenta.Helpers;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Proiect_licenta.DatabaseContext;
+
+public class UserRepository : IUserRepository
 {
-    public class UserRepository : IUserRepository
+    private readonly DataContext _context;
+    private readonly IMapper _mapper;
+
+    public UserRepository(DataContext context, IMapper mapper)
     {
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public UserRepository(DataContext context, IMapper mapper)
+    public async Task<MemberDto> GetMemberAsync(string username)
+    {
+        return await _context.Users
+            .Where(x => x.UserName == username)
+            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync();
+    }
+
+    public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
+    {
+        var query = _context.Users.AsQueryable();
+
+        query = query.Where(u => u.UserName != userParams.CurrentUsername);
+
+        if(!string.IsNullOrWhiteSpace(userParams.SearchedUsername))
+            query = query.Where(u => u.UserName.Contains(userParams.SearchedUsername));
+
+        query = userParams.OrderBy switch
         {
-            _context = context;
-            _mapper = mapper;
-        }
+            "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
+            "lookingFor" => query.OrderBy(u => u.LookingFor).OrderByDescending(u => u.LastActive),
+            _ => query.OrderByDescending(u => u.Interests)
+            
+        };
 
-        public async Task<MemberDto> GetMemberAsync(string username)
-        {
-            return await _context.Users
-                .Where(x => x.UserName == username)
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync();
-        }
+        return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+            userParams.PageNumber, userParams.PageSize);
+    }
 
-        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
-        {
-            var query = _context.Users.AsQueryable();
+    public async Task<AppUser> GetUserByIdAsync(int id)
+    {
+        return await _context.Users.FindAsync(id);
+    }
 
-            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+    public async Task<AppUser> GetUserByUsernameAsync(string username)
+    {
+        return await _context.Users
+            .Include(p => p.ProfilePicture)
+            .SingleOrDefaultAsync(x => x.UserName == username);
+    }
 
-            if(!string.IsNullOrWhiteSpace(userParams.SearchedUsername))
-                query = query.Where(u => u.UserName.Contains(userParams.SearchedUsername));
+    public async Task<IEnumerable<AppUser>> GetUsersAsync()
+    {
+        return await _context.Users
+            .Include(p => p.ProfilePicture)
+            .ToListAsync();
+    }
 
-            query = userParams.OrderBy switch
-            {
-                "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
-                "lookingFor" => query.OrderBy(u => u.LookingFor).OrderByDescending(u => u.LastActive),
-                _ => query.OrderByDescending(u => u.Interests)
-                
-            };
+    public async Task<bool> SaveAllAsync()
+    {
+        return await _context.SaveChangesAsync() > 0;
+    }
 
-            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
-                userParams.PageNumber, userParams.PageSize);
-        }
-
-        public async Task<AppUser> GetUserByIdAsync(int id)
-        {
-            return await _context.Users.FindAsync(id);
-        }
-
-        public async Task<AppUser> GetUserByUsernameAsync(string username)
-        {
-            return await _context.Users
-                .Include(p => p.ProfilePicture)
-                .SingleOrDefaultAsync(x => x.UserName == username);
-        }
-
-        public async Task<IEnumerable<AppUser>> GetUsersAsync()
-        {
-            return await _context.Users
-                .Include(p => p.ProfilePicture)
-                .ToListAsync();
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public void Update(AppUser user)
-        {
-            _context.Entry(user).State = EntityState.Modified;
-        }
+    public void Update(AppUser user)
+    {
+        _context.Entry(user).State = EntityState.Modified;
     }
 }
