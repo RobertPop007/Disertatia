@@ -2,7 +2,6 @@
 using Proiect_licenta.Entities.Games.Game;
 using Proiect_licenta.Entities.Games.GamesIds;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 

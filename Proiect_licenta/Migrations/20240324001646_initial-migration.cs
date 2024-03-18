@@ -1,10 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Proiect_licenta.Migrations
 {
-    public partial class InitialMigration : Migration
+    /// <inheritdoc />
+    public partial class initialmigration : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -51,10 +55,11 @@ namespace Proiect_licenta.Migrations
                     LastActive = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Introduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LookingFor = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Interests = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsSubscribedToNewsletter = table.Column<bool>(type: "bit", nullable: false),
+                    HasDarkMode = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -793,14 +798,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Games_AddedByStatusGame_Added_by_statusAddedByStatusGameId",
                         column: x => x.Added_by_statusAddedByStatusGameId,
                         principalTable: "AddedByStatusGame",
-                        principalColumn: "AddedByStatusGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "AddedByStatusGameId");
                     table.ForeignKey(
                         name: "FK_Games_EsrbRatingGame_Esrb_ratingEsrbRatingGameId",
                         column: x => x.Esrb_ratingEsrbRatingGameId,
                         principalTable: "EsrbRatingGame",
-                        principalColumn: "EsrbRatingGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "EsrbRatingGameId");
                 });
 
             migrationBuilder.CreateTable(
@@ -818,8 +821,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Connections_Groups_GroupName",
                         column: x => x.GroupName,
                         principalTable: "Groups",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Name");
                 });
 
             migrationBuilder.CreateTable(
@@ -838,8 +840,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Item_MoviesImages_MoviesImagesId",
                         column: x => x.MoviesImagesId,
                         principalTable: "MoviesImages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -866,14 +867,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Wikipedia_PlotFull_PlotFullId",
                         column: x => x.PlotFullId,
                         principalTable: "PlotFull",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Wikipedia_PlotShort_PlotShortId",
                         column: x => x.PlotShortId,
                         principalTable: "PlotShort",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -891,14 +890,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Prop_From_FromId",
                         column: x => x.FromId,
                         principalTable: "From",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Prop_To_ToId",
                         column: x => x.ToId,
                         principalTable: "To",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -916,14 +913,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_PropManga_FromManga_FromId",
                         column: x => x.FromId,
                         principalTable: "FromManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PropManga_ToManga_ToId",
                         column: x => x.ToId,
                         principalTable: "ToManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -942,8 +937,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowCreatorList_TvSeriesInfo_TvSeriesInfoTvShowInfoId",
                         column: x => x.TvSeriesInfoTvShowInfoId,
                         principalTable: "TvSeriesInfo",
-                        principalColumn: "TvShowInfoId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowInfoId");
                 });
 
             migrationBuilder.CreateTable(
@@ -962,8 +956,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowItems_TvShowImages_TvShowImagesId",
                         column: x => x.TvShowImagesId,
                         principalTable: "TvShowImages",
-                        principalColumn: "TvShowImagesId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowImagesId");
                 });
 
             migrationBuilder.CreateTable(
@@ -990,14 +983,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowWikipedia_TvShowPlotFull_PlotFullTvShowPlotFullId",
                         column: x => x.PlotFullTvShowPlotFullId,
                         principalTable: "TvShowPlotFull",
-                        principalColumn: "TvShowPlotFullId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowPlotFullId");
                     table.ForeignKey(
                         name: "FK_TvShowWikipedia_TvShowPlotShort_PlotShortTvShowPlotShortId",
                         column: x => x.PlotShortTvShowPlotShortId,
                         principalTable: "TvShowPlotShort",
-                        principalColumn: "TvShowPlotShortId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowPlotShortId");
                 });
 
             migrationBuilder.CreateTable(
@@ -1020,14 +1011,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Images_Jpg_JpgId",
                         column: x => x.JpgId,
                         principalTable: "Jpg",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Images_Webp_WebpId",
                         column: x => x.WebpId,
                         principalTable: "Webp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1045,14 +1034,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_ImagesManga_JpgManga_JpgId",
                         column: x => x.JpgId,
                         principalTable: "JpgManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ImagesManga_WebpManga_WebpId",
                         column: x => x.WebpId,
                         principalTable: "WebpManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1098,8 +1085,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_DeveloperGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1121,8 +1107,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_GenreGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1140,14 +1125,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_ParentPlatformGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ParentPlatformGame_PlatformChildGame_PlatformChildGameId",
                         column: x => x.PlatformChildGameId,
                         principalTable: "PlatformChildGame",
-                        principalColumn: "PlatformChildGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "PlatformChildGameId");
                 });
 
             migrationBuilder.CreateTable(
@@ -1167,20 +1150,17 @@ namespace Proiect_licenta.Migrations
                         name: "FK_PlatformsGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PlatformsGame_PlatformGame_PlatformGameId",
                         column: x => x.PlatformGameId,
                         principalTable: "PlatformGame",
-                        principalColumn: "PlatformGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "PlatformGameId");
                     table.ForeignKey(
                         name: "FK_PlatformsGame_RequirementsGame_RequirementsGameId",
                         column: x => x.RequirementsGameId,
                         principalTable: "RequirementsGame",
-                        principalColumn: "RequirementsGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "RequirementsGameId");
                 });
 
             migrationBuilder.CreateTable(
@@ -1202,8 +1182,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_PublisherGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1224,8 +1203,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_RatingGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1245,14 +1223,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_StoresGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_StoresGame_StoreGame_StoreGameId",
                         column: x => x.StoreGameId,
                         principalTable: "StoreGame",
-                        principalColumn: "StoreGameId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "StoreGameId");
                 });
 
             migrationBuilder.CreateTable(
@@ -1275,8 +1251,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TagGame_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1323,32 +1298,27 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Movies_BoxOffice_BoxOfficeId",
                         column: x => x.BoxOfficeId,
                         principalTable: "BoxOffice",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Movies_MoviesImages_ImagesId",
                         column: x => x.ImagesId,
                         principalTable: "MoviesImages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Movies_MoviesTrailer_TrailerId",
                         column: x => x.TrailerId,
                         principalTable: "MoviesTrailer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Movies_Ratings_RatingsId",
                         column: x => x.RatingsId,
                         principalTable: "Ratings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Movies_Wikipedia_WikipediaId",
                         column: x => x.WikipediaId,
                         principalTable: "Wikipedia",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1368,8 +1338,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Aired_Prop_PropId",
                         column: x => x.PropId,
                         principalTable: "Prop",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1389,8 +1358,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_PublishedManga_PropManga_PropId",
                         column: x => x.PropId,
                         principalTable: "PropManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1437,38 +1405,32 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TrueTvShow_TvSeriesInfo_TvSeriesInfoTvShowInfoId",
                         column: x => x.TvSeriesInfoTvShowInfoId,
                         principalTable: "TvSeriesInfo",
-                        principalColumn: "TvShowInfoId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowInfoId");
                     table.ForeignKey(
                         name: "FK_TrueTvShow_TvShowBoxOffice_BoxOfficeTvShowBoxOfficeId",
                         column: x => x.BoxOfficeTvShowBoxOfficeId,
                         principalTable: "TvShowBoxOffice",
-                        principalColumn: "TvShowBoxOfficeId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowBoxOfficeId");
                     table.ForeignKey(
                         name: "FK_TrueTvShow_TvShowImages_ImagesTvShowImagesId",
                         column: x => x.ImagesTvShowImagesId,
                         principalTable: "TvShowImages",
-                        principalColumn: "TvShowImagesId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowImagesId");
                     table.ForeignKey(
                         name: "FK_TrueTvShow_TvShowRatings_RatingsTvShowRatingsId",
                         column: x => x.RatingsTvShowRatingsId,
                         principalTable: "TvShowRatings",
-                        principalColumn: "TvShowRatingsId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowRatingsId");
                     table.ForeignKey(
                         name: "FK_TrueTvShow_TvShowTrailer_TrailerTvShowTrailerId",
                         column: x => x.TrailerTvShowTrailerId,
                         principalTable: "TvShowTrailer",
-                        principalColumn: "TvShowTrailerId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowTrailerId");
                     table.ForeignKey(
                         name: "FK_TrueTvShow_TvShowWikipedia_WikipediaTvShowWikipediaId",
                         column: x => x.WikipediaTvShowWikipediaId,
                         principalTable: "TvShowWikipedia",
-                        principalColumn: "TvShowWikipediaId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TvShowWikipediaId");
                 });
 
             migrationBuilder.CreateTable(
@@ -1488,8 +1450,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Trailer_Images_ImagesId",
                         column: x => x.ImagesId,
                         principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1510,8 +1471,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_ActorList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1541,8 +1501,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_AppUserMovieItems_Top250Movies_MovieItemId",
                         column: x => x.MovieItemId,
                         principalTable: "Top250Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1561,8 +1520,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_CompanyList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1581,8 +1539,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_CountryList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1601,8 +1558,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_DirectorList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1621,8 +1577,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_GenreList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1641,8 +1596,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_LanguageList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1664,8 +1618,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Similar_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1684,8 +1637,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_StarList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1704,8 +1656,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_WriterList_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1741,14 +1692,12 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Manga_ImagesManga_ImagesId",
                         column: x => x.ImagesId,
                         principalTable: "ImagesManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Manga_PublishedManga_PublishedId",
                         column: x => x.PublishedId,
                         principalTable: "PublishedManga",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1778,8 +1727,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_AppUserTvShowItems_TvShows_TvShowItemId",
                         column: x => x.TvShowItemId,
                         principalTable: "TvShows",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1800,8 +1748,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowActorList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1820,8 +1767,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowCompanyList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1840,8 +1786,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowCountryList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1860,8 +1805,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowGenreList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1880,8 +1824,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowLanguageList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1902,8 +1845,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowSimilar_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1922,8 +1864,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_TvShowStarList_TrueTvShow_TvShowId",
                         column: x => x.TvShowId,
                         principalTable: "TrueTvShow",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1964,26 +1905,22 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Anime_Aired_AiredId",
                         column: x => x.AiredId,
                         principalTable: "Aired",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Anime_Broadcast_BroadcastId",
                         column: x => x.BroadcastId,
                         principalTable: "Broadcast",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Anime_Images_ImagesId",
                         column: x => x.ImagesId,
                         principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Anime_Trailer_TrailerId",
                         column: x => x.TrailerId,
                         principalTable: "Trailer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2028,8 +1965,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_AuthorManga_Manga_DatumMangaMal_id",
                         column: x => x.DatumMangaMal_id,
                         principalTable: "Manga",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2050,8 +1986,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_DemographicManga_Manga_DatumMangaMal_id",
                         column: x => x.DatumMangaMal_id,
                         principalTable: "Manga",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2072,8 +2007,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_GenreManga_Manga_DatumMangaMal_id",
                         column: x => x.DatumMangaMal_id,
                         principalTable: "Manga",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2094,8 +2028,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_SerializationManga_Manga_DatumMangaMal_id",
                         column: x => x.DatumMangaMal_id,
                         principalTable: "Manga",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2116,8 +2049,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_ThemeManga_Manga_DatumMangaMal_id",
                         column: x => x.DatumMangaMal_id,
                         principalTable: "Manga",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2162,8 +2094,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Demographic_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2184,8 +2115,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Genre_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2206,8 +2136,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Licensor_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2228,8 +2157,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Producer_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2250,8 +2178,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Studio_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -2272,8 +2199,7 @@ namespace Proiect_licenta.Migrations
                         name: "FK_Theme_Anime_DatumMal_id",
                         column: x => x.DatumMal_id,
                         principalTable: "Anime",
-                        principalColumn: "Mal_id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Mal_id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -2757,6 +2683,7 @@ namespace Proiect_licenta.Migrations
                 column: "MovieId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

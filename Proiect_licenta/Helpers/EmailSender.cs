@@ -29,7 +29,7 @@ namespace Proiect_licenta.Helpers
         private MimeMessage CreateEmailMessage(EmailMessage message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.From.Add(new MailboxAddress("testName", _emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
@@ -39,7 +39,7 @@ namespace Proiect_licenta.Helpers
         private MimeMessage CreateHtmlEmailMessage(EmailMessage message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
+            emailMessage.From.Add(new MailboxAddress("testName", _emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
 

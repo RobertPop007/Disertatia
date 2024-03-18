@@ -10,7 +10,6 @@ using Proiect_licenta.SignalR;
 using Proiect_licenta.Services;
 using Proiect_licenta.DatabaseContext;
 using Proiect_licenta.Entities.Movies;
-using System.Collections.Generic;
 using Proiect_licenta.Entities;
 using Hangfire;
 using Proiect_licenta.Hangfire;
