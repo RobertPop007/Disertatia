@@ -3,7 +3,7 @@
 
     <div class="d-flex justify-content-between">
       <div>
-        <p>{{game.released}} <span *ngIf="game.esrb_rating"><i class="far fa-dot-circle"></i></span> {{game.esrb_rating?.name}}
+        <p>{{game.released}}<span *ngIf="game.esrb_rating"><i class="far fa-dot-circle"></i></span> {{game.esrb_rating}}
           </p>
 
         <div class="d-inline-block" *ngFor="let genre of game.genres">
@@ -57,7 +57,7 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 
 <div *ngIf="game.platforms!.length > 0">
-<h1>Platforms</h1>
+<h1>Platforme</h1>
 <div *ngFor="let platform of game.platforms">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{platform.platform?.name}}</span></p>
   </div>
@@ -65,18 +65,8 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-<div *ngIf="game.platforms!.length > 0">
-  <h1>Requirements for PC</h1>
-  <div>
-      <p>{{game!.platforms![0].requirements!.minimum}}</p>
-      <p>{{game!.platforms![0].requirements!.recommended}}</p>
-    </div>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
 <div *ngIf="game.stores">
-<h1>Online stores</h1>
+<h1>Magazine online</h1>
 <div *ngFor="let store of game.stores">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{store.store?.name}}</span></p>
   </div>
@@ -93,8 +83,8 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-<div *ngIf="game.genres">
-    <h1>Genres</h1>
+<div *ngIf="game.developers">
+    <h1>Genuri</h1>
     <div *ngFor="let genre of game.genres">
         <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{genre.name}}</span></p>
         </div>
@@ -102,19 +92,17 @@
     <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-<div *ngIf="game.tags">
-    <h1>Tags</h1>
-      <div class="row">
-    <div *ngFor="let tag of game.tags" class="col-3">
+<div *ngIf="game.developers">
+    <h1>Tag-uri</h1>
+    <div *ngFor="let tag of game.tags">
         <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tag.name}}</span></p>
         </div>
-      </div>
 
     <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-<div *ngIf="game.publishers">
-    <h1>Publishers</h1>
+<div *ngIf="game.developers">
+    <h1>Editori</h1>
     <div *ngFor="let publisher of game.publishers">
         <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{publisher.name}}</span></p>
         </div>

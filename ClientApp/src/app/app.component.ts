@@ -27,16 +27,15 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.setCurrentUser();
     
-    // if(this.isDarkMode === true)
-    // {
-    //   this.darkModeService.enable();
-    // }
+    if(this.isDarkMode === true)
+    {
+      this.darkModeService.enable();
+    }
 
     this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
-
     this.document.body.classList.replace(
       this.theme, 
-      this.isDarkMode === true
+      this.isDarkMode == true
       ? (this.theme = 'dark-theme') 
       : (this.theme = 'light-theme'))
 
@@ -64,26 +63,15 @@ export class AppComponent implements OnInit {
 
   setCurrentUser(){
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
-
+    
     if(user.username !== undefined){ //if(user) - asa era inainte
       if(user.username !== undefined) //pentru ca la refresh cand nu esti logat, te loga instant
         this.accountService.setCurrentUser(user);
-        
 
       this.presence.createHubConnection(user);
-
-      localStorage.setItem('isSubscribed', user.isSubscribed + "");
-      localStorage.setItem('isDarkMode', user.hasDarkMode + "");
-
-      this.document.body.classList.replace(
-        this.theme, 
-        this.isDarkMode === true
-        ? (this.theme = 'dark-theme') 
-        : (this.theme = 'light-theme'))
-
-      console.log(user);
-      
     }
+
+    
   }
 }
 

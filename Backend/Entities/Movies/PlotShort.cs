@@ -1,0 +1,12 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace Backend.Entities.Movies;
+
+public class PlotShort
+{
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string PlainText { get; set; }
+    public string Html { get; set; }
+}
