@@ -1,0 +1,15 @@
+import { Movie } from "./movie";
+import { User } from "./user";
+
+export class AnimeParams{
+    username!: string;
+    pageNumber = 1;
+    pageSize = 20;
+    searchedAnime!: string;
+    orderBy = "score";
+
+    constructor(user: User, searchedAnime: string){
+        this.username = user.username;
+        this.searchedAnime = searchedAnime;
+    }
+}

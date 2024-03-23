@@ -14,11 +14,9 @@ import { DOCUMENT } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   theme: Theme = 'light-theme';
-  title = 'The dating app';
   users: any;
   isDarkMode!: boolean;
   darkMode$: Observable<boolean> = this.darkModeService.darkMode$;
-  currentMode: string = this.isDarkMode ? "Light mode" : "Dark mode";
 
   constructor(private accountService: AccountService, 
               private presence: PresenceService,
@@ -29,12 +27,18 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.setCurrentUser();
     
-    this.isDarkMode = (this.currentMode == "Dark mode") ? true : false;
+    // if(this.isDarkMode === true)
+    // {
+    //   this.darkModeService.enable();
+    // }
 
-    if(this.isDarkMode === true)
-    {
-      this.darkModeService.enable();
-    }
+    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
+
+    this.document.body.classList.replace(
+      this.theme, 
+      this.isDarkMode === true
+      ? (this.theme = 'dark-theme') 
+      : (this.theme = 'light-theme'))
 
     this.initializeTheme();
   }
@@ -46,33 +50,40 @@ export class AppComponent implements OnInit {
       ? (this.theme = 'dark-theme') 
       : (this.theme = 'light-theme'))
 
-      this.setDisplayMode(this.theme);
   }
 
   initializeTheme = (): void =>
       this.renderer.addClass(this.document.body, this.theme);
 
-  setDisplayMode(mode: string) {
-    localStorage.setItem("currentMode", mode);
-    this.currentMode = mode;
-  }
+  
 
   onToggle(): void {
-    this.setDisplayMode(this.isDarkMode ? "Light mode" : "Dark mode");
+    
     this.darkModeService.toggle();
   }
 
   setCurrentUser(){
     const user: User = JSON.parse(localStorage.getItem('user') || '{}');
 
-    if(user){
-      if(user.username || user.token) //pentru ca la refresh cand nu esti logat, te loga instant
+    if(user.username !== undefined){ //if(user) - asa era inainte
+      if(user.username !== undefined) //pentru ca la refresh cand nu esti logat, te loga instant
         this.accountService.setCurrentUser(user);
-      
-      this.presence.createHubConnection(user);
-    }
+        
 
-    
+      this.presence.createHubConnection(user);
+
+      localStorage.setItem('isSubscribed', user.isSubscribed + "");
+      localStorage.setItem('isDarkMode', user.hasDarkMode + "");
+
+      this.document.body.classList.replace(
+        this.theme, 
+        this.isDarkMode === true
+        ? (this.theme = 'dark-theme') 
+        : (this.theme = 'light-theme'))
+
+      console.log(user);
+      
+    }
   }
 }
 

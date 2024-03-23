@@ -1,1 +1,27 @@
-<p>tv-shows-list works!</p>
+<div class="container" mt-3>
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadTvShows()" autocomplete="off">
+        <div class="form-group">
+            <label>Tv Show title: </label>
+            <input type="text" class="form-control ml-1" style="width: 170px;" name="searchedUsername" [(ngModel)]="tvShowParams.searchedTvShow">
+        </div>
+
+        <button class="btn btn-primary ml-1" type="submit">Search</button>
+        <button (click)="resetFilters()" class="btn btn-info ml-1">Reset searching</button>
+
+        <div class="btn-group float-right">
+            <button class="btn btn-primary" name='orderBy' (click)="loadTvShows()" btnRadio="lookingFor" type="button" [(ngModel)]="tvShowParams.orderBy">Newest TV shows</button>
+        </div>
+    </form>
+</div> 
+
+<div class="row">
+    <div *ngFor="let tvShow of tvShows | paginate: { itemsPerPage: 18, currentPage: p }" class="col-2">
+        <app-tv-show-card [tvShow]="tvShow"></app-tv-show-card> 
+    </div>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="text-right">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+</div>

@@ -25,7 +25,6 @@ export class MovieCardAddedComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
   }
 
   deleteMovieForUser(movie: Movie){

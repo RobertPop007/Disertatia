@@ -15,4 +15,6 @@ export interface Member {
     city: string;
     country: string;
     photo: Photo;
+    IsSubscribedToNewsletter: boolean;
+    hasDarkMode: boolean;
 }

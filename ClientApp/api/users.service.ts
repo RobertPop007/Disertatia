@@ -221,16 +221,7 @@ export class UsersService {
             }
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Users/delete-photo`,
-            null,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Users/delete-photo`
         );
     }
 

@@ -1,0 +1,136 @@
+<div class="row">
+    <h1 style="size: 15rem;">{{anime.title}} ({{anime.title_japanese}})</h1>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>{{anime.year}} <span *ngIf="anime.duration"><i class="far fa-dot-circle"></i> </span> {{anime.duration}}
+          <span *ngIf="anime.rating"><i class="far fa-dot-circle"></i></span> {{anime.rating}}
+          <span *ngIf="anime.status"><i class="far fa-dot-circle"></i></span> {{anime.status}}</p>
+          
+
+        <div class="d-inline-block" *ngFor="let genre of anime.genres">
+          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+        </div>
+
+        <!-- <div *ngIf="movie.tagline">
+          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
+        </div> -->
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addAnime(anime)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button> <p>Add anime</p></li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteAnime(anime)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button> <p>Delete movie</p></li>
+        </div>
+        <br>
+      </div>
+      
+    <div>
+      <div class="text-end">
+        <p style="font-size: 20px;">Rating</p>
+          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
+          <div class="d-inline-block">
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{anime.score}}</span>/10<br>{{anime.scored_by}} votes</p>
+          </div>
+
+    </div>
+  </div>
+      
+    </div>
+
+    <div class="col-4"><img src="{{anime.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{anime.title}}" class="img-fluid"></div>
+    <div class="col-8">
+
+    <div *ngIf="anime.trailer!.embed_url!" class="embed-responsive embed-responsive-4by3">
+        <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embed_url! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
+        </div>
+    </div>
+</div>
+  
+<br><br>
+
+<h1>Plot</h1>
+<p class="indent">{{anime.synopsis}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+
+<div *ngIf="anime.producers!.length > 0">
+<h1>Producers</h1>
+<div *ngFor="let producer of anime.producers">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{producer.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="anime.licensors!.length > 0">
+<h1>Licensors</h1>
+<div *ngFor="let licensor of anime.licensors">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{licensor.name}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="anime.studios!.length > 0">
+<h1>Studios</h1>
+<div *ngFor="let studio of anime.studios">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{studio.name}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="anime.themes">
+<h1>Themes</h1>
+<div *ngFor="let theme of anime.themes">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="anime.rank">
+  <h1>Additional informations</h1>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Rank: {{anime.rank}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Popularity: {{anime.popularity}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Members: {{anime.members}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Favorites: {{anime.favorites}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Episodes: {{anime.episodes}}</span></p>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+<div *ngIf="anime.url">
+  <h1>External links</h1>
+  <a style="color: #0096FF;" target="_blank" href="{{anime.url}}">
+  {{anime.title}} MyAnimeList</a>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+  <div *ngIf="anime.broadcast!.string !== 'Unknow' && anime.broadcast!.string">
+    <h1>Broadcast</h1>
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">
+      {{anime.broadcast!.string}}</span></p>
+
+      <hr style="width:50%;text-align:left;margin-left:0">
+    </div>
+
+    <div *ngIf="anime.demographics!.length > 0">
+      <h1>Similar animes on MyAnimeList</h1>
+
+      <h2>Links:</h2>
+
+      <div *ngFor="let demographic of anime.demographics">
+      <a style="color: #0096FF;" target="_blank" href="{{demographic.url}}">
+      Similar {{demographic.name}} on MyAnimeList</a>
+    </div>
+      
+      <hr style="width:50%;text-align:left;margin-left:0">
+      </div>

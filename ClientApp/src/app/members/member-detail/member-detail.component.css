@@ -10,6 +10,25 @@
 
 .card-footer{
     padding: 10px 15px;
-    background-color: #fff;
     border-top: none;
+}
+
+
+.tab{
+    background-color: skyblue;
+    margin-top: -20px; 
+    margin-bottom: -20px; 
+    padding-top: 20px;
+}
+
+.card{
+    background-color: skyblue;
+}
+
+.card-body{
+    background-color: skyblue;
+}
+
+.member-tabset{
+    background-color: skyblue;
 }

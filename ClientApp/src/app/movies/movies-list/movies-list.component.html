@@ -1,7 +1,7 @@
-<div class="container" mt-3>
+<div class="container">
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMovies()" autocomplete="off">
         <div class="form-group">
-            <label>Username: </label>
+            <label>Movie title: </label>
             <input type="text" class="form-control ml-1" style="width: 170px;" name="searchedUsername" [(ngModel)]="movieParams.searchedMovie">
         </div>
 

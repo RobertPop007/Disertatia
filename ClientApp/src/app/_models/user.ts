@@ -4,5 +4,8 @@ export interface User{
     photoUrl: string;
     knownAs: string;
     gender: string;
+    email: string;
     roles: string[];
+    isSubscribed: boolean;
+    hasDarkMode: boolean;
 }

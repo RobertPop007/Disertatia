@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   registerForm!: FormGroup;
   validationErrors: string[] = [];
+  emailPattern: any = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   constructor(private accountService: AccountService,
               private toastr: ToastrService,
@@ -29,10 +30,11 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       gender: ['male'],
       knownAs: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{6,}') ]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     })
   }
@@ -48,11 +50,17 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
+    console.log(this.registerForm.value);
+    
     this.accountService.register(this.registerForm.value).subscribe(response =>{
       this.router.navigateByUrl('/members');
     }, error => {
       this.validationErrors = error;
     })
+  }
+
+  goToSignIn(){
+    window.location.reload();
   }
 
   cancel(){

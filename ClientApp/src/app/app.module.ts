@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -54,6 +53,25 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxFixedFooterModule } from 'ngx-fixed-footer';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { TvShowDetailComponent } from './tvShows/tv-show-detail/tv-show-detail.component';
+import { TvShowCardAddedComponent } from './tvShows/tv-show-card-added/tv-show-card-added.component';
+import { TvShowCardComponent } from './tvShows/tv-show-card/tv-show-card.component';
+import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
+import { AnimeCardAddedComponent } from './anime/anime-card-added/anime-card-added.component';
+import { AnimeDetailComponent } from './anime/anime-detail/anime-detail.component';
+import { MangaCardComponent } from './manga/manga-card/manga-card.component';
+import { MangaCardAddedComponent } from './manga/manga-card-added/manga-card-added.component';
+import { GameCardAddedComponent } from './games/game-card-added/game-card-added.component';
+import { GameCardComponent } from './games/game-card/game-card.component';
+import { GameListComponent } from './games/game-list/game-list.component';
+import { GameDetailComponent } from './games/game-detail/game-detail.component';
+import { MangaDetailComponent } from './manga/manga-detail/manga-detail.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { MemberCardAddedComponent } from './members/member-card-added/member-card-added.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +109,22 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
     MovieCardAddedComponent,
     SafePipe,
     FooterComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    TvShowDetailComponent,
+    TvShowCardAddedComponent,
+    TvShowCardComponent,
+    AnimeCardComponent,
+    AnimeCardAddedComponent,
+    AnimeDetailComponent,
+    MangaCardComponent,
+    MangaCardAddedComponent,
+    MangaDetailComponent,
+    GameCardAddedComponent,
+    GameCardComponent,
+    GameListComponent,
+    GameDetailComponent,
+    ConfirmDialogComponent,
+    MemberCardAddedComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +143,15 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
     IvyCarouselModule,
     NgxPaginationModule,
     NgxFixedFooterModule,
-    CarouselModule
+    CarouselModule,
+    MdbCheckboxModule,
+    MatIconModule,
+    MatCardModule,
+    MatDialogModule,
+    MatRadioModule
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste

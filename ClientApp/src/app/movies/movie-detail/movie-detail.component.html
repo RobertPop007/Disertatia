@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{movie.title}}</h1>
+    <h1 style="size: 15rem;">{{movie.title}} ({{movie.fullTitle}})</h1>
 
     <div class="d-flex justify-content-between">
       <div>
@@ -18,12 +18,12 @@
 
         <div *ngIf="res == false">
           <li class="list-inline-item"><button (click)="addMovie(movie)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> Add movie</li>
+          <i class="fa fa-plus"></i></button> <p>Add movie</p></li>
         </div>
         
         <div *ngIf="res == true">
           <li class="list-inline-item"><button (click)="deleteMovie(movie)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> Delete movie</li>
+          <i class="fa fa-minus"></i></button> <p>Delete movie</p></li>
         </div>
         <br>
       </div>
@@ -134,6 +134,14 @@
   <hr style="width:50%;text-align:left;margin-left:0">
   </div>
 
+  <div *ngIf="movie.wikipedia">
+    <h1>External links</h1>
+    <a style="color: #0096FF;" target="_blank" href="{{movie.wikipedia.url}}">
+    {{movie.title}} Wikipedia</a>
+    
+    <hr style="width:50%;text-align:left;margin-left:0">
+    </div>
+
 <h1>Actor list</h1>
 <owl-carousel-o [options]="customOptions">
   
@@ -148,13 +156,12 @@
 </owl-carousel-o>
 
 <h1>Similar movies</h1>
-<owl-carousel-o [options]="customOptions">
-  
-    <ng-container *ngFor="let movie of movie.similars">
-      <ng-template *ngIf="movie.fullTitle && movie.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="movie.id!" style="margin-left: 20px;">
-        <div class="d-flex justify-content-start" style="width: 18rem;">
-            <app-movie-card [movie]="movie"></app-movie-card>
-      </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let similar of movie.similars" class="col-3 mb-2">
+        <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
+        <p class="card-text text-muted text-center">{{similar.title}}</p>
+        <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+    </div>
+  </div>
+</div>

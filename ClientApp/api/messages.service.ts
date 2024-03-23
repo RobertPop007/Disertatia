@@ -211,16 +211,7 @@ export class MessagesService {
             }
         }
 
-        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Messages/${encodeURIComponent(String(id))}`,
-            null,
-            {
-                context: localVarHttpContext,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: localVarHeaders,
-                observe: observe,
-                reportProgress: reportProgress
-            }
+        return this.httpClient.delete<any>(`${this.configuration.basePath}/api/Messages/${encodeURIComponent(String(id))}`
         );
     }
 

@@ -89,6 +89,10 @@ export class MembersService {
     return this.http.post(this.baseUrl + 'friends/' + username, {});
   }
 
+  removeFriend(username: string){
+    return this.http.delete(this.baseUrl + 'friends/' + username);
+  }
+
   getFriends(predicate: string, pageNumber: number, pageSize: number){
     let params = getPaginationHeaders(pageNumber, pageSize);
 

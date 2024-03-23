@@ -17,5 +17,6 @@ export interface UserDto {
     photoUrl?: string | null;
     knownAs?: string | null;
     gender?: string | null;
+    email?: string | null;
 }
 

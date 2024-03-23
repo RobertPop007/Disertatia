@@ -1,0 +1,134 @@
+<div class="row">
+    <h1 style="size: 15rem;">{{game.name}} ({{game.name_original}})</h1>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>{{game.released}} <span *ngIf="game.esrb_rating"><i class="far fa-dot-circle"></i></span> {{game.esrb_rating?.name}}
+          </p>
+
+        <div class="d-inline-block" *ngFor="let genre of game.genres">
+          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+        </div>
+
+        <!-- <div *ngIf="movie.tagline">
+          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
+        </div> -->
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addGame(game)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button> <p>Add game</p></li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteGame(game)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button> <p>Delete game</p></li>
+        </div>
+        <br>
+      </div>
+      
+    <div>
+      <div class="text-end">
+        <p style="font-size: 20px;">Rating</p>
+          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
+          <div class="d-inline-block">
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{game.rating}}</span>/5<br>{{game.ratings_count}} votes</p>
+          </div>
+
+          <div *ngIf="game.metacritic">
+            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{game.metacritic}} metascore</span></p>
+          </div>
+    </div>
+  </div>
+      
+    </div>
+    <div class="col-4">
+
+    </div>
+    <div class="col-4"><img src="{{game.background_image || './assets/user.png'}}" alt="{{game.name}}" class="img-fluid"></div>
+    
+  
+<br><br>
+
+<h1>Plot</h1>
+<p class="indent">{{game.description_raw}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+
+<div *ngIf="game.platforms!.length > 0">
+<h1>Platforms</h1>
+<div *ngFor="let platform of game.platforms">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{platform.platform?.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.platforms!.length > 0">
+  <h1>Requirements for PC</h1>
+  <div>
+      <p>{{game!.platforms![0].requirements!.minimum}}</p>
+      <p>{{game!.platforms![0].requirements!.recommended}}</p>
+    </div>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+<div *ngIf="game.stores">
+<h1>Online stores</h1>
+<div *ngFor="let store of game.stores">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{store.store?.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.developers">
+    <h1>Developers</h1>
+    <div *ngFor="let developer of game.developers">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{developer.name}}</span></p>
+      </div>
+    
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.genres">
+    <h1>Genres</h1>
+    <div *ngFor="let genre of game.genres">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{genre.name}}</span></p>
+        </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.tags">
+    <h1>Tags</h1>
+      <div class="row">
+    <div *ngFor="let tag of game.tags" class="col-3">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tag.name}}</span></p>
+        </div>
+      </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.publishers">
+    <h1>Publishers</h1>
+    <div *ngFor="let publisher of game.publishers">
+        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{publisher.name}}</span></p>
+        </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="game.reddit_url">
+  <h1>External links</h1>
+  <a style="color: #0096FF;" target="_blank" href="{{game.reddit_url}}">
+  {{game.reddit_url}} Reddit</a>
+
+  <a style="color: #0096FF;" target="_blank" href="{{game.metacritic_url}}">
+    {{game.metacritic_url}} Metacritic</a>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>

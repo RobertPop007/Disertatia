@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 import { UserFriend } from './userFriend';
+import { AppUserAnimeItem } from './appUserAnimeItem';
+import { AppUserMangaItem } from './appUserMangaItem';
 import { AppUserMovieItem } from './appUserMovieItem';
 import { Message } from './message';
 import { AppUserRole } from './appUserRole';
 import { AppUserTvShowItem } from './appUserTvShowItem';
 import { Photo } from './photo';
+import { AppUserGameItem } from './appUserGameItem';
 
 
 export interface AppUser { 
@@ -39,7 +42,6 @@ export interface AppUser {
     lastActive?: string;
     gender?: string | null;
     introduction?: string | null;
-    lookingFor?: string | null;
     interests?: string | null;
     city?: string | null;
     country?: string | null;
@@ -51,5 +53,10 @@ export interface AppUser {
     userRoles?: Array<AppUserRole> | null;
     appUserMovie?: Array<AppUserMovieItem> | null;
     appUserTvShow?: Array<AppUserTvShowItem> | null;
+    appUserAnime?: Array<AppUserAnimeItem> | null;
+    appUserManga?: Array<AppUserMangaItem> | null;
+    appUserGame?: Array<AppUserGameItem> | null;
+    isSubscribedToNewsletter?: boolean;
+    hasDarkMode?: boolean;
 }
 

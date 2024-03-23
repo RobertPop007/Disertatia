@@ -1,0 +1,86 @@
+<div class="row">
+    <h1 style="size: 15rem;">{{manga.title}} ({{manga.title_japanese}})</h1>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>{{manga.published?.string}}
+          <span *ngIf="manga.rank"><i class="far fa-dot-circle"></i></span> {{manga.volumes}}
+          <span *ngIf="manga.status"><i class="far fa-dot-circle"></i></span> {{manga.status}}</p>
+
+        <div class="d-inline-block" *ngFor="let genre of manga.genres">
+          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+        </div>
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addManga(manga)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button> <p>Add manga</p></li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteManga(manga)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button> <p>Delete manga</p></li>
+        </div>
+        <br>
+      </div>
+      
+    <div>
+      <div class="text-end">
+        <p style="font-size: 20px;">Rating</p>
+          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
+          <div class="d-inline-block">
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{manga.score}}</span>/10<br>{{manga.scored_by}} votes</p>
+          </div>
+    </div>
+  </div>
+      
+    </div>
+
+    <div class="col-4"></div>
+    <div class="col-4"><img src="{{manga.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{manga.title}}" class="img-fluid"></div>
+  
+<br><br>
+
+<h1>Plot</h1>
+<p class="indent">{{manga.synopsis}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+
+<div *ngIf="manga.authors!.length > 0">
+<h1>  Authors</h1>
+<div *ngFor="let author of manga.authors">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{author.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="manga.themes">
+<h1>Themes</h1>
+<div *ngFor="let theme of manga.themes">
+    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
+  </div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="manga.rank">
+  <h1>Additional informations</h1>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Rank: {{manga.rank}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Popularity: {{manga.popularity}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Members: {{manga.members}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Favorites: {{manga.favorites}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Chapters: {{manga.chapters}}</span></p>
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Volumes: {{manga.volumes}}</span></p>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+  <div *ngIf="manga.url">
+    <h1>External links</h1>
+    <a style="color: #0096FF;" target="_blank" href="{{manga.url}}">
+    {{manga.title}} MyAnimeList</a>
+    
+    <hr style="width:50%;text-align:left;margin-left:0">
+    </div>

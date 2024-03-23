@@ -1,0 +1,155 @@
+<div class="row">
+    <h1 style="size: 15rem;">{{tvShow.title}} ({{tvShow.fullTitle}})</h1>
+
+    <div class="d-flex justify-content-between">
+      <div>
+        <p>{{tvShow.year}} <span *ngIf="tvShow.runtimeStr"><i class="far fa-dot-circle"></i> </span> {{tvShow.runtimeStr}}
+          <span *ngIf="tvShow.contentRating"><i class="far fa-dot-circle"></i></span> {{tvShow.contentRating}}</p>
+
+        <div class="d-inline-block" *ngFor="let genre of tvShow.genreList">
+          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.value}}</p>
+        </div>
+
+        <br>
+
+        <div *ngIf="res == false">
+          <li class="list-inline-item"><button (click)="addTvShow(tvShow)" class="btn btn-primary">
+          <i class="fa fa-plus"></i></button><p>Add TV show</p></li>
+        </div>
+        
+        <div *ngIf="res == true">
+          <li class="list-inline-item"><button (click)="deleteTvShow(tvShow)" class="btn btn-primary">
+          <i class="fa fa-minus"></i></button><p>Delete TV show</p></li>
+        </div>
+        <br>
+      </div>
+      
+    <div>
+      <div class="text-end">
+        <p style="font-size: 20px;">Imdb Rating</p>
+          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
+          <div class="d-inline-block">
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{tvShow.imDbRating}}</span>/10<br>{{tvShow.imDbRatingVotes}} votes</p>
+          </div>
+
+          <div *ngIf="tvShow.metacriticRating">
+            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tvShow.metacriticRating}} metascore</span></p>
+          </div>
+    </div>
+  </div>
+      
+    </div>
+
+    <div class="col-4"><img src="{{tvShow.image || './assets/user.png'}}" alt="{{tvShow.fullTitle}}" class="img-fluid"></div>
+    <div class="col-8">
+
+    <div *ngIf="tvShow.trailer!.linkEmbed!" class="embed-responsive embed-responsive-4by3">
+        <iframe allowfullscreen class="embed-responsive-item" [src]="tvShow.trailer?.linkEmbed! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
+        </div>
+    </div>
+</div>
+  
+<br><br>
+
+<h1>Plot</h1>
+<p class="indent">{{tvShow.plot}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+
+<div *ngIf="tvShow.directors">
+<h1>Director</h1>
+<p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{tvShow.directors}}</span></p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.starList!.length > 0">
+<h1>Stars</h1>
+<div *ngFor="let star of tvShow.starList">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{star.name}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.awards">
+<h1>Awards</h1>
+<p>{{tvShow.awards}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.companies">
+<h1>Company</h1>
+<p>{{tvShow.companies}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.countryList!.length > 0">
+<h1>Countries</h1>
+<div *ngFor="let country of tvShow.countryList">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{country.value}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.languageList!.length > 0">
+<h1>Languages</h1>
+<div *ngFor="let language of tvShow.languageList">
+  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{language.value}}</span></p>
+</div>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.boxOffice">
+<h1>Box office</h1>
+<p *ngIf="tvShow.boxOffice.budget"><span style="font-weight: bolder;">Bugdet</span><br>{{tvShow.boxOffice!.budget}}</p>
+<p *ngIf="tvShow.boxOffice!.openingWeekendUSA"><span style="font-weight: bolder;">Opening weekend USA</span><br>{{tvShow.boxOffice!.openingWeekendUSA}}</p>
+<p *ngIf="tvShow.boxOffice!.grossUSA"><span style="font-weight: bolder;">Gross USA</span><br>{{tvShow.boxOffice!.grossUSA}}</p>
+<p *ngIf="tvShow.boxOffice!.cumulativeWorldwideGross"><span style="font-weight: bolder;">Cumulative worldwide gross</span><br>{{tvShow.boxOffice!.cumulativeWorldwideGross}}</p>
+
+<hr style="width:50%;text-align:left;margin-left:0">
+</div>
+
+<div *ngIf="tvShow.keywords">
+  <h1>Keywords</h1>
+  <p>{{tvShow.keywords}}</p>
+  
+  <hr style="width:50%;text-align:left;margin-left:0">
+  </div>
+
+  <div *ngIf="tvShow.wikipedia">
+    <h1>External links</h1>
+    <a style="color: #0096FF;" target="_blank" href="{{tvShow.wikipedia.url}}">
+    {{tvShow.title}} Wikipedia</a>
+    
+    <hr style="width:50%;text-align:left;margin-left:0">
+    </div>
+
+<h1>Actor list</h1>
+<owl-carousel-o [options]="customOptions">
+  
+    <ng-container *ngFor="let actor of tvShow.actorList">
+      <ng-template *ngIf="actor.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="actor.id!" style="margin-left: 20px;">
+        <img [src]="actor.image" width="100px" height="400px">
+        <div style="align-items: center;">
+            <p>{{actor.name}}<br><span style="color: gray;">as {{actor.asCharacter}}</span></p>
+        </div>
+      </ng-template>
+    </ng-container>
+</owl-carousel-o>
+
+<h1>Similar TV shows</h1>
+<owl-carousel-o [options]="customOptions">
+  
+    <ng-container *ngFor="let tvShow of tvShow.similars">
+      <ng-template *ngIf="tvShow.title && tvShow.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="tvShow.id!" style="margin-left: 20px;">
+        <div class="d-flex justify-content-start" style="width: 18rem;">
+            <app-tv-show-card [tvShow]="tvShow"></app-tv-show-card>
+      </div>
+      </ng-template>
+    </ng-container>
+</owl-carousel-o>

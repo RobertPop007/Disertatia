@@ -9,6 +9,9 @@ namespace Backend.DTO
         public string Username { get; set; }
 
         [Required]
+        public string Email { get; set; }
+
+        [Required]
         public string KnownAs { get; set; }
 
         [Required]

@@ -8,7 +8,8 @@
         <tr *ngFor="let user of users">
             <td>{{user!.username}}</td>
             <td>{{user!.roles}}</td>
-            <td><button (click)="openRolesModal(user!)" class="btn btn-info" style="color: black;">Edit roles</button></td>
+            <td><button (click)="openRolesModalForModerator(user!)" class="btn btn-info" style="color: black;">Edit roles</button>
+                <button (click)="deleteAccount(user!.username)" class="btn btn-danger" style="color: black;" *appHasRole='["Admin"]'>Delete user</button></td>
         </tr>
     </table>
 </div>

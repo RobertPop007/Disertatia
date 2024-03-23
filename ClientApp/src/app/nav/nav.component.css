@@ -11,3 +11,15 @@ img{
 .nav-item > a.active{
   color: aqua;
 }
+
+.dropdown-item{
+  background-color: white;
+  margin-top: -8px;
+  margin-bottom: -8px;
+}
+
+.dropdown-item:hover{
+  background-color: black;
+  margin-top: -8px;
+  margin-bottom: -8px;
+}

@@ -52,22 +52,22 @@
     transition: all .1s ease;
   }
 
+  .tab{
+    color: var(--text-color);
+    transition: all .1s ease;
+  }
+
   p{
     color: var(--text-color);
     transition: all .1s ease;
   }
 
-  h1,h2,h3,h4,h5,h6,hr{
+  h1,h2,h3,h4,h5,h6,hr, strong{
     color: var(--text-color);
     transition: all .1s ease;
   }
 
   label{
-    color: var(--text-color);
-    transition: all .1s ease;
-  }
-
-  .member-tabset {
     color: var(--text-color);
     transition: all .1s ease;
   }
