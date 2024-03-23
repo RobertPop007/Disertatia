@@ -172,9 +172,7 @@ namespace Proiect_licenta.Controllers
                 Token = await _tokenService.CreateToken(user),
                 PhotoUrl = user.ProfilePicture?.Url,
                 KnownAs = user.KnownAs,
-                Gender = user.Gender,
-                IsSubscribed = user.IsSubscribedToNewsletter,
-                HasDarkMode = user.HasDarkMode,
+                Gender = user.Gender
             };
         }
     }

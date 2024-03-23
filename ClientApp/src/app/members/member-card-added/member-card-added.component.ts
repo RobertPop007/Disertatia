@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
@@ -16,19 +15,15 @@ export class MemberCardAddedComponent implements OnInit {
   
   constructor(private memberService: MembersService,
     private toastr: ToastrService,
-    public presence: PresenceService,
-    private route: ActivatedRoute, 
-    private router: Router) {
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
-      
-     }
+    public presence: PresenceService) { }
 
   ngOnInit(): void {
   }
 
   removeFriend(member: Member){
     this.memberService.removeFriend(member.username).subscribe(() => {
+      console.log("intra");
+      
       this.toastr.success('You have removed ' + member.username);
     })
   }

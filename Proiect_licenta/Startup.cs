@@ -39,7 +39,6 @@ namespace Proiect_licenta
             services.AddApplicationServices(Configuration);
 
             services.AddControllers();
-
             services.AddCors();
 
             services.AddCrud<MovieItem, DataContext>();
@@ -103,6 +102,7 @@ namespace Proiect_licenta
                                                              //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseHangfireDashboard("/hangfire", new DashboardOptions()

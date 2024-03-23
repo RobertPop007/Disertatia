@@ -50,6 +50,7 @@ export class MemberEditComponent implements OnInit {
 
   checked = false;
   isSubscribed!: boolean;
+  hasDarkMode!: boolean;
   disabled = false;
   
   
@@ -79,6 +80,10 @@ export class MemberEditComponent implements OnInit {
     this.loadMember();
     this.updateWatchList();
 
+
+    console.log(this.member);
+    
+
     if(this.isDarkMode === true)
     {
       this.darkModeService.enable();
@@ -86,14 +91,16 @@ export class MemberEditComponent implements OnInit {
 
     this.initializeTheme();
 
-    this.isSubscribed = this.user.isSubscribed;
-    this.isDarkMode = this.user.hasDarkMode;
-
+    this.isDarkMode = localStorage.getItem('isDarkMode') == 'true';
     this.document.body.classList.replace(
       this.theme, 
-      this.isDarkMode === true
+      this.isDarkMode == true
       ? (this.theme = 'dark-theme') 
       : (this.theme = 'light-theme'))
+
+    this.isSubscribed = localStorage.getItem('isSubscribed') == 'true';
+    console.log(this.isSubscribed);
+    
   }
 
   getState(): boolean{
@@ -106,38 +113,17 @@ export class MemberEditComponent implements OnInit {
 
 
   subcribeToNewsletter(username: string){
-
     this.accountAngularService.subscribe(username);
 
     this.isSubscribed = !this.isSubscribed;
     localStorage.setItem('isSubscribed', JSON.stringify(this.isSubscribed));
-
-    let user = JSON.parse(localStorage.getItem('user')!);
-
-    var boolValue = JSON.parse(localStorage.getItem('isSubscribed')!);
-
-    user['isSubscribed'] = boolValue;
-    localStorage.setItem('user', JSON.stringify(user));
   }
 
   enabledDarkMode(username: string){
     this.accountAngularService.enableDarkMode(username);
 
-    this.isDarkMode = !this.isDarkMode;
-    localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode));
-
-    let user = JSON.parse(localStorage.getItem('user')!);
-
-    var boolValue = JSON.parse(localStorage.getItem('isDarkMode')!);
-
-    user['hasDarkMode'] = boolValue;
-    localStorage.setItem('user', JSON.stringify(user));
-
-    this.document.body.classList.replace(
-      this.theme, 
-      localStorage.getItem('isDarkMode') === 'true'
-      ? (this.theme = 'dark-theme') 
-      : (this.theme = 'light-theme'))
+    this.hasDarkMode = !this.hasDarkMode;
+    localStorage.setItem('isDarkMode', JSON.stringify(this.isSubscribed));
   }
 
   deleteAccount(username: string){
@@ -161,17 +147,17 @@ export class MemberEditComponent implements OnInit {
   initializeTheme = (): void =>
       this.renderer.addClass(this.document.body, this.theme);
 
-  // switchTheme(){
-  //   this.document.body.classList.replace(
-  //     this.theme, 
-  //     this.theme === 'light-theme' 
-  //     ? (this.theme = 'dark-theme') 
-  //     : (this.theme = 'light-theme'))
+  switchTheme(){
+    this.document.body.classList.replace(
+      this.theme, 
+      this.theme === 'light-theme' 
+      ? (this.theme = 'dark-theme') 
+      : (this.theme = 'light-theme'))
 
 
-  //     this.isDarkMode = !this.isDarkMode;
-  //     localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode));
-  // }
+      this.isDarkMode = !this.isDarkMode;
+      localStorage.setItem('isDarkMode', JSON.stringify(this.isDarkMode));
+  }
 
   setDisplayMode(mode: string) {
     localStorage.setItem("isDarkMode", mode);

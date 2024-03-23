@@ -60,7 +60,7 @@
 <hr style="width:50%;text-align:left;margin-left:0">
 
 <div *ngIf="anime.producers!.length > 0">
-<h1>Producers</h1>
+<h1>Producatori</h1>
 <div *ngFor="let producer of anime.producers">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{producer.name}}</span></p>
   </div>
@@ -69,7 +69,7 @@
 </div>
 
 <div *ngIf="anime.licensors!.length > 0">
-<h1>Licensors</h1>
+<h1>Licentiatori</h1>
 <div *ngFor="let licensor of anime.licensors">
   <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{licensor.name}}</span></p>
 </div>
@@ -78,7 +78,7 @@
 </div>
 
 <div *ngIf="anime.studios!.length > 0">
-<h1>Studios</h1>
+<h1>Studiouri</h1>
 <div *ngFor="let studio of anime.studios">
   <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{studio.name}}</span></p>
 </div>
@@ -87,7 +87,7 @@
 </div>
 
 <div *ngIf="anime.themes">
-<h1>Themes</h1>
+<h1>Teme</h1>
 <div *ngFor="let theme of anime.themes">
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
   </div>
@@ -117,7 +117,7 @@
   <div *ngIf="anime.broadcast!.string !== 'Unknow' && anime.broadcast!.string">
     <h1>Broadcast</h1>
     <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">
-      {{anime.broadcast!.string}}</span></p>
+      Rank: {{anime.broadcast!.string}}</span></p>
 
       <hr style="width:50%;text-align:left;margin-left:0">
     </div>

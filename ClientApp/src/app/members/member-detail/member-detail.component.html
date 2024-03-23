@@ -51,17 +51,11 @@
                 <p>{{member.interests}}</p>
             </tab>
 
-            <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Messages" (selectTab)="onTabsActivated($event)">
-                <div *ngIf="areUsersFriends">
-                    <app-member-messages [username]="member.username"></app-member-messages>
-                </div>
-                <div *ngIf="!areUsersFriends">
-                    <p style="background-color: skyblue; margin-top: -20px; margin-bottom: -15px; padding-top: 20px;">You are not friend with this user!</p>
-                </div>
+            <tab *ngIf="areUsersFriends" style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Messages" (selectTab)="onTabsActivated($event)">
+                <app-member-messages [username]="member.username"></app-member-messages>
             </tab>
 
-            <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Watchlist" (selectTab)="onTabsActivated($event)">
-                <div *ngIf="areUsersFriends">
+            <tab *ngIf="areUsersFriends" style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Watchlist" (selectTab)="onTabsActivated($event)">
                 <form id="editForm2" (ngSubmit)="updateWatchList()">
                     <tabset class="member-tabset">
                         <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Movies">
@@ -138,10 +132,6 @@
                 
             </tabset>
                 </form>
-            </div>
-            <div *ngIf="!areUsersFriends">
-                <p style="background-color: skyblue; margin-top: -20px; margin-bottom: -15px; padding-top: 20px;">You are not friend with this user!</p>
-            </div>
             </tab>
         </tabset>
             </div>
