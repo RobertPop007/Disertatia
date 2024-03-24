@@ -6,14 +6,21 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proiect_licenta.DatabaseContext;
 
+<<<<<<< HEAD
 namespace Proiect_licenta.Migrations;
 
 [DbContext(typeof(DataContext))]
 partial class DataContextModelSnapshot : ModelSnapshot
+=======
+#nullable disable
+
+namespace Proiect_licenta.Migrations
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 {
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
+<<<<<<< HEAD
         modelBuilder
             .HasAnnotation("Relational:MaxIdentifierLength", 128)
             .HasAnnotation("ProductVersion", "5.0.13")
@@ -25,6 +32,21 @@ partial class DataContextModelSnapshot : ModelSnapshot
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<string>("ClaimType")
                     .HasColumnType("nvarchar(max)");
@@ -39,6 +61,7 @@ partial class DataContextModelSnapshot : ModelSnapshot
 
                 b.HasIndex("RoleId");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetRoleClaims");
             });
 
@@ -48,6 +71,18 @@ partial class DataContextModelSnapshot : ModelSnapshot
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<string>("ClaimType")
                     .HasColumnType("nvarchar(max)");
@@ -62,8 +97,13 @@ partial class DataContextModelSnapshot : ModelSnapshot
 
                 b.HasIndex("UserId");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetUserClaims");
             });
+=======
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
             {
@@ -83,8 +123,13 @@ partial class DataContextModelSnapshot : ModelSnapshot
 
                 b.HasIndex("UserId");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetUserLogins");
             });
+=======
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
         modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
             {
@@ -102,8 +147,13 @@ partial class DataContextModelSnapshot : ModelSnapshot
 
                 b.HasKey("UserId", "LoginProvider", "Name");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetUserTokens");
             });
+=======
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
         modelBuilder.Entity("Proiect_licenta.Entities.Anime.Aired", b =>
             {
@@ -650,12 +700,22 @@ partial class DataContextModelSnapshot : ModelSnapshot
                 b.ToTable("Webp");
             });
 
+<<<<<<< HEAD
         modelBuilder.Entity("Proiect_licenta.Entities.AppRole", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+            modelBuilder.Entity("Proiect_licenta.Entities.AppRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<string>("ConcurrencyStamp")
                     .IsConcurrencyToken()
@@ -676,6 +736,7 @@ partial class DataContextModelSnapshot : ModelSnapshot
                     .HasDatabaseName("RoleNameIndex")
                     .HasFilter("[NormalizedName] IS NOT NULL");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetRoles");
             });
 
@@ -685,6 +746,18 @@ partial class DataContextModelSnapshot : ModelSnapshot
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Proiect_licenta.Entities.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<int>("AccessFailedCount")
                     .HasColumnType("int");
@@ -790,10 +863,15 @@ partial class DataContextModelSnapshot : ModelSnapshot
                 b.HasIndex("NormalizedEmail")
                     .HasDatabaseName("EmailIndex");
 
+<<<<<<< HEAD
                 b.HasIndex("NormalizedUserName")
                     .IsUnique()
                     .HasDatabaseName("UserNameIndex")
                     .HasFilter("[NormalizedUserName] IS NOT NULL");
+=======
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.ToTable("AspNetUsers");
             });
@@ -882,8 +960,13 @@ partial class DataContextModelSnapshot : ModelSnapshot
 
                 b.HasIndex("RoleId");
 
+<<<<<<< HEAD
                 b.ToTable("AspNetUserRoles");
             });
+=======
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
         modelBuilder.Entity("Proiect_licenta.Entities.AppUserTvShowItem", b =>
             {
@@ -1949,12 +2032,22 @@ partial class DataContextModelSnapshot : ModelSnapshot
                 b.ToTable("WebpManga");
             });
 
+<<<<<<< HEAD
         modelBuilder.Entity("Proiect_licenta.Entities.Message", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+            modelBuilder.Entity("Proiect_licenta.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<string>("Content")
                     .HasColumnType("nvarchar(max)");
@@ -2612,12 +2705,22 @@ partial class DataContextModelSnapshot : ModelSnapshot
                 b.ToTable("WriterList");
             });
 
+<<<<<<< HEAD
         modelBuilder.Entity("Proiect_licenta.Entities.Photo", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
                     .HasColumnType("int")
                     .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+=======
+            modelBuilder.Entity("Proiect_licenta.Entities.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 8f968e6dcf9ad96ae3b6b3a574efd2be4d1a9ec3
 
                 b.Property<int>("AppUserId")
                     .HasColumnType("int");
