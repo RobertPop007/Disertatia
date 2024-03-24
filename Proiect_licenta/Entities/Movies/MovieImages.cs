@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.Movies
+namespace Disertatie_backend.Entities.Movies
 {
     public class MoviesImages
     {

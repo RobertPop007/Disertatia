@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.Errors
+﻿namespace Disertatie_backend.Errors
 {
     public class ApiException
     {

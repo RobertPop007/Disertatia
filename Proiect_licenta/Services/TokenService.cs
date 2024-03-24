@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Services
+namespace Disertatie_backend.Services
 {
     public class TokenService : ITokenService
     {

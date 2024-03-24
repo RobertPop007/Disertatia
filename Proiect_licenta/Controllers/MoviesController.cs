@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.DTO.Movies;
-using Proiect_licenta.Entities.Movies;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.DTO.Movies;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.Extensions;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Helpers;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Helpers;
 
-namespace Proiect_licenta.Controllers
+namespace Disertatie_backend.Controllers
 {
     public class MoviesController : BaseApiController
     {

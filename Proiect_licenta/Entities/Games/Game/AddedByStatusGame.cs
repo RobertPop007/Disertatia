@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.Entities.Games.Game
+namespace Disertatie_backend.Entities.Games.Game
 {
     public class AddedByStatusGame
     {

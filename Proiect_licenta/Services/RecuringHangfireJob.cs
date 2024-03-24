@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.DTO;
-using Proiect_licenta.EmailTemplates;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.DTO;
+using Disertatie_backend.EmailTemplates;
+using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Services
+namespace Disertatie_backend.Services
 {
     public class RecuringHangfireJob : IRecuringHangfireJob
     {

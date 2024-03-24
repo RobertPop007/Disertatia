@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Proiect_licenta.Migrations
+namespace Disertatie_backend.Migrations
 {
     public partial class InitialMigration : Migration
     {

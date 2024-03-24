@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Proiect_licenta.Extensions
+namespace Disertatie_backend.Extensions
 {
     public static class ClaimsPrincipleExtensions
     {

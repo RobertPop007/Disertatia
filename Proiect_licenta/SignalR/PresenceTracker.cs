@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.SignalR
+namespace Disertatie_backend.SignalR
 {
     public class PresenceTracker
     {

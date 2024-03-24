@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DTO.Anime;
-using Proiect_licenta.Entities.Anime;
-using Proiect_licenta.Helpers;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DTO.Anime;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Helpers;
+using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class AnimeRepository : IAnimeRepository
     {

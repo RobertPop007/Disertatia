@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.DTO
+namespace Disertatie_backend.DTO
 {
     public class MemberDto
     {

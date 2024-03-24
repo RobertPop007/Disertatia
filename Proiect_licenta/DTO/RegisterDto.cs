@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.DTO
+namespace Disertatie_backend.DTO
 {
     public class RegisterDto
     {

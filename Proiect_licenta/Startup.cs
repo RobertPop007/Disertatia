@@ -4,19 +4,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Proiect_licenta.Extensions;
-using Proiect_licenta.Middleware;
-using Proiect_licenta.SignalR;
-using Proiect_licenta.Services;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities.Movies;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Middleware;
+using Disertatie_backend.SignalR;
+using Disertatie_backend.Services;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities.Movies;
 using System.Collections.Generic;
-using Proiect_licenta.Entities;
+using Disertatie_backend.Entities;
 using Hangfire;
-using Proiect_licenta.Hangfire;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.Hangfire;
+using Disertatie_backend.Interfaces;
 
-namespace Proiect_licenta
+namespace Disertatie_backend
 {
     public class Startup
     {

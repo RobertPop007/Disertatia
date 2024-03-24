@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class Group
     {

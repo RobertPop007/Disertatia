@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class Message
     {

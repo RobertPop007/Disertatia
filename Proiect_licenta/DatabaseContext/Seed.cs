@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.Entities;
+using Disertatie_backend.Entities;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class Seed
     {

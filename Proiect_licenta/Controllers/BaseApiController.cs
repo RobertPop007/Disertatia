@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Proiect_licenta.Helpers;
+using Disertatie_backend.Helpers;
 
-namespace Proiect_licenta.Controllers
+namespace Disertatie_backend.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]

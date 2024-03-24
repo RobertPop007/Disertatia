@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Proiect_licenta.Helpers;
+using Disertatie_backend.Helpers;
 using System.Text.Json;
 
-namespace Proiect_licenta.Extensions
+namespace Disertatie_backend.Extensions
 {
     public static class HttpExtensions
     {

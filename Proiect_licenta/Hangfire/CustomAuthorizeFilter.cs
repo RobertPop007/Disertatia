@@ -1,7 +1,7 @@
 ﻿using Hangfire.Annotations;
 using Hangfire.Dashboard;
 
-namespace Proiect_licenta.Hangfire
+namespace Disertatie_backend.Hangfire
 {
     public class CustomAuthorizeFilter : IDashboardAuthorizationFilter
     {

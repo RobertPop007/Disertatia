@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserRole : IdentityUserRole<int>
     {

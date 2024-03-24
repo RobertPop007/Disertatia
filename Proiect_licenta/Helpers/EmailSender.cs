@@ -1,11 +1,11 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
-using Proiect_licenta.DTO;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Helpers
+namespace Disertatie_backend.Helpers
 {
     public class EmailSender : IEmailSender
     {

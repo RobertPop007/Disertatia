@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Proiect_licenta.Entities.Movies
+namespace Disertatie_backend.Entities.Movies
 {
     public class MovieItem
     {

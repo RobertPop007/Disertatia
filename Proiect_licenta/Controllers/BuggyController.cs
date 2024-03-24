@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities;
 
-namespace Proiect_licenta.Controllers
+namespace Disertatie_backend.Controllers
 {
     public class BuggyController : BaseApiController
     {

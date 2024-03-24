@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Proiect_licenta.DTO.Movies;
-using Proiect_licenta.Entities.Movies;
+using Disertatie_backend.DTO.Movies;
+using Disertatie_backend.Entities.Movies;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class SeedMovies
     {

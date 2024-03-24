@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Proiect_licenta.Migrations
+namespace Disertatie_backend.Migrations
 {
     public partial class AddedIsSubscribed : Migration
     {

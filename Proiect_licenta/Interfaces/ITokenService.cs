@@ -1,7 +1,7 @@
-﻿using Proiect_licenta.Entities;
+﻿using Disertatie_backend.Entities;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface ITokenService
     {

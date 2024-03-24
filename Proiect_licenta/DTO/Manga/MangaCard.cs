@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.DTO.Manga
+﻿namespace Disertatie_backend.DTO.Manga
 {
     public class MangaCard
     {

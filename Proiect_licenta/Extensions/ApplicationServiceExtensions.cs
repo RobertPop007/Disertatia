@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Helpers;
-using Proiect_licenta.Interfaces;
-using Proiect_licenta.Services;
-using Proiect_licenta.SignalR;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Helpers;
+using Disertatie_backend.Interfaces;
+using Disertatie_backend.Services;
+using Disertatie_backend.SignalR;
 
-namespace Proiect_licenta.Extensions
+namespace Disertatie_backend.Extensions
 {
     public static class ApplicationServiceExtensions
     {

@@ -1,10 +1,10 @@
-﻿using Proiect_licenta.DTO.Anime;
-using Proiect_licenta.Entities.Anime;
-using Proiect_licenta.Helpers;
+﻿using Disertatie_backend.DTO.Anime;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface IAnimeRepository
     {

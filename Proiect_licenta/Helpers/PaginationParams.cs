@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.Helpers
+﻿namespace Disertatie_backend.Helpers
 {
     public class PaginationParams
     {

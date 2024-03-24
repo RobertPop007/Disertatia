@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.Extensions
+namespace Disertatie_backend.Extensions
 {
     public static class DateTimeExtensions
     {

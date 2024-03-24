@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppRole : IdentityRole<int>
     {

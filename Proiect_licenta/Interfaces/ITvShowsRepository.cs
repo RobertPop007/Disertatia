@@ -1,10 +1,10 @@
-﻿using Proiect_licenta.DTO.TvShows;
-using Proiect_licenta.Entities.TvShows;
-using Proiect_licenta.Helpers;
+﻿using Disertatie_backend.DTO.TvShows;
+using Disertatie_backend.Entities.TvShows;
+using Disertatie_backend.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface ITvShowsRepository
     {

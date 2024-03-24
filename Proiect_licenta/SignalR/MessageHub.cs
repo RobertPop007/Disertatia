@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
-using Proiect_licenta.DTO;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Extensions;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.SignalR
+namespace Disertatie_backend.SignalR
 {
     public class MessageHub : Hub
     {

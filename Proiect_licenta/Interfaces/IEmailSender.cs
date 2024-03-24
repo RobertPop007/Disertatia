@@ -1,7 +1,7 @@
-﻿using Proiect_licenta.DTO;
+﻿using Disertatie_backend.DTO;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface IEmailSender
     {

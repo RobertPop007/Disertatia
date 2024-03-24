@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Proiect_licenta.Entities.Movies;
+using Disertatie_backend.Entities.Movies;
 using System;
 using System.Collections.Generic;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUser : IdentityUser<int>
     {

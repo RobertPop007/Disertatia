@@ -1,10 +1,10 @@
-﻿using Proiect_licenta.Entities.Movies;
+﻿using Disertatie_backend.Entities.Movies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserMovieItem
     {

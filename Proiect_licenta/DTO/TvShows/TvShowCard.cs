@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.DTO.TvShows
+﻿namespace Disertatie_backend.DTO.TvShows
 {
     public class TvShowCard
     {

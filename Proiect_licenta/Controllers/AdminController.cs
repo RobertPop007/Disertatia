@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Extensions;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Controllers
+namespace Disertatie_backend.Controllers
 {
     public class AdminController : BaseApiController
     {

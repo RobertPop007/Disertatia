@@ -2,11 +2,11 @@
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using Proiect_licenta.Helpers;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.Helpers;
+using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Services
+namespace Disertatie_backend.Services
 {
     public class PhotoService : IPhotoService
     {

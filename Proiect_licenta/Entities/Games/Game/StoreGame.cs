@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.Games.Game
+namespace Disertatie_backend.Entities.Games.Game
 {
     public class StoreGame
     {

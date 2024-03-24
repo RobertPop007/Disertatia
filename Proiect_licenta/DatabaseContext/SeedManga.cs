@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Proiect_licenta.Entities.Manga;
+using Disertatie_backend.Entities.Manga;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class SeedManga
     {

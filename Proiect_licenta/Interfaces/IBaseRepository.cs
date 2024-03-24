@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface IBaseRepository<TEntity, TContext>
            where TEntity : class

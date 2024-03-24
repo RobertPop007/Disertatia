@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities;
 using System;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta
+namespace Disertatie_backend
 {
     public class Program
     {

@@ -1,8 +1,8 @@
-﻿using Proiect_licenta.Entities.Anime;
+﻿using Disertatie_backend.Entities.Anime;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserAnimeItem
     {

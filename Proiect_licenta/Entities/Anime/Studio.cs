@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.Anime
+namespace Disertatie_backend.Entities.Anime
 {
     public class Studio
     {

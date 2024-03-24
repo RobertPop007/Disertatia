@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Proiect_licenta.Entities.TvShows
+namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowPlotFull
     {

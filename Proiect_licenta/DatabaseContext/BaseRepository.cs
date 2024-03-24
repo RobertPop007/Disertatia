@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity, TContext>
         where TEntity : class

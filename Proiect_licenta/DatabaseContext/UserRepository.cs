@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DTO;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using AutoMapper;
-using Proiect_licenta.Helpers;
+using Disertatie_backend.Helpers;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class UserRepository : IUserRepository
     {

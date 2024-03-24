@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.Entities.Manga
+namespace Disertatie_backend.Entities.Manga
 {
     public class JpgManga
     {

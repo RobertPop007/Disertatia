@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Proiect_licenta.DTO.Movies;
-using Proiect_licenta.Entities.Anime;
-using Proiect_licenta.Entities.Movies;
-using Proiect_licenta.Entities.TvShows;
+using Disertatie_backend.DTO.Movies;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.TvShows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class SeedAnime
     {

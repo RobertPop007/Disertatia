@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Proiect_licenta.Entities.Manga
+namespace Disertatie_backend.Entities.Manga
 {
     public class DatumManga
     {

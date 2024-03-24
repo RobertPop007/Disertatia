@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DTO;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Helpers;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Helpers;
+using Disertatie_backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class MessageRepository : IMessageRepository
     {

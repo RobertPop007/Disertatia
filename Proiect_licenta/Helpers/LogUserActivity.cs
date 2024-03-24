@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Proiect_licenta.Extensions;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Interfaces;
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Proiect_licenta.Helpers
+namespace Disertatie_backend.Helpers
 {
     public class LogUserActivity : IAsyncActionFilter
     {

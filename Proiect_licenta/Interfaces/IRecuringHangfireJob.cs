@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface IRecuringHangfireJob
     {

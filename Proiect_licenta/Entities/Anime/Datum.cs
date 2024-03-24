@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Proiect_licenta.Entities.Anime
+namespace Disertatie_backend.Entities.Anime
 {
     public class Datum
     {

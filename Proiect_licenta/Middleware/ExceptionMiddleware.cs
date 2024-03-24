@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Proiect_licenta.Errors;
+using Disertatie_backend.Errors;
 using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Middleware
+namespace Disertatie_backend.Middleware
 {
     public class ExceptionMiddleware
     {

@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.DTO.Anime
+﻿namespace Disertatie_backend.DTO.Anime
 {
     public class AnimeCard
     {

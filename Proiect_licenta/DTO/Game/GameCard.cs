@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.DTO.Game
+﻿namespace Disertatie_backend.DTO.Game
 {
     public class GameCard
     {

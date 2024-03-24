@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Entities.Anime;
-using Proiect_licenta.Entities.Games.Game;
-using Proiect_licenta.Entities.Manga;
-using Proiect_licenta.Entities.Movies;
-using Proiect_licenta.Entities.TvShows;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.Manga;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.TvShows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Z.EntityFramework.Plus;
 
-namespace Proiect_licenta.EmailTemplates
+namespace Disertatie_backend.EmailTemplates
 {
     public class RecommandationEmailTemplate
     {

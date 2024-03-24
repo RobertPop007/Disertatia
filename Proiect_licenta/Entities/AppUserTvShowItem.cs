@@ -1,6 +1,6 @@
-﻿using Proiect_licenta.Entities.TvShows;
+﻿using Disertatie_backend.Entities.TvShows;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserTvShowItem
     {

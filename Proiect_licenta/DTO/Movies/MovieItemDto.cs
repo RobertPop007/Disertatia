@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.DTO.Movies
+﻿namespace Disertatie_backend.DTO.Movies
 {
     public class MovieItemDto
     {

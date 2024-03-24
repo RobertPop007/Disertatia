@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Proiect_licenta.DTO;
-using Proiect_licenta.DTO.Movies;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Entities.Movies;
-using Proiect_licenta.Extensions;
+using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.Movies;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Proiect_licenta.Helpers
+namespace Disertatie_backend.Helpers
 {
     public class AutoMapperProfiles : Profile
     {

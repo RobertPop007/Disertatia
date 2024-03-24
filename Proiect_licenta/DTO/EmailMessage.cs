@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Proiect_licenta.DTO
+namespace Disertatie_backend.DTO
 {
     public class EmailMessage
     {

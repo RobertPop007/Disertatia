@@ -1,4 +1,4 @@
-﻿namespace Proiect_licenta.Services
+﻿namespace Disertatie_backend.Services
 {
     public class EmailService
     {

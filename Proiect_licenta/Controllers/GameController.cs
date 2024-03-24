@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities;
-using Proiect_licenta.Entities.Games.Game;
-using Proiect_licenta.Extensions;
-using Proiect_licenta.Helpers;
-using Proiect_licenta.Interfaces;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Helpers;
+using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Controllers
+namespace Disertatie_backend.Controllers
 {
     public class GameController : BaseApiController
     {

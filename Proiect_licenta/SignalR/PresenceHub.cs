@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Proiect_licenta.Extensions;
+using Disertatie_backend.Extensions;
 using System;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.SignalR
+namespace Disertatie_backend.SignalR
 {
     [Authorize]
     public class PresenceHub : Hub

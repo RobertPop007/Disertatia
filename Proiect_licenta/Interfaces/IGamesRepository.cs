@@ -1,10 +1,10 @@
-﻿using Proiect_licenta.DTO.Game;
-using Proiect_licenta.Entities.Games.Game;
-using Proiect_licenta.Helpers;
+﻿using Disertatie_backend.DTO.Game;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Helpers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Interfaces
+namespace Disertatie_backend.Interfaces
 {
     public interface IGamesRepository
     {

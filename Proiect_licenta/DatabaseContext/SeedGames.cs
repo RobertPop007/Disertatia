@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using Proiect_licenta.Entities.Games.Game;
-using Proiect_licenta.Entities.Games.GamesIds;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.Games.GamesIds;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.DatabaseContext
+namespace Disertatie_backend.DatabaseContext
 {
     public class SeedGames
     {

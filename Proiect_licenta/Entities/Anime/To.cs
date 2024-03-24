@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proiect_licenta.Entities.Anime
+namespace Disertatie_backend.Entities.Anime
 {
     public class To
     {

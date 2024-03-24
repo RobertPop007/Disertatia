@@ -1,6 +1,6 @@
-﻿using Proiect_licenta.Entities.Games.Game;
+﻿using Disertatie_backend.Entities.Games.Game;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserGameItem
     {

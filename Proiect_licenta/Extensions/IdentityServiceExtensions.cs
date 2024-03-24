@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Proiect_licenta.DatabaseContext;
-using Proiect_licenta.Entities;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Extensions
+namespace Disertatie_backend.Extensions
 {
     public static class IdentityServiceExtensions
     {

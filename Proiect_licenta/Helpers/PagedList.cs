@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Proiect_licenta.Helpers
+namespace Disertatie_backend.Helpers
 {
     public class PagedList<T> : List<T>
     {

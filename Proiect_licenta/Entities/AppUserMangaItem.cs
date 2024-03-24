@@ -1,6 +1,6 @@
-﻿using Proiect_licenta.Entities.Manga;
+﻿using Disertatie_backend.Entities.Manga;
 
-namespace Proiect_licenta.Entities
+namespace Disertatie_backend.Entities
 {
     public class AppUserMangaItem
     {
