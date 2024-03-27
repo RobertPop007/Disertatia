@@ -8,44 +8,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using MongoDB.Driver;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class AnimeRepository : IAnimeRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        private static IMongoCollection<Datum> _animeCollection;
 
-        public AnimeRepository(DataContext context, IMapper mapper)
+        public AnimeRepository(DataContext context, IOptions<DatabaseSettings> databaseSettings)
         {
             _context = context;
-            _mapper = mapper;
+
+            var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            _animeCollection = mongoDb.GetCollection<Datum>("Anime");
+
+            var indexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Title);
+            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(indexModel));
         }
+
         public void DeleteAnimeForUser(int userId, int animeId)
         {
             var appUserAnimeItem = _context.AppUserAnimeItems.FirstOrDefault(o => o.AppUserId == userId && o.AnimeId == animeId);
             _context.AppUserAnimeItems.Remove(appUserAnimeItem);
         }
 
-        public async Task<Datum> GetAnimeByFullTitleAsync(string title)
-        {
-            var x = await _context.Anime
-                .Where(t => t.Title == title)
-                .IncludeOptimized(o => o.Images)
-                .IncludeOptimized(o => o.Images.Jpg)
-                .IncludeOptimized(o => o.Images.Webp)
-                .IncludeOptimized(o => o.Trailer)
-                .IncludeOptimized(o => o.Aired)
-                .IncludeOptimized(o => o.Broadcast)
-                .IncludeOptimized(o => o.Producers)
-                .IncludeOptimized(o => o.Licensors)
-                .IncludeOptimized(o => o.Studios)
-                .IncludeOptimized(o => o.Genres)
-                .IncludeOptimized(o => o.Themes)
-                .IncludeOptimized(o => o.Demographics)
-                .FirstOrDefaultAsync();
-            return x;
-        }
+        public async Task<Datum> GetAnimeByFullTitleAsync(string title) => await _animeCollection.Find(x => x.Title == title).FirstOrDefaultAsync();
 
         public async Task<Datum> GetAnimeByIdAsync(int id)
         {

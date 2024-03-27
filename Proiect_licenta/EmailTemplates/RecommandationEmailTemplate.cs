@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.DatabaseContext;
+﻿using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;

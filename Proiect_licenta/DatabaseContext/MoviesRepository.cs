@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.DTO.Movies;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;

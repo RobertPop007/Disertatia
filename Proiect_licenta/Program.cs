@@ -29,7 +29,7 @@ namespace Disertatie_backend
                 await Seed.SeedUsers(userManager, roleManager);
                 await SeedMovies.SeedAllMovies(context);
                 await SeedTvShows.SeedAllTvShows(context);
-                await SeedAnime.SeedAllAnime(context);
+                await SeedAnime.SeedAllAnime();
                 await SeedManga.SeedAllManga(context);
                 await SeedGames.SeedAllGamesIds(context);
             }

@@ -1,10 +1,7 @@
 ﻿using Disertatie_backend.DTO.Movies;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Helpers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Disertatie_backend.Interfaces

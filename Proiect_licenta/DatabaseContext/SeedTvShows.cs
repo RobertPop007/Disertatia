@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Disertatie_backend.DTO.Movies;
-using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;

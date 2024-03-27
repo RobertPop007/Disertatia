@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,9 @@ namespace Disertatie_backend.Entities.Anime
 {
     public class Datum
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Mal_id { get; set; }

@@ -1,14 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.Extensions;

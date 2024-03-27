@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Disertatie_backend.DatabaseContext
 {

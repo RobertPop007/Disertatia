@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Disertatie_backend.DTO.Movies;
+﻿using Newtonsoft.Json;
 using Disertatie_backend.Entities.Movies;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.DatabaseContext
 {

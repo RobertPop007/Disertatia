@@ -2,7 +2,6 @@
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Games.GamesIds;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 

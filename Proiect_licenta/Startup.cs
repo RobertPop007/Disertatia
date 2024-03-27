@@ -10,16 +10,17 @@ using Disertatie_backend.SignalR;
 using Disertatie_backend.Services;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.Movies;
-using System.Collections.Generic;
 using Disertatie_backend.Entities;
 using Hangfire;
 using Disertatie_backend.Hangfire;
 using Disertatie_backend.Interfaces;
+using Disertatie_backend.Configurations;
 
 namespace Disertatie_backend
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +32,8 @@ namespace Disertatie_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(Configuration.GetSection("MongoDatabase"));
+
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
@@ -40,17 +43,25 @@ namespace Disertatie_backend
 
             services.AddControllers();
 
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                              policy =>
+                              {
+                                  policy.WithOrigins("https://localhost:4200",
+                                                      "https://localhost:44330");
+                              });
+            });
 
             services.AddCrud<MovieItem, DataContext>();
 
 
             var connectionString = Configuration.GetConnectionString("HangfireConnection");
-            services.AddHangfire(config => config.SetDataCompatibilityLevel((CompatibilityLevel.Version_170))
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseDefaultTypeSerializer()
-                .UseSqlServerStorage(connectionString));
-            services.AddHangfireServer();
+            //services.AddHangfire(config => config.SetDataCompatibilityLevel((CompatibilityLevel.Version_170))
+            //    .UseSimpleAssemblyNameTypeSerializer()
+            //    .UseDefaultTypeSerializer()
+            //    .UseSqlServerStorage(connectionString));
+            //services.AddHangfireServer();
 
             services.AddIdentityServices(Configuration);
 
@@ -94,23 +105,19 @@ namespace Disertatie_backend
               .SetIsOriginAllowed(origin => true) // allow any origin  
               .AllowCredentials()); // allow credentials  
 
-            
 
-            app.UseCors(x => x.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials() // allow credentials
-                    .WithOrigins("https://localhost:4200")); // allow any origin
-                                                             //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
+
+            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseHangfireDashboard("/hangfire", new DashboardOptions()
-            {
-                Authorization = new[] { new CustomAuthorizeFilter() }
-            });
+            //app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+            //{
+            //    Authorization = new[] { new CustomAuthorizeFilter() }
+            //});
 
-            RecurringJob.AddOrUpdate("Recommandation emails", () => recurringRecomandationEmail.SendRecomandationsEmails(), Cron.Daily(10));
+            //RecurringJob.AddOrUpdate("Recommandation emails", () => recurringRecomandationEmail.SendRecomandationsEmails(), Cron.Daily(10));
 
             app.UseEndpoints(endpoints =>
             {
