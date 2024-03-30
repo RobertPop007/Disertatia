@@ -11,21 +11,21 @@ namespace Disertatie_backend.DatabaseContext
     {
         public static async Task SeedAllAnime()
         {
-            //var mongoClient = new MongoClient("mongodb://localhost:27017");
-            //var mongoDb = mongoClient.GetDatabase("TestDB");
+            var mongoClient = new MongoClient("mongodb://localhost:27017");
+            var mongoDb = mongoClient.GetDatabase("Database_disertație");
 
-            //var _animeCollection = mongoDb.GetCollection<Datum>("Anime");
+            var _animeCollection = mongoDb.GetCollection<Datum>("Anime");
 
-            //if (_animeCollection.CountDocuments(_ => true) >= 0)
-            //{
-            //    await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+            ////if (_animeCollection.CountDocuments(_ => true) >= 0)
+            ////{
+                //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
 
-            //    for (var i = 2; i < 10; i++)
-            //    {
-            //        System.Threading.Thread.Sleep(1000);
-            //        await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
-            //    }
-            //}
+            for (var i = 700; i < 1100; i++)
+            {
+                System.Threading.Thread.Sleep(1000);
+                await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            }
+            ////}
         }
 
         public static async Task SeedAnimeList(IMongoCollection<Datum> _animeCollection, string url)

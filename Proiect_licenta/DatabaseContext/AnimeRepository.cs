@@ -11,6 +11,7 @@ using Z.EntityFramework.Plus;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
+using Disertatie_backend.Entities.Manga;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -27,23 +28,34 @@ namespace Disertatie_backend.DatabaseContext
             var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
             _animeCollection = mongoDb.GetCollection<Datum>("Anime");
 
-            var indexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Title);
-            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(indexModel));
+            var titleIndexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Title);
+            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(titleIndexModel));
+
+            var idIndexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Id);
+            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(idIndexModel));
         }
 
+
+        //aici umblam dupa ce terminam si partea cu users
         public void DeleteAnimeForUser(int userId, int animeId)
         {
             var appUserAnimeItem = _context.AppUserAnimeItems.FirstOrDefault(o => o.AppUserId == userId && o.AnimeId == animeId);
             _context.AppUserAnimeItems.Remove(appUserAnimeItem);
         }
 
-        public async Task<Datum> GetAnimeByFullTitleAsync(string title) => await _animeCollection.Find(x => x.Title == title).FirstOrDefaultAsync();
+        public async Task<Datum> GetAnimeByFullTitleAsync(string title)
+        {
+            var filterByTitle = Builders<Datum>.Filter.Eq(p => p.Title, title);
+            return  await _animeCollection.Find(filterByTitle).FirstOrDefaultAsync();
+        }
 
         public async Task<Datum> GetAnimeByIdAsync(int id)
         {
-            return await _context.Anime.FindAsync(id);
+            var filterById = Builders<Datum>.Filter.Eq(p => p.Mal_id, id);
+            return await _animeCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
+        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
         public async Task<List<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
         {
             var query = _context.Anime
@@ -71,6 +83,7 @@ namespace Disertatie_backend.DatabaseContext
             return await query.ToListAsync();
         }
 
+        //tot cu users
         public async Task<List<Datum>> GetUserAnimes(int userId)
         {
             var listOfAnimesIdForUser = _context.AppUserAnimeItems.Where(o => o.AppUserId == userId).Select(o => o.AnimeId).AsEnumerable();

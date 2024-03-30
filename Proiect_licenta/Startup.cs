@@ -15,12 +15,14 @@ using Hangfire;
 using Disertatie_backend.Hangfire;
 using Disertatie_backend.Interfaces;
 using Disertatie_backend.Configurations;
+using Disertatie_backend.DTO.Identity;
+using System;
+using AspNetCore.Identity.MongoDbCore.Infrastructure;
 
 namespace Disertatie_backend
 {
     public class Startup
     {
-        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,6 +36,12 @@ namespace Disertatie_backend
         {
             services.Configure<DatabaseSettings>(Configuration.GetSection("MongoDatabase"));
 
+            //services.AddIdentity<ApplicationUsers, ApplicationRoles>()
+            //    .AddMongoDbStores<ApplicationUsers, ApplicationRoles, Guid>
+            //    (
+            //        mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
+            //    );
+
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
@@ -43,15 +51,7 @@ namespace Disertatie_backend
 
             services.AddControllers();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                              policy =>
-                              {
-                                  policy.WithOrigins("https://localhost:4200",
-                                                      "https://localhost:44330");
-                              });
-            });
+            services.AddCors();
 
             services.AddCrud<MovieItem, DataContext>();
 
@@ -104,10 +104,6 @@ namespace Disertatie_backend
               .AllowAnyHeader()
               .SetIsOriginAllowed(origin => true) // allow any origin  
               .AllowCredentials()); // allow credentials  
-
-
-
-            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthentication();
             app.UseAuthorization();

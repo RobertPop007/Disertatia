@@ -3,9 +3,11 @@ using MongoDB.Bson;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.EntityFrameworkCore;
 
 namespace Disertatie_backend.Entities.Anime
 {
+    [Collection("Anime")]
     public class Datum
     {
         [BsonId]
@@ -19,9 +21,9 @@ namespace Disertatie_backend.Entities.Anime
         public Trailer Trailer { get; set; }
         public string Title { get; set; }
         public string Title_english { get; set; }
-        public string Title_japanese { get; set; }
-        public string Type { get; set; }
-        public string Source { get; set; }
+        public string? Title_japanese { get; set; }
+        public string? Type { get; set; }
+        public string? Source { get; set; }
         public int? Episodes { get; set; }
         public string Status { get; set; }
         public bool Airing { get; set; }
@@ -29,14 +31,14 @@ namespace Disertatie_backend.Entities.Anime
         public string Duration { get; set; }
         public string Rating { get; set; }
         public double? Score { get; set; }
-        public int Scored_by { get; set; }
+        public int? Scored_by { get; set; }
         public int? Rank { get; set; }
         public int? Popularity { get; set; }
         public int? Members { get; set; }
         public int? Favorites { get; set; }
-        public string Synopsis { get; set; }
-        public string Background { get; set; }
-        public string Season { get; set; }
+        public string? Synopsis { get; set; }
+        public string? Background { get; set; }
+        public string? Season { get; set; }
         public int? Year { get; set; }
         public Broadcast Broadcast { get; set; }
         public IList<Producer> Producers { get; set; }

@@ -9,6 +9,7 @@ using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using System;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -19,28 +20,46 @@ namespace Disertatie_backend.DatabaseContext
         {
         }
 
-        public DbSet<UserFriend> Friends { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Connection> Connections { get; set; }
+        public DbSet<UserFriend> Friends { get; init; }
+        public DbSet<Message> Messages { get; init; }
+        public DbSet<Group> Groups { get; init; }
+        public DbSet<Connection> Connections { get; init; }
         public DbSet<MovieItem> Top250Movies { get; set; }
-        public DbSet<AppUserMovieItem> AppUserMovieItems { get; set; }
-        public DbSet<AppUserTvShowItem> AppUserTvShowItems { get; set; }
+        public DbSet<AppUserMovieItem> AppUserMovieItems { get; init; }
+        public DbSet<AppUserTvShowItem> AppUserTvShowItems { get; init; }
         public DbSet<AppUserAnimeItem> AppUserAnimeItems { get; set; }
-        public DbSet<AppUserMangaItem> AppUserMangaItems { get; set; }
-        public DbSet<AppUserGameItem> AppUserGameItems { get; set; }
-        public DbSet<TvShowItem> TvShows { get; set; }
-        public DbSet<Datum> Anime { get; set; }
-        public DbSet<DatumManga> Manga { get; set; }
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<TvShow> TrueTvShow { get; set; }
-        public DbSet<Result> GamesIds { get; set; }
-        public DbSet<Game> Games { get; set; }
+        public DbSet<AppUserMangaItem> AppUserMangaItems { get; init; }
+        public DbSet<AppUserGameItem> AppUserGameItems { get; init; }
+        public DbSet<TvShowItem> TvShows { get; init; }
+        public DbSet<Datum> Anime { get; init; }
+        public DbSet<DatumManga> Manga { get; init; }
+        public DbSet<Movie> Movies { get; init; }
+        public DbSet<TvShow> TrueTvShow { get; init; }
+        public DbSet<Result> GamesIds { get; init; }
+        public DbSet<Game> Games { get; init; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            //builder.Entity<UserFriend>().ToCollection("Friends");
+            //builder.Entity<Message>().ToCollection("Messages");
+            //builder.Entity<Group>().ToCollection("Groups");
+            //builder.Entity<Connection>().ToCollection("Connections");
+            //builder.Entity<MovieItem>().ToCollection("MovieItems");
+            //builder.Entity<AppUserMovieItem>().ToCollection("Movies for users");
+            //builder.Entity<AppUserTvShowItem>().ToCollection("TV  Shows for users");
+            //builder.Entity<AppUserAnimeItem>().ToCollection("Animes for users");
+            //builder.Entity<AppUserMangaItem>().ToCollection("Mangas for users");
+            //builder.Entity<AppUserGameItem>().ToCollection("Games for users");
+            //builder.Entity<TvShowItem>().ToCollection("TV Shows Items");
+            //builder.Entity<Datum>().ToCollection("Animes");
+            //builder.Entity<DatumManga>().ToCollection("Mangas");
+            //builder.Entity<Movie>().ToCollection("Movies");
+            //builder.Entity<TvShow>().ToCollection("TV Shows");
+            //builder.Entity<Result>().ToCollection("GamesIds");
+            //builder.Entity<Game>().ToCollection("Games");
 
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
@@ -61,7 +80,7 @@ namespace Disertatie_backend.DatabaseContext
                 .HasOne(s => s.AddedByUser)
                 .WithMany(l => l.AddedUsers)
                 .HasForeignKey(s => s.AddedByUserId)
-                .OnDelete(DeleteBehavior.NoAction);  
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<UserFriend>()
                 .HasOne(s => s.AddedUser)
