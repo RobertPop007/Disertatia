@@ -4,6 +4,8 @@ using Disertatie_backend.DTO;
 using Disertatie_backend.EmailTemplates;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
+using Disertatie_backend.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Disertatie_backend.Services
 {
@@ -11,21 +13,18 @@ namespace Disertatie_backend.Services
     {
         private readonly DataContext _context;
         private readonly IEmailSender _emailSender;
+        private readonly UserManager<AppUser> _userManager;
 
-        public RecuringHangfireJob(DataContext context, IEmailSender emailSender)
+        public RecuringHangfireJob(DataContext context, IEmailSender emailSender, UserManager<AppUser> userManager)
         {
             _context = context;
             _emailSender = emailSender;
+            _userManager = userManager;
         }
         public async Task SendRecomandationsEmails()
         {
             
-            foreach(var user in _context.Users
-                .Include(o => o.AppUserMovie)
-                .Include(o => o.AppUserAnime)
-                .Include(o => o.AppUserTvShow)
-                .Include(o => o.AppUserManga)
-                .Include(o => o.AppUserGame))
+            foreach(var user in _userManager.Users)
             {
                 if(user.IsSubscribedToNewsletter == true)
                 {

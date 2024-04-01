@@ -2,15 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace Disertatie_backend.Controllers
 {
     public class BuggyController : BaseApiController
     {
-        private readonly DataContext _context;
-        public BuggyController(DataContext context)
+        private readonly UserManager<AppUser> _userManager;
+        public BuggyController(UserManager<AppUser> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
         [Authorize]
@@ -21,17 +23,17 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpGet("not-found")]
-        public ActionResult<AppUser> GetNotFound()
+        public async Task<ActionResult<AppUser>> GetNotFound()
         {
-            var thing = _context.Users.Find(-1);
+            var thing = await _userManager.FindByIdAsync("-1");
 
             return thing == null ? NotFound() : thing;
         }
 
         [HttpGet("server-error")]
-        public ActionResult<string> GetServerError()
+        public async Task<ActionResult<string>> GetServerError()
         {
-            var thing = _context.Users.Find(-1);
+            var thing = await _userManager.FindByIdAsync("-1");
 
             var thingToReturn = thing.ToString();
 

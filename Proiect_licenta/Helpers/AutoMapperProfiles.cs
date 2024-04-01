@@ -4,6 +4,9 @@ using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Extensions;
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Disertatie_backend.Helpers
 {
@@ -16,6 +19,10 @@ namespace Disertatie_backend.Helpers
                     src.ProfilePicture.Url))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.DateOfBirth.CalculateAge()));
+
+            CreateMap<IFindFluent<AppUser, IQueryable>, List<MemberDto>>().ReverseMap();
+            CreateMap<MemberDto, MemberDto>().ReverseMap();
+
             CreateMap<Photo, PhotoDto>();
 
             CreateMap<MemberUpdateDto, AppUser>();

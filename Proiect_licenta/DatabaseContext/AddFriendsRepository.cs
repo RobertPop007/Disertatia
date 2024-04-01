@@ -7,16 +7,19 @@ using Disertatie_backend.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using Microsoft.AspNetCore.Identity;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class AddFriendsRepository : IAddFriendsRepository
     {
         private readonly DataContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AddFriendsRepository(DataContext context)
+        public AddFriendsRepository(DataContext context, UserManager<AppUser> userManager)
         {
             this._context = context;
+            this._userManager = userManager;
         }
 
         public async Task<UserFriend> GetUserFriend(int addedByUserId, int addedUserId)
@@ -26,7 +29,7 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams friendsParams)
         {
-            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var users = _userManager.Users.OrderBy(u => u.UserName).AsQueryable();
             var friends = _context.Friends.AsQueryable();
 
             if(friendsParams.Predicate == "added")
@@ -56,10 +59,7 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<AppUser> GetUserWithFriends(int userId)
         {
-            return await _context.Users
-                 .IncludeOptimized(x => x.AddedUsers)
-                 .IncludeOptimized(x => x.AddedByUsers)
-                 .FirstOrDefaultAsync(x => x.Id == userId);
+            return await _userManager.FindByIdAsync(userId.ToString());
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Disertatie_backend.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class UsersController : BaseApiController //BaseApiController e un controller parinte, are el proprietatile necesare
     {
         private readonly IUserRepository _userRepository;
@@ -29,7 +29,8 @@ namespace Disertatie_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            userParams.CurrentUsername = User.GetUsername();
+            //userParams.CurrentUsername = User.GetUsername();
+            userParams.CurrentUsername = "rae";
 
             var users = await _userRepository.GetMembersAsync(userParams);
 

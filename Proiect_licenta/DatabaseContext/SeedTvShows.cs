@@ -52,7 +52,7 @@ namespace Disertatie_backend.DatabaseContext
             //}
             
 
-            await context.SaveChangesAsync();
+            //await context.SaveChangesAsync();
         }
 
         public static async Task SeedTvShowsList(DataContext context, string url)

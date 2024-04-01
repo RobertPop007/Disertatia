@@ -4,7 +4,7 @@ namespace Disertatie_backend.Entities.Anime
 {
     public class Broadcast
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+#nullable enable
         public string? Day { get; set; }
         public string? Time { get; set; }
         public string? Timezone { get; set; }

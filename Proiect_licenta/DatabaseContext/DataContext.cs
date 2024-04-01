@@ -10,16 +10,20 @@ using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using System;
 using MongoDB.EntityFrameworkCore.Extensions;
+using MongoDbGenericRepository;
+using System.Threading.Tasks;
+using System.Reflection.Emit;
 
 namespace Disertatie_backend.DatabaseContext
 {
-    public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, 
-        AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
+    public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
 
+        public DbSet<AppUser> Users { get; set; }
+        public DbSet<AppRole> Roles { get; set; }
         public DbSet<UserFriend> Friends { get; init; }
         public DbSet<Message> Messages { get; init; }
         public DbSet<Group> Groups { get; init; }
@@ -43,6 +47,9 @@ namespace Disertatie_backend.DatabaseContext
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<AppUser>().ToCollection("Users");
+            builder.Entity<AppRole>().ToCollection("Roles");
+            builder.Entity<AppUserAnimeItem>().ToCollection("UsersAnime");
             //builder.Entity<UserFriend>().ToCollection("Friends");
             //builder.Entity<Message>().ToCollection("Messages");
             //builder.Entity<Group>().ToCollection("Groups");
@@ -158,6 +165,10 @@ namespace Disertatie_backend.DatabaseContext
             .HasConversion(
                 v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+            builder.Entity<UserLoginInfo>()
+            .HasNoKey() // If a keyless entity
+            .Ignore(p => p.ProviderDisplayName);
         }
     }
 }

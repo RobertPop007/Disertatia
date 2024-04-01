@@ -64,7 +64,8 @@ namespace Disertatie_backend.Controllers
         [HttpPost("newsletter/{username}")]
         public async Task SubscribeToNewsletterUser([FromRoute] string username)
         {
-            var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
+            var user = await _userManager.FindByNameAsync(username);
+            //var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
 
             user.IsSubscribedToNewsletter = !user.IsSubscribedToNewsletter;
 
@@ -74,7 +75,7 @@ namespace Disertatie_backend.Controllers
         [HttpPost("darkMode/{username}")]
         public async Task EnableDarkModeForUser([FromRoute] string username)
         {
-            var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
+            var user = await _userManager.FindByNameAsync(username);
 
             user.HasDarkMode = !user.HasDarkMode;
 
@@ -84,65 +85,59 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("deleteUser/{username}")]
         public async Task DeleteUser([FromRoute] string username)
         {
-            var user = await _context.Users.Where(u => u.UserName == username)
-                .IncludeOptimized(o => o.AppUserMovie)
-                .IncludeOptimized(o => o.AppUserAnime)
-                .IncludeOptimized(o => o.AppUserGame)
-                .IncludeOptimized(o => o.AppUserTvShow)
-                .IncludeOptimized(o => o.AppUserManga)
-                .FirstOrDefaultAsync();
+            var user = await _userManager.FindByNameAsync(username);
 
-            foreach(var item in _context.AppUserAnimeItems)
-            {
-                if(item.AppUser == user) _context.AppUserAnimeItems.Remove(item);
-            }
+            //foreach (var item in _context.AppUserAnimeItems)
+            //{
+            //    if(item.AppUser == user) _context.AppUserAnimeItems.Remove(item);
+            //}
 
-            foreach (var item in _context.AppUserGameItems)
-            {
-                if (item.AppUser == user) _context.AppUserGameItems.Remove(item);
-            }
+            //foreach (var item in _context.AppUserGameItems)
+            //{
+            //    if (item.AppUser == user) _context.AppUserGameItems.Remove(item);
+            //}
 
-            foreach (var item in _context.AppUserMangaItems)
-            {
-                if (item.AppUser == user) _context.AppUserMangaItems.Remove(item);
-            }
+            //foreach (var item in _context.AppUserMangaItems)
+            //{
+            //    if (item.AppUser == user) _context.AppUserMangaItems.Remove(item);
+            //}
 
-            foreach (var item in _context.AppUserMovieItems)
-            {
-                if (item.AppUser == user) _context.AppUserMovieItems.Remove(item);
-            }
+            //foreach (var item in _context.AppUserMovieItems)
+            //{
+            //    if (item.AppUser == user) _context.AppUserMovieItems.Remove(item);
+            //}
 
-            foreach (var item in _context.AppUserTvShowItems)
-            {
-                if (item.AppUser == user) _context.AppUserTvShowItems.Remove(item);
-            }
+            //foreach (var item in _context.AppUserTvShowItems)
+            //{
+            //    if (item.AppUser == user) _context.AppUserTvShowItems.Remove(item);
+            //}
 
-            foreach (var item in _context.UserRoles)
-            {
-                if (item.User == user) _context.UserRoles.Remove(item);
-            }
+            //foreach (var item in _context.UserRoles)
+            //{
+            //    if (item.User == user) _context.UserRoles.Remove(item);
+            //}
 
-            foreach (var item in _context.UserLogins)
-            {
-                if (item.UserId == user.Id) _context.UserLogins.Remove(item);
-            }
+            //foreach (var item in _context.UserLogins)
+            //{
+            //    if (item.UserId == user.Id) _context.UserLogins.Remove(item);
+            //}
 
-            foreach (var item in _context.UserClaims)
-            {
-                if (item.UserId == user.Id) _context.UserClaims.Remove(item);
-            }
+            //foreach (var item in _context.UserClaims)
+            //{
+            //    if (item.UserId == user.Id) _context.UserClaims.Remove(item);
+            //}
 
-            foreach (var item in _context.Friends)
-            {
-                if (item.AddedByUser == user || item.AddedUser == user) _context.Friends.Remove(item);
-            }
+            //foreach (var item in _context.Friends)
+            //{
+            //    if (item.AddedByUser == user || item.AddedUser == user) _context.Friends.Remove(item);
+            //}
 
-            foreach (var item in _context.Messages)
-            {
-                if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
-            }
+            //foreach (var item in _context.Messages)
+            //{
+            //    if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
+            //}
 
-            _context.Users.Remove(user);
+            await _userManager.DeleteAsync(user);
             await _context.SaveChangesAsync();
         }
 

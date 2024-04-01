@@ -9,6 +9,7 @@ using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Disertatie_backend.Controllers
 {
@@ -18,12 +19,14 @@ namespace Disertatie_backend.Controllers
         private readonly IUserRepository _userRepository;
         private readonly DataContext _context;
         private readonly IAddFriendsRepository _addFriendsRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public FriendsController(IUserRepository userRepository, DataContext context, IAddFriendsRepository addFriendsRepository)
+        public FriendsController(IUserRepository userRepository, DataContext context, IAddFriendsRepository addFriendsRepository, UserManager<AppUser> userManager)
         {
             this._userRepository = userRepository;
             this._addFriendsRepository = addFriendsRepository;
             _context = context;
+            _userManager = userManager;
         }
 
         [HttpPost("{username}")]
@@ -107,7 +110,7 @@ namespace Disertatie_backend.Controllers
             var userId = User.GetUserId();
             var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
 
-            var friend = _context.Users.Where(o => o.UserName == username).FirstOrDefault();
+            var friend = _userManager.FindByNameAsync(username);
 
             if(friend == null) return false;
 

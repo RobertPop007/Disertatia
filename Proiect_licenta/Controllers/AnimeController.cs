@@ -8,6 +8,10 @@ using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.Controllers
 {
@@ -17,19 +21,28 @@ namespace Disertatie_backend.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
+        private static IMongoCollection<AppUserAnimeItem> _userAnimeCollection;
+        private static IMongoCollection<AppUser> _userCollection;
 
-        public AnimeController(DataContext context, IAnimeRepository animesRepository, IMapper mapper, IUserRepository userRepository)
+        public AnimeController(DataContext context, IAnimeRepository animesRepository, IMapper mapper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
             _animesRepository = animesRepository;
             _context = context;
             _mapper = mapper;
             _userRepository = userRepository;
+
+            var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            _userAnimeCollection = mongoDb.GetCollection<AppUserAnimeItem>("UserAnime");
+            _userCollection = mongoDb.GetCollection<AppUser>("Users");
         }
 
+
+        //facem cumva sa avem acele colectii numai in repo
         [HttpPost("AddAnime/{animeId}")]
         public async Task<ActionResult> AddAnimeForUser(int animeId)
         {
-            var username = User.GetUsername();
+            var username = "rae";
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
@@ -41,16 +54,16 @@ namespace Disertatie_backend.Controllers
                 AnimeId = animeId
             };
 
-            var alreadyAdded = await _context.AppUserAnimeItems.AnyAsync(o => o.AppUserId == user.Id && o.AnimeId == animeId);
+            var alreadyAdded = await _userAnimeCollection.FindAsync(o => o.AppUserId == user.Id && o.AnimeId == animeId);
 
-            if (alreadyAdded == true) return BadRequest("You have already added this anime to your list");
+            if (alreadyAdded.Any() == true) return BadRequest("You have already added this anime to your list");
 
-            await _context.AppUserAnimeItems.AddAsync(appUserAnimeItem);
+            await _userAnimeCollection.InsertOneAsync(appUserAnimeItem);
+
+            if(user.AppUserAnime == null) user.AppUserAnime = new List<AppUserAnimeItem>();
             user.AppUserAnime.Add(appUserAnimeItem);
 
             await _userRepository.SaveAllAsync();
-
-            await _context.SaveChangesAsync();
 
             return Ok(user);
         }

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AspNetCore.Identity.MongoDbCore.Models;
+using Microsoft.AspNetCore.Identity;
+using MongoDbGenericRepository.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities
 {
-    public class AppUser : IdentityUser<int>
+    [CollectionName("Users")]
+    public class AppUser : MongoIdentityUser<int>
     {
         public DateTime DateOfBirth { get; set; }
         public string KnownAs { get; set; }

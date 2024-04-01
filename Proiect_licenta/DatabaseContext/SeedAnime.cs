@@ -16,16 +16,16 @@ namespace Disertatie_backend.DatabaseContext
 
             var _animeCollection = mongoDb.GetCollection<Datum>("Anime");
 
-            ////if (_animeCollection.CountDocuments(_ => true) >= 0)
-            ////{
-                //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
-
-            for (var i = 700; i < 1100; i++)
+            if (_animeCollection.CountDocuments(_ => true) >= 0)
             {
-                System.Threading.Thread.Sleep(1000);
-                await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+                await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+
+                //for (var i = 2; i < 1500; i++)
+                //{
+                //    System.Threading.Thread.Sleep(1000);
+                //    await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+                //}
             }
-            ////}
         }
 
         public static async Task SeedAnimeList(IMongoCollection<Datum> _animeCollection, string url)

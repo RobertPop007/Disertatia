@@ -34,13 +34,14 @@ namespace Disertatie_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<DatabaseSettings>(Configuration.GetSection("MongoDatabase"));
+            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
 
-            //services.AddIdentity<ApplicationUsers, ApplicationRoles>()
-            //    .AddMongoDbStores<ApplicationUsers, ApplicationRoles, Guid>
-            //    (
-            //        mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
-            //    );
+            var mongoDbSettings = Configuration.GetSection(nameof(DatabaseSettings)).Get<DatabaseSettings>();
+            services.AddIdentity<AppUser, AppRole>()
+                .AddMongoDbStores<AppUser, AppRole, int>
+                (
+                    mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
+                );
 
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
