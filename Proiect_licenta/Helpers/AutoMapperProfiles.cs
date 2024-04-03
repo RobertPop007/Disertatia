@@ -20,7 +20,7 @@ namespace Disertatie_backend.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.DateOfBirth.CalculateAge()));
 
-            CreateMap<IFindFluent<AppUser, IQueryable>, List<MemberDto>>().ReverseMap();
+            CreateMap<IFindFluent<AppUser, AppUser>, List<MemberDto>>().ReverseMap();
             CreateMap<MemberDto, MemberDto>().ReverseMap();
 
             CreateMap<Photo, PhotoDto>();

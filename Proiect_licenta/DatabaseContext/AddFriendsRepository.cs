@@ -54,7 +54,7 @@ namespace Disertatie_backend.DatabaseContext
                 Id = user.Id
             });
 
-            return await PagedList<FriendsDto>.CreateAsync(addedUsers, friendsParams.PageNumber, friendsParams.PageSize);
+            return await PagedList<FriendsDto>.CreateAsync(addedUsers.ToList(), friendsParams.PageNumber, friendsParams.PageSize);
         }
 
         public async Task<AppUser> GetUserWithFriends(int userId)

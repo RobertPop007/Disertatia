@@ -13,6 +13,9 @@ using Disertatie_backend.Configurations;
 using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
+using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -48,25 +51,42 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            var query = _context.Users.AsQueryable();
-            //var query = _userCollection.Find(_ => true).ToList().AsQueryable();
+            //var query = _context.Users.AsQueryable();
 
-            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+            //query = query.Where(u => u.UserName != userParams.CurrentUsername);
 
             if (string.IsNullOrEmpty(userParams.CurrentUsername) || string.IsNullOrWhiteSpace(userParams.CurrentUsername)) return null;
 
-            if (!string.IsNullOrWhiteSpace(userParams.SearchedUsername))
-                query = query.Where(u => u.UserName.Contains(userParams.SearchedUsername));
+            var filter = Builders<AppUser>.Filter.Ne(x => x.UserName, userParams.CurrentUsername) &
+            Builders<AppUser>.Filter.Where(x => x.UserName.Contains(userParams.SearchedUsername));
+            
+            var query = _userCollection.Find(filter).ToEnumerable();
+            //await query.ForEachAsync(u => _mapper.Map<MemberDto>(u).to);
 
-            query = userParams.OrderBy switch
+            var queryList = new List<MemberDto>();
+
+            foreach(var document in query)
             {
-                "username" => query.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
-                "newest accounts" => query.OrderByDescending(u => u.Created).OrderByDescending(u => u.LastActive),
-                _ => query.OrderByDescending(u => u.Created)
+                var x = _mapper.Map<MemberDto>(document);
+                queryList.Add(_mapper.Map<MemberDto>(document));
+            }
 
+            var mappedQuery = queryList.AsEnumerable();
+
+            mappedQuery = userParams.OrderBy switch
+            {
+                "username" => mappedQuery.OrderByDescending(u => u.LastActive).OrderBy(u => u.UserName),
+                "newest accounts" => mappedQuery.OrderByDescending(u => u.Created).OrderByDescending(u => u.LastActive),
+                _ => mappedQuery.OrderByDescending(u => u.Created)
             };
+            
+            //return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+            //    userParams.PageNumber, userParams.PageSize);
 
-            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+
+            //var mappedQuery = _mapper.Map<List<MemberDto>>(query).AsQueryable().ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
+
+            return await PagedList<MemberDto>.CreateAsync(mappedQuery.ToList(),
                 userParams.PageNumber, userParams.PageSize);
         }
 
