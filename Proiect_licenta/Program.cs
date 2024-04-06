@@ -28,8 +28,8 @@ namespace Disertatie_backend
                 //await context.Database.MigrateAsync();
                 //await Seed.SeedUsers(userManager, roleManager);
                 //await SeedMovies.SeedAllMovies(context);
-                await SeedTvShows.SeedAllTvShows(context);
-                await SeedAnime.SeedAllAnime();
+                //await SeedTvShows.SeedAllTvShows(context);
+                //await SeedAnime.SeedAllAnime();
                 await SeedManga.SeedAllManga(context);
                 await SeedGames.SeedAllGamesIds(context);
             }

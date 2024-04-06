@@ -110,7 +110,7 @@ namespace Disertatie_backend.Controllers
             var userId = User.GetUserId();
             var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
 
-            var friend = _userManager.FindByNameAsync(username);
+            var friend = await _userManager.FindByNameAsync(username);
 
             if(friend == null) return false;
 

@@ -11,48 +11,63 @@ using Z.EntityFramework.Plus;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
-using Disertatie_backend.Entities.Manga;
+using Disertatie_backend.Entities;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class AnimeRepository : IAnimeRepository
     {
         private readonly DataContext _context;
-        private static IMongoCollection<Datum> _animeCollection;
+        private readonly IMongoCollection<Datum> _animeCollection;
+        private readonly IMongoCollection<AppUser> _userCollection;
+        private readonly IUserRepository _userRepository;
+        private readonly IMongoDBCollectionHelper<Datum> _animeCollectionHelper;
+        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
+        private readonly string titleIndex = "Title_index";
 
-        public AnimeRepository(DataContext context, IOptions<DatabaseSettings> databaseSettings)
+        public AnimeRepository(DataContext context, IMongoDBCollectionHelper<Datum> animeCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
-            _context = context;
-
-            var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
-            _animeCollection = mongoDb.GetCollection<Datum>("Anime");
-
-            var titleIndexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Title);
-            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(titleIndexModel));
-
-            var idIndexModel = Builders<Datum>.IndexKeys.Ascending(u => u.Id);
-            _animeCollection.Indexes.CreateOne(new CreateIndexModel<Datum>(idIndexModel));
+            _animeCollectionHelper = animeCollectionHelper;
+            _userCollectionHelper = userCollectionHelper;
+            _animeCollection = _animeCollectionHelper.CreateCollection(databaseSettings);
+            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
+            _userRepository = userRepository;
         }
 
-
-        //aici umblam dupa ce terminam si partea cu users
-        public void DeleteAnimeForUser(int userId, int animeId)
+        public async Task DeleteAnimeForUser(ObjectId userId, ObjectId animeId)
         {
-            var appUserAnimeItem = _context.AppUserAnimeItems.FirstOrDefault(o => o.AppUserId == userId && o.AnimeId == animeId);
-            _context.AppUserAnimeItems.Remove(appUserAnimeItem);
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserAnime, animeId);
+
+            await _userCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task AddAnimeToUser(ObjectId userId, ObjectId animeId)
+        {
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserAnime, animeId);
+            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Datum> GetAnimeByFullTitleAsync(string title)
         {
-            var filterByTitle = Builders<Datum>.Filter.Eq(p => p.Title, title);
-            return  await _animeCollection.Find(filterByTitle).FirstOrDefaultAsync();
+            _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            var filterByTitle = Builders<Datum>.Filter.Where(p => p.Title.Contains(title));
+
+            var result = await _animeCollection.Find(filterByTitle).FirstOrDefaultAsync();
+            _animeCollectionHelper.DropIndex(titleIndex);
+
+            return result;
         }
 
-        public async Task<Datum> GetAnimeByIdAsync(int id)
+        public async Task<Datum> GetAnimeByIdAsync(ObjectId id)
         {
-            var filterById = Builders<Datum>.Filter.Eq(p => p.Mal_id, id);
-            return await _animeCollection.Find(filterById).FirstOrDefaultAsync();
+            var filterById = Builders<Datum>.Filter.Eq(p => p.Id, id);
+
+            var result = await _animeCollection.Find(filterById).FirstOrDefaultAsync();
+
+            return result;
         }
 
         //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
@@ -83,20 +98,15 @@ namespace Disertatie_backend.DatabaseContext
             return await query.ToListAsync();
         }
 
-        //tot cu users
-        public async Task<List<Datum>> GetUserAnimes(int userId)
+        public async Task<List<Datum>> GetUserAnimes(ObjectId userId)
         {
-            var listOfAnimesIdForUser = _context.AppUserAnimeItems.Where(o => o.AppUserId == userId).Select(o => o.AnimeId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var listOfAnimesForUser = new List<Datum>();
 
-            foreach (var animeId in listOfAnimesIdForUser)
+            foreach (var animeId in user.AppUserAnime)
             {
-                var anime = await _context.Anime.Where(o => o.Mal_id == animeId)
-                    .IncludeOptimized(o => o.Images)
-                    .IncludeOptimized(o => o.Images.Jpg)
-                    .IncludeOptimized(o => o.Images.Webp)
-                    .FirstOrDefaultAsync();
+                var anime = await GetAnimeByIdAsync(animeId);
 
                 if (anime != null) listOfAnimesForUser.Add(anime);
             }
@@ -104,18 +114,13 @@ namespace Disertatie_backend.DatabaseContext
             return listOfAnimesForUser;
         }
 
-        public bool IsAnimeAlreadyAdded(int userId, int animeId)
+        public async Task<bool> IsAnimeAlreadyAdded(ObjectId userId, ObjectId animeId)
         {
-            var listOfAnimesIdForUser = _context.AppUserAnimeItems.Where(o => o.AppUserId == userId).Select(o => o.AnimeId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isAnimeAlreadyAdded = listOfAnimesIdForUser.Contains(animeId);
+            var isAnimeAlreadyAdded = user.AppUserAnime.Contains(animeId);
             if (isAnimeAlreadyAdded == true) return true;
             return false;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

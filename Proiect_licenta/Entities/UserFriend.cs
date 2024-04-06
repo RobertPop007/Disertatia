@@ -1,11 +1,13 @@
-﻿namespace Disertatie_backend.Entities
+﻿using MongoDB.Bson;
+
+namespace Disertatie_backend.Entities
 {
     public class UserFriend
     {
         public AppUser AddedByUser { get; set; }
-        public int AddedByUserId { get; set; }
+        public ObjectId AddedByUserId { get; set; }
 
         public AppUser AddedUser { get; set; }
-        public int AddedUserId { get; set; }
+        public ObjectId AddedUserId { get; set; }
     }
 }

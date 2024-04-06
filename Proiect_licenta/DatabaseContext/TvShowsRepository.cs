@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -22,7 +23,7 @@ namespace Disertatie_backend.DatabaseContext
             _mapper = mapper;
         }
 
-        public void DeleteShowForUser(int userId, string tvShowId)
+        public void DeleteShowForUser(ObjectId userId, string tvShowId)
         {
             var appUserTvShowItem = _context.AppUserTvShowItems.FirstOrDefault(o => o.AppUserId == userId && o.TvShowId == tvShowId);
             _context.AppUserTvShowItems.Remove(appUserTvShowItem);
@@ -81,7 +82,7 @@ namespace Disertatie_backend.DatabaseContext
             return await query.ToListAsync();
         }
 
-        public async Task<List<TvShow>> GetUserTvShows(int userId)
+        public async Task<List<TvShow>> GetUserTvShows(ObjectId userId)
         {
             var listOfTvShowsIdForUser = _context.AppUserTvShowItems.Where(o => o.AppUserId == userId).Select(o => o.TvShowId).AsEnumerable();
 
@@ -97,7 +98,7 @@ namespace Disertatie_backend.DatabaseContext
             return listOfTvShowsForUser;
         }
 
-        public bool IsTvShowAlreadyAdded(int userId, string tvShowId)
+        public bool IsTvShowAlreadyAdded(ObjectId userId, string tvShowId)
         {
             var listOfTvShowsIdForUser = _context.AppUserTvShowItems.Where(o => o.AppUserId == userId).Select(o => o.TvShowId).AsEnumerable();
 

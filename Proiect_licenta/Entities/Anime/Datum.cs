@@ -12,7 +12,7 @@ namespace Disertatie_backend.Entities.Anime
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 #nullable enable
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

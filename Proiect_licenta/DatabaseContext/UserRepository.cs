@@ -23,51 +23,46 @@ namespace Disertatie_backend.DatabaseContext
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<AppUser> _userManager;
         private static IMongoCollection<AppUser> _userCollection;
+        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
+        private readonly string usernameIndex = "Username_index";
+        private readonly string idIndex = "Id_index";
 
-        public UserRepository(DataContext context, IMapper mapper, UserManager<AppUser> userManager, IOptions<DatabaseSettings> databaseSettings)
+        public UserRepository(DataContext context, IMapper mapper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IOptions<DatabaseSettings> databaseSettings)
         {
-            var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
-            _userCollection = mongoDb.GetCollection<AppUser>("Users");
-
             _context = context;
             _mapper = mapper;
-            _userManager = userManager;
+
+            _userCollectionHelper = userCollectionHelper;
+            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
         }
 
         public async Task<MemberDto> GetMemberAsync(string username)
         {
-            //return await _context.Users
-            //    .Where(x => x.UserName == username)
-            //    .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            //    .SingleOrDefaultAsync();
-
+            _userCollectionHelper.CreateIndexAscending(u => u.UserName, usernameIndex);
             var filterByUsername = Builders<AppUser>.Filter.Eq(p => p.UserName, username);
+
             var user = await _userCollection.Find(filterByUsername).FirstOrDefaultAsync();
-            return _mapper.Map<MemberDto>(user);
+            var member = _mapper.Map<MemberDto>(user);
+
+            _userCollectionHelper.DropIndex(usernameIndex);
+            return member;
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            //var query = _context.Users.AsQueryable();
-
-            //query = query.Where(u => u.UserName != userParams.CurrentUsername);
-
             if (string.IsNullOrEmpty(userParams.CurrentUsername) || string.IsNullOrWhiteSpace(userParams.CurrentUsername)) return null;
 
-            var filter = Builders<AppUser>.Filter.Ne(x => x.UserName, userParams.CurrentUsername) &
+            _userCollectionHelper.CreateIndexAscending(u => u.UserName, usernameIndex);
+            var filterByUsername = Builders<AppUser>.Filter.Ne(x => x.UserName, userParams.CurrentUsername) &
             Builders<AppUser>.Filter.Where(x => x.UserName.Contains(userParams.SearchedUsername));
             
-            var query = _userCollection.Find(filter).ToEnumerable();
-            //await query.ForEachAsync(u => _mapper.Map<MemberDto>(u).to);
+            var query = _userCollection.Find(filterByUsername).ToEnumerable();
 
             var queryList = new List<MemberDto>();
 
             foreach(var document in query)
             {
-                var x = _mapper.Map<MemberDto>(document);
                 queryList.Add(_mapper.Map<MemberDto>(document));
             }
 
@@ -79,25 +74,29 @@ namespace Disertatie_backend.DatabaseContext
                 "newest accounts" => mappedQuery.OrderByDescending(u => u.Created).OrderByDescending(u => u.LastActive),
                 _ => mappedQuery.OrderByDescending(u => u.Created)
             };
-            
-            //return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
-            //    userParams.PageNumber, userParams.PageSize);
 
+            _userCollectionHelper.DropIndex(usernameIndex);
 
-            //var mappedQuery = _mapper.Map<List<MemberDto>>(query).AsQueryable().ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
-
-            return await PagedList<MemberDto>.CreateAsync(mappedQuery.ToList(),
+            return await PagedList<MemberDto>.CreateAsync(mappedQuery.AsQueryable(),
                 userParams.PageNumber, userParams.PageSize);
         }
 
-        public async Task<AppUser> GetUserByIdAsync(int id)
-        { 
-            return await _userCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task<AppUser> GetUserByIdAsync(ObjectId id)
+        {
+            var filterById = Builders<AppUser>.Filter.Eq(p => p.Id, id);
+
+            var result = await _userCollection.Find(filterById).FirstOrDefaultAsync();
+            return result;
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            return await _userCollection.Find(x => x.UserName == username).FirstOrDefaultAsync();
+            _userCollectionHelper.CreateIndexAscending(u => u.UserName, usernameIndex);
+            var filterByUsername = Builders<AppUser>.Filter.Eq(p => p.UserName, username);
+
+            var result = await _userCollection.Find(filterByUsername).FirstOrDefaultAsync();
+            _userCollectionHelper.DropIndex(usernameIndex);
+            return result;
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()

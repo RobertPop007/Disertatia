@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using MongoDB.Bson;
+using System.Security.Claims;
 
 namespace Disertatie_backend.Extensions
 {
@@ -9,9 +10,9 @@ namespace Disertatie_backend.Extensions
             return user.FindFirst(ClaimTypes.Name)?.Value;
         }
 
-        public static int GetUserId(this ClaimsPrincipal user)
+        public static ObjectId GetUserId(this ClaimsPrincipal user)
         {
-            return int.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return ObjectId.Parse(user.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

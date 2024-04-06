@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -23,7 +24,7 @@ namespace Disertatie_backend.DatabaseContext
             _mapper = mapper;
         }
 
-        public void DeleteGameForUser(int userId, int gameId)
+        public void DeleteGameForUser(ObjectId userId, int gameId)
         {
             var appUserGameItem = _context.AppUserGameItems.FirstOrDefault(o => o.AppUserId == userId && o.GameId == gameId);
             _context.AppUserGameItems.Remove(appUserGameItem);
@@ -84,7 +85,7 @@ namespace Disertatie_backend.DatabaseContext
             return await query.ToListAsync();
         }
 
-        public async Task<List<Game>> GetUserGames(int userId)
+        public async Task<List<Game>> GetUserGames(ObjectId userId)
         {
             var listOfGamesIdForUser = _context.AppUserGameItems.Where(o => o.AppUserId == userId).Select(o => o.GameId).AsEnumerable();
 
@@ -100,7 +101,7 @@ namespace Disertatie_backend.DatabaseContext
             return listOfGamesForUser;
         }
 
-        public bool IsGameAlreadyAdded(int userId, int gameId)
+        public bool IsGameAlreadyAdded(ObjectId userId, int gameId)
         {
             var listOfGamesIdForUser = _context.AppUserGameItems.Where(o => o.AppUserId == userId).Select(o => o.GameId).AsEnumerable();
 

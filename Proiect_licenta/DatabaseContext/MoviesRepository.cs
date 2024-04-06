@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -77,7 +78,7 @@ namespace Disertatie_backend.DatabaseContext
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<Movie>> GetUserMovies(int userId)
+        public async Task<List<Movie>> GetUserMovies(ObjectId userId)
         {
             var listOfMoviesIdForUser = _context.AppUserMovieItems.Where(o => o.AppUserId == userId).Select(o => o.MovieId).AsEnumerable();
 
@@ -93,7 +94,7 @@ namespace Disertatie_backend.DatabaseContext
             return listOfMoviesForUser;
         }
 
-        public bool IsMovieAlreadyAdded(int userId, string movieId)
+        public bool IsMovieAlreadyAdded(ObjectId userId, string movieId)
         {
             var listOfMoviesIdForUser = _context.AppUserMovieItems.Where(o => o.AppUserId == userId).Select(o => o.MovieId).AsEnumerable();
 
@@ -102,7 +103,7 @@ namespace Disertatie_backend.DatabaseContext
             return false;
         }
 
-        public void DeleteMovieForUser(int userId, string movieId)
+        public void DeleteMovieForUser(ObjectId userId, string movieId)
         {
             var appUserMovieItem = _context.AppUserMovieItems.FirstOrDefault(o => o.AppUserId == userId && o.MovieId == movieId);
             _context.AppUserMovieItems.Remove(appUserMovieItem);

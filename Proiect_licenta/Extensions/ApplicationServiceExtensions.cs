@@ -24,11 +24,13 @@ namespace Disertatie_backend.Extensions
             services.AddScoped<IAnimeRepository, AnimeRepository>();
             services.AddScoped<IMangaRepository, MangaRepository>();
             services.AddScoped<IGamesRepository, GameRepository>();
+            services.AddScoped<IUserAnimeRepository, UserAnimeRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddTransient<IRecuringHangfireJob, RecuringHangfireJob>();
+            services.AddScoped(typeof(IMongoDBCollectionHelper<>), typeof(MongoDBCollectionHelper<>));
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 

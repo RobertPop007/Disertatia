@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +18,8 @@ using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Identity;
 using System;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using Disertatie_backend.Helpers;
+using MongoDB.Bson;
 
 namespace Disertatie_backend
 {
@@ -38,7 +40,7 @@ namespace Disertatie_backend
 
             var mongoDbSettings = Configuration.GetSection(nameof(DatabaseSettings)).Get<DatabaseSettings>();
             services.AddIdentity<AppUser, AppRole>()
-                .AddMongoDbStores<AppUser, AppRole, int>
+                .AddMongoDbStores<AppUser, AppRole, ObjectId>
                 (
                     mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
                 );
@@ -91,7 +93,7 @@ namespace Disertatie_backend
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proiect_licenta v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proiect disertație"));
             }
 
             app.UseMiddleware<ExceptionMiddleware>();

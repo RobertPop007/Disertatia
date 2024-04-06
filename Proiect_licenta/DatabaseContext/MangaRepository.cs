@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -22,7 +23,7 @@ namespace Disertatie_backend.DatabaseContext
             _mapper = mapper;
         }
 
-        public void DeleteMangaForUser(int userId, int mangaId)
+        public void DeleteMangaForUser(ObjectId userId, int mangaId)
         {
             var appUserMangaItem = _context.AppUserMangaItems.FirstOrDefault(o => o.AppUserId == userId && o.MangaId == mangaId);
             _context.AppUserMangaItems.Remove(appUserMangaItem);
@@ -76,7 +77,7 @@ namespace Disertatie_backend.DatabaseContext
             return await query.ToListAsync();
         }
 
-        public async Task<List<DatumManga>> GetUserMangas(int userId)
+        public async Task<List<DatumManga>> GetUserMangas(ObjectId userId)
         {
             var listOfMangasIdForUser = _context.AppUserMangaItems.Where(o => o.AppUserId == userId).Select(o => o.MangaId).AsEnumerable();
 
@@ -97,7 +98,7 @@ namespace Disertatie_backend.DatabaseContext
             return listOfMangasForUser;
         }
 
-        public bool IsMangaAlreadyAdded(int userId, int mangaId)
+        public bool IsMangaAlreadyAdded(ObjectId userId, int mangaId)
         {
             var listOfMangasIdForUser = _context.AppUserMangaItems.Where(o => o.AppUserId == userId).Select(o => o.MangaId).AsEnumerable();
 

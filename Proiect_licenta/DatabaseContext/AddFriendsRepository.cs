@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 using Microsoft.AspNetCore.Identity;
+using System;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -22,7 +24,7 @@ namespace Disertatie_backend.DatabaseContext
             this._userManager = userManager;
         }
 
-        public async Task<UserFriend> GetUserFriend(int addedByUserId, int addedUserId)
+        public async Task<UserFriend> GetUserFriend(ObjectId addedByUserId, ObjectId addedUserId)
         {
             return await _context.Friends.FindAsync(addedByUserId, addedUserId);
         }
@@ -51,13 +53,13 @@ namespace Disertatie_backend.DatabaseContext
                 Age = user.DateOfBirth.CalculateAge(),
                 PhotoUrl = user.ProfilePicture.Url,
                 City = user.City,
-                Id = user.Id
+                Id = Convert.ToInt32(user.Id)
             });
 
-            return await PagedList<FriendsDto>.CreateAsync(addedUsers.ToList(), friendsParams.PageNumber, friendsParams.PageSize);
+            return await PagedList<FriendsDto>.CreateAsync(addedUsers, friendsParams.PageNumber, friendsParams.PageSize);
         }
 
-        public async Task<AppUser> GetUserWithFriends(int userId)
+        public async Task<AppUser> GetUserWithFriends(ObjectId userId)
         {
             return await _userManager.FindByIdAsync(userId.ToString());
         }

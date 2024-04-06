@@ -26,9 +26,9 @@ namespace Disertatie_backend.Helpers
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
 
-        public static async Task<PagedList<T>> CreateAsync(List<T> source, int pageNumber, int pageSize)
+        public static async Task<PagedList<T>> CreateAsync(IQueryable<T> source, int pageNumber, int pageSize)
         {
-            var count = source.Count();
+            var count = await source.CountAsync();
             var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
             return new PagedList<T>(items, count, pageNumber, pageSize);

@@ -9,10 +9,8 @@ namespace Disertatie_backend.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public int AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public ObjectId AppUserId { get; set; }
 
-        public int AnimeId { get; set; }
-        public Datum AnimeItem { get; set; }
+        public ObjectId AnimeId { get; set; }
     }
 }

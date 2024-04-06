@@ -45,10 +45,10 @@ namespace Disertatie_backend.DatabaseContext
 
                     throw;
                 }
-                
+
             }
 
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
 

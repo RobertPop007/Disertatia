@@ -73,14 +73,14 @@ namespace Disertatie_backend.EmailTemplates
                 var moviesIdList = user.AppUserMovie;
 
                 var index = random.Next(moviesIdList.Count);
-                randomMovie = context.Movies.Where(o => o.Id == moviesIdList[index].MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
                 countMovies++;
 
                 while (randomMovie.Similars == null)
                 {
                     index = random.Next(moviesIdList.Count);
-                    randomMovie = context.Movies.Where(o => o.Id == moviesIdList[index].MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                    randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
                     countMovies++;
 
@@ -119,14 +119,14 @@ namespace Disertatie_backend.EmailTemplates
                 var tvShowsIdList = user.AppUserTvShow;
 
                 var index = random.Next(tvShowsIdList.Count);
-                randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList[index].TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index).TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
                 countTvShows++;
 
                 while (randomTvShow.Similars == null)
                 {
                     index = random.Next(tvShowsIdList.Count);
-                    randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList[index].TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                    randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index).TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
                     countTvShows++;
 
@@ -166,14 +166,14 @@ namespace Disertatie_backend.EmailTemplates
                 var animesIdList = user.AppUserAnime;
 
                 var index = random.Next(animesIdList.Count);
-                randomAnime = context.Anime.Where(o => o.Mal_id == animesIdList[index].AnimeId).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+                randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
 
                 countAnimes++;
 
                 while (randomAnime.Licensors == null)
                 {
                     index = random.Next(animesIdList.Count);
-                    randomAnime = context.Anime.Where(o => o.Mal_id == animesIdList[index].AnimeId).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+                    randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
 
                     countAnimes++;
 
@@ -211,14 +211,14 @@ namespace Disertatie_backend.EmailTemplates
                 var mangasIdList = user.AppUserManga;
 
                 var index = random.Next(mangasIdList.Count);
-                randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList[index].MangaId).FirstOrDefault();
+                randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
 
                 countMangas++;
 
                 while (randomManga.Status == null)
                 {
                     index = random.Next(mangasIdList.Count);
-                    randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList[index].MangaId).FirstOrDefault();
+                    randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
 
                     countMangas++;
 
@@ -256,14 +256,14 @@ namespace Disertatie_backend.EmailTemplates
                 var gamesIdList = user.AppUserGame;
 
                 var index = random.Next(gamesIdList.Count);
-                randomGame = context.Games.Where(o => o.Id == gamesIdList[index].GameId).FirstOrDefault();
+                randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
 
                 countGames++;
 
                 while (randomGame.Description == null)
                 {
                     index = random.Next(gamesIdList.Count);
-                    randomGame = context.Games.Where(o => o.Id == gamesIdList[index].GameId).FirstOrDefault();
+                    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
 
                     countGames++;
 
