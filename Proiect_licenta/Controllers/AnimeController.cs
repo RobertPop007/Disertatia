@@ -12,13 +12,11 @@ namespace Disertatie_backend.Controllers
     {
         private readonly IAnimeRepository _animesRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IUserAnimeRepository _userAnimeRepository;
 
-        public AnimeController(IAnimeRepository animesRepository, IUserRepository userRepository, IUserAnimeRepository userAnimeRepository)
+        public AnimeController(IAnimeRepository animesRepository, IUserRepository userRepository)
         {
             _animesRepository = animesRepository;
             _userRepository = userRepository;
-            _userAnimeRepository = userAnimeRepository;
         }
 
 

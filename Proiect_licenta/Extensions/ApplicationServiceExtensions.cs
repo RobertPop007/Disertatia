@@ -24,7 +24,6 @@ namespace Disertatie_backend.Extensions
             services.AddScoped<IAnimeRepository, AnimeRepository>();
             services.AddScoped<IMangaRepository, MangaRepository>();
             services.AddScoped<IGamesRepository, GameRepository>();
-            services.AddScoped<IUserAnimeRepository, UserAnimeRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IUserRepository, UserRepository>();

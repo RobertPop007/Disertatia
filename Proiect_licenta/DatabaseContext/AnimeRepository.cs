@@ -1,18 +1,17 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Anime;
+using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
-using MongoDB.Driver;
-using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
-using Disertatie_backend.Entities;
-using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -33,6 +32,8 @@ namespace Disertatie_backend.DatabaseContext
             _animeCollection = _animeCollectionHelper.CreateCollection(databaseSettings);
             _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
             _userRepository = userRepository;
+
+            _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
         }
 
         public async Task DeleteAnimeForUser(ObjectId userId, ObjectId animeId)
@@ -52,22 +53,14 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<Datum> GetAnimeByFullTitleAsync(string title)
         {
-            _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            var filterByTitle = Builders<Datum>.Filter.Where(p => p.Title.Contains(title));
-
-            var result = await _animeCollection.Find(filterByTitle).FirstOrDefaultAsync();
-            _animeCollectionHelper.DropIndex(titleIndex);
-
-            return result;
+            var filterByTitle = Builders<Datum>.Filter.Eq(p => p.Title, title);
+            return await _animeCollection.Find(filterByTitle).FirstOrDefaultAsync();
         }
 
         public async Task<Datum> GetAnimeByIdAsync(ObjectId id)
         {
             var filterById = Builders<Datum>.Filter.Eq(p => p.Id, id);
-
-            var result = await _animeCollection.Find(filterById).FirstOrDefaultAsync();
-
-            return result;
+            return await _animeCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
         //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie

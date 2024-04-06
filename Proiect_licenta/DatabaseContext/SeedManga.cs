@@ -4,28 +4,32 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
+using Disertatie_backend.Entities.Anime;
+using MongoDB.Driver;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedManga
     {
-        public static async Task SeedAllManga(DataContext context)
+        public static async Task SeedAllManga(IOptions<DatabaseSettings> databaseSettings)
         {
-            //if (!context.Manga.Any())
-            //{
-            //    await SeedMangaList(context, "https://api.jikan.moe/v4/top/manga");
+            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-            //    for (var i = 2; i < 150; i++)
-            //    {
-            //        System.Threading.Thread.Sleep(3000);
-            //        await SeedMangaList(context, $"https://api.jikan.moe/v4/top/manga?page={i}");
-            //    }
-            //}
+            var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.Value.CollectionList["MangaCollection"]);
 
-            await context.SaveChangesAsync();
+            await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+
+            for (var i = 2; i <= 1081; i++)
+            {
+                System.Threading.Thread.Sleep(1000);
+                await SeedMangaList(_mangaCollection, $"https://api.jikan.moe/v4/top/manga?page={i}");
+            }
         }
 
-        public static async Task SeedMangaList(DataContext context, string url)
+        public static async Task SeedMangaList(IMongoCollection<DatumManga> _mangaCollection, string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
@@ -39,11 +43,7 @@ namespace Disertatie_backend.DatabaseContext
 
                 foreach (var manga in allManga.Data)
                 {
-                    var mangaAlreadyExists = context.Manga.Any(x => x.Mal_id == manga.Mal_id);
-                    if (mangaAlreadyExists == false)
-                    {
-                        await context.Manga.AddAsync(manga);
-                    }
+                    await _mangaCollection.InsertOneAsync(manga);
                 }
             }
         }

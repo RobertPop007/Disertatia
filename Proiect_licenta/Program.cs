@@ -8,6 +8,10 @@ using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities;
 using System;
 using System.Threading.Tasks;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend
 {
@@ -22,6 +26,14 @@ namespace Disertatie_backend
             
             try
             {
+                var configuration = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json")
+                            .Build();
+                IServiceCollection service = new ServiceCollection();
+                service.Configure<DatabaseSettings>(configuration.GetSection("DatabaseSettings"));
+
+                var settings = services.GetRequiredService<IOptions<DatabaseSettings>>();
+
                 var context = services.GetRequiredService<DataContext>();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
@@ -29,8 +41,8 @@ namespace Disertatie_backend
                 //await Seed.SeedUsers(userManager, roleManager);
                 //await SeedMovies.SeedAllMovies(context);
                 //await SeedTvShows.SeedAllTvShows(context);
-                //await SeedAnime.SeedAllAnime();
-                await SeedManga.SeedAllManga(context);
+                //await SeedAnime.SeedAllAnime(settings);
+                //await SeedManga.SeedAllManga(settings);
                 await SeedGames.SeedAllGamesIds(context);
             }
             catch (Exception ex)

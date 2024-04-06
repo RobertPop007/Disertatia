@@ -4,28 +4,31 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using Disertatie_backend.Interfaces;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedAnime
     {
-        public static async Task SeedAllAnime()
+        public static async Task SeedAllAnime(IOptions<DatabaseSettings> databaseSettings)
         {
-            var mongoClient = new MongoClient("mongodb://localhost:27017");
-            var mongoDb = mongoClient.GetDatabase("Database_disertație");
+            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-            var _animeCollection = mongoDb.GetCollection<Datum>("Anime");
+            var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.Value.CollectionList["AnimeCollection"]);
 
-            if (_animeCollection.CountDocuments(_ => true) >= 0)
-            {
-                //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+            //if (_animeCollection.CountDocuments(_ => true) >= 0)
+            //{
+                await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
 
-                //for (var i = 2; i < 1500; i++)
-                //{
-                //    System.Threading.Thread.Sleep(1000);
-                //    await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
-                //}
-            }
+                for (var i = 2; i <= 1081; i++)
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+                }
+            //}
         }
 
         public static async Task SeedAnimeList(IMongoCollection<Datum> _animeCollection, string url)
