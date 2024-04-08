@@ -1,33 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.Controllers
 {
     public class TvShowsController : BaseApiController
     {
         private readonly ITvShowsRepository _tvShowsRepository;
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public TvShowsController(DataContext context, ITvShowsRepository tvShowsRepository, IMapper mapper, IUserRepository userRepository)
+        public TvShowsController(ITvShowsRepository tvShowsRepository, IUserRepository userRepository)
         {
             _tvShowsRepository = tvShowsRepository;
-            _context = context;
-            _mapper = mapper;
             _userRepository = userRepository;
         }
 
         [HttpPost("AddTvShow/{tvShowId}")]
-        public async Task<ActionResult> AddMovieForUser(string tvShowId)
+        public async Task<ActionResult> AddMovieForUser(ObjectId tvShowId)
         {
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
@@ -35,22 +28,9 @@ namespace Disertatie_backend.Controllers
             var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(tvShowId);
             if (tvShow == null) return NotFound("TvShow not found");
 
-            var appUserTvShowItem = new AppUserTvShowItem
-            {
-                AppUserId = user.Id,
-                TvShowId = tvShowId
-            };
+            if (user.AppUserTvShow.Contains(tvShowId) == true) return BadRequest("You have already added this tv show to your list");
 
-            var alreadyAdded = await _context.AppUserTvShowItems.AnyAsync(o => o.AppUserId == user.Id && o.TvShowId == tvShowId);
-
-            if (alreadyAdded == true) return BadRequest("You have already added this tv show to your list");
-
-            await _context.AppUserTvShowItems.AddAsync(appUserTvShowItem);
-            user.AppUserTvShow.Add(appUserTvShowItem);
-
-            await _userRepository.SaveAllAsync();
-
-            await _context.SaveChangesAsync();
+            await _tvShowsRepository.AddTvShowToUser(user.Id, tvShow.Id);
 
             return Ok(user);
         }
@@ -68,9 +48,6 @@ namespace Disertatie_backend.Controllers
         public async Task<ActionResult> GetMovies([FromQuery] TvShowParams tvShowParams)
         {
             var tvShows = await _tvShowsRepository.GetTvShowsAsync(tvShowParams);
-
-            //Response.AddPaginationHeader(movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages);
-
             return Ok(tvShows);
         }
 
@@ -81,29 +58,27 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpGet("TvShowAlreadyAdded")]
-        public bool IsTvShowAlreadyAdded(string tvShowId)
+        public async Task<bool> IsTvShowAlreadyAdded(ObjectId tvShowId)
         {
             var userId = User.GetUserId();
 
-            return _tvShowsRepository.IsTvShowAlreadyAdded(userId, tvShowId);
+            return await _tvShowsRepository.IsTvShowAlreadyAdded(userId, tvShowId);
         }
 
         [HttpDelete("{tvShowId}")]
-        public async Task<IActionResult> DeleteTvShowForUser(string tvShowId)
+        public async Task<IActionResult> DeleteTvShowForUser(ObjectId tvShowId)
         {
             var userId = User.GetUserId();
 
-            var tvShow = await _context.TrueTvShow.FindAsync(tvShowId);
+            var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(tvShowId);
             if (tvShow == null)
             {
                 return NotFound();
             }
 
-            _tvShowsRepository.DeleteShowForUser(userId, tvShowId);
+            await _tvShowsRepository.DeleteShowForUser(userId, tvShowId);
 
-            if (await _tvShowsRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Problem deleting the tv show for this user");
+            return Ok();
         }
     }
 }

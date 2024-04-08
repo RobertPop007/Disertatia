@@ -1,13 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace Disertatie_backend.Entities.TvShows
+﻿namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowCreatorList
     {
-        [Key]
-        public Guid TvShowCreatorListId { get; set; } = Guid.NewGuid();
-        public string Id { get; set; }
-        public string Name { get; set; }
+#nullable enable
+        public string? Id { get; set; }
+        public string? Name { get; set; }
     }
 }

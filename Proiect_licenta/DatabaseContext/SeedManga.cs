@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Disertatie_backend.Entities.Manga;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
-using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
 
 namespace Disertatie_backend.DatabaseContext

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.DTO.TvShows;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Helpers;
@@ -9,51 +8,61 @@ using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 using MongoDB.Bson;
+using Disertatie_backend.Entities;
+using MongoDB.Driver;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class TvShowsRepository : ITvShowsRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMongoCollection<TvShow> _tvshowsCollection;
+        private readonly IMongoCollection<AppUser> _userCollection;
+        private readonly IUserRepository _userRepository;
+        private readonly IMongoDBCollectionHelper<TvShow> _tvshowsCollectionHelper;
+        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
+        private readonly string titleIndex = "Title_index";
 
-        public TvShowsRepository(DataContext context, IMapper mapper)
+        public TvShowsRepository(DataContext context, IMongoDBCollectionHelper<TvShow> tvshowsCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
-            _context = context;
-            _mapper = mapper;
+            _tvshowsCollectionHelper = tvshowsCollectionHelper;
+            _userCollectionHelper = userCollectionHelper;
+            _tvshowsCollection = tvshowsCollectionHelper.CreateCollection(databaseSettings);
+            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
+            _userRepository = userRepository;
+
+            tvshowsCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
         }
 
-        public void DeleteShowForUser(ObjectId userId, string tvShowId)
+        public async Task DeleteShowForUser(ObjectId userId, ObjectId tvShowId)
         {
-            var appUserTvShowItem = _context.AppUserTvShowItems.FirstOrDefault(o => o.AppUserId == userId && o.TvShowId == tvShowId);
-            _context.AppUserTvShowItems.Remove(appUserTvShowItem);
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserTvShow, tvShowId);
+            await _userCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task AddTvShowToUser(ObjectId userId, ObjectId tvShowId)
+        {
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserTvShow, tvShowId);
+            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<TvShow> GetTvShowByFullTitleAsync(string title)
         {
-            return await _context.TrueTvShow
-                .Where(t => t.Title == title)
-                .IncludeOptimized(o => o.ActorList)
-                .IncludeOptimized(o => o.StarList)
-                .IncludeOptimized(o => o.GenreList)
-                .IncludeOptimized(o => o.CompanyList)
-                .IncludeOptimized(o => o.CountryList)
-                .IncludeOptimized(o => o.LanguageList)
-                .IncludeOptimized(o => o.Ratings)
-                .IncludeOptimized(o => o.Wikipedia)
-                .IncludeOptimized(o => o.Images)
-                .IncludeOptimized(o => o.Trailer)
-                .IncludeOptimized(o => o.BoxOffice)
-                .IncludeOptimized(o => o.TvSeriesInfo)
-                .IncludeOptimized(o => o.Similars)
-                .FirstOrDefaultAsync();
+            var filterByName = Builders<TvShow>.Filter.Eq(p => p.Title, title);
+            return await _tvshowsCollection.Find(filterByName).FirstOrDefaultAsync();
         }
 
-        public async Task<TvShow> GetTvShowByIdAsync(string id)
+        public async Task<TvShow> GetTvShowByIdAsync(ObjectId id)
         {
-            return await _context.TrueTvShow.FindAsync(id);
+            var filterById = Builders<TvShow>.Filter.Eq(p => p.Id, id);
+            return await _tvshowsCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
+        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
         public async Task<List<TvShowCard>> GetTvShowsAsync(TvShowParams tvShowParams)
         {
             var query = _context.TrueTvShow
@@ -61,7 +70,7 @@ namespace Disertatie_backend.DatabaseContext
                 {
                     Title = tvShow.Title,
                     FullTitle = tvShow.FullTitle,
-                    Id = tvShow.Id,
+                    Id = tvShow.TvShow_Id,
                     ImDbRating = tvShow.ImDbRating,
                     Image = tvShow.Image,
                     Year = tvShow.Year
@@ -84,32 +93,27 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<List<TvShow>> GetUserTvShows(ObjectId userId)
         {
-            var listOfTvShowsIdForUser = _context.AppUserTvShowItems.Where(o => o.AppUserId == userId).Select(o => o.TvShowId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var listOfTvShowsForUser = new List<TvShow>();
+            var listOfTVShowsForUser = new List<TvShow>();
 
-            foreach (var tvShowId in listOfTvShowsIdForUser)
+            foreach (var tvShowId in user.AppUserTvShow)
             {
-                var tvShow = await _context.TrueTvShow.FindAsync(tvShowId);
+                var tvShow = await GetTvShowByIdAsync(tvShowId);
 
-                if (tvShow != null) listOfTvShowsForUser.Add(tvShow);
+                if (tvShow != null) listOfTVShowsForUser.Add(tvShow);
             }
 
-            return listOfTvShowsForUser;
+            return listOfTVShowsForUser;
         }
 
-        public bool IsTvShowAlreadyAdded(ObjectId userId, string tvShowId)
+        public async Task<bool> IsTvShowAlreadyAdded(ObjectId userId, ObjectId tvShowId)
         {
-            var listOfTvShowsIdForUser = _context.AppUserTvShowItems.Where(o => o.AppUserId == userId).Select(o => o.TvShowId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isTvShowAlreadyAdded = listOfTvShowsIdForUser.Contains(tvShowId);
-            if (isTvShowAlreadyAdded == true) return true;
+            var isMovieAlreadyAdded = user.AppUserTvShow.Contains(tvShowId);
+            if (isMovieAlreadyAdded == true) return true;
             return false;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

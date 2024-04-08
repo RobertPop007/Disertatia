@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Disertatie_backend.Entities.Anime
+﻿namespace Disertatie_backend.Entities.Anime
 {
     public class Licensor
     {

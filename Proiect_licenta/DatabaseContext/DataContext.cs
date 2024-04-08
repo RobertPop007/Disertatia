@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
@@ -8,11 +6,7 @@ using Disertatie_backend.Entities.Games.GamesIds;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
-using System;
 using MongoDB.EntityFrameworkCore.Extensions;
-using MongoDbGenericRepository;
-using System.Threading.Tasks;
-using System.Reflection.Emit;
 
 namespace Disertatie_backend.DatabaseContext
 {

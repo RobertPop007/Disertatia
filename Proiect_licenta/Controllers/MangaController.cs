@@ -1,33 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.Controllers
 {
     public class MangaController : BaseApiController
     {
         private readonly IMangaRepository _mangasRepository;
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public MangaController(DataContext context, IMangaRepository mangasRepository, IMapper mapper, IUserRepository userRepository)
+        public MangaController(IMangaRepository mangasRepository, IUserRepository userRepository)
         {
             _mangasRepository = mangasRepository;
-            _context = context;
-            _mapper = mapper;
             _userRepository = userRepository;
         }
 
         [HttpPost("AddManga/{mangaId}")]
-        public async Task<ActionResult> AddMangaForUser(int mangaId)
+        public async Task<ActionResult> AddMangaForUser(ObjectId mangaId)
         {
             var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
@@ -35,22 +28,9 @@ namespace Disertatie_backend.Controllers
             var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
             if (manga == null) return NotFound("Manga not found");
 
-            var appUsermangaItem = new AppUserMangaItem
-            {
-                AppUserId = user.Id,
-                MangaId = mangaId
-            };
+            if (user.AppUserManga.Contains(manga.Id) == true) return BadRequest("You have already added this anime to your list");
 
-            var alreadyAdded = await _context.AppUserMangaItems.AnyAsync(o => o.AppUserId == user.Id && o.MangaId == mangaId);
-
-            if (alreadyAdded == true) return BadRequest("You have already added this manga to your list");
-
-            await _context.AppUserMangaItems.AddAsync(appUsermangaItem);
-            user.AppUserManga.Add(appUsermangaItem);
-
-            await _userRepository.SaveAllAsync();
-
-            await _context.SaveChangesAsync();
+            await _mangasRepository.AddMangaToUser(user.Id, manga.Id);
 
             return Ok(user);
         }
@@ -64,46 +44,42 @@ namespace Disertatie_backend.Controllers
             return Ok(listOfMangas);
         }
 
-        [HttpGet("GetAllmangas")]
+        [HttpGet("GetAllMangas")]
         public async Task<ActionResult> GetMangas([FromQuery] MangaParams mangaParams)
         {
             var mangas = await _mangasRepository.GetMangasAsync(mangaParams);
 
-            //Response.AddPaginationHeader(mangas.CurrentPage, mangas.PageSize, mangas.TotalCount, mangas.TotalPages);
-
             return Ok(mangas);
         }
 
-        [HttpGet("{title}", Name = "Getmanga")]
+        [HttpGet("{title}", Name = "GetManga")]
         public async Task<ActionResult<DatumManga>> GetManga(string title)
         {
             return await _mangasRepository.GetMangaByFullTitleAsync(title);
         }
 
         [HttpGet("MangaAlreadyAdded")]
-        public bool IsMangaAlreadyAdded(int mangaId)
+        public async Task<bool> IsMangaAlreadyAdded(ObjectId mangaId)
         {
             var userId = User.GetUserId();
 
-            return _mangasRepository.IsMangaAlreadyAdded(userId, mangaId);
+            return await _mangasRepository.IsMangaAlreadyAdded(userId, mangaId);
         }
 
         [HttpDelete("{mangaId}")]
-        public async Task<IActionResult> DeletemangaForUser(int mangaId)
+        public async Task<IActionResult> DeleteMangaForUser(ObjectId mangaId)
         {
             var userId = User.GetUserId();
 
-            var manga = await _context.Manga.FindAsync(mangaId);
+            var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
             if (manga == null)
             {
                 return NotFound();
             }
 
-            _mangasRepository.DeleteMangaForUser(userId, mangaId);
+            await _mangasRepository.DeleteMangaForUser(userId, mangaId);
 
-            if (await _mangasRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Problem deleting the manga for this user");
+            return Ok();
         }
     }
 }

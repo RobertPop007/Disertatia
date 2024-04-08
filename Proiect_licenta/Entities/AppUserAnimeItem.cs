@@ -1,5 +1,4 @@
-﻿using Disertatie_backend.Entities.Anime;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
 namespace Disertatie_backend.Entities

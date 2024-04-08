@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.DTO;
@@ -29,8 +28,8 @@ namespace Disertatie_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            //userParams.CurrentUsername = User.GetUsername();
-            userParams.CurrentUsername = "rae";
+            userParams.CurrentUsername = User.GetUsername();
+            //userParams.CurrentUsername = "rae";
 
             var users = await _userRepository.GetMembersAsync(userParams);
 

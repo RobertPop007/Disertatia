@@ -40,7 +40,6 @@ namespace Disertatie_backend.DatabaseContext
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
             var update = Builders<AppUser>.Update.Pull(x => x.AppUserAnime, animeId);
-
             await _userCollection.UpdateOneAsync(filter, update);
         }
 

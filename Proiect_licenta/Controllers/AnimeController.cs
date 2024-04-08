@@ -19,8 +19,6 @@ namespace Disertatie_backend.Controllers
             _userRepository = userRepository;
         }
 
-
-        //facem cumva sa avem acele colectii numai in repo
         [HttpPost("AddAnime/{animeId}")]
         public async Task<ActionResult> AddAnimeForUser(ObjectId animeId)
         {
@@ -50,7 +48,6 @@ namespace Disertatie_backend.Controllers
         public async Task<ActionResult> GetAnimes([FromQuery] AnimeParams animeParams)
         {
             var animes = await _animesRepository.GetAnimesAsync(animeParams);
-
             return Ok(animes);
         }
 

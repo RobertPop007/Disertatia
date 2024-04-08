@@ -5,17 +5,12 @@ using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
 using AutoMapper;
 using Disertatie_backend.Helpers;
-using Microsoft.AspNetCore.Identity;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
-using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -35,6 +30,8 @@ namespace Disertatie_backend.DatabaseContext
 
             _userCollectionHelper = userCollectionHelper;
             _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
+
+            _userCollectionHelper.CreateIndexAscending(u => u.UserName, usernameIndex);
         }
 
         public async Task<MemberDto> GetMemberAsync(string username)
@@ -91,12 +88,8 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            _userCollectionHelper.CreateIndexAscending(u => u.UserName, usernameIndex);
             var filterByUsername = Builders<AppUser>.Filter.Eq(p => p.UserName, username);
-
-            var result = await _userCollection.Find(filterByUsername).FirstOrDefaultAsync();
-            _userCollectionHelper.DropIndex(usernameIndex);
-            return result;
+            return await _userCollection.Find(filterByUsername).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()

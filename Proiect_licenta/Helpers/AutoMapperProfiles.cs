@@ -6,7 +6,6 @@ using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Extensions;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Disertatie_backend.Helpers
 {

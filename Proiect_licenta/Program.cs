@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -8,7 +7,6 @@ using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities;
 using System;
 using System.Threading.Tasks;
-using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
@@ -43,7 +41,7 @@ namespace Disertatie_backend
                 //await SeedTvShows.SeedAllTvShows(context);
                 //await SeedAnime.SeedAllAnime(settings);
                 //await SeedManga.SeedAllManga(settings);
-                await SeedGames.SeedAllGamesIds(context);
+                //await SeedGames.SeedAllGamesIds(settings);
             }
             catch (Exception ex)
             {

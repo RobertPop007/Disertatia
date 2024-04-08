@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.Movies
 {
     public class MoviesImages
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
         public string ImDbId { get; set; }
         public string Title { get; set; }
         public string FullTitle { get; set; }

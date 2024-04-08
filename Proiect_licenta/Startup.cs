@@ -11,14 +11,8 @@ using Disertatie_backend.Services;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities;
-using Hangfire;
-using Disertatie_backend.Hangfire;
 using Disertatie_backend.Interfaces;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.DTO.Identity;
-using System;
-using AspNetCore.Identity.MongoDbCore.Infrastructure;
-using Disertatie_backend.Helpers;
 using MongoDB.Bson;
 
 namespace Disertatie_backend

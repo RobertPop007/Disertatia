@@ -60,7 +60,6 @@ namespace Disertatie_backend.Helpers
         {
             _collection.Indexes.DropOne(indexName);
         }
-
     }
 }
 

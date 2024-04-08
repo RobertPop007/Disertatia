@@ -1,5 +1,4 @@
 ﻿using AspNetCore.Identity.MongoDbCore.Models;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using MongoDbGenericRepository.Attributes;
 using System;
@@ -26,11 +25,11 @@ namespace Disertatie_backend.Entities
         public ICollection<Message> MessagesReceived { get; set; } = new HashSet<Message>();
         public ICollection<AppUserRole> UserRoles { get; set; } = new HashSet<AppUserRole>();
 
-        public ICollection<AppUserMovieItem> AppUserMovie { get; set; } = new HashSet<AppUserMovieItem>();
-        public ICollection<AppUserTvShowItem> AppUserTvShow { get; set; } = new HashSet<AppUserTvShowItem>();
+        public ICollection<ObjectId> AppUserMovie { get; set; } = new HashSet<ObjectId>();
+        public ICollection<ObjectId> AppUserTvShow { get; set; } = new HashSet<ObjectId>();
         public ICollection<ObjectId> AppUserAnime { get; set; } = new HashSet<ObjectId>();
-        public ICollection<AppUserMangaItem> AppUserManga { get; set; } = new HashSet<AppUserMangaItem>();
-        public ICollection<AppUserGameItem> AppUserGame { get; set; } = new HashSet<AppUserGameItem>();
+        public ICollection<ObjectId> AppUserManga { get; set; } = new HashSet<ObjectId>();
+        public ICollection<ObjectId> AppUserGame { get; set; } = new HashSet<ObjectId>();
 
         public bool IsSubscribedToNewsletter { get; set; }
         public bool HasDarkMode { get; set; }

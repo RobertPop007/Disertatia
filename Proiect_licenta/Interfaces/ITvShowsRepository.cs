@@ -10,11 +10,11 @@ namespace Disertatie_backend.Interfaces
     public interface ITvShowsRepository
     {
         Task<List<TvShowCard>> GetTvShowsAsync(TvShowParams userParams);
-        Task<TvShow> GetTvShowByIdAsync(string id);
+        Task<TvShow> GetTvShowByIdAsync(ObjectId id);
         Task<TvShow> GetTvShowByFullTitleAsync(string title);
         Task<List<TvShow>> GetUserTvShows(ObjectId userId);
-        bool IsTvShowAlreadyAdded(ObjectId userId, string tvShowId);
-        void DeleteShowForUser(ObjectId userId, string tvShowId);
-        Task<bool> SaveAllAsync();
+        Task<bool> IsTvShowAlreadyAdded(ObjectId userId, ObjectId tvShowId);
+        Task DeleteShowForUser(ObjectId userId, ObjectId tvShowId);
+        Task AddTvShowToUser(ObjectId userId, ObjectId tvShowId);
     }
 }

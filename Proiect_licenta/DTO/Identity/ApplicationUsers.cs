@@ -1,10 +1,4 @@
-﻿using AspNetCore.Identity.MongoDbCore.Models;
-using Disertatie_backend.Entities;
-using MongoDB.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-
-namespace Disertatie_backend.DTO.Identity
+﻿namespace Disertatie_backend.DTO.Identity
 {
     //[Collection("Users")]
     //public class ApplicationUsers : MongoIdentityUser<Guid>

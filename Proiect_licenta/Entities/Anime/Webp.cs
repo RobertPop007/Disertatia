@@ -1,8 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-using System;
-
-namespace Disertatie_backend.Entities.Anime
+﻿namespace Disertatie_backend.Entities.Anime
 {
     public class Webp
     {

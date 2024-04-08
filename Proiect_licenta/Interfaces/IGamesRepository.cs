@@ -10,11 +10,11 @@ namespace Disertatie_backend.Interfaces
     public interface IGamesRepository
     {
         Task<List<GameCard>> GetGamesAsync(GameParams userParams);
-        Task<Game> GetGameByIdAsync(int id);
-        Task<Game> GetGameByFullTitleAsync(string title);
+        Task<Game> GetGameByIdAsync(ObjectId id);
+        Task<Game> GetGameByNameAsync(string title);
         Task<List<Game>> GetUserGames(ObjectId userId);
-        bool IsGameAlreadyAdded(ObjectId userId, int gameId);
-        void DeleteGameForUser(ObjectId userId, int gameId);
-        Task<bool> SaveAllAsync();
+        Task<bool> IsGameAlreadyAdded(ObjectId userId, ObjectId gameId);
+        Task AddGameToUser(ObjectId userId, ObjectId gameId);
+        Task DeleteGameForUser(ObjectId userId, ObjectId gameId);
     }
 }

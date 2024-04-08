@@ -3,8 +3,6 @@ using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
-using Disertatie_backend.Entities.Movies;
-using Disertatie_backend.Entities.TvShows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,93 +62,93 @@ namespace Disertatie_backend.EmailTemplates
 
         public static string GetMoviePartTemplate(AppUser user, DataContext context, Random random)
         {
-            var movieTable = new StringBuilder();
-            var randomMovie = new Movie();
+            //var movieTable = new StringBuilder();
+            //var randomMovie = new Movie();
 
-            if (user.AppUserMovie.Count > 0)
-            {
-                var countMovies = 0;
-                var moviesIdList = user.AppUserMovie;
+            //if (user.AppUserMovie.Count > 0)
+            //{
+            //    var countMovies = 0;
+            //    var moviesIdList = user.AppUserMovie;
 
-                var index = random.Next(moviesIdList.Count);
-                randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+            //    var index = random.Next(moviesIdList.Count);
+            //    randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
-                countMovies++;
+            //    countMovies++;
 
-                while (randomMovie.Similars == null)
-                {
-                    index = random.Next(moviesIdList.Count);
-                    randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+            //    while (randomMovie.Similars == null)
+            //    {
+            //        index = random.Next(moviesIdList.Count);
+            //        randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
-                    countMovies++;
+            //        countMovies++;
 
-                    if (countMovies == moviesIdList.Count)
-                        break;
-                }
+            //        if (countMovies == moviesIdList.Count)
+            //            break;
+            //    }
 
 
-                index = random.Next(randomMovie.Similars.Count);
+            //    index = random.Next(randomMovie.Similars.Count);
 
-                var movieId = randomMovie.Similars[index].Id;
-                var randomSimilarMovie = context.Movies.Where(o => o.Id == movieId).FirstOrDefault();
+            //    var movieId = randomMovie.Similars[index].Id;
+            //    var randomSimilarMovie = context.Movies.Where(o => o.Id == movieId).FirstOrDefault();
 
-                movieTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-                                <tr>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p><br><p>'{3}'<p></td>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-                                </tr>
-                            </table><br><br>", randomMovie.Title, randomSimilarMovie.Image, randomSimilarMovie.Title, randomSimilarMovie.Tagline, $"https://localhost:4200/movies/{randomSimilarMovie.Title}");
+            //    movieTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
+            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
+            //                    <tr>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p><br><p>'{3}'<p></td>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
+            //                    </tr>
+            //                </table><br><br>", randomMovie.Title, randomSimilarMovie.Image, randomSimilarMovie.Title, randomSimilarMovie.Tagline, $"https://localhost:4200/movies/{randomSimilarMovie.Title}");
 
-                return movieTable.ToString();
-            }
-            else
+            //    return movieTable.ToString();
+            //}
+            //else
                 return String.Empty;
         }
 
         public static string GetTvShowPartTemplate(AppUser user, DataContext context, Random random)
         {
-            var tvShowTable = new StringBuilder();
-            var randomTvShow = new TvShow();
+            //var tvShowTable = new StringBuilder();
+            //var randomTvShow = new TvShow();
 
-            if (user.AppUserTvShow.Count > 0)
-            {
-                var countTvShows = 0;
-                var tvShowsIdList = user.AppUserTvShow;
+            //if (user.AppUserTvShow.Count > 0)
+            //{
+            //    var countTvShows = 0;
+            //    var tvShowsIdList = user.AppUserTvShow;
 
-                var index = random.Next(tvShowsIdList.Count);
-                randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index).TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+            //    var index = random.Next(tvShowsIdList.Count);
+            //    randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index)).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
-                countTvShows++;
+            //    countTvShows++;
 
-                while (randomTvShow.Similars == null)
-                {
-                    index = random.Next(tvShowsIdList.Count);
-                    randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index).TvShowId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+            //    while (randomTvShow.Similars == null)
+            //    {
+            //        index = random.Next(tvShowsIdList.Count);
+            //        randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index)).IncludeOptimized(o => o.Similars).FirstOrDefault();
 
-                    countTvShows++;
+            //        countTvShows++;
 
-                    if (countTvShows == tvShowsIdList.Count)
-                        break;
-                }
+            //        if (countTvShows == tvShowsIdList.Count)
+            //            break;
+            //    }
 
 
-                index = random.Next(randomTvShow.Similars.Count);
+            //    index = random.Next(randomTvShow.Similars.Count);
 
-                var tvShowId = randomTvShow.Similars[index].Id;
-                var randomSimilarTvShow = context.TrueTvShow.Where(o => o.Id == tvShowId).FirstOrDefault();
+            //    var tvShowId = randomTvShow.Similars[index].Id;
+            //    var randomSimilarTvShow = context.TrueTvShow.Where(o => o.Id == tvShowId).FirstOrDefault();
 
-                tvShowTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-                                <tr>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-                                </tr>
-                            </table><br><br>", randomTvShow.Title, randomSimilarTvShow.Image, randomSimilarTvShow.Title, string.Empty, $"https://localhost:4200/tvShows/{randomSimilarTvShow.Title}");
+            //    tvShowTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
+            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
+            //                    <tr>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
+            //                    </tr>
+            //                </table><br><br>", randomTvShow.Title, randomSimilarTvShow.Image, randomSimilarTvShow.Title, string.Empty, $"https://localhost:4200/tvShows/{randomSimilarTvShow.Title}");
 
-                return tvShowTable.ToString();
-            }
-            else
+            //    return tvShowTable.ToString();
+            //}
+            //else
                 return String.Empty;
         }
 
@@ -211,14 +209,14 @@ namespace Disertatie_backend.EmailTemplates
                 var mangasIdList = user.AppUserManga;
 
                 var index = random.Next(mangasIdList.Count);
-                randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
+                randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
 
                 countMangas++;
 
                 while (randomManga.Status == null)
                 {
                     index = random.Next(mangasIdList.Count);
-                    randomManga = context.Manga.Where(o => o.Mal_id == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
+                    randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
 
                     countMangas++;
 
@@ -256,14 +254,14 @@ namespace Disertatie_backend.EmailTemplates
                 var gamesIdList = user.AppUserGame;
 
                 var index = random.Next(gamesIdList.Count);
-                randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
+                randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
 
                 countGames++;
 
                 while (randomGame.Description == null)
                 {
                     index = random.Next(gamesIdList.Count);
-                    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
+                    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
 
                     countGames++;
 

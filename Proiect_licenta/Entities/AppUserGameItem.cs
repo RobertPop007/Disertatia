@@ -1,5 +1,4 @@
-﻿using Disertatie_backend.Entities.Games.Game;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 
 namespace Disertatie_backend.Entities
 {

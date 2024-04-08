@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.Games.GamesIds
 {
     public class Root
     {
-        [Key]
-        public Guid Id { get; set; } = new Guid();
         public List<Result> Results { get; set; }
     }
 }

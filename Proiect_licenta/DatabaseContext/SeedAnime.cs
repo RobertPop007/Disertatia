@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using MongoDB.Driver;
-using Disertatie_backend.Interfaces;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
 

@@ -1,63 +1,67 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Game;
+using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
-using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
-using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class GameRepository : IGamesRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMongoCollection<Game> _gamesCollection;
+        private readonly IMongoCollection<AppUser> _userCollection;
+        private readonly IUserRepository _userRepository;
+        private readonly IMongoDBCollectionHelper<Game> _gamesCollectionHelper;
+        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
+        private readonly string nameIndex = "Name_index";
 
-        public GameRepository(DataContext context, IMapper mapper)
+        public GameRepository(DataContext context, IMongoDBCollectionHelper<Game> gamesCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
-            _context = context;
-            _mapper = mapper;
+            _gamesCollectionHelper = gamesCollectionHelper;
+            _userCollectionHelper = userCollectionHelper;
+            _gamesCollection = _gamesCollectionHelper.CreateCollection(databaseSettings);
+            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
+            _userRepository = userRepository;
+
+            _gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
         }
 
-        public void DeleteGameForUser(ObjectId userId, int gameId)
+        public async Task DeleteGameForUser(ObjectId userId, ObjectId gameId)
         {
-            var appUserGameItem = _context.AppUserGameItems.FirstOrDefault(o => o.AppUserId == userId && o.GameId == gameId);
-            _context.AppUserGameItems.Remove(appUserGameItem);
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserGame, gameId);
+            await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<Game> GetGameByFullTitleAsync(string title)
+        public async Task AddGameToUser(ObjectId userId, ObjectId gameId)
         {
-            return await _context.Games
-                .Where(t => t.Name == title)
-                .IncludeOptimized(o => o.Ratings)
-                .IncludeOptimized(o => o.Added_by_status)
-                .IncludeOptimized(o => o.Parent_platforms)
-                .IncludeOptimized(o => o.Platforms)
-                .IncludeOptimized(o => o.Platforms.Select(q => new
-                {
-                    Requirements = q.Requirements,
-                    Platform = q.Platform
-                }))
-                .IncludeOptimized(o => o.Stores)
-                .IncludeOptimized(o => o.Stores.Select(q => q.Store))
-                .IncludeOptimized(o => o.Developers)
-                .IncludeOptimized(o => o.Genres)
-                .IncludeOptimized(o => o.Tags)
-                .IncludeOptimized(o => o.Publishers)
-                .IncludeOptimized(o => o.Esrb_rating)
-                .FirstOrDefaultAsync();
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserGame, gameId);
+            await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<Game> GetGameByIdAsync(int id)
+        public async Task<Game> GetGameByNameAsync(string name)
         {
-            return await _context.Games.FindAsync(id);
+            var filterByName = Builders<Game>.Filter.Eq(p => p.Name, name);
+            return await _gamesCollection.Find(filterByName).FirstOrDefaultAsync();
         }
 
+        public async Task<Game> GetGameByIdAsync(ObjectId id)
+        {
+            var filterById = Builders<Game>.Filter.Eq(p => p.Id, id);
+            return await _gamesCollection.Find(filterById).FirstOrDefaultAsync();
+        }
+
+        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
         public async Task<List<GameCard>> GetGamesAsync(GameParams gameParams)
         {
             var query = _context.Games
@@ -65,7 +69,7 @@ namespace Disertatie_backend.DatabaseContext
                 {
                     Name = game.Name,
                     Released = game.Released,
-                    Id = game.Id,
+                    Id = game.Game_Id,
                     Rating = game.Rating,
                     Background_image = game.Background_image,
                     Year = game.Released.Substring(0, 4)
@@ -87,13 +91,13 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<List<Game>> GetUserGames(ObjectId userId)
         {
-            var listOfGamesIdForUser = _context.AppUserGameItems.Where(o => o.AppUserId == userId).Select(o => o.GameId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var listOfGamesForUser = new List<Game>();
 
-            foreach (var gameId in listOfGamesIdForUser)
+            foreach (var gameId in user.AppUserGame)
             {
-                var game = await _context.Games.FindAsync(gameId);
+                var game = await GetGameByIdAsync(gameId);
 
                 if (game != null) listOfGamesForUser.Add(game);
             }
@@ -101,18 +105,13 @@ namespace Disertatie_backend.DatabaseContext
             return listOfGamesForUser;
         }
 
-        public bool IsGameAlreadyAdded(ObjectId userId, int gameId)
+        public async Task<bool> IsGameAlreadyAdded(ObjectId userId, ObjectId gameId)
         {
-            var listOfGamesIdForUser = _context.AppUserGameItems.Where(o => o.AppUserId == userId).Select(o => o.GameId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isGameAlreadyAdded = listOfGamesIdForUser.Contains(gameId);
+            var isGameAlreadyAdded = user.AppUserGame.Contains(gameId);
             if (isGameAlreadyAdded == true) return true;
             return false;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

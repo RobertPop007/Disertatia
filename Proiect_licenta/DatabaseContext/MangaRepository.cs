@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.DTO.Manga;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Helpers;
@@ -9,47 +8,61 @@ using System.Linq;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 using MongoDB.Bson;
+using MongoDB.Driver;
+using Disertatie_backend.Entities;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class MangaRepository : IMangaRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMongoCollection<DatumManga> _mangaCollection;
+        private readonly IMongoCollection<AppUser> _userCollection;
+        private readonly IUserRepository _userRepository;
+        private readonly IMongoDBCollectionHelper<DatumManga> _mangaCollectionHelper;
+        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
+        private readonly string titleIndex = "Title_index";
 
-        public MangaRepository(DataContext context, IMapper mapper)
+        public MangaRepository(DataContext context, IMongoDBCollectionHelper<DatumManga> mangaCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
-            _context = context;
-            _mapper = mapper;
+            _mangaCollectionHelper = mangaCollectionHelper;
+            _userCollectionHelper = userCollectionHelper;
+            _mangaCollection = _mangaCollectionHelper.CreateCollection(databaseSettings);
+            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
+            _userRepository = userRepository;
+
+            _mangaCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
         }
 
-        public void DeleteMangaForUser(ObjectId userId, int mangaId)
+        public async Task DeleteMangaForUser(ObjectId userId, ObjectId mangaId)
         {
-            var appUserMangaItem = _context.AppUserMangaItems.FirstOrDefault(o => o.AppUserId == userId && o.MangaId == mangaId);
-            _context.AppUserMangaItems.Remove(appUserMangaItem);
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserManga, mangaId);
+            await _userCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task AddMangaToUser(ObjectId userId, ObjectId mangaId)
+        {
+            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserManga, mangaId);
+            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<DatumManga> GetMangaByFullTitleAsync(string title)
         {
-            return await _context.Manga
-                .Where(t => t.Title == title)
-                .IncludeOptimized(o => o.Images)
-                .IncludeOptimized(o => o.Images.Webp)
-                .IncludeOptimized(o => o.Images.Jpg)
-                .IncludeOptimized(o => o.Published)
-                .IncludeOptimized(o => o.Authors)
-                .IncludeOptimized(o => o.Serializations)
-                .IncludeOptimized(o => o.Genres)
-                .IncludeOptimized(o => o.Themes)
-                .IncludeOptimized(o => o.Demographics)
-                .FirstOrDefaultAsync();
+            var filterByTitle = Builders<DatumManga>.Filter.Eq(p => p.Title, title);
+            return await _mangaCollection.Find(filterByTitle).FirstOrDefaultAsync();
         }
 
-        public async Task<DatumManga> GetMangaByIdAsync(int id)
+        public async Task<DatumManga> GetMangaByIdAsync(ObjectId id)
         {
-            return await _context.Manga.FindAsync(id);
+            var filterById = Builders<DatumManga>.Filter.Eq(p => p.Id, id);
+            return await _mangaCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
+        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
         public async Task<List<MangaCard>> GetMangasAsync(MangaParams mangaParams)
         {
             var query = _context.Manga
@@ -79,18 +92,13 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<List<DatumManga>> GetUserMangas(ObjectId userId)
         {
-            var listOfMangasIdForUser = _context.AppUserMangaItems.Where(o => o.AppUserId == userId).Select(o => o.MangaId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var listOfMangasForUser = new List<DatumManga>();
 
-            foreach (var mangaId in listOfMangasIdForUser)
+            foreach (var mangaId in user.AppUserManga)
             {
-                var manga = await _context.Manga
-                    .Where(o => o.Mal_id == mangaId)
-                    .IncludeOptimized(o => o.Images)
-                    .IncludeOptimized(o => o.Images.Webp)
-                    .IncludeOptimized(o => o.Images.Jpg)
-                    .FirstOrDefaultAsync();
+                var manga = await GetMangaByIdAsync(mangaId);
 
                 if (manga != null) listOfMangasForUser.Add(manga);
             }
@@ -98,18 +106,13 @@ namespace Disertatie_backend.DatabaseContext
             return listOfMangasForUser;
         }
 
-        public bool IsMangaAlreadyAdded(ObjectId userId, int mangaId)
+        public async Task<bool> IsMangaAlreadyAdded(ObjectId userId, ObjectId mangaId)
         {
-            var listOfMangasIdForUser = _context.AppUserMangaItems.Where(o => o.AppUserId == userId).Select(o => o.MangaId).AsEnumerable();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isMangaAlreadyAdded = listOfMangasIdForUser.Contains(mangaId);
+            var isMangaAlreadyAdded = user.AppUserManga.Contains(mangaId);
             if (isMangaAlreadyAdded == true) return true;
             return false;
-        }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

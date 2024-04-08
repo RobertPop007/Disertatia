@@ -6,9 +6,7 @@ using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Interfaces;
-using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.Controllers
 {

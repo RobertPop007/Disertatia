@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Disertatie_backend.Entities.Manga
+﻿namespace Disertatie_backend.Entities.Manga
 {
     public class ToManga
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+#nullable enable
         public int? Day { get; set; }
         public int? Month { get; set; }
         public int? Year { get; set; }

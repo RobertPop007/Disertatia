@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.DatabaseContext;
+﻿using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
 using Disertatie_backend.EmailTemplates;
 using Disertatie_backend.Interfaces;
