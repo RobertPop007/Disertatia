@@ -28,9 +28,11 @@ namespace Disertatie_backend.DatabaseContext
             this._mapper = mapper;
         }
 
-        public async Task<AppUser> GetUserFriend(Guid addedUserId)
+        public async Task<bool> IsUserFriend(Guid addedByUserId, Guid addedUserId)
         {
-            return await _context.Users.Where(x => x.Id == addedUserId).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.Id == addedByUserId).FirstOrDefaultAsync();
+
+            return user.Friends.Contains(addedUserId);
         }
 
         public async Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams friendsParams)

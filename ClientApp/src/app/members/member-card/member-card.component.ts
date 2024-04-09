@@ -21,8 +21,9 @@ export class MemberCardComponent implements OnInit {
   }
 
   addFriend(member: Member){
-    this.memberService.addFriend(member.username).subscribe(() => {
-      this.toastr.success('You have added ' + member.username);
+    console.log(member.userName);
+    this.memberService.addFriend(member.userName).subscribe(() => {
+      this.toastr.success('You have added ' + member.userName);
     })
   }
 }

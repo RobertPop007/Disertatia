@@ -28,8 +28,8 @@ export class MemberCardAddedComponent implements OnInit {
   }
 
   removeFriend(member: Member){
-    this.memberService.removeFriend(member.username).subscribe(() => {
-      this.toastr.success('You have removed ' + member.username);
+    this.memberService.removeFriend(member.userName).subscribe(() => {
+      this.toastr.success('You have removed ' + member.userName);
     })
   }
 

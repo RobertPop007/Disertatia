@@ -79,29 +79,29 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   updateWatchList(){
     console.log(this.user.username);
     
-    this.moviesService.apiMoviesGetMoviesForUsernameGet(this.member.username).subscribe(response => {
+    this.moviesService.apiMoviesGetMoviesForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedMovies = response;
     })
 
-    this.tvShowsService.apiTvShowsGetTvShowsForUsernameGet(this.member.username).subscribe(response => {
+    this.tvShowsService.apiTvShowsGetTvShowsForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedTvShows = response;
     })
 
-    this.animesService.apiAnimeGetAnimesForUsernameGet(this.member.username).subscribe(response => {
+    this.animesService.apiAnimeGetAnimesForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedAnime = response;
     })
 
-    this.mangaService.apiMangaGetMangasForUsernameGet(this.member.username).subscribe(response => {
+    this.mangaService.apiMangaGetMangasForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedManga = response;
     })
 
-    this.gamesService.apiGameGetGamesForUsernameGet(this.member.username).subscribe(response => {
+    this.gamesService.apiGameGetGamesForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedGame = response;
     })
   }
 
   areThoseUsersFriends(){
-    this.friendsService.apiFriendsCheckFriendshipUsernameGet(this.member.username).subscribe(response => {
+    this.friendsService.apiFriendsCheckFriendshipUsernameGet(this.member.userName).subscribe(response => {
       this.areUsersFriends = response;
     })
   }
@@ -116,7 +116,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     this.activeTabs = data;
 
     if(this.activeTabs.heading === 'Messages' && this.messages.length === 0){
-      this.messageService.createHubConnection(this!.user, this.member.username);
+      this.messageService.createHubConnection(this!.user, this.member.userName);
     } else {
       this.messageService.stopHubConnection();
     }
@@ -131,14 +131,14 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
   
   loadMessages(){
-    this.messageService.getMessageThread(this.member.username).subscribe(messages => {
+    this.messageService.getMessageThread(this.member.userName).subscribe(messages => {
       this.messages = messages;
     })
   }
 
   addFriend(member: Member){
-    this.memberService.addFriend(member.username).subscribe(() => {
-      this.toastr.success('You have added ' + member.username);
+    this.memberService.addFriend(member.userName).subscribe(() => {
+      this.toastr.success('You have added ' + member.userName);
     })
   }
 

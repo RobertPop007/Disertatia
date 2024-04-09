@@ -41,11 +41,13 @@ namespace Disertatie_backend.Controllers
 
             if (addedByUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userFriend = await _addFriendsRepository.GetUserFriend(addedUser.Id);
+            var isUserFriend = await _addFriendsRepository.IsUserFriend(addedByUserId, addedUser.Id);
 
-            if (userFriend != null) return BadRequest("You are already friend with this user");
+            if (isUserFriend == true) return BadRequest("You are already friend with this user");
 
             addedByUser.Friends.Add(addedUser.Id);
+
+            await _context.SaveChangesAsync();
 
             return Ok();
         }
@@ -61,9 +63,9 @@ namespace Disertatie_backend.Controllers
 
             if (removedByUser.UserName == username) return BadRequest("You cannot remove yourself");
 
-            var userFriend = await _addFriendsRepository.GetUserFriend(removedUser.Id);
+            var isUserFriend = await _addFriendsRepository.IsUserFriend(removedByUserId, removedUser.Id);
 
-            if (userFriend == null) return BadRequest("You are not friend with this user");
+            if (isUserFriend == false) return BadRequest("You are not friend with this user");
 
             var connection = _context.Users.Where(o => o.Friends.Contains( removedUser.Id)).FirstOrDefault();
             _context.Users.Remove(connection);

@@ -155,7 +155,7 @@
                         <mat-slide-toggle
                             class="example-margin"
                             [checked]="getTheme()"
-                            (toggleChange)="enabledDarkMode(member.username)"
+                            (toggleChange)="enabledDarkMode(member.userName)"
                             [disabled]="disabled">
                         </mat-slide-toggle>
                     </span>
@@ -169,7 +169,7 @@
                             id="subscribe-toggle"
                             class="example-margin"
                             [checked]="getState()"
-                            (toggleChange)="subcribeToNewsletter(member.username)"
+                            (toggleChange)="subcribeToNewsletter(member.userName)"
                             [disabled]="disabled">
                         </mat-slide-toggle>
                     </span>
@@ -178,7 +178,7 @@
                 <div class="ml-2" style="display: flex;
                 flex-direction: row;">
                     <p class="mr-3">Delete account: </p>
-                    <button (click)="deleteAccount(member.username)" class="bg-danger">Delete account</button>
+                    <button (click)="deleteAccount(member.userName)" class="bg-danger">Delete account</button>
                 </div>
             </tab>
         </tabset>

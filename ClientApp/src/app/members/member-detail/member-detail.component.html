@@ -4,7 +4,7 @@
             <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
 
             <div class="card-body">
-                <div class="mb-2" *ngIf="(presence.onlineUsers$ | async)!.includes(member.username)">
+                <div class="mb-2" *ngIf="(presence.onlineUsers$ | async)!.includes(member.userName)">
                     <i class="fa fa-user-circle text-success"></i> Online now
                 </div>
                 <div>
@@ -53,7 +53,7 @@
 
             <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -14px; padding-top: 20px;" heading="Messages" (selectTab)="onTabsActivated($event)">
                 <div *ngIf="areUsersFriends">
-                    <app-member-messages [username]="member.username"></app-member-messages>
+                    <app-member-messages [username]="member.userName"></app-member-messages>
                 </div>
                 <div *ngIf="!areUsersFriends">
                     <p style="background-color: skyblue; margin-top: -20px; margin-bottom: -15px; padding-top: 20px;">You are not friend with this user!</p>

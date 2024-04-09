@@ -9,7 +9,7 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IAddFriendsRepository
     {
-        Task<AppUser> GetUserFriend(Guid addedUserId);
+        Task<bool> IsUserFriend(Guid addedByUserId, Guid addedUserId);
         Task<AppUser> GetUserWithFriends(Guid userId);
         Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams addFriendParams);
     }
