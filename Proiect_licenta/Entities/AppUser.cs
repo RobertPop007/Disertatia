@@ -1,13 +1,11 @@
-﻿using AspNetCore.Identity.MongoDbCore.Models;
+﻿using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
-using MongoDbGenericRepository.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities
 {
-    [CollectionName("Users")]
-    public class AppUser : MongoIdentityUser<ObjectId>
+    public class AppUser : IdentityUser<Guid>
     {
         public DateTime DateOfBirth { get; set; }
         public string KnownAs { get; set; }
@@ -19,17 +17,16 @@ namespace Disertatie_backend.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public Photo ProfilePicture { get; set; }
-        public ICollection<UserFriend> AddedByUsers { get; set; } = new HashSet<UserFriend>();
-        public ICollection<UserFriend> AddedUsers { get; set; } = new HashSet<UserFriend>();
-        public ICollection<Message> MessagesSent { get; set; } = new HashSet<Message>();
-        public ICollection<Message> MessagesReceived { get; set; } = new HashSet<Message>();
-        public ICollection<AppUserRole> UserRoles { get; set; } = new HashSet<AppUserRole>();
+        public IList<Guid> Friends { get; set; } = new List<Guid>();
+        public IList<Message> MessagesSent { get; set; } = new List<Message>();
+        public IList<Message> MessagesReceived { get; set; } = new List<Message>();
+        public IList<AppUserRole> UserRoles { get; set; } = new List<AppUserRole>();
 
-        public ICollection<ObjectId> AppUserMovie { get; set; } = new HashSet<ObjectId>();
-        public ICollection<ObjectId> AppUserTvShow { get; set; } = new HashSet<ObjectId>();
-        public ICollection<ObjectId> AppUserAnime { get; set; } = new HashSet<ObjectId>();
-        public ICollection<ObjectId> AppUserManga { get; set; } = new HashSet<ObjectId>();
-        public ICollection<ObjectId> AppUserGame { get; set; } = new HashSet<ObjectId>();
+        public IList<string> AppUserMovie { get; set; } = new List<string>();
+        public IList<string> AppUserTvShow { get; set; } = new List<string>();
+        public IList<string> AppUserAnime { get; set; } = new List<string>();
+        public IList<string> AppUserManga { get; set; } = new List<string>();
+        public IList<string> AppUserGame { get; set; } = new List<string>();
 
         public bool IsSubscribedToNewsletter { get; set; }
         public bool HasDarkMode { get; set; }

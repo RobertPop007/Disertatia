@@ -1,10 +1,11 @@
 ﻿using MongoDB.Bson;
+using System;
 
 namespace Disertatie_backend.Helpers
 {
     public class AddFriendParams : PaginationParams
     {
-        public ObjectId UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Predicate { get; set; }
     }
 }

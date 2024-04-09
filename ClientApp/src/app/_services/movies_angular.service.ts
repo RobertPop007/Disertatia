@@ -9,6 +9,7 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { ObjectId } from 'model/objectId';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class MoviesAngularService{
     return this.http.get<Movie>(this.baseUrl + "Movies/" + fullTitle);
   }
 
-  addMovie(movieId: string){
+  addMovie(movieId: ObjectId){
     return this.movieService.apiMoviesAddMovieMovieIdPost(movieId);
   }
 
@@ -87,7 +88,7 @@ export class MoviesAngularService{
     return getPaginatedResult<Partial<Movie[]>>(this.baseUrl + 'Movies/GetMoviesFor', params, this.http);
   }
 
-  deleteMovieForUser(movieId: string){
+  deleteMovieForUser(movieId: ObjectId){
     return this.http.delete(this.baseUrl + 'Movies/' + movieId);
   }
 }

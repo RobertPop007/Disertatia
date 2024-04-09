@@ -18,15 +18,16 @@ namespace Disertatie_backend.Controllers
         private readonly IMapper _mapper;
         private readonly IEmailSender _emailSender;
         private readonly DataContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender, DataContext context)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender, IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
             _mapper = mapper;
             _emailSender = emailSender;
-            _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")]
@@ -141,15 +142,13 @@ namespace Disertatie_backend.Controllers
 
         private async Task<bool> UserExists(string username)
         {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username);
+            return await _userRepository.GetUserByUsernameAsync(username) != null;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.Users
-                .Include(p => p.ProfilePicture)
-                .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower()); 
+            var user = await _userRepository.GetUserByUsernameAsync(loginDto.Username);
 
             if (user == null) return Unauthorized("Invalid username");
 

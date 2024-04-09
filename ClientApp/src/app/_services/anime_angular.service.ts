@@ -9,6 +9,7 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { ObjectId } from 'model/objectId';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class AnimeAngularService {
     return this.http.get<Datum>(this.baseUrl + "Anime/" + title);
   }
 
-  addAnime(animeId: number){
+  addAnime(animeId: ObjectId){
     return this.animeService.apiAnimeAddAnimeAnimeIdPost(animeId);
   }
 
@@ -87,7 +88,7 @@ export class AnimeAngularService {
     return getPaginatedResult<Partial<Datum[]>>(this.baseUrl + 'Anime/GetAnimesFor', params, this.http);
   }
 
-  deleteAnimeForUser(animeId: number){
+  deleteAnimeForUser(animeId: ObjectId){
     return this.http.delete(this.baseUrl + 'Anime/' + animeId);
   }
 }

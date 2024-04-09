@@ -40,7 +40,7 @@ namespace Disertatie_backend.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
+                Subject = new ClaimsIdentity(claims, "Basic"),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds
             };

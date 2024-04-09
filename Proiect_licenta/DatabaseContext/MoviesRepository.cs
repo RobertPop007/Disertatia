@@ -6,18 +6,18 @@ using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 using MongoDB.Bson;
 using Disertatie_backend.Entities;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
+using AutoMapper;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class MoviesRepository : IMoviesRepository
     {
-        private readonly DataContext _context;
         private readonly IMongoCollection<Movie> _moviesCollection;
         private readonly IMongoCollection<AppUser> _userCollection;
         private readonly IUserRepository _userRepository;
@@ -25,7 +25,9 @@ namespace Disertatie_backend.DatabaseContext
         private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string titleIndex = "Title_index";
 
-        public MoviesRepository(DataContext context, IMongoDBCollectionHelper<Movie> moviesCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        private readonly IMapper _mapper;
+
+        public MoviesRepository(IMapper mapper, IMongoDBCollectionHelper<Movie> moviesCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
             _moviesCollectionHelper = moviesCollectionHelper;
             _userCollectionHelper = userCollectionHelper;
@@ -34,36 +36,38 @@ namespace Disertatie_backend.DatabaseContext
             _userRepository = userRepository;
 
             _moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+
+            _mapper = mapper;
         }
 
-        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
-        public async Task<List<MovieCard>> GetMoviesAsync(MovieParams movieParams)
+        public async Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams movieParams)
         {
-            var query = _context.Movies
-                .Select(movie => new MovieCard
-                {
-                    Title = movie.Title,
-                    FullTitle = movie.FullTitle,
-                    Id = movie.MovieId,
-                    ImDbRating = movie.ImDbRating,
-                    Image = movie.Image,
-                    Year = movie.Year
-                })
-                .AsQueryable();
+            if (string.IsNullOrEmpty(movieParams.SearchedMovie) || string.IsNullOrWhiteSpace(value: movieParams.SearchedMovie)) return null;
 
+            var filterByTitle = Builders<Movie>.Filter.Where(x => x.Title.Contains(movieParams.SearchedMovie)) |
+                Builders<Movie>.Filter.Where(x => x.FullTitle.Contains(movieParams.SearchedMovie)) |
+                Builders<Movie>.Filter.Where(x => x.OriginalTitle.Contains(movieParams.SearchedMovie));
 
-            if (!string.IsNullOrWhiteSpace(movieParams.SearchedMovie))
-                query = query.Where(u => u.FullTitle.Contains(movieParams.SearchedMovie));
+            var query = await _moviesCollection.Find(filterByTitle).ToListAsync();
 
-            query = movieParams.OrderBy switch
+            var queryList = new List<MovieCard>();
+
+            foreach (var document in query)
             {
-                "fulltitle" => query.OrderBy(u => u.FullTitle).OrderBy(u => u.Year),
-                "imdbRating" => query.OrderByDescending(u => u.ImDbRating),
-                _ => query.OrderByDescending(u => u.Year)
+                queryList.Add(_mapper.Map<MovieCard>(document));
+            }
+
+            var mappedQuery = queryList.AsEnumerable();
+
+            mappedQuery = movieParams.OrderBy switch
+            {
+                "fulltitle" => mappedQuery.OrderBy(u => u.FullTitle).OrderByDescending(u => u.Year),
+                "imdbRating" => mappedQuery.OrderByDescending(u => u.ImDbRating),
+                _ => mappedQuery.OrderByDescending(u => u.Year)
 
             };
 
-            return await query.ToListAsync();
+            return mappedQuery;
         }
 
         public async Task<Movie> GetMovieByIdAsync(ObjectId id)
@@ -77,7 +81,7 @@ namespace Disertatie_backend.DatabaseContext
             return await _moviesCollection.Find(filterByName).FirstOrDefaultAsync();
         }
 
-        public async Task<List<Movie>> GetUserMovies(ObjectId userId)
+        public async Task<IEnumerable<Movie>> GetUserMovies(Guid userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
@@ -85,7 +89,7 @@ namespace Disertatie_backend.DatabaseContext
 
             foreach (var movieId in user.AppUserMovie)
             {
-                var movie = await GetMovieByIdAsync(movieId);
+                var movie = await GetMovieByIdAsync(new ObjectId(movieId));
 
                 if (movie != null) listOfMoviesForUser.Add(movie);
             }
@@ -93,26 +97,26 @@ namespace Disertatie_backend.DatabaseContext
             return listOfMoviesForUser;
         }
 
-        public async Task<bool> IsMovieAlreadyAdded(ObjectId userId, ObjectId movieId)
+        public async Task<bool> IsMovieAlreadyAdded(Guid userId, ObjectId movieId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isMovieAlreadyAdded = user.AppUserMovie.Contains(movieId);
+            var isMovieAlreadyAdded = user.AppUserMovie.Contains(movieId.ToString());
             if (isMovieAlreadyAdded == true) return true;
             return false;
         }
 
-        public async Task DeleteMovieForUser(ObjectId userId, ObjectId movieId)
+        public async Task DeleteMovieForUser(Guid userId, ObjectId movieId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserMovie, movieId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserMovie, movieId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AddMovieToUser(ObjectId userId, ObjectId movieId)
+        public async Task AddMovieToUser(Guid userId, ObjectId movieId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserMovie, movieId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserMovie, movieId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.Helpers;
+using System;
 
 namespace Disertatie_backend.Controllers
 {
@@ -8,5 +9,6 @@ namespace Disertatie_backend.Controllers
     [Route("api/[controller]")]
     public class BaseApiController : ControllerBase
     {
+
     }
 }

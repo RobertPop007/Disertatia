@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 namespace Disertatie_backend
 {
@@ -35,8 +36,8 @@ namespace Disertatie_backend
                 var context = services.GetRequiredService<DataContext>();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-                //await context.Database.MigrateAsync();
-                //await Seed.SeedUsers(userManager, roleManager);
+                await context.Database.MigrateAsync();
+                await Seed.SeedUsers(userManager, roleManager);
                 //await SeedMovies.SeedAllMovies(context);
                 //await SeedTvShows.SeedAllTvShows(context);
                 //await SeedAnime.SeedAllAnime(settings);

@@ -23,7 +23,7 @@ export class MangaCardAddedComponent implements OnInit {
   }
 
   deleteMangaForUser(manga: DatumManga){
-    this.mangaAngularService.deleteMangaForUser(manga.mal_id!).subscribe(() => {
+    this.mangaAngularService.deleteMangaForUser(manga.id!).subscribe(() => {
       this.toastr.success("You have deleted " + manga.title);
 
       this.deleteEvent.emit("This value is coming from child");

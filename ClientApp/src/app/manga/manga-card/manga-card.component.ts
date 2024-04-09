@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MangaService } from 'api/manga.service';
 import { DatumManga } from 'model/datumManga';
+import { ObjectId } from 'model/objectId';
 import { ToastrService } from 'ngx-toastr';
 import { MangaCard } from 'src/app/_models/mangaCard';
 import { MangaAngularService } from 'src/app/_services/manga_angular.service';
@@ -22,12 +23,12 @@ export class MangaCardComponent implements OnInit {
   }
 
   addManga(manga: DatumManga){
-    this.mangaAngularService.addManga(manga.mal_id!).subscribe(() => {
+    this.mangaAngularService.addManga(manga.id!).subscribe(() => {
       this.toastr.success("You have added " + manga.title);
     })
   }
 
-  isMangaAlreadyAdded(mangaId: number): boolean{
+  isMangaAlreadyAdded(mangaId: ObjectId): boolean{
     this.mangaService.apiMangaMangaAlreadyAddedGet(mangaId).subscribe((response) => {
       return response;
     })

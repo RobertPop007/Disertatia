@@ -47,14 +47,14 @@ export class MangaDetailComponent implements OnInit {
 
       // this.images = this.anime.actorList?.map((n) => n.image);
 
-      this.mangaService.apiMangaMangaAlreadyAddedGet(this.manga.mal_id!).pipe(take(1)).subscribe(res => {
+      this.mangaService.apiMangaMangaAlreadyAddedGet(this.manga.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
     })
   }
 
   deleteManga(manga: DatumManga){
-    this.mangaAngularService.deleteMangaForUser(manga.mal_id!).subscribe(() => {
+    this.mangaAngularService.deleteMangaForUser(manga.id!).subscribe(() => {
       this.toastr.success("You have deleted " + manga.title);
     })
 
@@ -62,13 +62,13 @@ export class MangaDetailComponent implements OnInit {
   };
 
   loadManga(){
-    this.mangaService.getmanga(this.route.snapshot.paramMap.get('title')!).subscribe(manga => {
+    this.mangaService.getManga(this.route.snapshot.paramMap.get('title')!).subscribe(manga => {
       this.manga = manga;
     })
   }
 
   addManga(manga: DatumManga){
-    this.mangaAngularService.addManga(manga.mal_id!).subscribe(() => {
+    this.mangaAngularService.addManga(manga.id!).subscribe(() => {
       this.toastr.success("You have added " + manga.title);
     })
 

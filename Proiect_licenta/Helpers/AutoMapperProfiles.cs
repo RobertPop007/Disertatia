@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Extensions;
 using MongoDB.Driver;
@@ -22,26 +24,25 @@ namespace Disertatie_backend.Helpers
             CreateMap<IFindFluent<AppUser, AppUser>, List<MemberDto>>().ReverseMap();
             CreateMap<MemberDto, MemberDto>().ReverseMap();
 
-            CreateMap<Photo, PhotoDto>();
+            CreateMap<Photo, PhotoDto>().ReverseMap();
 
-            CreateMap<MemberUpdateDto, AppUser>();
+            CreateMap<MemberUpdateDto, AppUser>().ReverseMap();
 
-            CreateMap<RegisterDto, AppUser>();
+            CreateMap<RegisterDto, AppUser>().ReverseMap();
 
             CreateMap<Message, MessageDto>()
                 .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src =>
                     src.Sender.ProfilePicture.Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
-                    src.Recipient.ProfilePicture.Url));
+                    src.Recipient.ProfilePicture.Url)).ReverseMap();
 
-            CreateMap<MovieItem, MovieItem>();
-            CreateMap<Movie, Movie>();
+            CreateMap<MovieItem, Movie>().ReverseMap();
 
-            CreateMap<Movie, MovieItem>();
-            CreateMap<MovieItem, Movie>();
+            CreateMap<Movie, MovieItem>().ReverseMap();
 
-            CreateMap<Movie, MovieCard>();
-            CreateMap<MovieCard, Movie>();
+            CreateMap<Movie, MovieCard>().ReverseMap();
+
+            CreateMap<Datum, AnimeCard>().ReverseMap();
         }
     }
 }

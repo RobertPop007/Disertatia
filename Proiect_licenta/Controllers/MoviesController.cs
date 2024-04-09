@@ -28,7 +28,7 @@ namespace Disertatie_backend.Controllers
             var movie = await _moviesRepository.GetMovieByIdAsync(movieId);
             if (movie == null) return NotFound("Movie not found");
 
-            if (user.AppUserMovie.Contains(movieId) == true) return BadRequest("You have already added this movie to your list");
+            if (user.AppUserMovie.Contains(movieId.ToString()) == true) return BadRequest("You have already added this movie to your list");
 
             await _moviesRepository.AddMovieToUser(user.Id, movie.Id);
 

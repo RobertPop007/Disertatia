@@ -1,7 +1,10 @@
-﻿namespace Disertatie_backend.Entities.TvShows
+﻿using MongoDB.Bson;
+
+namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowSimilar
     {
+        public ObjectId? Id { get; set; }
 #nullable enable
         public string? TvShow_Id { get; set; }
         public string? Title { get; set; }

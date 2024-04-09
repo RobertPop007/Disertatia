@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost:5001/"
+      "url": "https://localhost:44330/"
     }
   ],
   "paths": {
@@ -246,8 +246,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -358,8 +357,7 @@
             "name": "animeId",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -398,8 +396,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -578,8 +575,8 @@
             "name": "UserId",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "uuid"
             }
           },
           {
@@ -689,8 +686,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -723,7 +719,7 @@
         }
       }
     },
-    "/api/Game/GetAllgames": {
+    "/api/Game/GetAllGames": {
       "get": {
         "tags": [
           "Game"
@@ -751,7 +747,7 @@
         }
       }
     },
-    "/api/Game/{title}": {
+    "/api/Game/{name}": {
       "get": {
         "tags": [
           "Game"
@@ -759,7 +755,7 @@
         "operationId": "GetGame",
         "parameters": [
           {
-            "name": "title",
+            "name": "name",
             "in": "path",
             "required": true,
             "schema": {
@@ -801,8 +797,7 @@
             "name": "gameId",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -841,8 +836,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -864,8 +858,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -898,7 +891,7 @@
         }
       }
     },
-    "/api/Manga/GetAllmangas": {
+    "/api/Manga/GetAllMangas": {
       "get": {
         "tags": [
           "Manga"
@@ -931,7 +924,7 @@
         "tags": [
           "Manga"
         ],
-        "operationId": "Getmanga",
+        "operationId": "GetManga",
         "parameters": [
           {
             "name": "title",
@@ -976,8 +969,7 @@
             "name": "mangaId",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1016,8 +1008,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1231,7 +1222,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1358,7 +1349,7 @@
             "name": "movieId",
             "in": "query",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1397,7 +1388,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1419,7 +1410,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1530,7 +1521,7 @@
             "name": "tvShowId",
             "in": "query",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1569,7 +1560,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ObjectId"
             }
           }
         ],
@@ -1798,10 +1789,6 @@
       "ActorList": {
         "type": "object",
         "properties": {
-          "actorId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -1824,33 +1811,35 @@
       "AddedByStatusGame": {
         "type": "object",
         "properties": {
-          "addedByStatusGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "yet": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "owned": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "beaten": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "toplay": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "dropped": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "playing": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1858,13 +1847,10 @@
       "Aired": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "from": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "to": {
             "type": "string",
@@ -1885,8 +1871,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
           "name": {
             "type": "string",
@@ -1914,8 +1900,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
           "userName": {
             "type": "string",
@@ -2009,17 +1995,11 @@
           "profilePicture": {
             "$ref": "#/components/schemas/Photo"
           },
-          "addedByUsers": {
+          "friends": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserFriend"
-            },
-            "nullable": true
-          },
-          "addedUsers": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserFriend"
+              "type": "string",
+              "format": "uuid"
             },
             "nullable": true
           },
@@ -2047,35 +2027,35 @@
           "appUserMovie": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AppUserMovieItem"
+              "type": "string"
             },
             "nullable": true
           },
           "appUserTvShow": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AppUserTvShowItem"
+              "type": "string"
             },
             "nullable": true
           },
           "appUserAnime": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AppUserAnimeItem"
+              "type": "string"
             },
             "nullable": true
           },
           "appUserManga": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AppUserMangaItem"
+              "type": "string"
             },
             "nullable": true
           },
           "appUserGame": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AppUserGameItem"
+              "type": "string"
             },
             "nullable": true
           },
@@ -2088,96 +2068,16 @@
         },
         "additionalProperties": false
       },
-      "AppUserAnimeItem": {
-        "type": "object",
-        "properties": {
-          "appUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "animeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "animeItem": {
-            "$ref": "#/components/schemas/Datum"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AppUserGameItem": {
-        "type": "object",
-        "properties": {
-          "appUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "gameId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "gameItem": {
-            "$ref": "#/components/schemas/Game"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AppUserMangaItem": {
-        "type": "object",
-        "properties": {
-          "appUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "mangaId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "mangaItem": {
-            "$ref": "#/components/schemas/DatumManga"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AppUserMovieItem": {
-        "type": "object",
-        "properties": {
-          "appUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "movieId": {
-            "type": "string",
-            "nullable": true
-          },
-          "movieItem": {
-            "$ref": "#/components/schemas/Movie"
-          }
-        },
-        "additionalProperties": false
-      },
       "AppUserRole": {
         "type": "object",
         "properties": {
           "userId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
           "roleId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
           "user": {
             "$ref": "#/components/schemas/AppUser"
@@ -2188,36 +2088,13 @@
         },
         "additionalProperties": false
       },
-      "AppUserTvShowItem": {
-        "type": "object",
-        "properties": {
-          "appUserId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "tvShowId": {
-            "type": "string",
-            "nullable": true
-          },
-          "tvShowItem": {
-            "$ref": "#/components/schemas/TvShow"
-          }
-        },
-        "additionalProperties": false
-      },
       "AuthorManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -2237,10 +2114,6 @@
       "BoxOffice": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "budget": {
             "type": "string",
             "nullable": true
@@ -2263,10 +2136,6 @@
       "Broadcast": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "day": {
             "type": "string",
             "nullable": true
@@ -2289,10 +2158,6 @@
       "CompanyList": {
         "type": "object",
         "properties": {
-          "companyId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -2307,10 +2172,6 @@
       "CountryList": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -2339,6 +2200,9 @@
       "Datum": {
         "type": "object",
         "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
           "mal_id": {
             "type": "integer",
             "format": "int32"
@@ -2383,7 +2247,8 @@
             "nullable": true
           },
           "airing": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "aired": {
             "$ref": "#/components/schemas/Aired"
@@ -2403,7 +2268,8 @@
           },
           "scored_by": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "rank": {
             "type": "integer",
@@ -2486,13 +2352,6 @@
               "$ref": "#/components/schemas/Demographic"
             },
             "nullable": true
-          },
-          "appUserAnime": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppUserAnimeItem"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2500,6 +2359,9 @@
       "DatumManga": {
         "type": "object",
         "properties": {
+          "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
           "mal_id": {
             "type": "integer",
             "format": "int32"
@@ -2542,7 +2404,8 @@
             "nullable": true
           },
           "publishing": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "published": {
             "$ref": "#/components/schemas/PublishedManga"
@@ -2554,11 +2417,13 @@
           },
           "scored": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "scored_by": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "rank": {
             "type": "integer",
@@ -2572,11 +2437,13 @@
           },
           "members": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "favorites": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "synopsis": {
             "type": "string",
@@ -2620,13 +2487,6 @@
               "$ref": "#/components/schemas/DemographicManga"
             },
             "nullable": true
-          },
-          "appUserManga": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppUserMangaItem"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2634,13 +2494,10 @@
       "Demographic": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -2660,13 +2517,10 @@
       "DemographicManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_Id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -2686,13 +2540,10 @@
       "DeveloperGame": {
         "type": "object",
         "properties": {
-          "developerGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -2704,7 +2555,8 @@
           },
           "games_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image_background": {
             "type": "string",
@@ -2716,10 +2568,6 @@
       "DirectorList": {
         "type": "object",
         "properties": {
-          "directorId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -2734,13 +2582,10 @@
       "EsrbRatingGame": {
         "type": "object",
         "properties": {
-          "esrbRatingGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -2757,8 +2602,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
           "username": {
             "type": "string",
@@ -2786,21 +2631,20 @@
       "From": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "day": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "month": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "year": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2834,6 +2678,9 @@
         "type": "object",
         "properties": {
           "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "game_Id": {
             "type": "integer",
             "format": "int32"
           },
@@ -2863,11 +2710,13 @@
             "nullable": true
           },
           "tba": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "updated": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "background_image": {
             "type": "string",
@@ -2883,11 +2732,13 @@
           },
           "rating": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "rating_top": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "ratings": {
             "type": "array",
@@ -2898,34 +2749,41 @@
           },
           "added": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "added_by_status": {
             "$ref": "#/components/schemas/AddedByStatusGame"
           },
           "playtime": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "screenshots_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "movies_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "creators_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "achievements_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "parent_achievements_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "reddit_url": {
             "type": "string",
@@ -2945,27 +2803,33 @@
           },
           "reddit_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "twitch_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "youtube_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "reviews_text_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "ratings_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "suggestions_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "metacritic_url": {
             "type": "string",
@@ -2973,19 +2837,23 @@
           },
           "parents_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "additions_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "game_series_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "reviews_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "saturated_color": {
             "type": "string",
@@ -3050,13 +2918,6 @@
           "description_raw": {
             "type": "string",
             "nullable": true
-          },
-          "appUserGame": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppUserGameItem"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3064,13 +2925,10 @@
       "Genre": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -3090,13 +2948,10 @@
       "GenreGame": {
         "type": "object",
         "properties": {
-          "genreGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -3108,7 +2963,8 @@
           },
           "games_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image_background": {
             "type": "string",
@@ -3120,10 +2976,6 @@
       "GenreList": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -3138,13 +2990,10 @@
       "GenreManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -3164,10 +3013,6 @@
       "Images": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "jpg": {
             "$ref": "#/components/schemas/Jpg"
           },
@@ -3200,10 +3045,6 @@
       "ImagesManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "jpg": {
             "$ref": "#/components/schemas/JpgManga"
           },
@@ -3234,10 +3075,6 @@
       "Jpg": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "image_url": {
             "type": "string",
             "nullable": true
@@ -3256,10 +3093,6 @@
       "JpgManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "image_url": {
             "type": "string",
             "nullable": true
@@ -3278,10 +3111,6 @@
       "LanguageList": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -3296,13 +3125,10 @@
       "Licensor": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -3337,10 +3163,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           },
-          "username": {
+          "userName": {
             "type": "string",
             "nullable": true
           },
@@ -3372,10 +3198,6 @@
             "type": "string",
             "nullable": true
           },
-          "lookingFor": {
-            "type": "string",
-            "nullable": true
-          },
           "interests": {
             "type": "string",
             "nullable": true
@@ -3401,10 +3223,6 @@
         "type": "object",
         "properties": {
           "introduction": {
-            "type": "string",
-            "nullable": true
-          },
-          "lookingFor": {
             "type": "string",
             "nullable": true
           },
@@ -3525,6 +3343,9 @@
         "type": "object",
         "properties": {
           "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "movieId": {
             "type": "string",
             "nullable": true
           },
@@ -3573,7 +3394,8 @@
             "nullable": true
           },
           "plotLocalIsRtl": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "awards": {
             "type": "string",
@@ -3708,13 +3530,6 @@
               "$ref": "#/components/schemas/Similar"
             },
             "nullable": true
-          },
-          "appUserMovie": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppUserMovieItem"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3722,10 +3537,6 @@
       "MoviesImages": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -3763,10 +3574,6 @@
       "MoviesTrailer": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -3818,13 +3625,43 @@
         },
         "additionalProperties": false
       },
+      "ObjectId": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "machine": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "pid": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "increment": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "deprecated": true
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ParentPlatformGame": {
         "type": "object",
         "properties": {
-          "parentPlatformGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "platform": {
             "$ref": "#/components/schemas/PlatformChildGame"
           }
@@ -3850,8 +3687,8 @@
             "$ref": "#/components/schemas/AppUser"
           },
           "appUserId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -3873,10 +3710,6 @@
       "PlatformChildGame": {
         "type": "object",
         "properties": {
-          "platformChildGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "type": "string",
             "nullable": true
@@ -3887,7 +3720,8 @@
           },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3895,10 +3729,6 @@
       "PlatformGame": {
         "type": "object",
         "properties": {
-          "platformGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "type": "string",
             "nullable": true
@@ -3909,7 +3739,8 @@
           },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image": {
             "type": "string",
@@ -3939,10 +3770,6 @@
       "PlatformsGame": {
         "type": "object",
         "properties": {
-          "platformsGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "platform": {
             "$ref": "#/components/schemas/PlatformGame"
           },
@@ -3995,13 +3822,10 @@
       "Producer": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -4021,10 +3845,6 @@
       "Prop": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "from": {
             "$ref": "#/components/schemas/From"
           },
@@ -4037,10 +3857,6 @@
       "PropManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "from": {
             "$ref": "#/components/schemas/FromManga"
           },
@@ -4053,10 +3869,6 @@
       "PublishedManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "from": {
             "type": "string",
             "format": "date-time",
@@ -4080,13 +3892,10 @@
       "PublisherGame": {
         "type": "object",
         "properties": {
-          "publisherGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -4098,7 +3907,8 @@
           },
           "games_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image_background": {
             "type": "string",
@@ -4110,13 +3920,10 @@
       "RatingGame": {
         "type": "object",
         "properties": {
-          "ratingGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "title": {
             "type": "string",
@@ -4124,11 +3931,13 @@
           },
           "count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "percent": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4136,10 +3945,6 @@
       "Ratings": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -4201,15 +4006,19 @@
         "type": "object",
         "properties": {
           "username": {
+            "minLength": 1,
             "type": "string"
           },
           "email": {
+            "minLength": 1,
             "type": "string"
           },
           "knownAs": {
+            "minLength": 1,
             "type": "string"
           },
           "gender": {
+            "minLength": 1,
             "type": "string"
           },
           "dateOfBirth": {
@@ -4217,9 +4026,11 @@
             "format": "date-time"
           },
           "city": {
+            "minLength": 1,
             "type": "string"
           },
           "country": {
+            "minLength": 1,
             "type": "string"
           },
           "password": {
@@ -4233,10 +4044,6 @@
       "RequirementsGame": {
         "type": "object",
         "properties": {
-          "requirementsGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "minimum": {
             "type": "string",
             "nullable": true
@@ -4251,13 +4058,10 @@
       "SerializationManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -4277,13 +4081,8 @@
       "Similar": {
         "type": "object",
         "properties": {
-          "similarId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/ObjectId"
           },
           "title": {
             "type": "string",
@@ -4307,10 +4106,6 @@
       "StarList": {
         "type": "object",
         "properties": {
-          "starId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -4325,13 +4120,10 @@
       "StoreGame": {
         "type": "object",
         "properties": {
-          "storeGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -4347,7 +4139,8 @@
           },
           "games_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image_background": {
             "type": "string",
@@ -4359,13 +4152,10 @@
       "StoresGame": {
         "type": "object",
         "properties": {
-          "storesGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "url": {
             "type": "string",
@@ -4380,13 +4170,10 @@
       "Studio": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -4406,13 +4193,10 @@
       "TagGame": {
         "type": "object",
         "properties": {
-          "tagGameId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -4428,7 +4212,8 @@
           },
           "games_count": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "image_background": {
             "type": "string",
@@ -4440,13 +4225,10 @@
       "Theme": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -4466,13 +4248,10 @@
       "ThemeManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "mal_id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "type": {
             "type": "string",
@@ -4492,10 +4271,6 @@
       "To": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "day": {
             "type": "integer",
             "format": "int32",
@@ -4517,10 +4292,6 @@
       "ToManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "day": {
             "type": "integer",
             "format": "int32",
@@ -4542,10 +4313,6 @@
       "Trailer": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "youtube_id": {
             "type": "string",
             "nullable": true
@@ -4567,10 +4334,6 @@
       "TvSeriesInfo": {
         "type": "object",
         "properties": {
-          "tvShowInfoId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "yearEnd": {
             "type": "string",
             "nullable": true
@@ -4600,6 +4363,9 @@
         "type": "object",
         "properties": {
           "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "tvShow_Id": {
             "type": "string",
             "nullable": true
           },
@@ -4648,7 +4414,8 @@
             "nullable": true
           },
           "plotLocalIsRtl": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "awards": {
             "type": "string",
@@ -4768,13 +4535,6 @@
           },
           "tvSeriesInfo": {
             "$ref": "#/components/schemas/TvSeriesInfo"
-          },
-          "appUserTvShow": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AppUserTvShowItem"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4782,10 +4542,6 @@
       "TvShowActorList": {
         "type": "object",
         "properties": {
-          "tvShowActorListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -4808,10 +4564,6 @@
       "TvShowBoxOffice": {
         "type": "object",
         "properties": {
-          "tvShowBoxOfficeId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "budget": {
             "type": "string",
             "nullable": true
@@ -4834,10 +4586,6 @@
       "TvShowCompanyList": {
         "type": "object",
         "properties": {
-          "tvShowCompanyListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -4852,10 +4600,6 @@
       "TvShowCountryList": {
         "type": "object",
         "properties": {
-          "tvShowCountryListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -4870,10 +4614,6 @@
       "TvShowCreatorList": {
         "type": "object",
         "properties": {
-          "tvShowCreatorListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -4888,10 +4628,6 @@
       "TvShowGenreList": {
         "type": "object",
         "properties": {
-          "tvShowGenreListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -4906,10 +4642,6 @@
       "TvShowImages": {
         "type": "object",
         "properties": {
-          "tvShowImagesId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -4947,10 +4679,6 @@
       "TvShowItems": {
         "type": "object",
         "properties": {
-          "tvShowItemsId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "title": {
             "type": "string",
             "nullable": true
@@ -4965,10 +4693,6 @@
       "TvShowLanguageList": {
         "type": "object",
         "properties": {
-          "tvShowLanguageListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "key": {
             "type": "string",
             "nullable": true
@@ -4983,10 +4707,6 @@
       "TvShowPlotFull": {
         "type": "object",
         "properties": {
-          "tvShowPlotFullId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "plainText": {
             "type": "string",
             "nullable": true
@@ -5001,10 +4721,6 @@
       "TvShowPlotShort": {
         "type": "object",
         "properties": {
-          "tvShowPlotShortId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "plainText": {
             "type": "string",
             "nullable": true
@@ -5019,10 +4735,6 @@
       "TvShowRatings": {
         "type": "object",
         "properties": {
-          "tvShowRatingsId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -5073,11 +4785,10 @@
       "TvShowSimilar": {
         "type": "object",
         "properties": {
-          "tvShowSimilarId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
+            "$ref": "#/components/schemas/ObjectId"
+          },
+          "tvShow_Id": {
             "type": "string",
             "nullable": true
           },
@@ -5099,10 +4810,6 @@
       "TvShowStarList": {
         "type": "object",
         "properties": {
-          "tvShowStarListId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true
@@ -5117,10 +4824,6 @@
       "TvShowTrailer": {
         "type": "object",
         "properties": {
-          "tvShowTrailerId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -5175,10 +4878,6 @@
       "TvShowWikipedia": {
         "type": "object",
         "properties": {
-          "tvShowWikipediaId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -5250,26 +4949,12 @@
           "email": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserFriend": {
-        "type": "object",
-        "properties": {
-          "addedByUser": {
-            "$ref": "#/components/schemas/AppUser"
           },
-          "addedByUserId": {
-            "type": "integer",
-            "format": "int32"
+          "isSubscribed": {
+            "type": "boolean"
           },
-          "addedUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "addedUserId": {
-            "type": "integer",
-            "format": "int32"
+          "hasDarkMode": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -5277,10 +4962,6 @@
       "Webp": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "image_url": {
             "type": "string",
             "nullable": true
@@ -5299,10 +4980,6 @@
       "WebpManga": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "image_url": {
             "type": "string",
             "nullable": true
@@ -5321,10 +4998,6 @@
       "Wikipedia": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "imDbId": {
             "type": "string",
             "nullable": true
@@ -5373,10 +5046,6 @@
       "WriterList": {
         "type": "object",
         "properties": {
-          "writerId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "id": {
             "type": "string",
             "nullable": true

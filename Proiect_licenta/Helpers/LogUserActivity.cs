@@ -21,8 +21,6 @@ namespace Disertatie_backend.Helpers
             var user = await repo.GetUserByIdAsync(userId);
 
             if(user != null) user.LastActive = DateTime.Now;
-
-            await repo.SaveAllAsync();
         }
     }
 }

@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
+
 import { AccountService } from './api/account.service';
 import { AdminService } from './api/admin.service';
 import { AnimeService } from './api/anime.service';
@@ -18,7 +19,18 @@ import { UsersService } from './api/users.service';
   imports:      [],
   declarations: [],
   exports:      [],
-  providers: []
+  providers: [
+    AccountService,
+    AdminService,
+    AnimeService,
+    BuggyService,
+    FriendsService,
+    GameService,
+    MangaService,
+    MessagesService,
+    MoviesService,
+    TvShowsService,
+    UsersService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

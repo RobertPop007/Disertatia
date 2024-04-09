@@ -28,7 +28,7 @@ namespace Disertatie_backend.Controllers
             var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
             if (manga == null) return NotFound("Manga not found");
 
-            if (user.AppUserManga.Contains(manga.Id) == true) return BadRequest("You have already added this anime to your list");
+            if (user.AppUserManga.Contains(manga.Id.ToString()) == true) return BadRequest("You have already added this anime to your list");
 
             await _mangasRepository.AddMangaToUser(user.Id, manga.Id);
 

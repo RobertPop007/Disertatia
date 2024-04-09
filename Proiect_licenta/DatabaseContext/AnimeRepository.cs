@@ -1,4 +1,5 @@
-﻿using Disertatie_backend.Configurations;
+﻿using AutoMapper;
+using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
@@ -8,16 +9,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class AnimeRepository : IAnimeRepository
     {
-        private readonly DataContext _context;
         private readonly IMongoCollection<Datum> _animeCollection;
         private readonly IMongoCollection<AppUser> _userCollection;
         private readonly IUserRepository _userRepository;
@@ -25,7 +25,9 @@ namespace Disertatie_backend.DatabaseContext
         private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string titleIndex = "Title_index";
 
-        public AnimeRepository(DataContext context, IMongoDBCollectionHelper<Datum> animeCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        private readonly IMapper _mapper;
+
+        public AnimeRepository(IMapper mapper, IMongoDBCollectionHelper<Datum> animeCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
             _animeCollectionHelper = animeCollectionHelper;
             _userCollectionHelper = userCollectionHelper;
@@ -34,19 +36,21 @@ namespace Disertatie_backend.DatabaseContext
             _userRepository = userRepository;
 
             _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+
+            _mapper = mapper;
         }
 
-        public async Task DeleteAnimeForUser(ObjectId userId, ObjectId animeId)
+        public async Task DeleteAnimeForUser(Guid userId, ObjectId animeId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserAnime, animeId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserAnime, animeId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AddAnimeToUser(ObjectId userId, ObjectId animeId)
+        public async Task AddAnimeToUser(Guid userId, ObjectId animeId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserAnime, animeId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserAnime, animeId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
@@ -62,35 +66,37 @@ namespace Disertatie_backend.DatabaseContext
             return await _animeCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
-        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
-        public async Task<List<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
+        public async Task<IEnumerable<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
         {
-            var query = _context.Anime
-                .Select(anime => new AnimeCard
-                {
-                    Title = anime.Title,
-                    Popularity = anime.Popularity.ToString(),
-                    Mal_id = anime.Mal_id,
-                    Score = anime.Score,
-                    Image = anime.Images.Webp.Image_url,
-                    Year = anime.Year.ToString()
-                }).AsQueryable();
+            if (string.IsNullOrEmpty(animeParams.SearchedAnime) || string.IsNullOrWhiteSpace(animeParams.SearchedAnime)) return null;
 
-            if (!string.IsNullOrWhiteSpace(animeParams.SearchedAnime))
-                query = query.Where(u => u.Title.Contains(animeParams.SearchedAnime));
+            var filterByTitle = Builders<Datum>.Filter.Where(x => x.Title.Contains(animeParams.SearchedAnime)) |
+                Builders<Datum>.Filter.Where(x => x.Title_english.Contains(animeParams.SearchedAnime)) |
+                Builders<Datum>.Filter.Where(x => x.Title_japanese.Contains(animeParams.SearchedAnime));
 
-            query = animeParams.OrderBy switch
+            var query = await _animeCollection.Find(filterByTitle).ToListAsync();
+
+            var queryList = new List<AnimeCard>();
+
+            foreach (var document in query)
             {
-                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
-                "score" => query.OrderByDescending(u => u.Score),
-                _ => query.OrderByDescending(u => u.Year)
+                queryList.Add(_mapper.Map<AnimeCard>(document));
+            }
+
+            var mappedQuery = queryList.AsEnumerable();
+
+            mappedQuery = animeParams.OrderBy switch
+            {
+                "title" => mappedQuery.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
+                "score" => mappedQuery.OrderByDescending(u => u.Score),
+                _ => mappedQuery.OrderByDescending(u => u.Year)
 
             };
 
-            return await query.ToListAsync();
+            return mappedQuery;
         }
 
-        public async Task<List<Datum>> GetUserAnimes(ObjectId userId)
+        public async Task<IEnumerable<Datum>> GetUserAnimes(Guid userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
@@ -98,7 +104,7 @@ namespace Disertatie_backend.DatabaseContext
 
             foreach (var animeId in user.AppUserAnime)
             {
-                var anime = await GetAnimeByIdAsync(animeId);
+                var anime = await GetAnimeByIdAsync(new ObjectId(animeId));
 
                 if (anime != null) listOfAnimesForUser.Add(anime);
             }
@@ -106,11 +112,11 @@ namespace Disertatie_backend.DatabaseContext
             return listOfAnimesForUser;
         }
 
-        public async Task<bool> IsAnimeAlreadyAdded(ObjectId userId, ObjectId animeId)
+        public async Task<bool> IsAnimeAlreadyAdded(Guid userId, ObjectId animeId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isAnimeAlreadyAdded = user.AppUserAnime.Contains(animeId);
+            var isAnimeAlreadyAdded = user.AppUserAnime.Contains(animeId.ToString());
             if (isAnimeAlreadyAdded == true) return true;
             return false;
         }

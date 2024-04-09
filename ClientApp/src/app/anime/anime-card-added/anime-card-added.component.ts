@@ -24,7 +24,7 @@ export class AnimeCardAddedComponent implements OnInit {
   }
 
   deleteAnimeForUser(anime: Datum){
-    this.animeAngularService.deleteAnimeForUser(anime.mal_id!).subscribe(() => {
+    this.animeAngularService.deleteAnimeForUser(anime.id!).subscribe(() => {
       this.toastr.success("You have deleted " + anime.title);
 
       this.deleteEvent.emit("This value is coming from child");

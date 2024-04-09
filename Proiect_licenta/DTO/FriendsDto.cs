@@ -1,8 +1,10 @@
-﻿namespace Disertatie_backend.DTO
+﻿using System;
+
+namespace Disertatie_backend.DTO
 {
     public class FriendsDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Username { get; set; }
         public int Age { get; set; }
         public string KnownAs { get; set; }

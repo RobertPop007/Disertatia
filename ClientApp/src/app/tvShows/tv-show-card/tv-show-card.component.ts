@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TvShowsService } from 'api/tvShows.service';
+import { ObjectId } from 'model/objectId';
 import { TvShow } from 'model/tvShow';
 import { ToastrService } from 'ngx-toastr';
 import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service';
@@ -26,7 +27,7 @@ export class TvShowCardComponent implements OnInit {
     })
   }
 
-  isTvShowAlreadyAdded(tvShowId: string): boolean{
+  isTvShowAlreadyAdded(tvShowId: ObjectId): boolean{
     this.tvShowService.apiTvShowsTvShowAlreadyAddedGet(tvShowId).subscribe((response) => {
       return response;
     })

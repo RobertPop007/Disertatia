@@ -10,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
-import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service';
 
 @Component({

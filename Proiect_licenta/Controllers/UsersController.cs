@@ -8,6 +8,7 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Disertatie_backend.Controllers
 {
@@ -29,7 +30,6 @@ namespace Disertatie_backend.Controllers
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
             userParams.CurrentUsername = User.GetUsername();
-            //userParams.CurrentUsername = "rae";
 
             var users = await _userRepository.GetMembersAsync(userParams);
 
@@ -39,7 +39,7 @@ namespace Disertatie_backend.Controllers
         }
 
         //api/users/3
-        [HttpGet("{username}", Name ="GetUser")]
+        [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             return await _userRepository.GetMemberAsync(username);
@@ -80,7 +80,7 @@ namespace Disertatie_backend.Controllers
             {
                 return CreatedAtRoute("GetUser", new { username = user.UserName }, _mapper.Map<PhotoDto>(photo));
             }
-               
+
 
             return BadRequest("Problem adding photo");
         }
@@ -94,7 +94,7 @@ namespace Disertatie_backend.Controllers
 
             if (photo == null) return NotFound();
 
-            if(photo.PublicId != null)
+            if (photo.PublicId != null)
             {
                 var result = await _photoService.DeletePhotoAsync(photo.PublicId);
 

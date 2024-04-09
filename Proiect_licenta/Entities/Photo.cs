@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Disertatie_backend.Entities
 {
@@ -9,6 +10,6 @@ namespace Disertatie_backend.Entities
         public string Url { get; set; }
         public string PublicId { get; set; }
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
     }
 }

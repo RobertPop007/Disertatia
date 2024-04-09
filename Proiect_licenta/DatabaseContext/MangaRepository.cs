@@ -6,18 +6,18 @@ using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Z.EntityFramework.Plus;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
+using AutoMapper;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class MangaRepository : IMangaRepository
     {
-        private readonly DataContext _context;
         private readonly IMongoCollection<DatumManga> _mangaCollection;
         private readonly IMongoCollection<AppUser> _userCollection;
         private readonly IUserRepository _userRepository;
@@ -25,7 +25,10 @@ namespace Disertatie_backend.DatabaseContext
         private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string titleIndex = "Title_index";
 
-        public MangaRepository(DataContext context, IMongoDBCollectionHelper<DatumManga> mangaCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        private readonly IMapper _mapper;
+
+
+        public MangaRepository(IMapper mapper, IMongoDBCollectionHelper<DatumManga> mangaCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
         {
             _mangaCollectionHelper = mangaCollectionHelper;
             _userCollectionHelper = userCollectionHelper;
@@ -34,19 +37,21 @@ namespace Disertatie_backend.DatabaseContext
             _userRepository = userRepository;
 
             _mangaCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+
+            _mapper = mapper;
         }
 
-        public async Task DeleteMangaForUser(ObjectId userId, ObjectId mangaId)
+        public async Task DeleteMangaForUser(Guid userId, ObjectId mangaId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserManga, mangaId);
+            var update = Builders<AppUser>.Update.Pull(x => x.AppUserManga, mangaId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task AddMangaToUser(ObjectId userId, ObjectId mangaId)
+        public async Task AddMangaToUser(Guid userId, ObjectId mangaId)
         {
             var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserManga, mangaId);
+            var update = Builders<AppUser>.Update.Push(x => x.AppUserManga, mangaId.ToString());
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
@@ -62,35 +67,37 @@ namespace Disertatie_backend.DatabaseContext
             return await _mangaCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
-        //aici umblam cand vedem si partea de frontend, să stim ca intoarcem ce trebuie
-        public async Task<List<MangaCard>> GetMangasAsync(MangaParams mangaParams)
+        public async Task<IEnumerable<MangaCard>> GetMangasAsync(MangaParams mangaParams)
         {
-            var query = _context.Manga
-                .Select(manga => new MangaCard
-                {
-                    Title = manga.Title,
-                    Popularity = manga.Popularity.ToString(),
-                    Mal_id = manga.Mal_id,
-                    Score = manga.Score,
-                    Image = manga.Images.Webp.Image_url,
-                    Year = manga.Published.From.Value.Year.ToString()
-                }).AsQueryable();
+            if (string.IsNullOrEmpty(mangaParams.SearchedManga) || string.IsNullOrWhiteSpace(value: mangaParams.SearchedManga)) return null;
 
-            if (!string.IsNullOrWhiteSpace(mangaParams.SearchedManga))
-                query = query.Where(u => u.Title.Contains(mangaParams.SearchedManga));
+            var filterByTitle = Builders<DatumManga>.Filter.Where(x => x.Title.Contains(mangaParams.SearchedManga)) |
+                Builders<DatumManga>.Filter.Where(x => x.Title_english.Contains(mangaParams.SearchedManga)) |
+                Builders<DatumManga>.Filter.Where(x => x.Title_japanese.Contains(mangaParams.SearchedManga));
 
-            query = mangaParams.OrderBy switch
+            var query = await _mangaCollection.Find(filterByTitle).ToListAsync();
+
+            var queryList = new List<MangaCard>();
+
+            foreach (var document in query)
             {
-                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
-                "score" => query.OrderByDescending(u => u.Score),
-                _ => query.OrderByDescending(u => u.Popularity)
+                queryList.Add(_mapper.Map<MangaCard>(document));
+            }
+
+            var mappedQuery = queryList.AsEnumerable();
+
+            mappedQuery = mangaParams.OrderBy switch
+            {
+                "title" => mappedQuery.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
+                "score" => mappedQuery.OrderByDescending(u => u.Score),
+                _ => mappedQuery.OrderByDescending(u => u.Year)
 
             };
 
-            return await query.ToListAsync();
+            return mappedQuery;
         }
 
-        public async Task<List<DatumManga>> GetUserMangas(ObjectId userId)
+        public async Task<IEnumerable<DatumManga>> GetUserMangas(Guid userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
@@ -98,7 +105,7 @@ namespace Disertatie_backend.DatabaseContext
 
             foreach (var mangaId in user.AppUserManga)
             {
-                var manga = await GetMangaByIdAsync(mangaId);
+                var manga = await GetMangaByIdAsync(new ObjectId(mangaId));
 
                 if (manga != null) listOfMangasForUser.Add(manga);
             }
@@ -106,11 +113,11 @@ namespace Disertatie_backend.DatabaseContext
             return listOfMangasForUser;
         }
 
-        public async Task<bool> IsMangaAlreadyAdded(ObjectId userId, ObjectId mangaId)
+        public async Task<bool> IsMangaAlreadyAdded(Guid userId, ObjectId mangaId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
-            var isMangaAlreadyAdded = user.AppUserManga.Contains(mangaId);
+            var isMangaAlreadyAdded = user.AppUserManga.Contains(mangaId.ToString());
             if (isMangaAlreadyAdded == true) return true;
             return false;
         }

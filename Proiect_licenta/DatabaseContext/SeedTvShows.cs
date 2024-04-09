@@ -4,13 +4,23 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Disertatie_backend.Configurations;
+using Microsoft.Extensions.Options;
+using Disertatie_backend.Entities.Anime;
+using MongoDB.Driver;
+using Disertatie_backend.Entities.Movies;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedTvShows
     {
-        public static async Task SeedAllTvShows(DataContext context)
+        public static async Task SeedAllTvShows(IOptions<DatabaseSettings> databaseSettings)
         {
+            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+
+            var _tvShowsCollection = mongoDb.GetCollection<Datum>(databaseSettings.Value.CollectionList["TVShowsCollection"]);
+
             //if (!context.TvShows.Any())
             //{
             //    await SeedTvShowsList(context, "https://imdb-api.com/en/api/top250tvs/k_nmakg2ch");
@@ -50,36 +60,33 @@ namespace Disertatie_backend.DatabaseContext
             //        await SeedTrueTvShowList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
             //    }
             //}
-            
+
 
             //await context.SaveChangesAsync();
         }
 
-        public static async Task SeedTvShowsList(DataContext context, string url)
+        public static async Task SeedTvShowsList(IMongoCollection<TvShow> _tvShowsCollection, string url)
         {
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string returnedUrl = reader.ReadToEnd();
-                var tvShows = JsonConvert.DeserializeObject<TvShowGeneralInfo>(returnedUrl);
+            //using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            //using (Stream stream = response.GetResponseStream())
+            //using (StreamReader reader = new StreamReader(stream))
+            //{
+            //    string returnedUrl = reader.ReadToEnd();
+            //    var tvShows = JsonConvert.DeserializeObject<TvShowGeneralInfo>(returnedUrl);
 
-                foreach (var tvShow in tvShows.Items.Take(500))
-                {
-                    if (context.TvShows.FirstOrDefault(x => x.Id == tvShow.Id) == null)
-                    {
-                        await context.TvShows.AddAsync(tvShow);
-                    }
-                }
-            }
+            //    foreach (var tvShow in tvShows.Items.Take(500))
+            //    {
+            //        await _tvShowsCollection.InsertOneAsync(tvShow);
+            //    }
+            //}
         }
 
-        public static async Task SeedTrueTvShowList(DataContext context, string url)
+        public static async Task SeedTrueTvShowList(IMongoCollection<TvShow> _tvShowsCollection, string url)
         {
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -93,7 +100,7 @@ namespace Disertatie_backend.DatabaseContext
                 string returnedUrl = reader.ReadToEnd();
                 var tvShow = JsonConvert.DeserializeObject<TvShow>(returnedUrl);
 
-                await context.TrueTvShow.AddAsync(tvShow);
+                await _tvShowsCollection.InsertOneAsync(tvShow);
 
             }
         }

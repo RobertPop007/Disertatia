@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
 import { MovieItem } from 'model/movieItem';
+import { ObjectId } from 'model/objectId';
 import { Similar } from 'model/similar';
 import { listenToTriggers } from 'ngx-bootstrap/utils';
 import { ToastrService } from 'ngx-toastr';
@@ -32,7 +33,7 @@ export class MovieCardComponent implements OnInit {
     })
   }
 
-  isMovieAlreadyAdded(movieId: string): boolean{
+  isMovieAlreadyAdded(movieId: ObjectId): boolean{
     this.movieService.apiMoviesMovieAlreadyAddedGet(movieId).subscribe((response) => {
       return response;
     })

@@ -28,7 +28,7 @@ namespace Disertatie_backend.Controllers
             var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(tvShowId);
             if (tvShow == null) return NotFound("TvShow not found");
 
-            if (user.AppUserTvShow.Contains(tvShowId) == true) return BadRequest("You have already added this tv show to your list");
+            if (user.AppUserTvShow.Contains(tvShowId.ToString()) == true) return BadRequest("You have already added this tv show to your list");
 
             await _tvShowsRepository.AddTvShowToUser(user.Id, tvShow.Id);
 

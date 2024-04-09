@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.Controllers
 {
@@ -40,28 +41,13 @@ namespace Disertatie_backend.Controllers
 
             if (addedByUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userFriend = await _addFriendsRepository.GetUserFriend(addedByUserId, addedUser.Id);
+            var userFriend = await _addFriendsRepository.GetUserFriend(addedUser.Id);
 
             if (userFriend != null) return BadRequest("You are already friend with this user");
 
-            userFriend = new UserFriend
-            {
-                AddedByUserId = addedByUserId,
-                AddedUserId = addedUser.Id
-            };
+            addedByUser.Friends.Add(addedUser.Id);
 
-            var userAddedby = new UserFriend
-            {
-                AddedByUserId = addedUser.Id,
-                AddedUserId = addedByUserId
-            };
-
-            addedByUser.AddedUsers.Add(userFriend);
-            addedUser.AddedUsers.Add(userAddedby);
-
-            if (await _userRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Failed to like user");
+            return Ok();
         }
 
         [HttpDelete("{username}")]
@@ -75,22 +61,14 @@ namespace Disertatie_backend.Controllers
 
             if (removedByUser.UserName == username) return BadRequest("You cannot remove yourself");
 
-            var userFriend = await _addFriendsRepository.GetUserFriend(removedByUserId, removedUser.Id);
+            var userFriend = await _addFriendsRepository.GetUserFriend(removedUser.Id);
 
             if (userFriend == null) return BadRequest("You are not friend with this user");
 
-            userFriend = new UserFriend
-            {
-                AddedByUserId = removedByUserId,
-                AddedUserId = removedUser.Id
-            };
+            var connection = _context.Users.Where(o => o.Friends.Contains( removedUser.Id)).FirstOrDefault();
+            _context.Users.Remove(connection);
 
-            var connection = _context.Friends.Where(o => o.AddedUserId == removedUser.Id && o.AddedByUserId == removedByUserId).FirstOrDefault();
-            _context.Friends.Remove(connection);
-
-            if (await _userRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Failed to remove user");
+            return Ok();
         }
 
         [HttpGet]
@@ -114,17 +92,7 @@ namespace Disertatie_backend.Controllers
 
             if(friend == null) return false;
 
-            foreach (var addedUser in currentUser.AddedUsers)
-            {
-                if (friend.Id == addedUser.AddedUserId)
-                    return true;
-            }
-            foreach (var addedUser in currentUser.AddedByUsers)
-            {
-                if (friend.Id == addedUser.AddedByUserId)
-                    return true;
-            }
-
+            if(currentUser.Friends.Contains(friend.Id)) return true;
 
             return false;
         }

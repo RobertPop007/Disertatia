@@ -14,6 +14,7 @@ using Disertatie_backend.Entities;
 using Disertatie_backend.Interfaces;
 using Disertatie_backend.Configurations;
 using MongoDB.Bson;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Disertatie_backend
 {
@@ -30,15 +31,6 @@ namespace Disertatie_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
-
-            var mongoDbSettings = Configuration.GetSection(nameof(DatabaseSettings)).Get<DatabaseSettings>();
-            services.AddIdentity<AppUser, AppRole>()
-                .AddMongoDbStores<AppUser, AppRole, ObjectId>
-                (
-                    mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
-                );
-
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
@@ -75,7 +67,7 @@ namespace Disertatie_backend
 
                 c.AddServer(new OpenApiServer()
                 {
-                    Url = "https://localhost:5001/"
+                    Url = "https://localhost:44330/"
                 });
             });
         }

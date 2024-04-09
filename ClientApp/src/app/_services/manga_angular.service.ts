@@ -9,6 +9,7 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { ObjectId } from 'model/objectId';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class MangaAngularService {
     return this.http.get<DatumManga>(this.baseUrl + "Manga/" + title);
   }
 
-  addManga(mangaId: number){
+  addManga(mangaId: ObjectId){
     return this.mangaService.apiMangaAddMangaMangaIdPost(mangaId);
   }
 
@@ -87,7 +88,7 @@ export class MangaAngularService {
     return getPaginatedResult<Partial<DatumManga[]>>(this.baseUrl + 'Manga/GetMangasFor', params, this.http);
   }
 
-  deleteMangaForUser(mangaId: number){
+  deleteMangaForUser(mangaId: ObjectId){
     return this.http.delete(this.baseUrl + 'Manga/' + mangaId);
   }
 }

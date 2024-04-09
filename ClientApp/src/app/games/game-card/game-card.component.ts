@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameService } from 'api/game.service';
 import { Game } from 'model/game';
+import { ObjectId } from 'model/objectId';
 import { ToastrService } from 'ngx-toastr';
 import { GameCard } from 'src/app/_models/gameCard';
 import { GamesAngularService } from 'src/app/_services/games_angular.service';
@@ -27,7 +28,7 @@ export class GameCardComponent implements OnInit {
     })
   }
 
-  isGameAlreadyAdded(gameId: number): boolean{
+  isGameAlreadyAdded(gameId: ObjectId): boolean{
     this.gameService.apiGameGameAlreadyAddedGet(gameId).subscribe((response) => {
       return response;
     })

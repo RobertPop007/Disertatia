@@ -1,17 +1,25 @@
 ﻿using Newtonsoft.Json;
 using Disertatie_backend.Entities.Movies;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Disertatie_backend.Configurations;
+using Disertatie_backend.Entities.Anime;
+using MongoDB.Driver;
+using Microsoft.Extensions.Options;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedMovies
     {
 
-        public static async Task SeedAllMovies(DataContext context)
+        public static async Task SeedAllMovies(IOptions<DatabaseSettings> databaseSettings)
         {
+            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+
+            var _moviesCollection = mongoDb.GetCollection<Datum>(databaseSettings.Value.CollectionList["MoviesCollection"]);
+
             //if (!context.Top250Movies.Any())
             //{
             //    await SeedMoviesList(context, "https://imdb-api.com/en/API/Top250Movies/k_k49hz8mt");
@@ -49,36 +57,33 @@ namespace Disertatie_backend.DatabaseContext
             //        }
             //    }
             //}
-            
-
-            await context.SaveChangesAsync();
         }
 
-        public static async Task SeedMoviesList(DataContext context, string url)
-        {
+        //public static async Task SeedMoviesList(DataContext context, string url)
+        //{
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        //    request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string returnedUrl = reader.ReadToEnd();
-                var movies = JsonConvert.DeserializeObject<MovieGeneralInfo>(returnedUrl);
+        //    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+        //    using (Stream stream = response.GetResponseStream())
+        //    using (StreamReader reader = new StreamReader(stream))
+        //    {
+        //        string returnedUrl = reader.ReadToEnd();
+        //        var movies = JsonConvert.DeserializeObject<MovieGeneralInfo>(returnedUrl);
 
-                foreach (var movie in movies.Items)
-                {
-                    if (context.Top250Movies.FirstOrDefault(x => x.Id == movie.Id) == null)
-                    {
-                        await context.Top250Movies.AddAsync(movie);
-                    }
-                }
-            }
-        }
+        //        foreach (var movie in movies.Items)
+        //        {
+        //            if (context.Top250Movies.FirstOrDefault(x => x.Id == movie.Id) == null)
+        //            {
+        //                await context.Top250Movies.AddAsync(movie);
+        //            }
+        //        }
+        //    }
+        //}
 
-        public static async Task SeedTrueMoviesList(DataContext context, string url)
+        public static async Task SeedTrueMoviesList(IMongoCollection<Movie> _moviesCollection, string url)
         {
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -92,8 +97,8 @@ namespace Disertatie_backend.DatabaseContext
                 string returnedUrl = reader.ReadToEnd();
                 var movie = JsonConvert.DeserializeObject<Movie>(returnedUrl);
 
-                await context.Movies.AddAsync(movie);
-                
+                await _moviesCollection.InsertOneAsync(movie);
+
             }
         }
     }

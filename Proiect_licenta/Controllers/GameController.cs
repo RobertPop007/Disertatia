@@ -22,13 +22,13 @@ namespace Disertatie_backend.Controllers
         [HttpPost("AddGame/{gameId}")]
         public async Task<ActionResult> AddGameForUser(ObjectId gameId)
         {
-            var username = "rae";
+            var username = User.GetUsername();
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var game = await _gamesRepository.GetGameByIdAsync(gameId);
             if (game == null) return NotFound("Game not found");
 
-            if (user.AppUserGame.Contains(gameId) == true) return BadRequest("You have already added this game to your list");
+            if (user.AppUserGame.Contains(gameId.ToString()) == true) return BadRequest("You have already added this game to your list");
 
             await _gamesRepository.AddGameToUser(user.Id, game.Id);
 

@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{manga.title}} ({{manga.title_japanese}})</h1>
+    <h1 style="size: 15rem;">{{manga.title}} ({{manga.titleJapanese}})</h1>
 
     <div class="d-flex justify-content-between">
       <div>
@@ -30,7 +30,7 @@
         <p style="font-size: 20px;">Rating</p>
           <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
           <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{manga.score}}</span>/10<br>{{manga.scored_by}} votes</p>
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{manga.score}}</span>/10<br>{{manga.scoredBy}} votes</p>
           </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-4"></div>
-    <div class="col-4"><img src="{{manga.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{manga.title}}" class="img-fluid"></div>
+    <div class="col-4"><img src="{{manga.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{manga.title}}" class="img-fluid"></div>
   
 <br><br>
 

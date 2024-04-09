@@ -154,136 +154,136 @@ namespace Disertatie_backend.EmailTemplates
 
         public static string GetAnimePartTemplate(AppUser user, DataContext context, Random random)
         {
-            var animeTable = new StringBuilder();
-            var randomAnime = new Datum();
-            var randomRecommendedAnimes = new List<Datum>();
+            //var animeTable = new StringBuilder();
+            //var randomAnime = new Datum();
+            //var randomRecommendedAnimes = new List<Datum>();
 
-            if (user.AppUserAnime.Count > 0)
-            {
-                var countAnimes = 0;
-                var animesIdList = user.AppUserAnime;
+            //if (user.AppUserAnime.Count > 0)
+            //{
+            //    var countAnimes = 0;
+            //    var animesIdList = user.AppUserAnime;
 
-                var index = random.Next(animesIdList.Count);
-                randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+            //    var index = random.Next(animesIdList.Count);
+            //    randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
 
-                countAnimes++;
+            //    countAnimes++;
 
-                while (randomAnime.Licensors == null)
-                {
-                    index = random.Next(animesIdList.Count);
-                    randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+            //    while (randomAnime.Licensors == null)
+            //    {
+            //        index = random.Next(animesIdList.Count);
+            //        randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
 
-                    countAnimes++;
+            //        countAnimes++;
 
-                    if (countAnimes == animesIdList.Count)
-                        break;
-                }
+            //        if (countAnimes == animesIdList.Count)
+            //            break;
+            //    }
 
-                index = random.Next(context.Anime.Count());
+            //    index = random.Next(context.Anime.Count());
 
-                var randomSimilarAnime = context.Anime.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
+            //    var randomSimilarAnime = context.Anime.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
 
-                animeTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-                                <tr>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-                                </tr>
-                            </table><br><br>", randomAnime.Title, randomSimilarAnime.Images.Webp.Image_url, randomSimilarAnime.Title, string.Empty, $"https://localhost:4200/anime/{randomSimilarAnime.Title}");
+            //    animeTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
+            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
+            //                    <tr>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
+            //                    </tr>
+            //                </table><br><br>", randomAnime.Title, randomSimilarAnime.Images.Webp.Image_url, randomSimilarAnime.Title, string.Empty, $"https://localhost:4200/anime/{randomSimilarAnime.Title}");
 
-                return animeTable.ToString();
-            }
-            else
+            //    return animeTable.ToString();
+            //}
+            //else
                 return String.Empty;
         }
 
         public static string GetMangaPartTemplate(AppUser user, DataContext context, Random random)
         {
-            var mangaTable = new StringBuilder();
-            var randomManga = new DatumManga();
-            var randomRecommendedMangas = new List<DatumManga>();
+            //var mangaTable = new StringBuilder();
+            //var randomManga = new DatumManga();
+            //var randomRecommendedMangas = new List<DatumManga>();
 
-            if (user.AppUserManga.Count > 0)
-            {
-                var countMangas = 0;
-                var mangasIdList = user.AppUserManga;
+            //if (user.AppUserManga.Count > 0)
+            //{
+            //    var countMangas = 0;
+            //    var mangasIdList = user.AppUserManga;
 
-                var index = random.Next(mangasIdList.Count);
-                randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
+            //    var index = random.Next(mangasIdList.Count);
+            //    randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
 
-                countMangas++;
+            //    countMangas++;
 
-                while (randomManga.Status == null)
-                {
-                    index = random.Next(mangasIdList.Count);
-                    randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
+            //    while (randomManga.Status == null)
+            //    {
+            //        index = random.Next(mangasIdList.Count);
+            //        randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
 
-                    countMangas++;
+            //        countMangas++;
 
-                    if (countMangas == mangasIdList.Count)
-                        break;
-                }
+            //        if (countMangas == mangasIdList.Count)
+            //            break;
+            //    }
 
-                index = random.Next(context.Manga.Count());
+            //    index = random.Next(context.Manga.Count());
 
-                var randomSimilarManga = context.Manga.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
+            //    var randomSimilarManga = context.Manga.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
 
-                mangaTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-                                <tr>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-                                </tr>
-                            </table><br><br>", randomManga.Title, randomSimilarManga.Images.Webp.Image_url, randomSimilarManga.Title, string.Empty, $"https://localhost:4200/manga/{randomSimilarManga.Title}");
+            //    mangaTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
+            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
+            //                    <tr>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
+            //                    </tr>
+            //                </table><br><br>", randomManga.Title, randomSimilarManga.Images.Webp.Image_url, randomSimilarManga.Title, string.Empty, $"https://localhost:4200/manga/{randomSimilarManga.Title}");
 
-                return mangaTable.ToString();
-            }
-            else
+            //    return mangaTable.ToString();
+            //}
+            //else
                 return String.Empty;
         }
 
         public static string GetGamePartTemplate(AppUser user, DataContext context, Random random)
         {
-            var gameTable = new StringBuilder();
-            var randomGame = new Game();
-            var randomRecommendedGames = new List<Game>();
+            //var gameTable = new StringBuilder();
+            //var randomGame = new Game();
+            //var randomRecommendedGames = new List<Game>();
 
-            if (user.AppUserGame.Count > 0)
-            {
-                var countGames = 0;
-                var gamesIdList = user.AppUserGame;
+            //if (user.AppUserGame.Count > 0)
+            //{
+            //    var countGames = 0;
+            //    var gamesIdList = user.AppUserGame;
 
-                var index = random.Next(gamesIdList.Count);
-                randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
+            //    var index = random.Next(gamesIdList.Count);
+            //    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
 
-                countGames++;
+            //    countGames++;
 
-                while (randomGame.Description == null)
-                {
-                    index = random.Next(gamesIdList.Count);
-                    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
+            //    while (randomGame.Description == null)
+            //    {
+            //        index = random.Next(gamesIdList.Count);
+            //        randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
 
-                    countGames++;
+            //        countGames++;
 
-                    if (countGames == gamesIdList.Count)
-                        break;
-                }
+            //        if (countGames == gamesIdList.Count)
+            //            break;
+            //    }
 
-                index = random.Next(context.Games.Count());
+            //    index = random.Next(context.Games.Count());
 
-                var randomSimilarGame = context.Games.Where(o => o != null).IncludeOptimized(u => u.Background_image).ToList().ElementAt(index);
+            //    var randomSimilarGame = context.Games.Where(o => o != null).IncludeOptimized(u => u.Background_image).ToList().ElementAt(index);
 
-                gameTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-                                <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-                                <tr>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-                                    <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-                                </tr>
-                            </table><br><br>", randomGame.Name, randomSimilarGame.Background_image, randomSimilarGame.Name, string.Empty, $"https://localhost:4200/games/{randomSimilarGame.Name}");
+            //    gameTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
+            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
+            //                    <tr>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
+            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
+            //                    </tr>
+            //                </table><br><br>", randomGame.Name, randomSimilarGame.Background_image, randomSimilarGame.Name, string.Empty, $"https://localhost:4200/games/{randomSimilarGame.Name}");
 
-                return gameTable.ToString();
-            }
-            else
+            //    return gameTable.ToString();
+            //}
+            //else
                 return String.Empty;
         }
     }

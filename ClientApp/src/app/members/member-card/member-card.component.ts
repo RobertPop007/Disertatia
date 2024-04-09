@@ -17,6 +17,7 @@ export class MemberCardComponent implements OnInit {
               public presence: PresenceService) { }
 
   ngOnInit(): void {
+    console.log(this.member);
   }
 
   addFriend(member: Member){

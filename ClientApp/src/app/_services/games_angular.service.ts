@@ -12,6 +12,7 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { ObjectId } from 'model/objectId';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,7 @@ export class GamesAngularService {
     return this.http.get<Datum>(this.baseUrl + "Game/" + title);
   }
 
-  addGame(gameId: number){
+  addGame(gameId: ObjectId){
     return this.gameService.apiGameAddGameGameIdPost(gameId);
   }
 
@@ -90,7 +91,7 @@ export class GamesAngularService {
     return getPaginatedResult<Partial<Datum[]>>(this.baseUrl + 'Game/GetGamesFor', params, this.http);
   }
 
-  deleteGameForUser(gameId: number){
+  deleteGameForUser(gameId: ObjectId){
     return this.http.delete(this.baseUrl + 'Game/' + gameId);
   }
 }

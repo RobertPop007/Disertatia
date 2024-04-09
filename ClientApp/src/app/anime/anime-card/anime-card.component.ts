@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AnimeService } from 'api/anime.service';
 import { Datum } from 'model/datum';
+import { ObjectId } from 'model/objectId';
 import { ToastrService } from 'ngx-toastr';
 import { AnimeCard } from 'src/app/_models/animeCard';
 import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
@@ -21,12 +22,12 @@ export class AnimeCardComponent implements OnInit {
   }
 
   addAnime(anime: Datum){
-    this.animeAngularService.addAnime(anime.mal_id!).subscribe(() => {
+    this.animeAngularService.addAnime(anime.id!).subscribe(() => {
       this.toastr.success("You have added " + anime.title);
     })
   }
 
-  isAnimeAlreadyAdded(animeId: number): boolean{
+  isAnimeAlreadyAdded(animeId: ObjectId): boolean{
     this.animeService.apiAnimeAnimeAlreadyAddedGet(animeId).subscribe((response) => {
       return response;
     })

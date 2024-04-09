@@ -18,7 +18,7 @@ export class MangaDetailedResolver implements Resolve<DatumManga>{
     }
 
     resolve(route: ActivatedRouteSnapshot): Observable<DatumManga>{
-        return this.mangaService.getmanga(route.paramMap.get('title')!);
+        return this.mangaService.getManga(route.paramMap.get('title')!);
     }
 
 }

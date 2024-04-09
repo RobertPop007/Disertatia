@@ -28,7 +28,7 @@ namespace Disertatie_backend.Controllers
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
             if (anime == null) return NotFound("Anime not found");
 
-            if (user.AppUserAnime.Contains(anime.Id) == true) return BadRequest("You have already added this anime to your list");
+            if (user.AppUserAnime.Contains(anime.Id.ToString()) == true) return BadRequest("You have already added this anime to your list");
 
             await _animesRepository.AddAnimeToUser(user.Id, anime.Id);
 

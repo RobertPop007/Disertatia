@@ -7,6 +7,7 @@ using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Interfaces;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

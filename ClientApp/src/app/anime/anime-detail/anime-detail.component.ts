@@ -49,14 +49,14 @@ export class AnimeDetailComponent implements OnInit {
 
       // this.images = this.anime.actorList?.map((n) => n.image);
 
-      this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.mal_id!).pipe(take(1)).subscribe(res => {
+      this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
     })
   }
 
   deleteAnime(anime: Datum){
-    this.animeAngularService.deleteAnimeForUser(anime.mal_id!).subscribe(() => {
+    this.animeAngularService.deleteAnimeForUser(anime.id!).subscribe(() => {
       this.toastr.success("You have deleted " + anime.title);
     })
 
@@ -70,7 +70,7 @@ export class AnimeDetailComponent implements OnInit {
   }
 
   addAnime(anime: Datum){
-    this.animeAngularService.addAnime(anime.mal_id!).subscribe(() => {
+    this.animeAngularService.addAnime(anime.id!).subscribe(() => {
       this.toastr.success("You have added " + anime.title);
     })
 

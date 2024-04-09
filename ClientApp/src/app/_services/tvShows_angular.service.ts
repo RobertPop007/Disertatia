@@ -12,6 +12,7 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { ObjectId } from 'model/objectId';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,7 @@ export class TvShowsAngularService{
     return this.http.get<TvShow>(this.baseUrl + "TvShows/" + fullTitle);
   }
 
-  addTvShow(tvShowId: string){
+  addTvShow(tvShowId: ObjectId){
     return this.tvShowService.apiTvShowsAddTvShowTvShowIdPost(tvShowId);
   }
 
@@ -90,7 +91,7 @@ export class TvShowsAngularService{
     return getPaginatedResult<Partial<TvShow[]>>(this.baseUrl + 'TvShows/GetTvShowsFor', params, this.http);
   }
 
-  deleteTvShowForUser(tvShowId: string){
+  deleteTvShowForUser(tvShowId: ObjectId){
     return this.http.delete(this.baseUrl + 'TvShows/' + tvShowId);
   }
 }

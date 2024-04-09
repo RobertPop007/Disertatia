@@ -1,5 +1,7 @@
+import { ObjectId } from "model/objectId";
+
 export interface GameCard{
-    id: number;
+    id: ObjectId;
     name: string;
     year: string;
     released: string;
