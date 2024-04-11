@@ -20,6 +20,8 @@ namespace Disertatie_backend.DatabaseContext
         private readonly IMongoCollection<Movie> _moviesCollection;
         private readonly IMongoDBCollectionHelper<Movie> _moviesCollectionHelper;
         private readonly string titleIndex = "Title_index";
+        private readonly string titleOriginalIndex = "TitleOriginal_index";
+        private readonly string titleFullIndex = "TitleFull_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -33,6 +35,8 @@ namespace Disertatie_backend.DatabaseContext
             _moviesCollection = _moviesCollectionHelper.CreateCollection(_databaseSettings);
 
             _moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            _moviesCollectionHelper.CreateIndexAscending(u => u.FullTitle, titleFullIndex);
+            _moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
         }

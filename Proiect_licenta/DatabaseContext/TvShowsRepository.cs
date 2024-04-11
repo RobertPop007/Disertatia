@@ -7,14 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using Disertatie_backend.Entities;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
-using System;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Movies;
-
 namespace Disertatie_backend.DatabaseContext
 {
     public class TvShowsRepository : ITvShowsRepository
@@ -22,6 +17,8 @@ namespace Disertatie_backend.DatabaseContext
         private readonly IMongoCollection<TvShow> _tvshowsCollection;
         private readonly IMongoDBCollectionHelper<TvShow> _tvshowsCollectionHelper;
         private readonly string titleIndex = "Title_index";
+        private readonly string titleOriginalIndex = "TitleOriginal_index";
+        private readonly string titleFullIndex = "TitleFull_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -35,6 +32,8 @@ namespace Disertatie_backend.DatabaseContext
             _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(_databaseSettings);
 
             _tvshowsCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            _tvshowsCollectionHelper.CreateIndexAscending(u => u.FullTitle, titleFullIndex);
+            _tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
         }

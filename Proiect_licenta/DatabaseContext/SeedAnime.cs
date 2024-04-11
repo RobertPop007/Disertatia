@@ -6,28 +6,37 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
+using Disertatie_backend.Entities;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedAnime
     {
-        public static async Task SeedAllAnime(IOptions<DatabaseSettings> databaseSettings)
+        public static async Task SeedAllAnime(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
 
-            var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.Value.CollectionList["AnimeCollection"]);
+            var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.CollectionList["AnimeCollection"]);
 
-            //if (_animeCollection.CountDocuments(_ => true) >= 0)
-            //{
-                await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+            var documents = await _animeCollection.Find(_ => true).ToListAsync();
 
-                for (var i = 2; i <= 1081; i++)
-                {
-                    System.Threading.Thread.Sleep(1000);
-                    await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
-                }
-            //}
+            var defaultReviews = new List<Review>();
+            var update = Builders<Datum>.Update.Set(x => x.Reviews, defaultReviews);
+            _animeCollection.UpdateMany(FilterDefinition<Datum>.Empty, update);
+
+            ////if (_animeCollection.CountDocuments(_ => true) >= 0)
+            ////{
+            //    await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+
+            //    for (var i = 2; i <= 1081; i++)
+            //    {
+            //        System.Threading.Thread.Sleep(1000);
+            //        await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            //    }
+            ////}
         }
 
         public static async Task SeedAnimeList(IMongoCollection<Datum> _animeCollection, string url)

@@ -15,6 +15,8 @@ using Disertatie_backend.Interfaces;
 using Disertatie_backend.Configurations;
 using MongoDB.Bson;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Hangfire;
+using Disertatie_backend.Hangfire;
 
 namespace Disertatie_backend
 {
@@ -51,12 +53,21 @@ namespace Disertatie_backend
             services.AddCrud<MovieItem, DataContext>();
 
 
-            var connectionString = Configuration.GetConnectionString("HangfireConnection");
+            //var connectionString = Configuration.GetConnectionString("HangfireConnection");
             //services.AddHangfire(config => config.SetDataCompatibilityLevel((CompatibilityLevel.Version_170))
             //    .UseSimpleAssemblyNameTypeSerializer()
             //    .UseDefaultTypeSerializer()
             //    .UseSqlServerStorage(connectionString));
             //services.AddHangfireServer();
+
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection")));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
 
             services.AddIdentityServices(Configuration);
 
@@ -103,12 +114,12 @@ namespace Disertatie_backend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseHangfireDashboard("/hangfire", new DashboardOptions()
-            //{
-            //    Authorization = new[] { new CustomAuthorizeFilter() }
-            //});
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+            {
+                Authorization = new[] { new CustomAuthorizeFilter() }
+            });
 
-            //RecurringJob.AddOrUpdate("Recommandation emails", () => recurringRecomandationEmail.SendRecomandationsEmails(), Cron.Daily(10));
+            RecurringJob.AddOrUpdate("Recommandation emails", () => recurringRecomandationEmail.SendRecomandationsEmails(), Cron.Daily(10));
 
             app.UseEndpoints(endpoints =>
             {

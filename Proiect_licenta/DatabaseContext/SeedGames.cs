@@ -8,32 +8,38 @@ using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using Disertatie_backend.Entities.Manga;
+using Disertatie_backend.Entities;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedGames
     {
-        public static async Task SeedAllGamesIds(IOptions<DatabaseSettings> databaseSettings)
+        public static async Task SeedAllGamesIds(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
 
-            var _gamesCollection = mongoDb.GetCollection<Game>(databaseSettings.Value.CollectionList["GamesCollection"]);
+            var _gamesCollection = mongoDb.GetCollection<Game>(databaseSettings.CollectionList["GamesCollection"]);
 
-            var gamesIds = new List<int>();
+            var defaultReviews = new List<Review>();
+            var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
+            _gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
 
-            //SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
+            //var gamesIds = new List<int>();
 
-            for (var i = 1230; i <= 1500; i++)
-            {
-                SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
-            }
+            ////SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
+
+            //for (var i = 1230; i <= 1500; i++)
+            //{
+            //    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
+            //}
 
 
-            foreach (var gameId in gamesIds)
-            {
-                await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
-            }
+            //foreach (var gameId in gamesIds)
+            //{
+            //    await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
+            //}
         }
 
         public static void SeedGameId(List<int> gamesIds, string url)

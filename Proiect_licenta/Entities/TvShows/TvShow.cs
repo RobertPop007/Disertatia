@@ -51,5 +51,6 @@ namespace Disertatie_backend.Entities.TvShows
         public string? Keywords { get; set; }
         public List<TvShowSimilar>? Similars { get; set; }
         public TvSeriesInfo? TvSeriesInfo { get; set; }
+        public IList<Review>? Reviews { get; set; }
     }
 }

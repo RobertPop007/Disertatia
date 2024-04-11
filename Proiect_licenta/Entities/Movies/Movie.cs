@@ -54,5 +54,6 @@ namespace Disertatie_backend.Entities.Movies
         public string? Tagline { get; set; }
         public string? Keywords { get; set; }
         public List<Similar>? Similars { get; set; }
+        public IList<Review>? Reviews { get; set; }
     }
 }

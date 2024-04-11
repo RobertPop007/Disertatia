@@ -62,5 +62,6 @@ namespace Disertatie_backend.Entities.Games.Game
         public List<PublisherGame>? Publishers { get; set; }
         public EsrbRatingGame? Esrb_rating { get; set; }
         public string? Description_raw { get; set; }
+        public IList<Review>? Reviews { get; set; }
     }
 }

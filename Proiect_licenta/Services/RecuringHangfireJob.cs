@@ -5,6 +5,8 @@ using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using Disertatie_backend.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Disertatie_backend.Services
 {
@@ -22,8 +24,8 @@ namespace Disertatie_backend.Services
         }
         public async Task SendRecomandationsEmails()
         {
-            
-            foreach(var user in _userManager.Users)
+            var userList = _userManager.Users.ToList();
+            foreach(var user in userList)
             {
                 if(user.IsSubscribedToNewsletter == true)
                 {

@@ -6,25 +6,32 @@ using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedManga
     {
-        public static async Task SeedAllManga(IOptions<DatabaseSettings> databaseSettings)
+        public static async Task SeedAllManga(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
 
-            var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.Value.CollectionList["MangaCollection"]);
+            var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.CollectionList["MangaCollection"]);
 
-            await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+            var defaultReviews = new List<Review>();
+            var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
+            _mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
 
-            for (var i = 2; i <= 1081; i++)
-            {
-                System.Threading.Thread.Sleep(1000);
-                await SeedMangaList(_mangaCollection, $"https://api.jikan.moe/v4/top/manga?page={i}");
-            }
+            //await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+
+            //for (var i = 2; i <= 1081; i++)
+            //{
+            //    System.Threading.Thread.Sleep(1000);
+            //    await SeedMangaList(_mangaCollection, $"https://api.jikan.moe/v4/top/manga?page={i}");
+            //}
         }
 
         public static async Task SeedMangaList(IMongoCollection<DatumManga> _mangaCollection, string url)
