@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MangaService } from 'api/manga.service';
 import { MangaCard } from 'src/app/_models/mangaCard';
 import { MangaParams } from 'src/app/_models/mangaParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -8,7 +9,8 @@ import { MangaAngularService } from 'src/app/_services/manga_angular.service';
 @Component({
   selector: 'app-manga-list',
   templateUrl: './manga-list.component.html',
-  styleUrls: ['./manga-list.component.css']
+  styleUrls: ['./manga-list.component.css'],
+  providers: [MangaService, MangaAngularService]
 })
 export class MangaListComponent implements OnInit {
 

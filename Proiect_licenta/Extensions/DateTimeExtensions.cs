@@ -13,5 +13,12 @@ namespace Disertatie_backend.Extensions
 
             return age;
         }
+
+        public static int CalculateDaysOfFriendship(this DateTime sinceDate)
+        {
+            TimeSpan days = DateTime.Today - sinceDate;
+
+            return days.Days;
+        }
     }
 }

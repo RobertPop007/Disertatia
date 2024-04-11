@@ -4,11 +4,13 @@ import { TvShowCard } from 'src/app/_models/tvShowCard';
 import { User } from 'src/app/_models/user';
 import { TvShowParams } from 'src/app/_models/tvShowParams';
 import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service';
+import { TvShowsService } from 'api/tvShows.service';
 
 @Component({
   selector: 'app-tv-shows-list',
   templateUrl: './tv-shows-list.component.html',
-  styleUrls: ['./tv-shows-list.component.css']
+  styleUrls: ['./tv-shows-list.component.css'],
+  providers: [TvShowsAngularService, TvShowsService]
 })
 export class TvShowsListComponent implements OnInit {
   tvShows!: TvShowCard[];

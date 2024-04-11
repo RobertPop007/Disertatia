@@ -12,6 +12,7 @@ using MongoDB.Bson;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -28,36 +29,19 @@ namespace Disertatie_backend.DatabaseContext
             this._mapper = mapper;
         }
 
-        public async Task<bool> IsUserFriend(Guid addedByUserId, Guid addedUserId)
+        public async Task<Friendships> IsUserFriend(Guid addedByUserId, Guid addedUserId)
         {
-            var user = await _context.Users.Where(x => x.Id == addedByUserId).FirstOrDefaultAsync();
-
-            return user.Friends.Contains(addedUserId);
+            return await _context.Friends.FindAsync(addedByUserId, addedUserId);
         }
 
         public async Task<PagedList<FriendsDto>> GetUserFriends(AddFriendParams friendsParams)
         {
-            var user = await _userManager.Users.Where(u => u.Id == friendsParams.UserId).FirstOrDefaultAsync();
-            var friends = user.Friends.AsQueryable();
+            var users = _context.Users.OrderBy(u => u.LastActive).AsQueryable();
+            var friends = _context.Friends.AsQueryable();
 
-            var userFriends = new List<FriendsDto>();
-            foreach(var friend in friends)
-            {
-                var userFriend = _context.Users.Where(u => u.Id == friend).FirstOrDefault();
-                userFriends.Add(_mapper.Map<FriendsDto>(userFriend));
-            }
-
-            //var addedUsers = friends.Select(user => new FriendsDto
-            //{
-            //    Username = user.UserName,
-            //    KnownAs = user.KnownAs,
-            //    Age = user.DateOfBirth.CalculateAge(),
-            //    PhotoUrl = user.ProfilePicture.Url,
-            //    City = user.City,
-            //    Id = Convert.ToInt32(user.Id)
-            //});
-
-            return await PagedList<FriendsDto>.CreateAsync(userFriends.AsQueryable(), friendsParams.PageNumber, friendsParams.PageSize);
+            friends = friends.Where(friend => friend.UserID1 == friendsParams.UserId || friend.UserID2 == friendsParams.UserId);
+            
+            return await PagedList<FriendsDto>.CreateAsync(friends.ProjectTo<FriendsDto>(_mapper.ConfigurationProvider).AsNoTracking(), friendsParams.PageNumber, friendsParams.PageSize);
         }
 
         public async Task<AppUser> GetUserWithFriends(Guid userId)

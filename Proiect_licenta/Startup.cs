@@ -34,7 +34,13 @@ namespace Disertatie_backend
             var emailConfig = Configuration
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
+
+            var databaseSettings = Configuration
+                .GetSection("DatabaseSettings")
+                .Get<DatabaseSettings>();
+
             services.AddSingleton(emailConfig);
+            services.AddSingleton(databaseSettings);
 
             services.AddApplicationServices(Configuration);
 

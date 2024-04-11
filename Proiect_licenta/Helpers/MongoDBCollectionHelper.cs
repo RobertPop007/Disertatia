@@ -34,12 +34,12 @@ namespace Disertatie_backend.Helpers
             {typeof(AppUserGameItem), "UserGamesCollection" }
         };
 
-        public IMongoCollection<T> CreateCollection(IOptions<DatabaseSettings> databaseSettings)
+        public IMongoCollection<T> CreateCollection(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
             var collectionName = mappedClasses[typeof(T)];
-            _collection = mongoDb.GetCollection<T>(databaseSettings.Value.CollectionList[collectionName]);
+            _collection = mongoDb.GetCollection<T>(databaseSettings.CollectionList[collectionName]);
 
             return _collection;
         }
@@ -49,17 +49,6 @@ namespace Disertatie_backend.Helpers
             var indexKey = Builders<T>.IndexKeys.Ascending(field);
             var indexOptions = new CreateIndexOptions { Name = indexName };
             _collection.Indexes.CreateOne(new CreateIndexModel<T>(indexKey, indexOptions));
-        }
-        public void CreateIndexDescending(Expression<Func<T, object>> field, string indexName)
-        {
-            var indexKey = Builders<T>.IndexKeys.Descending(field);
-            var indexOptions = new CreateIndexOptions { Name = indexName };
-            _collection.Indexes.CreateOne(new CreateIndexModel<T>(indexKey, indexOptions));
-        }
-
-        public void DropIndex(string indexName)
-        {
-            _collection.Indexes.DropOne(indexName);
         }
     }
 }

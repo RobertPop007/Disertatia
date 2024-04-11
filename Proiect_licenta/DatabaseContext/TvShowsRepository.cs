@@ -10,48 +10,33 @@ using MongoDB.Bson;
 using Disertatie_backend.Entities;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
 using AutoMapper;
 using System;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Movies;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class TvShowsRepository : ITvShowsRepository
     {
         private readonly IMongoCollection<TvShow> _tvshowsCollection;
-        private readonly IMongoCollection<AppUser> _userCollection;
-        private readonly IUserRepository _userRepository;
         private readonly IMongoDBCollectionHelper<TvShow> _tvshowsCollectionHelper;
-        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string titleIndex = "Title_index";
+        private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
 
-        public TvShowsRepository(IMapper mapper, IMongoDBCollectionHelper<TvShow> tvshowsCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        public TvShowsRepository(IMapper mapper, 
+            IMongoDBCollectionHelper<TvShow> tvshowsCollectionHelper, 
+            DatabaseSettings databaseSettings)
         {
+            _databaseSettings = databaseSettings;
             _tvshowsCollectionHelper = tvshowsCollectionHelper;
-            _userCollectionHelper = userCollectionHelper;
-            _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(databaseSettings);
-            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
-            _userRepository = userRepository;
+            _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(_databaseSettings);
 
             _tvshowsCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
 
             _mapper = mapper;
-        }
-
-        public async Task DeleteShowForUser(Guid userId, ObjectId tvShowId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserTvShow, tvShowId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
-        }
-
-        public async Task AddTvShowToUser(Guid userId, ObjectId tvShowId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserTvShow, tvShowId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<TvShow> GetTvShowByFullTitleAsync(string title)
@@ -68,11 +53,18 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<IEnumerable<TvShowCard>> GetTvShowsAsync(TvShowParams tvShowParams)
         {
-            if (string.IsNullOrEmpty(tvShowParams.SearchedTvShow) || string.IsNullOrWhiteSpace(tvShowParams.SearchedTvShow)) return null;
+            var filterByTitle = Builders<TvShow>.Filter.Empty;
+            var filterByFullTitle = Builders<TvShow>.Filter.Empty;
+            var filterByOriginalTitle = Builders<TvShow>.Filter.Empty;
 
-            var filterByTitle = Builders<TvShow>.Filter.Where(x => x.Title.Contains(tvShowParams.SearchedTvShow)) |
-                Builders<TvShow>.Filter.Where(x => x.FullTitle.Contains(tvShowParams.SearchedTvShow)) |
-                Builders<TvShow>.Filter.Where(x => x.OriginalTitle.Contains(tvShowParams.SearchedTvShow));
+            if (!(string.IsNullOrEmpty(tvShowParams.SearchedTvShow) || string.IsNullOrWhiteSpace(tvShowParams.SearchedTvShow)))
+            {
+                filterByTitle = Builders<TvShow>.Filter.Regex(x => x.Title, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
+                filterByFullTitle = Builders<TvShow>.Filter.Regex(x => x.FullTitle, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
+                filterByOriginalTitle = Builders<TvShow>.Filter.Regex(x => x.OriginalTitle, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
+
+                filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
+            }
 
             var query = await _tvshowsCollection.Find(filterByTitle).ToListAsync();
 
@@ -94,31 +86,6 @@ namespace Disertatie_backend.DatabaseContext
             };
 
             return mappedQuery;
-        }
-
-        public async Task<IEnumerable<TvShow>> GetUserTvShows(Guid userId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var listOfTVShowsForUser = new List<TvShow>();
-
-            foreach (var tvShowId in user.AppUserTvShow)
-            {
-                var tvShow = await GetTvShowByIdAsync(new ObjectId(tvShowId));
-
-                if (tvShow != null) listOfTVShowsForUser.Add(tvShow);
-            }
-
-            return listOfTVShowsForUser;
-        }
-
-        public async Task<bool> IsTvShowAlreadyAdded(Guid userId, ObjectId tvShowId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var isMovieAlreadyAdded = user.AppUserTvShow.Contains(tvShowId.ToString());
-            if (isMovieAlreadyAdded == true) return true;
-            return false;
         }
     }
 }

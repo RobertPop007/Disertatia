@@ -13,9 +13,5 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<MangaCard>> GetMangasAsync(MangaParams userParams);
         Task<DatumManga> GetMangaByIdAsync(ObjectId id);
         Task<DatumManga> GetMangaByFullTitleAsync(string title);
-        Task<IEnumerable<DatumManga>> GetUserMangas(Guid userId);
-        Task<bool> IsMangaAlreadyAdded(Guid userId, ObjectId mangaId);
-        Task DeleteMangaForUser(Guid userId, ObjectId mangaId);
-        Task AddMangaToUser(Guid userId, ObjectId mangaId);
     }
 }

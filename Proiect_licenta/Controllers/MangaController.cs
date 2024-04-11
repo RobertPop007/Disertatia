@@ -5,6 +5,8 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Games.Game;
 
 namespace Disertatie_backend.Controllers
 {
@@ -12,17 +14,25 @@ namespace Disertatie_backend.Controllers
     {
         private readonly IMangaRepository _mangasRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IUserItemsRepository<DatumManga> _userItemsRepository;
 
-        public MangaController(IMangaRepository mangasRepository, IUserRepository userRepository)
+        public MangaController(IMangaRepository mangasRepository, 
+            IUserRepository userRepository,
+            IUserItemsRepository<DatumManga> userItemsRepository
+            )
         {
             _mangasRepository = mangasRepository;
             _userRepository = userRepository;
+            _userItemsRepository = userItemsRepository;
         }
 
-        [HttpPost("AddManga/{mangaId}")]
-        public async Task<ActionResult> AddMangaForUser(ObjectId mangaId)
+        [HttpPost("AddMangaToUser/{mangaId}")]
+        public async Task<IActionResult> AddMangaForUser(ObjectId mangaId)
         {
             var username = User.GetUsername();
+
+            if (username == null) return BadRequest("User does not exist");
+
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
@@ -30,22 +40,22 @@ namespace Disertatie_backend.Controllers
 
             if (user.AppUserManga.Contains(manga.Id.ToString()) == true) return BadRequest("You have already added this anime to your list");
 
-            await _mangasRepository.AddMangaToUser(user.Id, manga.Id);
+            await _userItemsRepository.AddItemToUser<DatumManga>(user, mangaId);
 
             return Ok(user);
         }
 
         [HttpGet("GetMangasFor/{username}")]
-        public async Task<ActionResult> GetMangasForUser([FromRoute] string username)
+        public async Task<IActionResult> GetMangasForUser([FromRoute] string username)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfMangas = await _mangasRepository.GetUserMangas(user.Id);
+            var listOfMangas = await _userItemsRepository.GetItemForUser<DatumManga>(user.Id);
             return Ok(listOfMangas);
         }
 
         [HttpGet("GetAllMangas")]
-        public async Task<ActionResult> GetMangas([FromQuery] MangaParams mangaParams)
+        public async Task<IActionResult> GetMangas([FromQuery] MangaParams mangaParams)
         {
             var mangas = await _mangasRepository.GetMangasAsync(mangaParams);
 
@@ -63,13 +73,14 @@ namespace Disertatie_backend.Controllers
         {
             var userId = User.GetUserId();
 
-            return await _mangasRepository.IsMangaAlreadyAdded(userId, mangaId);
+            return await _userItemsRepository.IsItemAlreadyAdded(userId, mangaId);
         }
 
-        [HttpDelete("{mangaId}")]
+        [HttpDelete("DeleteMangaFrom/{mangaId}")]
         public async Task<IActionResult> DeleteMangaForUser(ObjectId mangaId)
         {
             var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
             if (manga == null)
@@ -77,7 +88,7 @@ namespace Disertatie_backend.Controllers
                 return NotFound();
             }
 
-            await _mangasRepository.DeleteMangaForUser(userId, mangaId);
+            await _userItemsRepository.DeleteItemFromUser<Datum>(user, mangaId);
 
             return Ok();
         }

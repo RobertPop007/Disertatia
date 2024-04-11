@@ -13,12 +13,11 @@ namespace Disertatie_backend.DatabaseContext
         {
         }
 
-        public DbSet<AppUser> Users { get; set; }
-        public DbSet<AppRole> Roles { get; set; }
         public DbSet<Message> Messages { get; init; }
         public DbSet<Group> Groups { get; init; }
         public DbSet<Connection> Connections { get; init; }
-        
+        public DbSet<Friendships> Friends { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -34,6 +33,21 @@ namespace Disertatie_backend.DatabaseContext
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<Friendships>()
+                .HasKey(f => new { f.UserID1, f.UserID2 });
+
+            builder.Entity<Friendships>()
+                .HasOne(f => f.User1)
+                .WithMany(s => s.Friends)
+                .HasForeignKey(f => f.UserID1)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Friendships>()
+                .HasOne(f => f.User2)
+                .WithMany()
+                .HasForeignKey(f => f.UserID2)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //builder.Entity<UserFriend>()
             //    .HasKey(k => new { k.AddedByUserId, k.AddedUserId });

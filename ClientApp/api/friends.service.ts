@@ -62,6 +62,46 @@ export class FriendsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
+    public acceptFriendRequestUsernamePost(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public acceptFriendRequestUsernamePost(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public acceptFriendRequestUsernamePost(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public acceptFriendRequestUsernamePost(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling acceptFriendRequestUsernamePost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/AcceptFriendRequest/${encodeURIComponent(String(username))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
     public apiFriendsCheckFriendshipUsernameGet(username: string, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
     public apiFriendsCheckFriendshipUsernameGet(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
     public apiFriendsCheckFriendshipUsernameGet(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
@@ -166,13 +206,13 @@ export class FriendsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFriendsUsernameDelete(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiFriendsUsernameDelete(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiFriendsUsernameDelete(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiFriendsUsernameDelete(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public cancelFriendRequestUsernameDelete(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public cancelFriendRequestUsernameDelete(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public cancelFriendRequestUsernameDelete(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public cancelFriendRequestUsernameDelete(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling apiFriendsUsernameDelete.');
+            throw new Error('Required parameter username was null or undefined when calling cancelFriendRequestUsernameDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -189,7 +229,7 @@ export class FriendsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Friends/${encodeURIComponent(String(username))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/CancelFriendRequest/${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -206,13 +246,13 @@ export class FriendsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFriendsUsernamePost(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiFriendsUsernamePost(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiFriendsUsernamePost(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiFriendsUsernamePost(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteFriendUsernameDelete(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteFriendUsernameDelete(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteFriendUsernameDelete(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteFriendUsernameDelete(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling apiFriendsUsernamePost.');
+            throw new Error('Required parameter username was null or undefined when calling deleteFriendUsernameDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -229,7 +269,87 @@ export class FriendsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Friends/${encodeURIComponent(String(username))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/DeleteFriend/${encodeURIComponent(String(username))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public refuseFriendRequestUsernameDelete(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public refuseFriendRequestUsernameDelete(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public refuseFriendRequestUsernameDelete(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public refuseFriendRequestUsernameDelete(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling refuseFriendRequestUsernameDelete.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/RefuseFriendRequest/${encodeURIComponent(String(username))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param username 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public sendFriendRequestusernamePost(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendFriendRequestusernamePost(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendFriendRequestusernamePost(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendFriendRequestusernamePost(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling sendFriendRequestusernamePost.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/SendFriendRequest${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

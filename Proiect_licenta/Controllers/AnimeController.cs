@@ -12,17 +12,24 @@ namespace Disertatie_backend.Controllers
     {
         private readonly IAnimeRepository _animesRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IUserItemsRepository<Datum> _userItemsRepository;
 
-        public AnimeController(IAnimeRepository animesRepository, IUserRepository userRepository)
+        public AnimeController(IAnimeRepository animesRepository, 
+            IUserRepository userRepository,
+            IUserItemsRepository<Datum> userItemsRepository)
         {
             _animesRepository = animesRepository;
             _userRepository = userRepository;
+            _userItemsRepository = userItemsRepository;
         }
 
-        [HttpPost("AddAnime/{animeId}")]
-        public async Task<ActionResult> AddAnimeForUser(ObjectId animeId)
+        [HttpPost("AddAnimeToUser/{animeId}")]
+        public async Task<IActionResult> AddAnimeForUser(ObjectId animeId)
         {
             var username = User.GetUsername();
+
+            if (username == null) return BadRequest("User does not exist");
+
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
@@ -30,22 +37,22 @@ namespace Disertatie_backend.Controllers
 
             if (user.AppUserAnime.Contains(anime.Id.ToString()) == true) return BadRequest("You have already added this anime to your list");
 
-            await _animesRepository.AddAnimeToUser(user.Id, anime.Id);
+            await _userItemsRepository.AddItemToUser<Datum>(user, animeId);
 
             return Ok(user);
         }
 
         [HttpGet("GetAnimesFor/{username}")]
-        public async Task<ActionResult> GetAnimesForUser([FromRoute] string username)
+        public async Task<IActionResult> GetAnimesForUser([FromRoute] string username)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfAnimes = await _animesRepository.GetUserAnimes(user.Id);
+            var listOfAnimes = await _userItemsRepository.GetItemForUser<Datum>(user.Id);
             return Ok(listOfAnimes);
         }
 
         [HttpGet("GetAllAnimes")]
-        public async Task<ActionResult> GetAnimes([FromQuery] AnimeParams animeParams)
+        public async Task<IActionResult> GetAnimes([FromQuery] AnimeParams animeParams)
         {
             var animes = await _animesRepository.GetAnimesAsync(animeParams);
             return Ok(animes);
@@ -62,13 +69,14 @@ namespace Disertatie_backend.Controllers
         {
             var userId = User.GetUserId();
 
-            return await _animesRepository.IsAnimeAlreadyAdded(userId, animeId);
+            return await _userItemsRepository.IsItemAlreadyAdded(userId, animeId);
         }
 
-        [HttpDelete("{animeId}")]
+        [HttpDelete("DeleteAnimeFromUser/{animeId}")]
         public async Task<IActionResult> DeleteAnimeForUser(ObjectId animeId)
         {
             var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
             if (anime == null)
@@ -76,7 +84,7 @@ namespace Disertatie_backend.Controllers
                 return NotFound();
             }
 
-            await _animesRepository.DeleteAnimeForUser(userId, animeId);
+            await _userItemsRepository.DeleteItemFromUser<Datum>(user, animeId);
 
             return Ok();
         }

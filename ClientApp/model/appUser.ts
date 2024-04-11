@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { AppUserRole } from './appUserRole';
+import { Friendships } from './friendships';
 import { Message } from './message';
 import { Photo } from './photo';
 
@@ -39,7 +40,8 @@ export interface AppUser {
     city?: string;
     country?: string;
     profilePicture?: Photo;
-    friends?: Array<string>;
+    friendRequests?: Array<string>;
+    friends?: Array<Friendships>;
     messagesSent?: Array<Message>;
     messagesReceived?: Array<Message>;
     userRoles?: Array<AppUserRole>;

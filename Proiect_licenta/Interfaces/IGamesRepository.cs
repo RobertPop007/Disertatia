@@ -13,9 +13,5 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<GameCard>> GetGamesAsync(GameParams userParams);
         Task<Game> GetGameByIdAsync(ObjectId id);
         Task<Game> GetGameByNameAsync(string title);
-        Task<IEnumerable<Game>> GetUserGames(Guid userId);
-        Task<bool> IsGameAlreadyAdded(Guid userId, ObjectId gameId);
-        Task AddGameToUser(Guid userId, ObjectId gameId);
-        Task DeleteGameForUser(Guid userId, ObjectId gameId);
     }
 }

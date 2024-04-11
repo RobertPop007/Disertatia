@@ -12,17 +12,24 @@ namespace Disertatie_backend.Controllers
     {
         private readonly IGamesRepository _gamesRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IUserItemsRepository<Game> _userItemsRepository;
 
-        public GameController(IGamesRepository gamesRepository, IUserRepository userRepository)
+        public GameController(IGamesRepository gamesRepository, 
+            IUserRepository userRepository,
+            IUserItemsRepository<Game> userItemsRepository)
         {
             _gamesRepository = gamesRepository;
             _userRepository = userRepository;
+            _userItemsRepository = userItemsRepository;
         }
 
-        [HttpPost("AddGame/{gameId}")]
-        public async Task<ActionResult> AddGameForUser(ObjectId gameId)
+        [HttpPost("AddGameToUser/{gameId}")]
+        public async Task<IActionResult> AddGameForUser(ObjectId gameId)
         {
             var username = User.GetUsername();
+
+            if (username == null) return BadRequest("User does not exist");
+
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var game = await _gamesRepository.GetGameByIdAsync(gameId);
@@ -30,22 +37,22 @@ namespace Disertatie_backend.Controllers
 
             if (user.AppUserGame.Contains(gameId.ToString()) == true) return BadRequest("You have already added this game to your list");
 
-            await _gamesRepository.AddGameToUser(user.Id, game.Id);
+            await _userItemsRepository.AddItemToUser<Game>(user, gameId);
 
             return Ok(user);
         }
 
         [HttpGet("GetGamesFor/{username}")]
-        public async Task<ActionResult> GetGamesForUser([FromRoute] string username)
+        public async Task<IActionResult> GetGamesForUser([FromRoute] string username)
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfGames = await _gamesRepository.GetUserGames(user.Id);
+            var listOfGames = await _userItemsRepository.GetItemForUser<Game>(user.Id);
             return Ok(listOfGames);
         }
 
         [HttpGet("GetAllGames")]
-        public async Task<ActionResult> GetGames([FromQuery] GameParams gameParams)
+        public async Task<IActionResult> GetGames([FromQuery] GameParams gameParams)
         {
             var games = await _gamesRepository.GetGamesAsync(gameParams);
 
@@ -63,13 +70,14 @@ namespace Disertatie_backend.Controllers
         {
             var userId = User.GetUserId();
 
-            return await _gamesRepository.IsGameAlreadyAdded(userId, gameId);
+            return await _userItemsRepository.IsItemAlreadyAdded(userId, gameId);
         }
 
-        [HttpDelete("{gameId}")]
+        [HttpDelete("DeleteGameFromUser/{gameId}")]
         public async Task<IActionResult> DeletegameForUser(ObjectId gameId)
         {
             var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
 
             var game = await  _gamesRepository.GetGameByIdAsync(gameId);
             if (game == null)
@@ -77,7 +85,7 @@ namespace Disertatie_backend.Controllers
                 return NotFound();
             }
 
-            await _gamesRepository.DeleteGameForUser(userId, gameId);
+            await _userItemsRepository.DeleteItemFromUser<Game>(user, gameId);
 
             return Ok();
         }

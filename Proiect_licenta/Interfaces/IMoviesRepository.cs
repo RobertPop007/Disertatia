@@ -13,9 +13,5 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams userParams);
         Task<Movie> GetMovieByIdAsync(ObjectId id);
         Task<Movie> GetMovieByTitleAsync(string title);
-        Task<IEnumerable<Movie>> GetUserMovies(Guid userId);
-        Task<bool> IsMovieAlreadyAdded(Guid userId, ObjectId movieId);
-        Task DeleteMovieForUser(Guid userId, ObjectId movieId);
-        Task AddMovieToUser(Guid userId, ObjectId movieId);
     }
 }

@@ -48,5 +48,7 @@ namespace Disertatie_backend.Entities.Anime
         public IList<Genre>? Genres { get; set; }
         public IList<Theme>? Themes { get; set; }
         public IList<Demographic>? Demographics { get; set; }
+
+        public IList<Review>? Reviews { get; set; }
     }
 }

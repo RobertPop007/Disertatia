@@ -14,7 +14,6 @@ import { MessagesService } from './api/messages.service';
 import { MoviesService } from './api/movies.service';
 import { TvShowsService } from './api/tvShows.service';
 import { UsersService } from './api/users.service';
-import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service';
 
 @NgModule({
   imports:      [],
@@ -31,8 +30,7 @@ import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service
     MessagesService,
     MoviesService,
     TvShowsService,
-    UsersService,
-    TvShowsAngularService ]
+    UsersService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

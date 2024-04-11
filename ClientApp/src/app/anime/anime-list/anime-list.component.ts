@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimeService } from 'api/anime.service';
 import { AnimeCard } from 'src/app/_models/animeCard';
 import { AnimeParams } from 'src/app/_models/animeParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -8,7 +9,8 @@ import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
 @Component({
   selector: 'app-anime-list',
   templateUrl: './anime-list.component.html',
-  styleUrls: ['./anime-list.component.css']
+  styleUrls: ['./anime-list.component.css'],
+  providers: [AnimeAngularService, AnimeService]
 })
 export class AnimeListComponent implements OnInit {
 

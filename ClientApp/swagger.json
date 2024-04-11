@@ -523,7 +523,7 @@
         }
       }
     },
-    "/api/Friends/{username}": {
+    "/AcceptFriendRequest/{username}": {
       "post": {
         "tags": [
           "Friends"
@@ -543,7 +543,75 @@
             "description": "Success"
           }
         }
-      },
+      }
+    },
+    "/SendFriendRequest{username}": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/DeleteFriend/{username}": {
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/CancelFriendRequest/{username}": {
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/RefuseFriendRequest/{username}": {
       "delete": {
         "tags": [
           "Friends"
@@ -1995,11 +2063,18 @@
           "profilePicture": {
             "$ref": "#/components/schemas/Photo"
           },
-          "friends": {
+          "friendRequests": {
             "type": "array",
             "items": {
               "type": "string",
               "format": "uuid"
+            },
+            "nullable": true
+          },
+          "friends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Friendships"
             },
             "nullable": true
           },
@@ -2624,6 +2699,35 @@
           "city": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Friendships": {
+        "type": "object",
+        "properties": {
+          "userID1": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user1": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "userID2": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user2": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "sinceDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "daysOfFriendships": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         },
         "additionalProperties": false

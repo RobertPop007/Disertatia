@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from 'api/game.service';
 import { GameCard } from 'src/app/_models/gameCard';
 import { GameParams } from 'src/app/_models/gameParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -8,7 +9,8 @@ import { GamesAngularService } from 'src/app/_services/games_angular.service';
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
-  styleUrls: ['./game-list.component.scss']
+  styleUrls: ['./game-list.component.scss'],
+  providers: [GameService, GamesAngularService]
 })
 export class GameListComponent implements OnInit {
 

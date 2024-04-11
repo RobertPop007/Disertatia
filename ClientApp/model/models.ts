@@ -18,6 +18,7 @@ export * from './developerGame';
 export * from './directorList';
 export * from './esrbRatingGame';
 export * from './friendsDto';
+export * from './friendships';
 export * from './from';
 export * from './fromManga';
 export * from './game';

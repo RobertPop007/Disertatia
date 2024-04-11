@@ -17,7 +17,8 @@ namespace Disertatie_backend.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public Photo ProfilePicture { get; set; }
-        public IList<Guid> Friends { get; set; } = new List<Guid>();
+        public IList<Guid> FriendRequests { get; set; } = new List<Guid>();
+        public IList<Friendships> Friends { get; set; } = new List<Friendships>();
         public IList<Message> MessagesSent { get; set; } = new List<Message>();
         public IList<Message> MessagesReceived { get; set; } = new List<Message>();
         public IList<AppUserRole> UserRoles { get; set; } = new List<AppUserRole>();

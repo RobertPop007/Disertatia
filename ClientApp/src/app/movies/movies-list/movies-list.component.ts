@@ -13,7 +13,8 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 @Component({
   selector: 'app-movies-list',
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.css']
+  styleUrls: ['./movies-list.component.css'],
+  providers: [MoviesAngularService, MoviesService]
 })
 export class MoviesListComponent implements OnInit {
   movies!: MovieCard[];

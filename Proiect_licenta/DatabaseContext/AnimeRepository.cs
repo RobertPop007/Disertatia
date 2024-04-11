@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.Entities;
@@ -11,7 +12,9 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Disertatie_backend.DatabaseContext
@@ -19,39 +22,27 @@ namespace Disertatie_backend.DatabaseContext
     public class AnimeRepository : IAnimeRepository
     {
         private readonly IMongoCollection<Datum> _animeCollection;
-        private readonly IMongoCollection<AppUser> _userCollection;
-        private readonly IUserRepository _userRepository;
         private readonly IMongoDBCollectionHelper<Datum> _animeCollectionHelper;
-        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string titleIndex = "Title_index";
+        private readonly string titleEnglishIndex = "TitleEnglish_index";
+        private readonly string titleJapaneseIndex = "TitleJapanese_index";
+        private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
 
-        public AnimeRepository(IMapper mapper, IMongoDBCollectionHelper<Datum> animeCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        public AnimeRepository(IMapper mapper, 
+            IMongoDBCollectionHelper<Datum> animeCollectionHelper,
+            DatabaseSettings databaseSettings)
         {
+            _databaseSettings = databaseSettings;
             _animeCollectionHelper = animeCollectionHelper;
-            _userCollectionHelper = userCollectionHelper;
-            _animeCollection = _animeCollectionHelper.CreateCollection(databaseSettings);
-            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
-            _userRepository = userRepository;
+            _animeCollection = _animeCollectionHelper.CreateCollection(_databaseSettings);
 
             _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            _animeCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
+            _animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
 
             _mapper = mapper;
-        }
-
-        public async Task DeleteAnimeForUser(Guid userId, ObjectId animeId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserAnime, animeId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
-        }
-
-        public async Task AddAnimeToUser(Guid userId, ObjectId animeId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserAnime, animeId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Datum> GetAnimeByFullTitleAsync(string title)
@@ -68,11 +59,18 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<IEnumerable<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
         {
-            if (string.IsNullOrEmpty(animeParams.SearchedAnime) || string.IsNullOrWhiteSpace(animeParams.SearchedAnime)) return null;
+            var filterByTitle = Builders<Datum>.Filter.Empty;
+            var filterByTitleEnglish = Builders<Datum>.Filter.Empty;
+            var filterByTitleJapanese = Builders<Datum>.Filter.Empty;
 
-            var filterByTitle = Builders<Datum>.Filter.Where(x => x.Title.Contains(animeParams.SearchedAnime)) |
-                Builders<Datum>.Filter.Where(x => x.Title_english.Contains(animeParams.SearchedAnime)) |
-                Builders<Datum>.Filter.Where(x => x.Title_japanese.Contains(animeParams.SearchedAnime));
+            if (!(string.IsNullOrEmpty(animeParams.SearchedAnime) || string.IsNullOrWhiteSpace(animeParams.SearchedAnime)))
+            {
+                filterByTitle = Builders<Datum>.Filter.Regex(x => x.Title, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
+                filterByTitleEnglish = Builders<Datum>.Filter.Regex(x => x.Title_english, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
+                filterByTitleJapanese = Builders<Datum>.Filter.Regex(x => x.Title_japanese, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
+
+                filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
+            }
 
             var query = await _animeCollection.Find(filterByTitle).ToListAsync();
 
@@ -94,31 +92,6 @@ namespace Disertatie_backend.DatabaseContext
             };
 
             return mappedQuery;
-        }
-
-        public async Task<IEnumerable<Datum>> GetUserAnimes(Guid userId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var listOfAnimesForUser = new List<Datum>();
-
-            foreach (var animeId in user.AppUserAnime)
-            {
-                var anime = await GetAnimeByIdAsync(new ObjectId(animeId));
-
-                if (anime != null) listOfAnimesForUser.Add(anime);
-            }
-
-            return listOfAnimesForUser;
-        }
-
-        public async Task<bool> IsAnimeAlreadyAdded(Guid userId, ObjectId animeId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var isAnimeAlreadyAdded = user.AppUserAnime.Contains(animeId.ToString());
-            if (isAnimeAlreadyAdded == true) return true;
-            return false;
         }
     }
 }

@@ -2,11 +2,11 @@
 using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -19,39 +19,27 @@ namespace Disertatie_backend.DatabaseContext
     public class GameRepository : IGamesRepository
     {
         private readonly IMongoCollection<Game> _gamesCollection;
-        private readonly IMongoCollection<AppUser> _userCollection;
-        private readonly IUserRepository _userRepository;
         private readonly IMongoDBCollectionHelper<Game> _gamesCollectionHelper;
-        private readonly IMongoDBCollectionHelper<AppUser> _userCollectionHelper;
         private readonly string nameIndex = "Name_index";
+        private readonly string nameOriginalIndex = "NameOriginal_index";
+        private readonly string nameRedditIndex = "NameReddit_index";
+        private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
 
-        public GameRepository(IMapper mapper, IMongoDBCollectionHelper<Game> gamesCollectionHelper, IMongoDBCollectionHelper<AppUser> userCollectionHelper, IUserRepository userRepository, IOptions<DatabaseSettings> databaseSettings)
+        public GameRepository(IMapper mapper, 
+            IMongoDBCollectionHelper<Game> gamesCollectionHelper,
+            DatabaseSettings databaseSettings)
         {
+            _databaseSettings = databaseSettings;
             _gamesCollectionHelper = gamesCollectionHelper;
-            _userCollectionHelper = userCollectionHelper;
-            _gamesCollection = _gamesCollectionHelper.CreateCollection(databaseSettings);
-            _userCollection = _userCollectionHelper.CreateCollection(databaseSettings);
-            _userRepository = userRepository;
+            _gamesCollection = _gamesCollectionHelper.CreateCollection(_databaseSettings);
 
             _gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
+            _gamesCollectionHelper.CreateIndexAscending(u => u.Name_original, nameOriginalIndex);
+            _gamesCollectionHelper.CreateIndexAscending(u => u.Reddit_name, nameRedditIndex);
 
             _mapper = mapper;
-        }
-
-        public async Task DeleteGameForUser(Guid userId, ObjectId gameId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Pull(x => x.AppUserGame, gameId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
-        }
-
-        public async Task AddGameToUser(Guid userId, ObjectId gameId)
-        {
-            var filter = Builders<AppUser>.Filter.Eq(x => x.Id, userId);
-            var update = Builders<AppUser>.Update.Push(x => x.AppUserGame, gameId.ToString());
-            await _userCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Game> GetGameByNameAsync(string name)
@@ -68,13 +56,20 @@ namespace Disertatie_backend.DatabaseContext
 
         public async Task<IEnumerable<GameCard>> GetGamesAsync(GameParams gameParams)
         {
-            if (string.IsNullOrEmpty(gameParams.SearchedGame) || string.IsNullOrWhiteSpace(gameParams.SearchedGame)) return null;
+            var filterByName = Builders<Game>.Filter.Empty;
+            var filterByNameOriginal = Builders<Game>.Filter.Empty;
+            var filterByRedditName = Builders<Game>.Filter.Empty;
 
-            var filterByTitle = Builders<Game>.Filter.Where(x => x.Name.Contains(gameParams.SearchedGame)) |
-                Builders<Game>.Filter.Where(x => x.Name_original.Contains(gameParams.SearchedGame)) |
-                Builders<Game>.Filter.Where(x => x.Reddit_name.Contains(gameParams.SearchedGame));
+            if (!(string.IsNullOrEmpty(gameParams.SearchedGame) || string.IsNullOrWhiteSpace(gameParams.SearchedGame)))
+            {
+                filterByName = Builders<Game>.Filter.Regex(x => x.Name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
+                filterByNameOriginal = Builders<Game>.Filter.Regex(x => x.Name_original, new BsonRegularExpression(gameParams.SearchedGame, "i"));
+                filterByRedditName = Builders<Game>.Filter.Regex(x => x.Reddit_name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
 
-            var query = await _gamesCollection.Find(filterByTitle).ToListAsync();
+                filterByName = filterByName & filterByNameOriginal & filterByRedditName;
+            }
+
+            var query = await _gamesCollection.Find(filterByName).ToListAsync();
 
             var queryList = new List<GameCard>();
 
@@ -94,31 +89,6 @@ namespace Disertatie_backend.DatabaseContext
             };
 
             return mappedQuery;
-        }
-
-        public async Task<IEnumerable<Game>> GetUserGames(Guid userId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var listOfGamesForUser = new List<Game>();
-
-            foreach (var gameId in user.AppUserGame)
-            {
-                var game = await GetGameByIdAsync(new ObjectId(gameId));
-
-                if (game != null) listOfGamesForUser.Add(game);
-            }
-
-            return listOfGamesForUser;
-        }
-
-        public async Task<bool> IsGameAlreadyAdded(Guid userId, ObjectId gameId)
-        {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            var isGameAlreadyAdded = user.AppUserGame.Contains(gameId.ToString());
-            if (isGameAlreadyAdded == true) return true;
-            return false;
         }
     }
 }

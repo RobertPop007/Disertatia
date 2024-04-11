@@ -26,11 +26,22 @@ import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
+import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service';
+import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
+import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
+import { MangaAngularService } from 'src/app/_services/manga_angular.service';
+import { GamesAngularService } from 'src/app/_services/games_angular.service';
 
 @Component({
   selector: 'app-member-edit',
   templateUrl: './member-edit.component.html',
-  styleUrls: ['./member-edit.component.css']
+  styleUrls: ['./member-edit.component.css'],
+  providers: [TvShowsService, TvShowsAngularService,
+    MoviesService, MoviesAngularService,
+    AnimeService, AnimeAngularService,
+    MangaService, MangaAngularService, 
+    GamesAngularService, GameService
+  ]
 })
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm!: NgForm;
