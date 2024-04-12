@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Entities.TvShows
 {

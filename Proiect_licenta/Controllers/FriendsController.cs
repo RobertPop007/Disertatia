@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System;
 using Microsoft.EntityFrameworkCore;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Controllers
 {

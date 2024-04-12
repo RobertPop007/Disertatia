@@ -7,6 +7,7 @@ using Disertatie_backend.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.SignalR
 {

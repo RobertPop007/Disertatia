@@ -3,7 +3,6 @@ using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
@@ -11,8 +10,10 @@ using System.Threading.Tasks;
 using System;
 using AutoMapper;
 using System.Collections.Generic;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities.User;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class UserItemsRepository<T> : IUserItemsRepository<T> where T : class
     {
@@ -92,11 +93,11 @@ namespace Disertatie_backend.DatabaseContext
 
             await _context.SaveChangesAsync();
         }
-         
+
         public async Task<IEnumerable<T>> GetItemForUser<T>(Guid userId)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
-            
+
             var listOfItemsForUser = new List<T>();
 
             switch (typeof(T))

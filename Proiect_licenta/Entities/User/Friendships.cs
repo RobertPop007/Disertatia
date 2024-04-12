@@ -1,7 +1,7 @@
 ﻿using Disertatie_backend.Extensions;
 using System;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     public class Friendships
     {

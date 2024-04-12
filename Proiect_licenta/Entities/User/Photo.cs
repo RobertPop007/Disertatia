@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     [Table("Photos")]
     public class Photo

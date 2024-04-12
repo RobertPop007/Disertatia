@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.DatabaseContext
 {

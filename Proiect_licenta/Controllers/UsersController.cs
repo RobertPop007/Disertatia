@@ -9,6 +9,7 @@ using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Controllers
 {

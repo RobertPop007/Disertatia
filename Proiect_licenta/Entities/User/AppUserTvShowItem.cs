@@ -1,7 +1,7 @@
 ﻿using Disertatie_backend.Entities.TvShows;
 using MongoDB.Bson;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     public class AppUserTvShowItem
     {

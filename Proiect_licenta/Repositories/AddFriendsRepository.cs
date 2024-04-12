@@ -1,5 +1,4 @@
 ﻿using Disertatie_backend.DTO;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
@@ -13,8 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities.User;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class AddFriendsRepository : IAddFriendsRepository
     {
@@ -24,9 +25,9 @@ namespace Disertatie_backend.DatabaseContext
 
         public AddFriendsRepository(DataContext context, UserManager<AppUser> userManager, IMapper mapper)
         {
-            this._context = context;
-            this._userManager = userManager;
-            this._mapper = mapper;
+            _context = context;
+            _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<Friendships> IsUserFriend(Guid addedByUserId, Guid addedUserId)
@@ -40,7 +41,7 @@ namespace Disertatie_backend.DatabaseContext
             var friends = _context.Friends.AsQueryable();
 
             friends = friends.Where(friend => friend.UserID1 == friendsParams.UserId || friend.UserID2 == friendsParams.UserId);
-            
+
             return await PagedList<FriendsDto>.CreateAsync(friends.ProjectTo<FriendsDto>(_mapper.ConfigurationProvider).AsNoTracking(), friendsParams.PageNumber, friendsParams.PageSize);
         }
 

@@ -4,9 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities;
 using System.Text;
 using System.Threading.Tasks;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Extensions
 {

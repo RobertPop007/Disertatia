@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.EntityFrameworkCore;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Entities.Manga
 {

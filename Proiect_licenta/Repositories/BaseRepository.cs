@@ -2,7 +2,7 @@
 using Disertatie_backend.Interfaces;
 using System.Linq;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity, TContext>
         where TEntity : class
@@ -23,7 +23,7 @@ namespace Disertatie_backend.DatabaseContext
 
         public void Delete(object id)
         {
-            _context.Remove(this._context.Find<TEntity>(id));
+            _context.Remove(_context.Find<TEntity>(id));
             _context.SaveChanges();
         }
 

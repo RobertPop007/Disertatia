@@ -1,5 +1,5 @@
 ﻿using Disertatie_backend.DTO;
-using Disertatie_backend.Entities;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using MongoDB.Bson;
 using System;

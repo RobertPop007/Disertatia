@@ -1,4 +1,4 @@
-﻿using Disertatie_backend.Entities;
+﻿using Disertatie_backend.Entities.User;
 using System.Threading.Tasks;
 
 namespace Disertatie_backend.Interfaces

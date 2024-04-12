@@ -2,6 +2,8 @@
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Entities.Games.Game
 {
@@ -12,7 +14,7 @@ namespace Disertatie_backend.Entities.Games.Game
         public ObjectId Id { get; set; }
 
 #nullable enable
-        
+        [JsonProperty("id")]
         public int Game_Id { get; set; }
         public string? Slug { get; set; }
         public string? Name { get; set; }

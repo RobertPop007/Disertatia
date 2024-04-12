@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     public class Review
     {

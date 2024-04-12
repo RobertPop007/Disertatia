@@ -10,7 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class TvShowsRepository : ITvShowsRepository
     {
@@ -23,8 +23,8 @@ namespace Disertatie_backend.DatabaseContext
 
         private readonly IMapper _mapper;
 
-        public TvShowsRepository(IMapper mapper, 
-            IMongoDBCollectionHelper<TvShow> tvshowsCollectionHelper, 
+        public TvShowsRepository(IMapper mapper,
+            IMongoDBCollectionHelper<TvShow> tvshowsCollectionHelper,
             DatabaseSettings databaseSettings)
         {
             _databaseSettings = databaseSettings;

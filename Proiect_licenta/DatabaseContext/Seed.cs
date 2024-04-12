@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Disertatie_backend.Entities;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Microsoft.EntityFrameworkCore;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.DatabaseContext
 {

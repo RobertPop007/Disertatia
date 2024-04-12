@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Entities.Movies
 {

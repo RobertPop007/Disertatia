@@ -6,6 +6,7 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Disertatie_backend.Services;
 using Disertatie_backend.SignalR;
+using Disertatie_backend.Repositories;
 
 namespace Disertatie_backend.Extensions
 {

@@ -13,7 +13,7 @@ using Disertatie_backend.Configurations;
 using AutoMapper;
 using System;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class MoviesRepository : IMoviesRepository
     {
@@ -26,7 +26,7 @@ namespace Disertatie_backend.DatabaseContext
 
         private readonly IMapper _mapper;
 
-        public MoviesRepository(IMapper mapper, 
+        public MoviesRepository(IMapper mapper,
             IMongoDBCollectionHelper<Movie> moviesCollectionHelper,
             DatabaseSettings databaseSettings)
         {

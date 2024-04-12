@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Controllers
 {

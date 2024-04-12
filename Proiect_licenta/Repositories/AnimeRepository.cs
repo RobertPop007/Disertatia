@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class AnimeRepository : IAnimeRepository
     {
@@ -30,7 +30,7 @@ namespace Disertatie_backend.DatabaseContext
 
         private readonly IMapper _mapper;
 
-        public AnimeRepository(IMapper mapper, 
+        public AnimeRepository(IMapper mapper,
             IMongoDBCollectionHelper<Datum> animeCollectionHelper,
             DatabaseSettings databaseSettings)
         {

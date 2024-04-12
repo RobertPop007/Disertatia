@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Disertatie_backend.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Controllers
 {

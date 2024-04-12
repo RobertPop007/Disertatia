@@ -1,4 +1,4 @@
-﻿using Disertatie_backend.Entities;
+﻿using Disertatie_backend.Entities.User;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;

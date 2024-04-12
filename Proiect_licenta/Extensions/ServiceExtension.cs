@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Interfaces;
+using Disertatie_backend.Repositories;
 
-namespace Disertatie_backend.Services
+namespace Disertatie_backend.Extensions
 {
     public static class ServiceExtensions
     {

@@ -13,7 +13,7 @@ using Disertatie_backend.Configurations;
 using AutoMapper;
 using System;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class MangaRepository : IMangaRepository
     {
@@ -28,7 +28,7 @@ namespace Disertatie_backend.DatabaseContext
 
 
         public MangaRepository(IMapper mapper,
-            IMongoDBCollectionHelper<DatumManga> mangaCollectionHelper, 
+            IMongoDBCollectionHelper<DatumManga> mangaCollectionHelper,
             DatabaseSettings databaseSettings)
         {
             _databaseSettings = databaseSettings;

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     public class AppUserAnimeItem
     {

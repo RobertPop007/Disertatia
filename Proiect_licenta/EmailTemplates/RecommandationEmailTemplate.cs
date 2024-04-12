@@ -1,8 +1,8 @@
 ﻿using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
+using Disertatie_backend.Entities.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

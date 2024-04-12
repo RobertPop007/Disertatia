@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.DTO;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +15,10 @@ using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities.User;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class UserRepository : IUserRepository
     {

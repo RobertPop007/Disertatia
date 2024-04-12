@@ -22,24 +22,24 @@ namespace Disertatie_backend.DatabaseContext
 
             var _gamesCollection = mongoDb.GetCollection<Game>(databaseSettings.CollectionList["GamesCollection"]);
 
-            var defaultReviews = new List<Review>();
-            var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
-            _gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
+            //var defaultReviews = new List<Review>();
+            //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
+            //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
 
-            //var gamesIds = new List<int>();
+            var gamesIds = new List<int>();
 
-            ////SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
+            SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
 
-            //for (var i = 1230; i <= 1500; i++)
+            //for (var i = 2; i <= 3; i++)
             //{
             //    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
             //}
 
 
-            //foreach (var gameId in gamesIds)
-            //{
-            //    await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
-            //}
+            foreach (var gameId in gamesIds)
+            {
+                await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
+            }
         }
 
         public static void SeedGameId(List<int> gamesIds, string url)

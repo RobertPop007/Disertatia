@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Disertatie_backend.DatabaseContext
+namespace Disertatie_backend.Repositories
 {
     public class GameRepository : IGamesRepository
     {
@@ -27,7 +27,7 @@ namespace Disertatie_backend.DatabaseContext
 
         private readonly IMapper _mapper;
 
-        public GameRepository(IMapper mapper, 
+        public GameRepository(IMapper mapper,
             IMongoDBCollectionHelper<Game> gamesCollectionHelper,
             DatabaseSettings databaseSettings)
         {

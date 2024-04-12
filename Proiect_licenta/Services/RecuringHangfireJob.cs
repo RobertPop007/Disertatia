@@ -3,10 +3,10 @@ using Disertatie_backend.DTO;
 using Disertatie_backend.EmailTemplates;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
-using Disertatie_backend.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Services
 {

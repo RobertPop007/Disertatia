@@ -1,10 +1,10 @@
 ﻿using Disertatie_backend.Configurations;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;

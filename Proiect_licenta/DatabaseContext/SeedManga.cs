@@ -21,11 +21,11 @@ namespace Disertatie_backend.DatabaseContext
 
             var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.CollectionList["MangaCollection"]);
 
-            var defaultReviews = new List<Review>();
-            var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
-            _mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
+            //var defaultReviews = new List<Review>();
+            //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
+            //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
 
-            //await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+            await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
 
             //for (var i = 2; i <= 1081; i++)
             //{

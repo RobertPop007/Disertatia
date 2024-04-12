@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using System;
 
-namespace Disertatie_backend.Entities
+namespace Disertatie_backend.Entities.User
 {
     public class AppUserRole : IdentityUserRole<Guid>
     {

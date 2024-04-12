@@ -1,9 +1,9 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using Disertatie_backend.DTO;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
+using Disertatie_backend.Configurations;
 
 namespace Disertatie_backend.Helpers
 {
