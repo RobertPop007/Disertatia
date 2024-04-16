@@ -1,4 +1,5 @@
-﻿using Disertatie_backend.DTO.TvShows;
+﻿using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.TvShows;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Helpers;
 using MongoDB.Bson;
@@ -13,5 +14,7 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<TvShowCard>> GetTvShowsAsync(TvShowParams userParams);
         Task<TvShow> GetTvShowByIdAsync(ObjectId id);
         Task<TvShow> GetTvShowByFullTitleAsync(string title);
+        Task AddReviewAsync(ObjectId id, ReviewDto reviewDto);
+        Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto);
     }
 }

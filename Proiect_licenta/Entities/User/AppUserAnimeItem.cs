@@ -1,15 +1,15 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
+using System;
+using Disertatie_backend.Entities.Anime;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Disertatie_backend.Entities.User
 {
     public class AppUserAnimeItem
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public ObjectId AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
 
-        public ObjectId AnimeId { get; set; }
+        public string AnimeId { get; set; }
     }
 }

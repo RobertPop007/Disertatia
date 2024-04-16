@@ -12,6 +12,10 @@ using Disertatie_backend.Entities;
 using Disertatie_backend.Configurations;
 using AutoMapper;
 using System;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Repositories
 {
@@ -40,6 +44,22 @@ namespace Disertatie_backend.Repositories
             _mangaCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
 
             _mapper = mapper;
+        }
+
+        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
+            var update = Builders<DatumManga>.Update.Push(x => x.Reviews, reviewDto);
+
+            await _mangaCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
+            var update = Builders<DatumManga>.Update.Pull(x => x.Reviews, reviewDto);
+
+            await _mangaCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<DatumManga> GetMangaByFullTitleAsync(string title)

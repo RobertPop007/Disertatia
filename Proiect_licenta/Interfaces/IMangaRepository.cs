@@ -1,4 +1,5 @@
-﻿using Disertatie_backend.DTO.Manga;
+﻿using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.Manga;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Helpers;
 using MongoDB.Bson;
@@ -13,5 +14,7 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<MangaCard>> GetMangasAsync(MangaParams userParams);
         Task<DatumManga> GetMangaByIdAsync(ObjectId id);
         Task<DatumManga> GetMangaByFullTitleAsync(string title);
+        Task AddReviewAsync(ObjectId id, ReviewDto reviewDto);
+        Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto);
     }
 }

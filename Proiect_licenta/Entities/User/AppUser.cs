@@ -24,15 +24,15 @@ namespace Disertatie_backend.Entities.User
         public IList<Message>? MessagesReceived { get; set; } = new List<Message>();
         public IList<AppUserRole>? UserRoles { get; set; } = new List<AppUserRole>();
 
-        public IList<string>? AppUserMovie { get; set; } = new List<string>();
-        public IList<string>? AppUserTvShow { get; set; } = new List<string>();
-        public IList<string>? AppUserAnime { get; set; } = new List<string>();
-        public IList<string>? AppUserManga { get; set; } = new List<string>();
-        public IList<string>? AppUserGame { get; set; } = new List<string>();
+        public ICollection<AppUserMovieItem>? AppUserMovie { get; set; } = new List<AppUserMovieItem>();
+        public ICollection<AppUserTvShowItem>? AppUserTvShow { get; set; } = new List<AppUserTvShowItem>();
+        public ICollection<AppUserAnimeItem>? AppUserAnime { get; set; } = new List<AppUserAnimeItem>();
+        public ICollection<AppUserMangaItem>? AppUserManga { get; set; } = new List<AppUserMangaItem>();
+        public ICollection<AppUserGameItem>? AppUserGame { get; set; } = new List<AppUserGameItem>();
 
         public bool IsSubscribedToNewsletter { get; set; }
         public bool HasDarkMode { get; set; }
 
-        public IList<string>? Reviews { get; set; } = new List<string>();
+        public ICollection<Review>? Reviews { get; set; } = new List<Review>();
     }
 }

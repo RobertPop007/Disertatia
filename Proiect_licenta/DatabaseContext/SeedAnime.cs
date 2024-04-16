@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Disertatie_backend.Entities;
 using System.Collections.Generic;
 using System.Xml;
+using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -29,7 +30,7 @@ namespace Disertatie_backend.DatabaseContext
 
             ////if (_animeCollection.CountDocuments(_ => true) >= 0)
             ////{
-                await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+            //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
 
             //    for (var i = 2; i <= 1081; i++)
             //    {

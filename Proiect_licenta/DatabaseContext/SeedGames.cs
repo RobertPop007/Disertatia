@@ -10,6 +10,7 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities;
+using Disertatie_backend.DTO;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -22,24 +23,30 @@ namespace Disertatie_backend.DatabaseContext
 
             var _gamesCollection = mongoDb.GetCollection<Game>(databaseSettings.CollectionList["GamesCollection"]);
 
+            var documents = await _gamesCollection.Find(_ => true).ToListAsync();
+
+            var defaultReviews = new List<ReviewDto>();
+            var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
+            _gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
+
             //var defaultReviews = new List<Review>();
             //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
             //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
 
-            var gamesIds = new List<int>();
+            //var gamesIds = new List<int>();
 
-            SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
+            //SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
 
-            //for (var i = 2; i <= 3; i++)
+            ////for (var i = 2; i <= 3; i++)
+            ////{
+            ////    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
+            ////}
+
+
+            //foreach (var gameId in gamesIds)
             //{
-            //    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
+            //    await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
             //}
-
-
-            foreach (var gameId in gamesIds)
-            {
-                await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
-            }
         }
 
         public static void SeedGameId(List<int> gamesIds, string url)

@@ -10,6 +10,9 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Movies;
 namespace Disertatie_backend.Repositories
 {
     public class TvShowsRepository : ITvShowsRepository
@@ -36,6 +39,22 @@ namespace Disertatie_backend.Repositories
             _tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
+        }
+
+        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<TvShow>.Filter.Eq(x => x.Id, id);
+            var update = Builders<TvShow>.Update.Push(x => x.Reviews, reviewDto);
+
+            await _tvshowsCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<TvShow>.Filter.Eq(x => x.Id, id);
+            var update = Builders<TvShow>.Update.Pull(x => x.Reviews, reviewDto);
+
+            await _tvshowsCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<TvShow> GetTvShowByFullTitleAsync(string title)

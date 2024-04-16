@@ -6,6 +6,12 @@ using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Repositories;
+using System;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.Controllers
 {
@@ -14,14 +20,17 @@ namespace Disertatie_backend.Controllers
         private readonly ITvShowsRepository _tvShowsRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUserItemsRepository<TvShow> _userItemsRepository;
+        private readonly IReviewRepository<Datum> _reviewRepository;
 
         public TvShowsController(ITvShowsRepository tvShowsRepository, 
             IUserRepository userRepository,
-            IUserItemsRepository<TvShow> userItemsRepository)
+            IUserItemsRepository<TvShow> userItemsRepository,
+            IReviewRepository<Datum> reviewRepository)
         {
             _tvShowsRepository = tvShowsRepository;
             _userRepository = userRepository;
             _userItemsRepository = userItemsRepository;
+            _reviewRepository = reviewRepository;
         }
 
         [HttpPost("AddTvShowToUser/{tvShowId}")]
@@ -36,7 +45,7 @@ namespace Disertatie_backend.Controllers
             var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(tvShowId);
             if (tvShow == null) return NotFound("TvShow not found");
 
-            if (user.AppUserTvShow.Contains(tvShowId.ToString()) == true) return BadRequest("You have already added this tv show to your list");
+            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, tvShowId)) return BadRequest("You have already added this tv show to your list");
 
             await _userItemsRepository.AddItemToUser<TvShow>(user, tvShowId);
 
@@ -48,7 +57,7 @@ namespace Disertatie_backend.Controllers
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfTvShows = await _userItemsRepository.GetItemForUser<TvShow>(user.Id);
+            var listOfTvShows = await _userItemsRepository.GetItemsForUser<TvShow>(user.Id);
             return Ok(listOfTvShows);
         }
 
@@ -88,6 +97,34 @@ namespace Disertatie_backend.Controllers
             await _userItemsRepository.DeleteItemFromUser<TvShow>(user, tvShowId);
 
             return Ok();
+        }
+
+        [HttpPost("AddReviewFor/{tvShowId}")]
+        public async Task<IActionResult> AddReviewForTvShow(ObjectId tvShowId, ReviewDto reviewDto)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.AddReviewToItem<TvShow>(user, tvShowId, reviewDto);
+
+            return Ok(reviewDto);
+        }
+
+        [HttpDelete("DeleteReviewFor/{tvShowId}")]
+        public async Task<IActionResult> DeleteReviewForTvShow(ObjectId tvShowId, Guid reviewId)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.DeleteReviewFromItem<TvShow>(user, tvShowId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpGet("GetReviewsFor/{tvShowId}")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForTvShow(ObjectId tvShowId)
+        {
+            return Ok(await _reviewRepository.GetReviewsForItem<TvShow>(tvShowId));
         }
     }
 }

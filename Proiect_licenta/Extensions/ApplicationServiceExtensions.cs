@@ -33,6 +33,7 @@ namespace Disertatie_backend.Extensions
 
             services.AddScoped(typeof(IMongoDBCollectionHelper<>), typeof(MongoDBCollectionHelper<>));
             services.AddScoped(typeof(IUserItemsRepository<>),typeof(UserItemsRepository<>));
+            services.AddScoped(typeof(IReviewRepository<>),typeof(ReviewRepository<>));
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 

@@ -5,6 +5,11 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Repositories;
+using System;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.Controllers
 {
@@ -13,14 +18,17 @@ namespace Disertatie_backend.Controllers
         private readonly IGamesRepository _gamesRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUserItemsRepository<Game> _userItemsRepository;
+        private readonly IReviewRepository<Game> _reviewRepository;
 
         public GameController(IGamesRepository gamesRepository, 
             IUserRepository userRepository,
-            IUserItemsRepository<Game> userItemsRepository)
+            IUserItemsRepository<Game> userItemsRepository,
+            IReviewRepository<Game> reviewRepository)
         {
             _gamesRepository = gamesRepository;
             _userRepository = userRepository;
             _userItemsRepository = userItemsRepository;
+            _reviewRepository = reviewRepository;
         }
 
         [HttpPost("AddGameToUser/{gameId}")]
@@ -35,7 +43,7 @@ namespace Disertatie_backend.Controllers
             var game = await _gamesRepository.GetGameByIdAsync(gameId);
             if (game == null) return NotFound("Game not found");
 
-            if (user.AppUserGame.Contains(gameId.ToString()) == true) return BadRequest("You have already added this game to your list");
+            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, gameId)) return BadRequest("You have already added this game to your list");
 
             await _userItemsRepository.AddItemToUser<Game>(user, gameId);
 
@@ -47,7 +55,7 @@ namespace Disertatie_backend.Controllers
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfGames = await _userItemsRepository.GetItemForUser<Game>(user.Id);
+            var listOfGames = await _userItemsRepository.GetItemsForUser<Game>(user.Id);
             return Ok(listOfGames);
         }
 
@@ -88,6 +96,34 @@ namespace Disertatie_backend.Controllers
             await _userItemsRepository.DeleteItemFromUser<Game>(user, gameId);
 
             return Ok();
+        }
+
+        [HttpPost("AddReviewFor/{gameId}")]
+        public async Task<IActionResult> AddReviewForGame(ObjectId gameId, ReviewDto reviewDto)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.AddReviewToItem<Game>(user, gameId, reviewDto);
+
+            return Ok(reviewDto);
+        }
+
+        [HttpDelete("DeleteReviewFor/{gameId}")]
+        public async Task<IActionResult> DeleteReviewForGame(ObjectId gameId, Guid reviewId)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.DeleteReviewFromItem<Game>(user, gameId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpGet("GetReviewsFor/{gameId}")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForGame(ObjectId gameId)
+        {
+            return Ok(await _reviewRepository.GetReviewsForItem<Game>(gameId));
         }
     }
 }

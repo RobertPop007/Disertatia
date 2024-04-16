@@ -12,6 +12,9 @@ using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
 using System;
+using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Games.Game;
 
 namespace Disertatie_backend.Repositories
 {
@@ -39,6 +42,22 @@ namespace Disertatie_backend.Repositories
             _moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
+        }
+
+        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Movie>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Movie>.Update.Push(x => x.Reviews, reviewDto);
+
+            await _moviesCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Movie>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Movie>.Update.Pull(x => x.Reviews, reviewDto);
+
+            await _moviesCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams movieParams)

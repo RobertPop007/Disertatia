@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;
 using Disertatie_backend.Entities.User;
+using System.Reflection.Emit;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -17,10 +20,21 @@ namespace Disertatie_backend.DatabaseContext
         public DbSet<Group> Groups { get; init; }
         public DbSet<Connection> Connections { get; init; }
         public DbSet<Friendships> Friends { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<AppUserAnimeItem> UserAnimes { get; set; }
+        public DbSet<AppUserMangaItem> UserMangas { get; set; }
+        public DbSet<AppUserGameItem> UserGames { get; set; }
+        public DbSet<AppUserMovieItem> UserMovies { get; set; }
+        public DbSet<AppUserTvShowItem> UserTvShows { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            var converter = new ValueConverter<ObjectId, string>(
+                v => v.ToString(),
+                v => ObjectId.Parse(v),
+                new ConverterMappingHints(size: 24)); // Assuming ObjectId string representation length is 24
 
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
@@ -48,6 +62,56 @@ namespace Disertatie_backend.DatabaseContext
                 .WithMany()
                 .HasForeignKey(f => f.UserID2)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.UserId);
+
+            builder.Entity<AppUserAnimeItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.AnimeId });
+
+            builder.Entity<AppUserAnimeItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserAnime)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<AppUserMangaItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.MangaId });
+
+            builder.Entity<AppUserMangaItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserManga)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<AppUserGameItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.GameId });
+
+            builder.Entity<AppUserGameItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserGame)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<AppUserMovieItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.MovieId });
+
+            builder.Entity<AppUserMovieItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserMovie)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<AppUserTvShowItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.TvShowId });
+
+            builder.Entity<AppUserTvShowItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserTvShow)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reviews) // Navigation property for user reviews
+                .HasForeignKey(r => r.UserId);
 
             //builder.Entity<UserFriend>()
             //    .HasKey(k => new { k.AddedByUserId, k.AddedUserId });

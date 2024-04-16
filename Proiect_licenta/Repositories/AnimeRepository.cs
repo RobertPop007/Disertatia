@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
+using Disertatie_backend.DTO;
 using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +46,22 @@ namespace Disertatie_backend.Repositories
             _animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
 
             _mapper = mapper;
+        }
+
+        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Datum>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Datum>.Update.Push(x => x.Reviews, reviewDto);
+
+            await _animeCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Datum>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Datum>.Update.Pull(x => x.Reviews, reviewDto);
+
+            await _animeCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Datum> GetAnimeByFullTitleAsync(string title)

@@ -9,6 +9,9 @@ using Microsoft.Extensions.Options;
 using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
 using Disertatie_backend.Entities.Movies;
+using System.Collections.Generic;
+using Disertatie_backend.Entities.User;
+using Disertatie_backend.DTO;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -19,7 +22,13 @@ namespace Disertatie_backend.DatabaseContext
             var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
             var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
 
-            var _tvShowsCollection = mongoDb.GetCollection<Datum>(databaseSettings.Value.CollectionList["TVShowsCollection"]);
+            var _tvShowsCollection = mongoDb.GetCollection<TvShow>(databaseSettings.Value.CollectionList["TVShowsCollection"]);
+
+            var documents = await _tvShowsCollection.Find(_ => true).ToListAsync();
+
+            var defaultReviews = new List<ReviewDto>();
+            var update = Builders<TvShow>.Update.Set(x => x.Reviews, defaultReviews);
+            _tvShowsCollection.UpdateMany(FilterDefinition<TvShow>.Empty, update);
 
             //if (!context.TvShows.Any())
             //{

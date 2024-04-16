@@ -69,7 +69,11 @@ namespace Disertatie_backend.Repositories
         {
             return await _context.Users
                 .Include(p => p.ProfilePicture)
-                //.Include(p => p.Friends)
+                .Include(p => p.AppUserAnime)
+                .Include(p => p.AppUserManga)
+                .Include(p => p.AppUserMovie)
+                .Include(p => p.AppUserTvShow)
+                .Include(p => p.AppUserGame)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 

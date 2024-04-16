@@ -1,10 +1,14 @@
-﻿using MongoDB.Bson;
+﻿using Disertatie_backend.Entities.Games.Game;
+using MongoDB.Bson;
+using System;
 
 namespace Disertatie_backend.Entities.User
 {
     public class AppUserGameItem
     {
-        public ObjectId AppUserId { get; set; }
-        public int GameId { get; set; }
+        public Guid AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
+
+        public string GameId { get; set; }
     }
 }

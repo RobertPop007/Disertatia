@@ -1,11 +1,16 @@
-﻿using Disertatie_backend.Entities.Anime;
+﻿using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
+using Disertatie_backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Disertatie_backend.Controllers
@@ -15,14 +20,17 @@ namespace Disertatie_backend.Controllers
         private readonly IMoviesRepository _moviesRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUserItemsRepository<Movie> _userItemsRepository;
+        private readonly IReviewRepository<Datum> _reviewRepository;
 
         public MoviesController(IMoviesRepository moviesRepository, 
             IUserRepository userRepository,
-            IUserItemsRepository<Movie> userItemsRepository)
+            IUserItemsRepository<Movie> userItemsRepository,
+            IReviewRepository<Datum> reviewRepository)
         {
             _moviesRepository = moviesRepository;
             _userRepository = userRepository;
             _userItemsRepository = userItemsRepository;
+            _reviewRepository = reviewRepository;
         }
 
         [HttpPost("AddMovieToUser/{movieId}")]
@@ -37,7 +45,7 @@ namespace Disertatie_backend.Controllers
             var movie = await _moviesRepository.GetMovieByIdAsync(movieId);
             if (movie == null) return NotFound("Movie not found");
 
-            if (user.AppUserMovie.Contains(movieId.ToString()) == true) return BadRequest("You have already added this movie to your list");
+            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, movieId)) return BadRequest("You have already added this movie to your list");
 
             await _userItemsRepository.AddItemToUser<Movie>(user, movieId);
 
@@ -49,7 +57,7 @@ namespace Disertatie_backend.Controllers
         {
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
-            var listOfMovies = await _userItemsRepository.GetItemForUser<Movie>(user.Id);
+            var listOfMovies = await _userItemsRepository.GetItemsForUser<Movie>(user.Id);
             return Ok(listOfMovies);
         }
 
@@ -89,6 +97,34 @@ namespace Disertatie_backend.Controllers
             await _userItemsRepository.DeleteItemFromUser<Movie>(user, movieId);
 
             return Ok();
+        }
+
+        [HttpPost("AddReviewFor/{movieId}")]
+        public async Task<IActionResult> AddReviewForMovie(ObjectId movieId, ReviewDto reviewDto)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.AddReviewToItem<Movie>(user, movieId, reviewDto);
+
+            return Ok(reviewDto);
+        }
+
+        [HttpDelete("DeleteReviewFor/{movieId}")]
+        public async Task<IActionResult> DeleteReviewForMovie(ObjectId movieId, Guid reviewId)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.DeleteReviewFromItem<Movie>(user, movieId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpGet("GetReviewsFor/{movieId}")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForMovie(ObjectId movieId)
+        {
+            return Ok(await _reviewRepository.GetReviewsForItem<Movie>(movieId));
         }
     }
 }

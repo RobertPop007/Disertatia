@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.EntityFrameworkCore;
 using Disertatie_backend.Entities.User;
+using Disertatie_backend.DTO;
 
 namespace Disertatie_backend.Entities.Anime
 {
@@ -50,6 +51,6 @@ namespace Disertatie_backend.Entities.Anime
         public IList<Theme>? Themes { get; set; }
         public IList<Demographic>? Demographics { get; set; }
 
-        public IList<Review>? Reviews { get; set; }
+        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
     }
 }

@@ -10,7 +10,7 @@ namespace Disertatie_backend.Interfaces
     {
         Task AddItemToUser<T>(AppUser user, ObjectId itemId);
         Task DeleteItemFromUser<T>(AppUser user, ObjectId itemId);
-        Task<IEnumerable<T>> GetItemForUser<T>(Guid userId);
+        Task<IEnumerable<T>> GetItemsForUser<T>(Guid userId);
         Task<bool> IsItemAlreadyAdded(Guid userId, ObjectId itemId);
     }
 }

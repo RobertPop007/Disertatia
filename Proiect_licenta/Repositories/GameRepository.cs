@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Disertatie_backend.Configurations;
+using Disertatie_backend.DTO;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
@@ -40,6 +41,21 @@ namespace Disertatie_backend.Repositories
             _gamesCollectionHelper.CreateIndexAscending(u => u.Reddit_name, nameRedditIndex);
 
             _mapper = mapper;
+        }
+        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Game>.Update.Push(x => x.Reviews, reviewDto);
+
+            await _gamesCollection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        {
+            var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
+            var update = Builders<Game>.Update.Pull(x => x.Reviews, reviewDto);
+
+            await _gamesCollection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Game> GetGameByNameAsync(string name)

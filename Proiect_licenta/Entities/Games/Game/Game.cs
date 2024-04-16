@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Disertatie_backend.Entities.User;
+using Disertatie_backend.DTO;
 
 namespace Disertatie_backend.Entities.Games.Game
 {
@@ -64,6 +65,6 @@ namespace Disertatie_backend.Entities.Games.Game
         public List<PublisherGame>? Publishers { get; set; }
         public EsrbRatingGame? Esrb_rating { get; set; }
         public string? Description_raw { get; set; }
-        public IList<Review>? Reviews { get; set; }
+        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
     }
 }

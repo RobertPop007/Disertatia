@@ -12,6 +12,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
+using System.Linq;
 
 namespace Disertatie_backend.Repositories
 {
@@ -47,19 +48,19 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    user.AppUserAnime.Add(itemId.ToString());
+                    user.AppUserAnime.Add(new AppUserAnimeItem() { AppUserId = user.Id, AnimeId = itemId.ToString() });
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    user.AppUserManga.Add(itemId.ToString());
+                    user.AppUserManga.Add(new AppUserMangaItem() { AppUserId = user.Id, MangaId = itemId.ToString() });
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    user.AppUserGame.Add(itemId.ToString());
+                    user.AppUserGame.Add(new AppUserGameItem() { AppUserId = user.Id, GameId = itemId.ToString() });
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    user.AppUserMovie.Add(itemId.ToString());
+                    user.AppUserMovie.Add(new AppUserMovieItem() { AppUserId = user.Id, MovieId = itemId.ToString() });
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    user.AppUserTvShow.Add(itemId.ToString());
+                    user.AppUserTvShow.Add(new AppUserTvShowItem() { AppUserId = user.Id, TvShowId = itemId.ToString() });
                     break;
                 default:
                     break;
@@ -73,19 +74,19 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    user.AppUserAnime.Remove(itemId.ToString());
+                    user.AppUserAnime.Remove(new AppUserAnimeItem() { AppUserId = user.Id, AnimeId = itemId.ToString() });
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    user.AppUserManga.Remove(itemId.ToString());
+                    user.AppUserManga.Remove(new AppUserMangaItem() { AppUserId = user.Id, MangaId = itemId.ToString() });
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    user.AppUserGame.Remove(itemId.ToString());
+                    user.AppUserGame.Remove(new AppUserGameItem() { AppUserId = user.Id, GameId = itemId.ToString() });
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    user.AppUserMovie.Remove(itemId.ToString());
+                    user.AppUserMovie.Remove(new AppUserMovieItem() { AppUserId = user.Id, MovieId = itemId.ToString() });
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    user.AppUserTvShow.Remove(itemId.ToString());
+                    user.AppUserTvShow.Remove(new AppUserTvShowItem() { AppUserId = user.Id, TvShowId = itemId.ToString() });
                     break;
                 default:
                     break;
@@ -94,16 +95,15 @@ namespace Disertatie_backend.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetItemForUser<T>(Guid userId)
+        public async Task<IEnumerable<T>> GetItemsForUser<T>(Guid userId)
         {
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
             var listOfItemsForUser = new List<T>();
 
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    foreach (var animeId in user.AppUserAnime)
+                    var userAnime = await _context.Users.Include(u => u.AppUserAnime).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var animeId in userAnime.AppUserAnime.Select(a => a.AnimeId))
                     {
                         var anime = await _animeRepository.GetAnimeByIdAsync(new ObjectId(animeId));
 
@@ -112,7 +112,8 @@ namespace Disertatie_backend.Repositories
                     break;
 
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    foreach (var mangaId in user.AppUserManga)
+                    var userManga = await _context.Users.Include(u => u.AppUserManga).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var mangaId in userManga.AppUserManga.Select(m => m.MangaId))
                     {
                         var manga = await _mangaRepository.GetMangaByIdAsync(new ObjectId(mangaId));
 
@@ -121,7 +122,8 @@ namespace Disertatie_backend.Repositories
                     break;
 
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    foreach (var gameId in user.AppUserGame)
+                    var userGame = await _context.Users.Include(u => u.AppUserGame).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var gameId in userGame.AppUserGame.Select(g => g.GameId))
                     {
                         var game = await _gamesRepository.GetGameByIdAsync(new ObjectId(gameId));
 
@@ -130,7 +132,8 @@ namespace Disertatie_backend.Repositories
                     break;
 
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    foreach (var movieId in user.AppUserMovie)
+                    var userMovie = await _context.Users.Include(u => u.AppUserMovie).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var movieId in userMovie.AppUserMovie.Select(m => m.MovieId))
                     {
                         var movie = await _moviesRepository.GetMovieByIdAsync(new ObjectId(movieId));
 
@@ -139,7 +142,8 @@ namespace Disertatie_backend.Repositories
                     break;
 
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    foreach (var tvShowId in user.AppUserTvShow)
+                    var userTvShow = await _context.Users.Include(u => u.AppUserTvShow).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var tvShowId in userTvShow.AppUserTvShow.Select(t => t.TvShowId))
                     {
                         var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(new ObjectId(tvShowId));
 
@@ -162,19 +166,19 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserAnime.Contains(itemId.ToString());
+                    isItemAlreadyAdded = user.AppUserAnime.Any(u => u.AnimeId == itemId.ToString());
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserManga.Contains(itemId.ToString());
+                    isItemAlreadyAdded = user.AppUserManga.Any(u => u.MangaId == itemId.ToString());
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserGame.Contains(itemId.ToString());
+                    isItemAlreadyAdded = user.AppUserGame.Any(u => u.GameId == itemId.ToString());
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserMovie.Contains(itemId.ToString());
+                    isItemAlreadyAdded = user.AppUserMovie.Any(u => u.MovieId == itemId.ToString());
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserTvShow.Contains(itemId.ToString());
+                    isItemAlreadyAdded = user.AppUserTvShow.Any(u => u.TvShowId == itemId.ToString());
                     break;
                 default:
                     break;
