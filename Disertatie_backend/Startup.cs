@@ -15,6 +15,7 @@ using MongoDB.Bson;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Hangfire;
 using Disertatie_backend.Hangfire;
+using Microsoft.AspNetCore.Identity;
 
 namespace Disertatie_backend
 {
@@ -35,16 +36,23 @@ namespace Disertatie_backend
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();
 
+            var facebookLoginSettings = Configuration
+                .GetSection("FacebookLoginSettings")
+                .Get<FacebookLoginSettings>();
+
             var databaseSettings = Configuration
                 .GetSection("DatabaseSettings")
                 .Get<DatabaseSettings>();
 
             services.AddSingleton(emailConfig);
+            services.AddSingleton(facebookLoginSettings);
             services.AddSingleton(databaseSettings);
 
             services.AddApplicationServices(Configuration);
 
             services.AddControllers();
+
+            services.AddHttpClient();
 
             services.AddCors();
 

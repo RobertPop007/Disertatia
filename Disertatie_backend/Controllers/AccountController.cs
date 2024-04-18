@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using Disertatie_backend.Entities.User;
+using System.Net.Http;
+using Microsoft.Extensions.Options;
+using Disertatie_backend.Configurations;
+using Newtonsoft.Json;
 
 namespace Disertatie_backend.Controllers
 {
@@ -19,8 +22,17 @@ namespace Disertatie_backend.Controllers
         private readonly IEmailSender _emailSender;
         private readonly DataContext _context;
         private readonly IUserRepository _userRepository;
+        private readonly IHttpClientFactory _httpClient;
+        private readonly FacebookLoginSettings _facebookLoginSettings;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, IEmailSender emailSender, IUserRepository userRepository)
+        public AccountController(UserManager<AppUser> userManager, 
+            SignInManager<AppUser> signInManager, 
+            ITokenService tokenService, 
+            IMapper mapper, 
+            IEmailSender emailSender, 
+            IUserRepository userRepository,
+            IHttpClientFactory httpClient,
+            FacebookLoginSettings facebookLoginSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -28,6 +40,8 @@ namespace Disertatie_backend.Controllers
             _mapper = mapper;
             _emailSender = emailSender;
             _userRepository = userRepository;
+            _httpClient = httpClient;
+            _facebookLoginSettings = facebookLoginSettings;
         }
 
         [HttpPost("register")]
@@ -81,6 +95,51 @@ namespace Disertatie_backend.Controllers
                 Gender = user.Gender,
                 IsSubscribed = user.IsSubscribedToNewsletter,
                 HasDarkMode = user.HasDarkMode,
+            };
+        }
+
+        [HttpPost("LoginWithFacebook")]
+        public async Task<ActionResult<UserDto>> LoginWithFacebook([FromBody] string credential)
+        {
+            HttpResponseMessage debugTokenResponse = await _httpClient.CreateClient()
+                .GetAsync("https://graph.facebook.com/debug_token?input_token=" + credential +
+                          $"&access_token={_facebookLoginSettings.FacebookAppId}|{_facebookLoginSettings.FacebookSecret}");
+
+            var stringResult = await debugTokenResponse.Content.ReadAsStringAsync();
+            var userObj = JsonConvert.DeserializeObject<FBUser>(stringResult);
+
+            if(userObj.Data.IsValid == false) return Unauthorized();
+
+            HttpResponseMessage meResponse = await _httpClient.CreateClient()
+                .GetAsync("https://graph.facebook.com/me?fields=first_name,last_name,email,id&access_token=" + credential);
+
+            var userContent = await meResponse.Content.ReadAsStringAsync();
+            var userContentObj = JsonConvert.DeserializeObject<RegisterDto>(userContent);
+
+            if (await UserExists(userContentObj.Username)) return BadRequest("Username already exists");
+
+            var user = _mapper.Map<AppUser>(userContentObj);
+
+            user.UserName = userContentObj.Username.ToLower();
+
+            var result = await _userManager.CreateAsync(user, userContentObj.Password);
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", "Your account has been created! Welcome to our community!");
+            await _emailSender.SendEmailAsync(message, user.UserName);
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                KnownAs = user.KnownAs,
+                Gender = user.Gender,
+                Email = user.Email
             };
         }
 
