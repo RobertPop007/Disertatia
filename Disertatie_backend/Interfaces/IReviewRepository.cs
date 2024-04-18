@@ -13,5 +13,6 @@ namespace Disertatie_backend.Interfaces
         Task DeleteReviewFromItem<T>(AppUser user, ObjectId itemId, Guid reviewId);
         Task UpdateReviewItem<T>(AppUser user, ObjectId itemId, Review review);
         Task<IEnumerable<ReviewDto>> GetReviewsForItem<T>(ObjectId itemId);
+        Task<IEnumerable<Review>> GetReviewsForUserAsync(Guid userId);
     }
 }

@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disertatie_backend", "Proiect_licenta\Disertatie_backend.csproj", "{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{33619CF5-36D8-45FE-94C6-7A65988A51ED}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Disertatie_backend", "Disertatie_backend\Disertatie_backend.csproj", "{4F15D9E7-9666-4685-BFFB-554FCA490B50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +16,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F69281C4-7E9F-4CE4-8098-CFF365D3B38D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F15D9E7-9666-4685-BFFB-554FCA490B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F15D9E7-9666-4685-BFFB-554FCA490B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F15D9E7-9666-4685-BFFB-554FCA490B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F15D9E7-9666-4685-BFFB-554FCA490B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

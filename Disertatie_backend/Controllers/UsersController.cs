@@ -19,12 +19,17 @@ namespace Disertatie_backend.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
+        private readonly IReviewRepository<AppUser> _reviewRepository;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+        public UsersController(IUserRepository userRepository, 
+            IMapper mapper, 
+            IPhotoService photoService,
+            IReviewRepository<AppUser> reviewRepository)
         {
-            this._userRepository = userRepository;
-            this._mapper = mapper;
-            this._photoService = photoService;
+            _userRepository = userRepository;
+            _mapper = mapper;
+            _photoService = photoService;
+            _reviewRepository = reviewRepository;
         }
 
         [HttpGet]
@@ -107,6 +112,14 @@ namespace Disertatie_backend.Controllers
             if (await _userRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to delete this photo");
+        }
+
+        [HttpGet("GetReviewsForCurrentUser")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetReviewsForUser()
+        {
+            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57"); //User.GetUserId();
+
+            return  Ok(await _reviewRepository.GetReviewsForUserAsync(userId));
         }
     }
 }

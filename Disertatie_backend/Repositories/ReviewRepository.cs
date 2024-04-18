@@ -7,6 +7,7 @@ using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -146,6 +147,15 @@ namespace Disertatie_backend.Repositories
             }
 
             return new List<ReviewDto>();
+        }
+
+        public async Task<IEnumerable<Review>> GetReviewsForUserAsync(Guid userId)
+        {
+            var reviewsForUser = await _context.Reviews.Where(x => x.UserId == userId).ToListAsync();
+
+            if (reviewsForUser == null) return Enumerable.Empty<Review>();
+
+            return reviewsForUser;
         }
 
         public Task UpdateReviewItem<T>(AppUser user, ObjectId itemId, Review review)

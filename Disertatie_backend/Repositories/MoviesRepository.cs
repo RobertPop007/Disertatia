@@ -7,14 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using Disertatie_backend.Entities;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
-using System;
 using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Games.Game;
 
 namespace Disertatie_backend.Repositories
 {
