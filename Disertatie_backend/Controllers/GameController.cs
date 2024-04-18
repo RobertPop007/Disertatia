@@ -31,25 +31,6 @@ namespace Disertatie_backend.Controllers
             _reviewRepository = reviewRepository;
         }
 
-        [HttpPost("AddGameToUser/{gameId}")]
-        public async Task<IActionResult> AddGameForUser(ObjectId gameId)
-        {
-            var username = User.GetUsername();
-
-            if (username == null) return BadRequest("User does not exist");
-
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-
-            var game = await _gamesRepository.GetGameByIdAsync(gameId);
-            if (game == null) return NotFound("Game not found");
-
-            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, gameId)) return BadRequest("You have already added this game to your list");
-
-            await _userItemsRepository.AddItemToUser<Game>(user, gameId);
-
-            return Ok(user);
-        }
-
         [HttpGet("GetGamesFor/{username}")]
         public async Task<IActionResult> GetGamesForUser([FromRoute] string username)
         {
@@ -81,6 +62,43 @@ namespace Disertatie_backend.Controllers
             return await _userItemsRepository.IsItemAlreadyAdded(userId, gameId);
         }
 
+
+        [HttpGet("GetReviewsFor/{gameId}")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForGame(ObjectId gameId)
+        {
+            return Ok(await _reviewRepository.GetReviewsForItem<Game>(gameId));
+        }
+
+        [HttpPost("AddReviewFor/{gameId}")]
+        public async Task<IActionResult> AddReviewForGame(ObjectId gameId, ReviewDto reviewDto)
+        {
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            await _reviewRepository.AddReviewToItem<Game>(user, gameId, reviewDto);
+
+            return Ok(reviewDto);
+        }
+
+        [HttpPost("AddGameToUser/{gameId}")]
+        public async Task<IActionResult> AddGameForUser(ObjectId gameId)
+        {
+            var username = User.GetUsername();
+
+            if (username == null) return BadRequest("User does not exist");
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            var game = await _gamesRepository.GetGameByIdAsync(gameId);
+            if (game == null) return NotFound("Game not found");
+
+            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, gameId)) return BadRequest("You have already added this game to your list");
+
+            await _userItemsRepository.AddItemToUser<Game>(user, gameId);
+
+            return Ok(user);
+        }
+
         [HttpDelete("DeleteGameFromUser/{gameId}")]
         public async Task<IActionResult> DeletegameForUser(ObjectId gameId)
         {
@@ -98,17 +116,6 @@ namespace Disertatie_backend.Controllers
             return Ok();
         }
 
-        [HttpPost("AddReviewFor/{gameId}")]
-        public async Task<IActionResult> AddReviewForGame(ObjectId gameId, ReviewDto reviewDto)
-        {
-            var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            await _reviewRepository.AddReviewToItem<Game>(user, gameId, reviewDto);
-
-            return Ok(reviewDto);
-        }
-
         [HttpDelete("DeleteReviewFor/{gameId}")]
         public async Task<IActionResult> DeleteReviewForGame(ObjectId gameId, Guid reviewId)
         {
@@ -118,12 +125,6 @@ namespace Disertatie_backend.Controllers
             await _reviewRepository.DeleteReviewFromItem<Game>(user, gameId, reviewId);
 
             return Ok();
-        }
-
-        [HttpGet("GetReviewsFor/{gameId}")]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForGame(ObjectId gameId)
-        {
-            return Ok(await _reviewRepository.GetReviewsForItem<Game>(gameId));
         }
     }
 }

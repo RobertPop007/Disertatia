@@ -18,11 +18,33 @@ namespace Disertatie_backend.Controllers
         private readonly IMessageRepository _messageRepository;
         private readonly IMapper _mapper;
 
-        public MessagesController(IUserRepository userRepository, IMessageRepository messageRepository, IMapper mapper)
+        public MessagesController(IUserRepository userRepository, 
+            IMessageRepository messageRepository, 
+            IMapper mapper)
         {
-            this._userRepository = userRepository;
-            this._messageRepository = messageRepository;
-            this._mapper = mapper;
+            _userRepository = userRepository;
+            _messageRepository = messageRepository;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
+        {
+            messageParams.Username = User.GetUsername();
+
+            var messages = await _messageRepository.GetMessagesForUser(messageParams);
+
+            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
+
+            return messages;
+        }
+
+        [HttpGet("thread/{username}")]
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessageThread(string username)
+        {
+            var currentUsername = User.GetUsername();
+
+            return Ok(await _messageRepository.GetMessageThread(currentUsername, username));
         }
 
         [HttpPost]
@@ -55,26 +77,6 @@ namespace Disertatie_backend.Controllers
             if (await _messageRepository.SaveAllAsync()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest("Failed to send message");
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
-        {
-            messageParams.Username = User.GetUsername();
-
-            var messages = await _messageRepository.GetMessagesForUser(messageParams);
-
-            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, messages.TotalCount, messages.TotalPages);
-
-            return messages; 
-        }
-
-        [HttpGet("thread/{username}")]
-        public async Task<ActionResult<IEnumerable<Message>>> GetMessageThread(string username)
-        {
-            var currentUsername = User.GetUsername();
-
-            return Ok(await _messageRepository.GetMessageThread(currentUsername, username));
         }
 
         [HttpDelete("{id}")]

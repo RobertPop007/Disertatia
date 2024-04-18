@@ -32,6 +32,34 @@ namespace Disertatie_backend.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<FriendsDto>>> GetUserFriends([FromQuery] AddFriendParams addFriendParams)
+        {
+            addFriendParams.UserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4"); //User.GetUserId();
+            var users = await _addFriendsRepository.GetUserFriends(addFriendParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+            return Ok(users);
+        }
+
+        [HttpGet("CheckFriendship/{username}")]
+        public async Task<bool> CheckFriendship([FromRoute] string username)
+        {
+            var userId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4");
+            var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
+
+            var friend = await _userManager.FindByNameAsync(username);
+
+            if (friend == null) return false;
+
+            var isUserFriend = await _context.Friends.FirstOrDefaultAsync(x => (x.UserID1 == userId && x.UserID2 == friend.Id) ||
+                                                                                                           (x.UserID1 == friend.Id && x.UserID2 == userId));
+            if (isUserFriend != null) return true;
+
+            return false;
+        }
+
         [HttpPost("/AcceptFriendRequest/{username}")]
         public async Task<ActionResult> AddFriend(string username)
         {
@@ -157,35 +185,6 @@ namespace Disertatie_backend.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
-        }
-
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<FriendsDto>>> GetUserFriends([FromQuery] AddFriendParams addFriendParams)
-        {
-            addFriendParams.UserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4"); //User.GetUserId();
-            var users =  await _addFriendsRepository.GetUserFriends(addFriendParams);
-
-            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
-
-            return Ok(users);
-        }
-
-        [HttpGet("CheckFriendship/{username}")]
-        public async Task<bool> CheckFriendship([FromRoute] string username)
-        {
-            var userId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4");
-            var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
-
-            var friend = await _userManager.FindByNameAsync(username);
-
-            if(friend == null) return false;
-
-            var isUserFriend = await _context.Friends.FirstOrDefaultAsync(x => (x.UserID1 == userId && x.UserID2 == friend.Id) ||
-                                                                                                           (x.UserID1 == friend.Id && x.UserID2 == userId));
-            if(isUserFriend != null) return true;
-
-            return false;
         }
     }
 }

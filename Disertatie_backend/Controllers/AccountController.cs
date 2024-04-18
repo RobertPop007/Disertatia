@@ -60,6 +60,30 @@ namespace Disertatie_backend.Controllers
             };
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(loginDto.Username);
+
+            if (user == null) return Unauthorized("Invalid username");
+
+            var result = await _signInManager
+                .CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded) return Unauthorized();
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                PhotoUrl = user.ProfilePicture?.Url,
+                KnownAs = user.KnownAs,
+                Gender = user.Gender,
+                IsSubscribed = user.IsSubscribedToNewsletter,
+                HasDarkMode = user.HasDarkMode,
+            };
+        }
+
         [HttpPost("newsletter/{username}")]
         public async Task SubscribeToNewsletterUser([FromRoute] string username)
         {
@@ -143,30 +167,6 @@ namespace Disertatie_backend.Controllers
         private async Task<bool> UserExists(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username) != null;
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
-        {
-            var user = await _userRepository.GetUserByUsernameAsync(loginDto.Username);
-
-            if (user == null) return Unauthorized("Invalid username");
-
-            var result = await _signInManager
-                .CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded) return Unauthorized();
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = await _tokenService.CreateToken(user),
-                PhotoUrl = user.ProfilePicture?.Url,
-                KnownAs = user.KnownAs,
-                Gender = user.Gender,
-                IsSubscribed = user.IsSubscribedToNewsletter,
-                HasDarkMode = user.HasDarkMode,
-            };
         }
     }
 }

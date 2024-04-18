@@ -41,6 +41,13 @@ namespace Disertatie_backend.Controllers
             return Ok(users);
         }
 
+        [Authorize(Policy = "ModeratePhotoRole")]
+        [HttpGet("photos-to-moderate")]
+        public ActionResult GetPhotosForModeration()
+        {
+            return Ok("Admins or moderators can see this");
+        }
+
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {
@@ -61,13 +68,6 @@ namespace Disertatie_backend.Controllers
             if (!result.Succeeded) return BadRequest("Failed to remove from roles");
 
             return Ok(await _userManager.GetRolesAsync(user));
-        }
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpGet("photos-to-moderate")]
-        public ActionResult GetPhotosForModeration()
-        {
-            return Ok("Admins or moderators can see this");
         }
     }
 }

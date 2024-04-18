@@ -32,25 +32,6 @@ namespace Disertatie_backend.Controllers
             _reviewRepository = reviewRepository;
         }
 
-        [HttpPost("AddMangaToUser/{mangaId}")]
-        public async Task<IActionResult> AddMangaForUser(ObjectId mangaId)
-        {
-            var username = User.GetUsername();
-
-            if (username == null) return BadRequest("User does not exist");
-
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-
-            var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
-            if (manga == null) return NotFound("Manga not found");
-
-            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, mangaId)) return BadRequest("You have already added this anime to your list");
-
-            await _userItemsRepository.AddItemToUser<DatumManga>(user, mangaId);
-
-            return Ok(user);
-        }
-
         [HttpGet("GetMangasFor/{username}")]
         public async Task<IActionResult> GetMangasForUser([FromRoute] string username)
         {
@@ -82,21 +63,29 @@ namespace Disertatie_backend.Controllers
             return await _userItemsRepository.IsItemAlreadyAdded(userId, mangaId);
         }
 
-        [HttpDelete("DeleteMangaFrom/{mangaId}")]
-        public async Task<IActionResult> DeleteMangaForUser(ObjectId mangaId)
+        [HttpGet("GetReviewsFor/{mangaId}")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForManga(ObjectId mangaId)
         {
-            var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            return Ok(await _reviewRepository.GetReviewsForItem<DatumManga>(mangaId));
+        }
+
+        [HttpPost("AddMangaToUser/{mangaId}")]
+        public async Task<IActionResult> AddMangaForUser(ObjectId mangaId)
+        {
+            var username = User.GetUsername();
+
+            if (username == null) return BadRequest("User does not exist");
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
 
             var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
-            if (manga == null)
-            {
-                return NotFound();
-            }
+            if (manga == null) return NotFound("Manga not found");
 
-            await _userItemsRepository.DeleteItemFromUser<Datum>(user, mangaId);
+            if (await _userItemsRepository.IsItemAlreadyAdded(user.Id, mangaId)) return BadRequest("You have already added this anime to your list");
 
-            return Ok();
+            await _userItemsRepository.AddItemToUser<DatumManga>(user, mangaId);
+
+            return Ok(user);
         }
 
         [HttpPost("AddReviewFor/{mangaId}")]
@@ -121,10 +110,21 @@ namespace Disertatie_backend.Controllers
             return Ok();
         }
 
-        [HttpGet("GetReviewsFor/{mangaId}")]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForManga(ObjectId mangaId)
+        [HttpDelete("DeleteMangaFrom/{mangaId}")]
+        public async Task<IActionResult> DeleteMangaForUser(ObjectId mangaId)
         {
-            return Ok(await _reviewRepository.GetReviewsForItem<DatumManga>(mangaId));
+            var userId = User.GetUserId();
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            var manga = await _mangasRepository.GetMangaByIdAsync(mangaId);
+            if (manga == null)
+            {
+                return NotFound();
+            }
+
+            await _userItemsRepository.DeleteItemFromUser<Datum>(user, mangaId);
+
+            return Ok();
         }
     }
 }
