@@ -80,7 +80,7 @@ export class GamesAngularService {
   }
 
   addGame(gameId: ObjectId){
-    return this.gameService.apiGameAddGameGameIdPost(gameId);
+    return this.gameService.apiGameAddReviewForGameIdPost(gameId);
   }
 
   getGamesForUser(predicate: string, pageNumber: number, pageSize: number){

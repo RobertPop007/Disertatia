@@ -86,11 +86,11 @@ export class MembersService {
   }
 
   addFriend(username: string){
-    return this.http.post(this.baseUrl + 'friends/' + username, {});
+    return this.http.post(this.baseUrl + 'friends/SendFriendRequest/' + username, {});
   }
 
   removeFriend(username: string){
-    return this.http.delete(this.baseUrl + 'friends/' + username);
+    return this.http.delete(this.baseUrl + 'friends/DeleteFriend/' + username);
   }
 
   getFriends(predicate: string, pageNumber: number, pageSize: number){

@@ -77,15 +77,19 @@ export class MoviesAngularService{
   }
 
   addMovie(movieId: ObjectId){
-    return this.movieService.apiMoviesAddMovieMovieIdPost(movieId);
+    return this.movieService.apiMoviesAddMovieToUserMovieIdPost(movieId);
   }
 
-  getMoviesForUser(predicate: string, pageNumber: number, pageSize: number){
+  getPaginatedMoviesForUser(predicate: string, pageNumber: number, pageSize: number){
     let params = getPaginationHeaders(pageNumber, pageSize);
 
     params = params.append('predicate', predicate);
 
     return getPaginatedResult<Partial<Movie[]>>(this.baseUrl + 'Movies/GetMoviesFor', params, this.http);
+  }
+
+  getMoviesForUser(predicate: string){
+    return (this.baseUrl + 'Movies/GetMoviesFor', this.http);
   }
 
   deleteMovieForUser(movieId: ObjectId){

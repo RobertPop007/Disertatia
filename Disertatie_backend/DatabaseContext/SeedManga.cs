@@ -11,6 +11,8 @@ using Disertatie_backend.Entities;
 using System.Collections.Generic;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.TvShows;
+using Disertatie_backend.Entities.Games.Game;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -24,7 +26,8 @@ namespace Disertatie_backend.DatabaseContext
             var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.CollectionList["MangaCollection"]);
 
             //var documents = await _mangaCollection.Find(_ => true).ToListAsync();
-
+            var update = Builders<DatumManga>.Update.Set(x => x.ReviewsIds, new List<Guid>());
+            _mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
             //var defaultReviews = new List<ReviewDto>();
             //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
             //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
@@ -33,7 +36,7 @@ namespace Disertatie_backend.DatabaseContext
             //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
             //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
 
-            await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+            //await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
 
             //for (var i = 2; i <= 1081; i++)
             //{

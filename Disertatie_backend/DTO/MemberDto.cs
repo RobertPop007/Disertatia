@@ -17,7 +17,6 @@ namespace Disertatie_backend.DTO
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public PhotoDto ProfilePicture { get; set; }
         public bool IsSubscribedToNewsletter { get; set; }
     }
 }

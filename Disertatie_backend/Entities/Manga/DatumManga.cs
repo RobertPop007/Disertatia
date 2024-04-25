@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.EntityFrameworkCore;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
+using System;
 
 namespace Disertatie_backend.Entities.Manga
 {
@@ -44,6 +45,6 @@ namespace Disertatie_backend.Entities.Manga
         public IList<GenreManga>? Genres { get; set; }
         public IList<ThemeManga>? Themes { get; set; }
         public IList<DemographicManga>? Demographics { get; set; }
-        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
+        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
     }
 }

@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities;
 using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Anime;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -23,12 +25,13 @@ namespace Disertatie_backend.DatabaseContext
 
             var _gamesCollection = mongoDb.GetCollection<Game>(databaseSettings.CollectionList["GamesCollection"]);
 
-            var documents = await _gamesCollection.Find(_ => true).ToListAsync();
+            //var documents = await _gamesCollection.Find(_ => true).ToListAsync();
 
-            var defaultReviews = new List<ReviewDto>();
-            var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
+            //var defaultReviews = new List<ReviewDto>();
+            //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
+            //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
+            var update = Builders<Game>.Update.Set(x => x.ReviewsIds, new List<Guid>());
             _gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
-
             //var defaultReviews = new List<Review>();
             //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
             //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);

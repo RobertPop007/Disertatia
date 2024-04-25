@@ -49,7 +49,7 @@ namespace Disertatie_backend.Repositories
         public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
             var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
-            var update = Builders<DatumManga>.Update.Push(x => x.Reviews, reviewDto);
+            var update = Builders<DatumManga>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _mangaCollection.UpdateOneAsync(filter, update);
         }
@@ -57,7 +57,7 @@ namespace Disertatie_backend.Repositories
         public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
             var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
-            var update = Builders<DatumManga>.Update.Pull(x => x.Reviews, reviewDto);
+            var update = Builders<DatumManga>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _mangaCollection.UpdateOneAsync(filter, update);
         }

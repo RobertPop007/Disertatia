@@ -72,6 +72,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { MemberCardAddedComponent } from './members/member-card-added/member-card-added.component';
+import { AnimeService } from 'api/anime.service';
+import { MangaService } from 'api/manga.service';
+import { MoviesService } from 'api/movies.service';
+import { TvShowsService } from 'api/tvShows.service';
+import { GameService } from 'api/game.service';
+import { PaginationComponent } from './_pagination/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +130,8 @@ import { MemberCardAddedComponent } from './members/member-card-added/member-car
     GameListComponent,
     GameDetailComponent,
     ConfirmDialogComponent,
-    MemberCardAddedComponent
+    MemberCardAddedComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -156,7 +163,12 @@ import { MemberCardAddedComponent } from './members/member-card-added/member-car
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, //multi: true inseamna ca adauga interceptorii astia la aia care sunt deja, nu ii inlocuieste
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+    AnimeService,
+    MangaService,
+    MoviesService,
+    TvShowsService,
+    GameService
   ],
 
   bootstrap: [AppComponent]

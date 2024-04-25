@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +18,7 @@ namespace Disertatie_backend.Entities.User
         public string? Interests { get; set; }
         public string? City { get; set; }
         public string? Country { get; set; }
-        public Photo? ProfilePicture { get; set; }
+        public Photo? Photos { get; set; }
         public IList<Guid>? FriendRequests { get; set; } = new List<Guid>();
         public IList<Friendships>? Friends { get; set; } = new List<Friendships>();
         public IList<Message>? MessagesSent { get; set; } = new List<Message>();

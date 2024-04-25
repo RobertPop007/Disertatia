@@ -26,9 +26,9 @@ namespace Disertatie_backend.DatabaseContext
 
             var documents = await _tvShowsCollection.Find(_ => true).ToListAsync();
 
-            var defaultReviews = new List<ReviewDto>();
-            var update = Builders<TvShow>.Update.Set(x => x.Reviews, defaultReviews);
-            _tvShowsCollection.UpdateMany(FilterDefinition<TvShow>.Empty, update);
+            //var defaultReviews = new List<ReviewDto>();
+            //var update = Builders<TvShow>.Update.Set(x => x.Reviews, defaultReviews);
+            //_tvShowsCollection.UpdateMany(FilterDefinition<TvShow>.Empty, update);
 
             //if (!context.TvShows.Any())
             //{

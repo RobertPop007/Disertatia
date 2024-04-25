@@ -146,7 +146,7 @@
 <owl-carousel-o [options]="customOptions">
   
     <ng-container *ngFor="let tvShow of tvShow.similars">
-      <ng-template *ngIf="tvShow.title && tvShow.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="tvShow.tvShowId" style="margin-left: 20px;">
+      <ng-template *ngIf="tvShow.title && tvShow.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="tvShow.tvShowId!" style="margin-left: 20px;">
         <div class="d-flex justify-content-start" style="width: 18rem;">
             <app-tv-show-card [tvShow]="tvShow"></app-tv-show-card>
       </div>

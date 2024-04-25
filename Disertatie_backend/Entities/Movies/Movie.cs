@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
+using System;
 
 namespace Disertatie_backend.Entities.Movies
 {
@@ -56,6 +57,6 @@ namespace Disertatie_backend.Entities.Movies
         public string? Tagline { get; set; }
         public string? Keywords { get; set; }
         public List<Similar>? Similars { get; set; }
-        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
+        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
     }
 }

@@ -8,13 +8,19 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { User } from 'src/app/_models/user';
+import { AnimeDetailedResolver } from 'src/app/_resolvers/anime-detailed.resolver';
 import { AccountService } from 'src/app/_services/account.service';
 import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
 
 @Component({
   selector: 'app-anime-detail',
   templateUrl: './anime-detail.component.html',
-  styleUrls: ['./anime-detail.component.scss']
+  styleUrls: ['./anime-detail.component.scss'],
+  providers: [
+    AnimeDetailedResolver,
+    AnimeService,
+    AnimeAngularService
+  ]
 })
 export class AnimeDetailComponent implements OnInit {
 

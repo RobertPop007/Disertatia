@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO;
@@ -44,22 +45,23 @@ namespace Disertatie_backend.Repositories
             _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
             _animeCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
             _animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
+            _animeCollectionHelper.CreateIndexAscending(u => u.Score, "Score");
 
             _mapper = mapper;
         }
 
-        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task AddReviewAsync(ObjectId id, Review review)
         {
             var filter = Builders<Datum>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Datum>.Update.Push(x => x.Reviews, reviewDto);
+            var update = Builders<Datum>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _animeCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
             var filter = Builders<Datum>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Datum>.Update.Pull(x => x.Reviews, reviewDto);
+            var update = Builders<Datum>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _animeCollection.UpdateOneAsync(filter, update);
         }
@@ -76,7 +78,7 @@ namespace Disertatie_backend.Repositories
             return await _animeCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
+        public async Task<PagedList<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
         {
             var filterByTitle = Builders<Datum>.Filter.Empty;
             var filterByTitleEnglish = Builders<Datum>.Filter.Empty;
@@ -91,26 +93,17 @@ namespace Disertatie_backend.Repositories
                 filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
             }
 
-            var query = await _animeCollection.Find(filterByTitle).ToListAsync();
+            var query = _animeCollection.AsQueryable().AsQueryable();
 
-            var queryList = new List<AnimeCard>();
-
-            foreach (var document in query)
+            query = animeParams.OrderBy switch
             {
-                queryList.Add(_mapper.Map<AnimeCard>(document));
-            }
-
-            var mappedQuery = queryList.AsEnumerable();
-
-            mappedQuery = animeParams.OrderBy switch
-            {
-                "title" => mappedQuery.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
-                "score" => mappedQuery.OrderByDescending(u => u.Score),
-                _ => mappedQuery.OrderByDescending(u => u.Year)
-
+                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
+                "score" => query.OrderByDescending(u => u.Score),
+                _ => query
             };
 
-            return mappedQuery;
+            return await PagedList<AnimeCard>.CreateAsync(query.ProjectTo<AnimeCard>(_mapper.ConfigurationProvider).AsNoTracking(),
+                animeParams.PageNumber, animeParams.PageSize);
         }
     }
 }

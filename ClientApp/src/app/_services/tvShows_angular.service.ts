@@ -80,7 +80,7 @@ export class TvShowsAngularService{
   }
 
   addTvShow(tvShowId: ObjectId){
-    return this.tvShowService.apiTvShowsAddTvShowTvShowIdPost(tvShowId);
+    return this.tvShowService.apiTvShowsAddTvShowToUserTvShowIdPost(tvShowId);
   }
 
   getTvShowsForUser(predicate: string, pageNumber: number, pageSize: number){

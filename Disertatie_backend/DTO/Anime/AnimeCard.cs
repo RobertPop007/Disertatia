@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Disertatie_backend.Entities.Anime;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DTO.Anime
 {

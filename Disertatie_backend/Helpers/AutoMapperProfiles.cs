@@ -23,13 +23,13 @@ namespace Disertatie_backend.Helpers
         {
             CreateMap<AppUser, MemberDto>()
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src =>
-                    src.ProfilePicture.Url))
+                    src.Photos.Url))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.DateOfBirth.CalculateAge()));
 
             CreateMap<AppUser, FriendsDto>()
                 .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src =>
-                    src.ProfilePicture.Url))
+                    src.Photos.Url))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.DateOfBirth.CalculateAge()));
 
@@ -46,9 +46,9 @@ namespace Disertatie_backend.Helpers
 
             CreateMap<Message, MessageDto>()
                 .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src =>
-                    src.Sender.ProfilePicture.Url))
+                    src.Sender.Photos.Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
-                    src.Recipient.ProfilePicture.Url)).ReverseMap();
+                    src.Recipient.Photos.Url)).ReverseMap();
 
             CreateMap<MovieItem, Movie>().ReverseMap();
 
@@ -56,7 +56,10 @@ namespace Disertatie_backend.Helpers
 
             CreateMap<Movie, MovieCard>().ReverseMap();
 
-            CreateMap<Datum, AnimeCard>().ReverseMap();
+            CreateMap<Datum, AnimeCard>()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src =>
+                    src.Images.Jpg.Image_url))
+                .ReverseMap();
             CreateMap<DatumManga, MangaCard>().ReverseMap();
             CreateMap<Game, GameCard>().ReverseMap();
             CreateMap<Movie, MovieCard>().ReverseMap();

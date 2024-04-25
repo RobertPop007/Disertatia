@@ -77,7 +77,7 @@ export class AnimeAngularService {
   }
 
   addAnime(animeId: ObjectId){
-    return this.animeService.apiAnimeAddAnimeAnimeIdPost(animeId);
+    return this.animeService.apiAnimeAddReviewForAnimeIdPost(animeId);
   }
 
   getAnimesForUser(predicate: string, pageNumber: number, pageSize: number){

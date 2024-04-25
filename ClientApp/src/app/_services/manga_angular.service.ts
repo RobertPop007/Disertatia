@@ -77,7 +77,7 @@ export class MangaAngularService {
   }
 
   addManga(mangaId: ObjectId){
-    return this.mangaService.apiMangaAddMangaMangaIdPost(mangaId);
+    return this.mangaService.apiMangaAddReviewForMangaIdPost(mangaId);
   }
 
   getMangasForUser(predicate: string, pageNumber: number, pageSize: number){

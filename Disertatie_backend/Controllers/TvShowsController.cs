@@ -92,9 +92,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> AddReviewForTvShow(ObjectId tvShowId, ReviewDto reviewDto)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.AddReviewToItem<TvShow>(user, tvShowId, reviewDto);
+            await _reviewRepository.AddReviewToItem<TvShow>(userId, tvShowId, reviewDto);
 
             return Ok(reviewDto);
         }
@@ -120,9 +119,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> DeleteReviewForTvShow(ObjectId tvShowId, Guid reviewId)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.DeleteReviewFromItem<TvShow>(user, tvShowId, reviewId);
+            await _reviewRepository.DeleteReviewFromItem<TvShow>(userId, tvShowId, reviewId);
 
             return Ok();
         }

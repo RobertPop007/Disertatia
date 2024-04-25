@@ -30,8 +30,12 @@
 
             <div class="card-footer">
                 <div class="btn-group d-flex">
-                    <button (click)="addFriend(member)" class="btn btn-primary">Add</button>
-                    <button (click)="selectTab(2)" class="btn btn-success">Message</button>
+                    <div *ngIf="!areUsersFriends">
+                        <button (click)="addFriend(member)" class="btn btn-primary">Send friend request</button>
+                    </div>
+                    <div *ngIf="areUsersFriends">
+                        <button (click)="selectTab(2)" class="btn btn-success">Message</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@ namespace Disertatie_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FriendsDto>>> GetUserFriends([FromQuery] AddFriendParams addFriendParams)
         {
-            addFriendParams.UserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4"); //User.GetUserId();
+            addFriendParams.UserId = User.GetUserId();
             var users = await _addFriendsRepository.GetUserFriends(addFriendParams);
 
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
@@ -46,7 +46,7 @@ namespace Disertatie_backend.Controllers
         [HttpGet("CheckFriendship/{username}")]
         public async Task<bool> CheckFriendship([FromRoute] string username)
         {
-            var userId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4");
+            var userId = User.GetUserId();
             var currentUser = await _addFriendsRepository.GetUserWithFriends(userId);
 
             var friend = await _userManager.FindByNameAsync(username);
@@ -60,10 +60,10 @@ namespace Disertatie_backend.Controllers
             return false;
         }
 
-        [HttpPost("/AcceptFriendRequest/{username}")]
+        [HttpPost("AcceptFriendRequest/{username}")]
         public async Task<ActionResult> AddFriend(string username)
         {
-            var addedByUserId = new Guid("0A5AAA80-3373-49C2-1D57-08DC58ADDFE4");
+            var addedByUserId = User.GetUserId();
             var addedUser = await _userRepository.GetUserByUsernameAsync(username);
             var addedByUser = await _addFriendsRepository.GetUserWithFriends(addedByUserId);
 
@@ -93,10 +93,10 @@ namespace Disertatie_backend.Controllers
             return Ok($"Successfully added {username} as a friend");
         }
 
-        [HttpPost("/SendFriendRequest/{username}")]
+        [HttpPost("SendFriendRequest/{username}")]
         public async Task<ActionResult> SendFriendRequest(string username)
         {
-            var addedByUserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4"); //User.GetUserId();
+            var addedByUserId = User.GetUserId();
             var addedUser = await _userRepository.GetUserByUsernameAsync(username);
             var addedByUser = await _addFriendsRepository.GetUserWithFriends(addedByUserId);
 
@@ -114,13 +114,13 @@ namespace Disertatie_backend.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(@$"A friend request has been sent to {username}");
+            return Ok();
         }
 
-        [HttpDelete("/DeleteFriend/{username}")]
+        [HttpDelete("DeleteFriend/{username}")]
         public async Task<ActionResult> RemoveFriend(string username)
         {
-            var removedByUserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4"); //User.GetUserId();
+            var removedByUserId = User.GetUserId();
             var removedUser = await _userRepository.GetUserByUsernameAsync(username);
             var removedByUser = await _addFriendsRepository.GetUserWithFriends(removedByUserId);
 
@@ -143,10 +143,10 @@ namespace Disertatie_backend.Controllers
             return Ok($"Successfully removed friend request to {username}");
         }
 
-        [HttpDelete("/CancelFriendRequest/{username}")]
+        [HttpDelete("CancelFriendRequest/{username}")]
         public async Task<ActionResult> CancelFriendRequest(string username)
         {
-            var currentUserId = new Guid("DFF8FFF1-EF29-4C60-1D51-08DC58ADDFE4");  //User.GetUserId();
+            var currentUserId = User.GetUserId();
             var userWithFriendRequest = await _userRepository.GetUserByUsernameAsync(username);
             var currentUser = await _addFriendsRepository.GetUserWithFriends(currentUserId);
 
@@ -165,10 +165,10 @@ namespace Disertatie_backend.Controllers
             return Ok("Successfully cancelled friend request");
         }
 
-        [HttpDelete("/RefuseFriendRequest/{username}")]
+        [HttpDelete("RefuseFriendRequest/{username}")]
         public async Task<ActionResult> RefuseFriendRequest(string username)
         {
-            var currentUserId = new Guid("0A5AAA80-3373-49C2-1D57-08DC58ADDFE4"); //User.GetUserId();
+            var currentUserId = User.GetUserId();
             var userInFriendRequestList = await _userRepository.GetUserByUsernameAsync(username);
             var currentUser = await _addFriendsRepository.GetUserWithFriends(currentUserId);
 

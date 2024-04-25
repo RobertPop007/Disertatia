@@ -29,7 +29,15 @@ import { TvShowsAngularService } from 'src/app/_services/tvShows_angular.service
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.css']
+  styleUrls: ['./member-detail.component.css'],
+  providers:[
+    MoviesService,
+    AnimeService,
+    MangaService,
+    GameService,
+    FriendsService,
+    TvShowsService
+  ]
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs!: TabsetComponent;
@@ -63,8 +71,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.data.subscribe(data => {
-     // console.log(data);
-      
+      console.log(data);
       this.member = data['member'];
     })
 
@@ -77,8 +84,6 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   updateWatchList(){
-    console.log(this.user.username);
-    
     this.moviesService.apiMoviesGetMoviesForUsernameGet(this.member.userName).subscribe(response => {
       this.watchedMovies = response;
     })
@@ -107,7 +112,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   loadMember(){
-    this.memberService.getMember(this.route.snapshot.paramMap.get('username')!).subscribe(member => {
+    this.memberService.getMember(this.route.snapshot.paramMap.get('userName')!).subscribe(member => {
       this.member = member;
     })
   }
@@ -138,7 +143,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   addFriend(member: Member){
     this.memberService.addFriend(member.userName).subscribe(() => {
-      this.toastr.success('You have added ' + member.userName);
+      this.toastr.success('You have send a friend request to ' + member.userName);
     })
   }
 

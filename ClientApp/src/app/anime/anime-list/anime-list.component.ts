@@ -27,6 +27,7 @@ export class AnimeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAnimes();
+    
   }
 
   loadAnimes(){

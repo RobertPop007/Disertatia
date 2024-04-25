@@ -592,7 +592,7 @@ namespace Disertatie_backend.Migrations
             modelBuilder.Entity("Disertatie_backend.Entities.User.Photo", b =>
                 {
                     b.HasOne("Disertatie_backend.Entities.User.AppUser", "AppUser")
-                        .WithOne("ProfilePicture")
+                        .WithOne("Photos")
                         .HasForeignKey("Disertatie_backend.Entities.User.Photo", "AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -670,7 +670,7 @@ namespace Disertatie_backend.Migrations
 
                     b.Navigation("MessagesSent");
 
-                    b.Navigation("ProfilePicture");
+                    b.Navigation("Photos");
 
                     b.Navigation("Reviews");
 

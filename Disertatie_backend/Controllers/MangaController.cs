@@ -92,9 +92,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> AddReviewForManga(ObjectId mangaId, ReviewDto reviewDto)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.AddReviewToItem<DatumManga>(user, mangaId, reviewDto);
+            await _reviewRepository.AddReviewToItem<DatumManga>(userId, mangaId, reviewDto);
 
             return Ok(reviewDto);
         }
@@ -103,9 +102,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> DeleteReviewForManga(ObjectId mangaId, Guid reviewId)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.DeleteReviewFromItem<DatumManga>(user, mangaId, reviewId);
+            await _reviewRepository.DeleteReviewFromItem<DatumManga>(userId, mangaId, reviewId);
 
             return Ok();
         }

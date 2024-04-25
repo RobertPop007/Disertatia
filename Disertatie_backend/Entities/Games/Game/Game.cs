@@ -15,8 +15,8 @@ namespace Disertatie_backend.Entities.Games.Game
         public ObjectId Id { get; set; }
 
 #nullable enable
-        [JsonProperty("id")]
-        public int Game_Id { get; set; }
+        //[JsonProperty("id")]
+        //public int Game_Id { get; set; }
         public string? Slug { get; set; }
         public string? Name { get; set; }
         public string? Name_original { get; set; }
@@ -65,6 +65,6 @@ namespace Disertatie_backend.Entities.Games.Game
         public List<PublisherGame>? Publishers { get; set; }
         public EsrbRatingGame? Esrb_rating { get; set; }
         public string? Description_raw { get; set; }
-        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
+        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
     }
 }

@@ -90,7 +90,7 @@ namespace Disertatie_backend.Controllers
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
-                PhotoUrl = user.ProfilePicture?.Url,
+                PhotoUrl = user.Photos?.Url,
                 KnownAs = user.KnownAs,
                 Gender = user.Gender,
                 IsSubscribed = user.IsSubscribedToNewsletter,

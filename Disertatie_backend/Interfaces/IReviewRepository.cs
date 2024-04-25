@@ -9,10 +9,10 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IReviewRepository<T>
     {
-        Task AddReviewToItem<T>(AppUser user, ObjectId itemId, ReviewDto reviewDto);
-        Task DeleteReviewFromItem<T>(AppUser user, ObjectId itemId, Guid reviewId);
-        Task UpdateReviewItem<T>(AppUser user, ObjectId itemId, Review review);
-        Task<IEnumerable<ReviewDto>> GetReviewsForItem<T>(ObjectId itemId);
+        Task AddReviewToItem<T>(Guid userId, ObjectId itemId, ReviewDto reviewDto);
+        Task DeleteReviewFromItem<T>(Guid userId, ObjectId itemId, Guid reviewId);
+        Task UpdateReviewItem<T>(Guid userId, ObjectId itemId, Review review);
+        Task<IEnumerable<Review>> GetReviewsForItem<T>(ObjectId itemId);
         Task<IEnumerable<Review>> GetReviewsForUserAsync(Guid userId);
     }
 }

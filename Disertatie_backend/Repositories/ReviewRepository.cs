@@ -41,26 +41,28 @@ namespace Disertatie_backend.Repositories
             _gamesRepository = gamesRepository;
         }
 
-        public async Task AddReviewToItem<T>(AppUser user, ObjectId itemId, ReviewDto reviewDto)
+        public async Task AddReviewToItem<T>(Guid userId, ObjectId itemId, ReviewDto reviewDto)
         {
+            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+
             var review = new Review()
             {
                 ItemId = itemId.ToString(),
                 Main_description = reviewDto.Main_description,
                 Short_description = reviewDto.Short_description,
                 ReviewDate = DateTime.Now,
-                ReviewId = new Guid(),
+                ReviewId = Guid.NewGuid(),
                 Stars = reviewDto.Stars,
                 User = user,
                 UserId = user.Id
             };
 
-            user.Reviews.Add(review);
+            _context.Reviews.Add(review);
 
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    await _animeRepository.AddReviewAsync(itemId, reviewDto);
+                    await _animeRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
                     await _mangaRepository.AddReviewAsync(itemId, reviewDto);
@@ -81,86 +83,101 @@ namespace Disertatie_backend.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteReviewFromItem<T>(AppUser user, ObjectId itemId, Guid reviewId)
+        public async Task DeleteReviewFromItem<T>(Guid userId, ObjectId itemId, Guid reviewId)
         {
+            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
             var review = _context.Reviews.FirstOrDefault(r => r.ReviewId ==  reviewId);
-            var reviewDto = new ReviewDto()
-            {
-                Main_description = review.Main_description,
-                Short_description = review.Short_description,
-                Stars = review.Stars,
-                Username = review.User.UserName
-            };
 
-            user.Reviews.Remove(review);
-
-            switch (typeof(T))
+            if(review != null)
             {
-                case Type t when typeof(Datum).IsAssignableFrom(t):
-                    await _animeRepository.DeleteReviewAsync(itemId, reviewDto);
-                    break;
-                case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    await _mangaRepository.DeleteReviewAsync(itemId, reviewDto);
-                    break;
-                case Type t when typeof(Game).IsAssignableFrom(t):
-                    await _gamesRepository.DeleteReviewAsync(itemId, reviewDto);
-                    break;
-                case Type t when typeof(Movie).IsAssignableFrom(t):
-                    await _moviesRepository.DeleteReviewAsync(itemId, reviewDto);
-                    break;
-                case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    await _tvShowsRepository.DeleteReviewAsync(itemId, reviewDto);
-                    break;
-                default:
-                    break;
+                var reviewDto = new ReviewDto()
+                {
+                    Main_description = review.Main_description,
+                    Short_description = review.Short_description,
+                    Stars = review.Stars,
+                    Username = review.User.UserName
+                };
+
+                _context.Reviews.Remove(review);
+
+                switch (typeof(T))
+                {
+                    case Type t when typeof(Datum).IsAssignableFrom(t):
+                        await _animeRepository.DeleteReviewAsync(itemId, review.ReviewId);
+                        break;
+                    case Type t when typeof(DatumManga).IsAssignableFrom(t):
+                        await _mangaRepository.DeleteReviewAsync(itemId, reviewDto);
+                        break;
+                    case Type t when typeof(Game).IsAssignableFrom(t):
+                        await _gamesRepository.DeleteReviewAsync(itemId, reviewDto);
+                        break;
+                    case Type t when typeof(Movie).IsAssignableFrom(t):
+                        await _moviesRepository.DeleteReviewAsync(itemId, reviewDto);
+                        break;
+                    case Type t when typeof(TvShow).IsAssignableFrom(t):
+                        await _tvShowsRepository.DeleteReviewAsync(itemId, reviewDto);
+                        break;
+                    default:
+                        break;
+                }
+
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ReviewDto>> GetReviewsForItem<T>(ObjectId itemId)
+        public async Task<IEnumerable<Review>> GetReviewsForItem<T>(ObjectId itemId)
         {
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
                     var anime = await _animeRepository.GetAnimeByIdAsync(itemId);
-                    return anime.Reviews;
+                    var animeReviews = anime.ReviewsIds.Select(x => GetReview(x));
+                    return animeReviews;
 
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
                     var manga = await _mangaRepository.GetMangaByIdAsync(itemId);
-                    return manga.Reviews;
+                    var mangaReviews = manga.ReviewsIds.Select(x => GetReview(x));
+                    return mangaReviews;
 
                 case Type t when typeof(Game).IsAssignableFrom(t):
                     var game = await _gamesRepository.GetGameByIdAsync(itemId);
-                    return game.Reviews;
+                    var gameReviews = game.ReviewsIds.Select(x => GetReview(x));
+                    return gameReviews;
 
                 case Type t when typeof(Movie).IsAssignableFrom(t):
                     var movie = await _moviesRepository.GetMovieByIdAsync(itemId);
-                    return movie.Reviews;
+                    var movieReviews = movie.ReviewsIds.Select(x => GetReview(x));
+                    return movieReviews;
 
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
                     var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(itemId);
-                    return tvShow.Reviews;
+                    var tvShowReviews = tvShow.ReviewsIds.Select(x => GetReview(x));
+                    return tvShowReviews;
 
                 default:
                     break;
             }
 
-            return new List<ReviewDto>();
+            return new List<Review>();
         }
 
         public async Task<IEnumerable<Review>> GetReviewsForUserAsync(Guid userId)
         {
-            var reviewsForUser = await _context.Reviews.Where(x => x.UserId == userId).ToListAsync();
+            var reviewsForUser = _context.Reviews.Where(x => x.UserId == userId).ToList();
 
             if (reviewsForUser == null) return Enumerable.Empty<Review>();
 
             return reviewsForUser;
         }
 
-        public Task UpdateReviewItem<T>(AppUser user, ObjectId itemId, Review review)
+        public Task UpdateReviewItem<T>(Guid userId, ObjectId itemId, Review review)
         {
             throw new System.NotImplementedException();
+        }
+
+        private Review GetReview(Guid reviewId)
+        {
+            return _context.Reviews.FirstOrDefault(x => x.ReviewId == reviewId);
         }
     }
 }

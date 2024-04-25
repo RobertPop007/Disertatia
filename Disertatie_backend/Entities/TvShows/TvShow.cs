@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
+using System;
 
 namespace Disertatie_backend.Entities.TvShows
 {
@@ -53,6 +54,6 @@ namespace Disertatie_backend.Entities.TvShows
         public string? Keywords { get; set; }
         public List<TvShowSimilar>? Similars { get; set; }
         public TvSeriesInfo? TvSeriesInfo { get; set; }
-        public ICollection<ReviewDto>? Reviews { get; set; } = new List<ReviewDto>();
+        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
     }
 }

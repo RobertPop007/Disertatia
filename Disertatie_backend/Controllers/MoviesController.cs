@@ -92,9 +92,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> AddReviewForMovie(ObjectId movieId, ReviewDto reviewDto)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.AddReviewToItem<Movie>(user, movieId, reviewDto);
+            await _reviewRepository.AddReviewToItem<Movie>(userId, movieId, reviewDto);
 
             return Ok(reviewDto);
         }
@@ -120,9 +119,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> DeleteReviewForMovie(ObjectId movieId, Guid reviewId)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.DeleteReviewFromItem<Movie>(user, movieId, reviewId);
+            await _reviewRepository.DeleteReviewFromItem<Movie>(userId, movieId, reviewId);
 
             return Ok();
         }

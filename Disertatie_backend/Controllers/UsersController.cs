@@ -54,7 +54,7 @@ namespace Disertatie_backend.Controllers
         [HttpGet("GetReviewsForCurrentUser")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviewsForUser()
         {
-            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57"); //User.GetUserId();
+            var userId = User.GetUserId();
 
             return Ok(await _reviewRepository.GetReviewsForUserAsync(userId));
         }
@@ -74,7 +74,7 @@ namespace Disertatie_backend.Controllers
                 PublicId = result.PublicId
             };
 
-            user.ProfilePicture = photo;
+            user.Photos = photo;
 
             if (await _userRepository.SaveAllAsync())
             {
@@ -104,7 +104,7 @@ namespace Disertatie_backend.Controllers
         {
             var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
 
-            var photo = user.ProfilePicture;
+            var photo = user.Photos;
 
             if (photo == null) return NotFound();
 
@@ -115,7 +115,7 @@ namespace Disertatie_backend.Controllers
                 if (result.Error != null) return BadRequest(result.Error.Message);
             }
 
-            user.ProfilePicture = null;
+            user.Photos = null;
 
             if (await _userRepository.SaveAllAsync()) return Ok();
 

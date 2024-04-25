@@ -42,7 +42,7 @@ namespace Disertatie_backend.DatabaseContext
 
             var admin = new AppUser
             {
-                UserName = "admin"
+                UserName = "testAdminPentruAzure"
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");

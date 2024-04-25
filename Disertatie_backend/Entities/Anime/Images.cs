@@ -1,4 +1,6 @@
-﻿namespace Disertatie_backend.Entities.Anime
+﻿using Newtonsoft.Json;
+
+namespace Disertatie_backend.Entities.Anime
 {
 
     public class Images
@@ -6,7 +8,6 @@
 #nullable enable
         public Jpg? Jpg { get; set; }
         public Webp? Webp { get; set; }
-
         public string? Image_url { get; set; }
         public string? Small_image_url { get; set; }
         public string? Medium_image_url { get; set; }

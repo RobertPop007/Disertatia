@@ -73,9 +73,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> AddReviewForGame(ObjectId gameId, ReviewDto reviewDto)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.AddReviewToItem<Game>(user, gameId, reviewDto);
+            await _reviewRepository.AddReviewToItem<Game>(userId, gameId, reviewDto);
 
             return Ok(reviewDto);
         }
@@ -120,9 +119,8 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> DeleteReviewForGame(ObjectId gameId, Guid reviewId)
         {
             var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
 
-            await _reviewRepository.DeleteReviewFromItem<Game>(user, gameId, reviewId);
+            await _reviewRepository.DeleteReviewFromItem<Game>(userId, gameId, reviewId);
 
             return Ok();
         }

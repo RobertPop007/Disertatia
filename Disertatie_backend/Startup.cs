@@ -86,11 +86,11 @@ namespace Disertatie_backend
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect_licenta", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect_disertatie", Version = "v1" });
 
                 c.AddServer(new OpenApiServer()
                 {
-                    Url = "https://localhost:44330/"
+                    Url = "https://localhost:5001"
                 });
             });
         }

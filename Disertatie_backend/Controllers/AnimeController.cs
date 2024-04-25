@@ -44,6 +44,9 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> GetAnimes([FromQuery] AnimeParams animeParams)
         {
             var animes = await _animesRepository.GetAnimesAsync(animeParams);
+
+            Response.AddPaginationHeader(animes.CurrentPage, animes.PageSize, animes.TotalCount, animes.TotalPages);
+
             return Ok(animes);
         }
 
@@ -56,7 +59,7 @@ namespace Disertatie_backend.Controllers
         [HttpGet("AnimeAlreadyAdded")]
         public async Task<bool> IsAnimeAlreadyAdded(ObjectId animeId)
         {
-            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57");// User.GetUserId();
+            var userId = User.GetUserId();
 
             return await _userItemsRepository.IsItemAlreadyAdded(userId, animeId);
         }
@@ -89,10 +92,9 @@ namespace Disertatie_backend.Controllers
         [HttpPost("AddReviewFor/{animeId}")]
         public async Task<IActionResult> AddReviewForAnime(ObjectId animeId, ReviewDto reviewDto)
         {
-            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57"); //User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");//User.GetUserId();
 
-            await _reviewRepository.AddReviewToItem<Datum>(user, animeId, reviewDto);
+            await _reviewRepository.AddReviewToItem<Datum>(userId, animeId, reviewDto);
 
             return Ok(reviewDto);
         }
@@ -100,7 +102,7 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("DeleteAnimeFromUser/{animeId}")]
         public async Task<IActionResult> DeleteAnimeForUser(ObjectId animeId)
         {
-            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57"); //User.GetUserId();
+            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");  //User.GetUserId();
             var user = await _userRepository.GetUserByIdAsync(userId);
 
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
@@ -117,10 +119,9 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("DeleteReviewFor/{animeId}")]
         public async Task<IActionResult> DeleteReviewForAnime(ObjectId animeId, Guid reviewId)
         {
-            var userId = new System.Guid("1C7E8AC6-3371-4C90-2A43-08DC5AE01C57"); //User.GetUserId();
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");  //User.GetUserId();
 
-            await _reviewRepository.DeleteReviewFromItem<Datum>(user, animeId, reviewId);
+            await _reviewRepository.DeleteReviewFromItem<Datum>(userId, animeId, reviewId);
 
             return Ok();
         }

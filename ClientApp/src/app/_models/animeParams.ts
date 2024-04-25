@@ -4,7 +4,7 @@ import { User } from "./user";
 export class AnimeParams{
     username!: string;
     pageNumber = 1;
-    pageSize = 20;
+    pageSize = 72;
     searchedAnime!: string;
     orderBy = "score";
 

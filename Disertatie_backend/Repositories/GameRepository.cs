@@ -45,7 +45,7 @@ namespace Disertatie_backend.Repositories
         public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
             var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Game>.Update.Push(x => x.Reviews, reviewDto);
+            var update = Builders<Game>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _gamesCollection.UpdateOneAsync(filter, update);
         }
@@ -53,7 +53,7 @@ namespace Disertatie_backend.Repositories
         public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
             var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Game>.Update.Pull(x => x.Reviews, reviewDto);
+            var update = Builders<Game>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _gamesCollection.UpdateOneAsync(filter, update);
         }

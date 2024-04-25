@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using System.Threading.Tasks;
 using System;
-using AutoMapper;
 using System.Collections.Generic;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
@@ -48,19 +47,58 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    user.AppUserAnime.Add(new AppUserAnimeItem() { AppUserId = user.Id, AnimeId = itemId.ToString() });
+                    var animeItem = new AppUserAnimeItem()
+                    {
+                        AnimeId = itemId.ToString(),
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserAnimes.Add(animeItem);
+                    user.AppUserAnime.Add(animeItem);
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    user.AppUserManga.Add(new AppUserMangaItem() { AppUserId = user.Id, MangaId = itemId.ToString() });
+                    var mangaItem = new AppUserMangaItem()
+                    {
+                        MangaId = itemId.ToString(),
+                        AppUser = user,
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserMangas.Add(mangaItem);
+                    user.AppUserManga.Add(mangaItem);
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    user.AppUserGame.Add(new AppUserGameItem() { AppUserId = user.Id, GameId = itemId.ToString() });
+                    var gameItem = new AppUserGameItem()
+                    {
+                        GameId = itemId.ToString(),
+                        AppUser = user,
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserGames.Add(gameItem);
+                    user.AppUserGame.Add(gameItem);
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    user.AppUserMovie.Add(new AppUserMovieItem() { AppUserId = user.Id, MovieId = itemId.ToString() });
+                    var movieItem = new AppUserMovieItem()
+                    {
+                        MovieId = itemId.ToString(),
+                        AppUser = user,
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserMovies.Add(movieItem);
+                    user.AppUserMovie.Add(movieItem);
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    user.AppUserTvShow.Add(new AppUserTvShowItem() { AppUserId = user.Id, TvShowId = itemId.ToString() });
+                    var tvShowItem = new AppUserTvShowItem()
+                    {
+                        TvShowId = itemId.ToString(),
+                        AppUser = user,
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserTvShows.Add(tvShowItem);
+                    user.AppUserTvShow.Add(tvShowItem);
                     break;
                 default:
                     break;
@@ -74,19 +112,29 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    user.AppUserAnime.Remove(new AppUserAnimeItem() { AppUserId = user.Id, AnimeId = itemId.ToString() });
+                    var animeItem = _context.UserAnimes.FirstOrDefault(u => u.AnimeId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserAnimes.Remove(animeItem);
+                    user.AppUserAnime.Remove(animeItem);
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    user.AppUserManga.Remove(new AppUserMangaItem() { AppUserId = user.Id, MangaId = itemId.ToString() });
+                    var mangaItem = _context.UserMangas.FirstOrDefault(u => u.MangaId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserMangas.Remove(mangaItem);
+                    user.AppUserManga.Remove(mangaItem);
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    user.AppUserGame.Remove(new AppUserGameItem() { AppUserId = user.Id, GameId = itemId.ToString() });
+                    var gameItem = _context.UserGames.FirstOrDefault(u => u.GameId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserGames.Remove(gameItem);
+                    user.AppUserGame.Remove(gameItem);
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    user.AppUserMovie.Remove(new AppUserMovieItem() { AppUserId = user.Id, MovieId = itemId.ToString() });
+                    var movieItem = _context.UserMovies.FirstOrDefault(u => u.MovieId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserMovies.Remove(movieItem);
+                    user.AppUserMovie.Remove(movieItem);
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    user.AppUserTvShow.Remove(new AppUserTvShowItem() { AppUserId = user.Id, TvShowId = itemId.ToString() });
+                    var tvShowItem = _context.UserTvShows.FirstOrDefault(u => u.TvShowId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserTvShows.Remove(tvShowItem);
+                    user.AppUserTvShow.Remove(tvShowItem);
                     break;
                 default:
                     break;

@@ -36,7 +36,7 @@ namespace Disertatie_backend.Repositories
             return await _context.Users
                 .Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -62,13 +62,13 @@ namespace Disertatie_backend.Repositories
 
         public async Task<AppUser> GetUserByIdAsync(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
             return await _context.Users
-                .Include(p => p.ProfilePicture)
+                .Include(p => p.Photos)
                 .Include(p => p.AppUserAnime)
                 .Include(p => p.AppUserManga)
                 .Include(p => p.AppUserMovie)
@@ -80,7 +80,7 @@ namespace Disertatie_backend.Repositories
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
-                .Include(p => p.ProfilePicture)
+                .Include(p => p.Photos)
                 .ToListAsync();
         }
 

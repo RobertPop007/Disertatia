@@ -25,9 +25,9 @@ namespace Disertatie_backend.DatabaseContext
 
             var documents = await _moviesCollection.Find(_ => true).ToListAsync();
 
-            var defaultReviews = new List<ReviewDto>();
-            var update = Builders<Movie>.Update.Set(x => x.Reviews, defaultReviews);
-            _moviesCollection.UpdateMany(FilterDefinition<Movie>.Empty, update);
+            //var defaultReviews = new List<ReviewDto>();
+            //var update = Builders<Movie>.Update.Set(x => x.Reviews, defaultReviews);
+            //_moviesCollection.UpdateMany(FilterDefinition<Movie>.Empty, update);
 
             //if (!context.Top250Movies.Any())
             //{

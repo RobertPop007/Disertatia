@@ -15,17 +15,19 @@ namespace Disertatie_backend.DatabaseContext
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-
+        public DataContext()
+        {
+        }
         public DbSet<Message> Messages { get; init; }
         public DbSet<Group> Groups { get; init; }
         public DbSet<Connection> Connections { get; init; }
-        public DbSet<Friendships> Friends { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<AppUserAnimeItem> UserAnimes { get; set; }
-        public DbSet<AppUserMangaItem> UserMangas { get; set; }
-        public DbSet<AppUserGameItem> UserGames { get; set; }
-        public DbSet<AppUserMovieItem> UserMovies { get; set; }
-        public DbSet<AppUserTvShowItem> UserTvShows { get; set; }
+        public DbSet<Friendships> Friends { get; init; }
+        public virtual DbSet<Review> Reviews { get; init; }
+        public virtual DbSet<AppUserAnimeItem> UserAnimes { get; init; }
+        public virtual DbSet<AppUserMangaItem> UserMangas { get; init; }
+        public virtual DbSet<AppUserGameItem> UserGames { get; init; }
+        public virtual DbSet<AppUserMovieItem> UserMovies { get; init; }
+        public virtual DbSet<AppUserTvShowItem> UserTvShows { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

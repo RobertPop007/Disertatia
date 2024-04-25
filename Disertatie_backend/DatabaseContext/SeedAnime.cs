@@ -10,6 +10,8 @@ using Disertatie_backend.Entities;
 using System.Collections.Generic;
 using System.Xml;
 using Disertatie_backend.Entities.User;
+using AspNetCore.Identity.Mongo.Mongo;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -22,15 +24,16 @@ namespace Disertatie_backend.DatabaseContext
 
             var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.CollectionList["AnimeCollection"]);
 
-            //var documents = await _animeCollection.Find(_ => true).ToListAsync();
+            //var document = _animeCollection.Find(x => x.Id == new MongoDB.Bson.ObjectId("6611a0727b2649a4fd4e6ec0"));
 
             //var defaultReviews = new List<Review>();
-            //var update = Builders<Datum>.Update.Set(x => x.Reviews, defaultReviews);
+            //var update = Builders<Datum>.Update.Set(x => x.ReviewsIds, new List<Guid>());
             //_animeCollection.UpdateMany(FilterDefinition<Datum>.Empty, update);
+
 
             ////if (_animeCollection.CountDocuments(_ => true) >= 0)
             ////{
-            await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+            //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
 
             //    for (var i = 2; i <= 1081; i++)
             //    {

@@ -13,10 +13,10 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IAnimeRepository
     {
-        Task<IEnumerable<AnimeCard>> GetAnimesAsync(AnimeParams userParams);
+        Task<PagedList<AnimeCard>> GetAnimesAsync(AnimeParams userParams);
         Task<Datum> GetAnimeByIdAsync(ObjectId id);
         Task<Datum> GetAnimeByFullTitleAsync(string title);
-        Task AddReviewAsync(ObjectId id, ReviewDto reviewDto);
-        Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto);
+        Task AddReviewAsync(ObjectId id, Review reviewDto);
+        Task DeleteReviewAsync(ObjectId id, Guid reviewId);
     }
 }
