@@ -26,8 +26,14 @@ namespace Disertatie_backend.DatabaseContext
             var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.CollectionList["MangaCollection"]);
 
             //var documents = await _mangaCollection.Find(_ => true).ToListAsync();
-            var update = Builders<DatumManga>.Update.Set(x => x.ReviewsIds, new List<Guid>());
-            _mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
+            var filter = Builders<DatumManga>.Filter.Empty; // Match all documents
+            var options = new FindOptions<DatumManga> { Sort = Builders<DatumManga>.Sort.Descending("_id"), Limit = 6025 };
+            var cursor = await _mangaCollection.FindAsync(filter, options);
+            await cursor.ForEachAsync(async doc =>
+            {
+                // Delete each document
+                await _mangaCollection.DeleteOneAsync(Builders<DatumManga>.Filter.Eq("_id", doc.Id));
+            });
             //var defaultReviews = new List<ReviewDto>();
             //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
             //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);

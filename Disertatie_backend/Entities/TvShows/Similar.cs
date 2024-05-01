@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Disertatie_backend.Entities.Movies
+namespace Disertatie_backend.Entities.TvShows
 {
     public class Similar
     {
         [JsonProperty("page")]
-        public int Page { get; set; }
+        public int? Page;
 
         [JsonProperty("results")]
-        public List<Result> Results { get; set; }
+        public List<Result> Results;
 
         [JsonProperty("total_pages")]
-        public int TotalPages { get; set; }
+        public int? TotalPages;
 
         [JsonProperty("total_results")]
-        public int TotalResults { get; set; }
+        public int? TotalResults;
     }
 }

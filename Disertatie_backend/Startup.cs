@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Hangfire;
 using Disertatie_backend.Hangfire;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace Disertatie_backend
 {
@@ -56,9 +57,6 @@ namespace Disertatie_backend
 
             services.AddCors();
 
-            services.AddCrud<MovieItem, DataContext>();
-
-
             //var connectionString = Configuration.GetConnectionString("HangfireConnection");
             //services.AddHangfire(config => config.SetDataCompatibilityLevel((CompatibilityLevel.Version_170))
             //    .UseSimpleAssemblyNameTypeSerializer()
@@ -87,7 +85,7 @@ namespace Disertatie_backend
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect_disertatie", Version = "v1" });
-
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                 c.AddServer(new OpenApiServer()
                 {
                     Url = "https://localhost:5001"

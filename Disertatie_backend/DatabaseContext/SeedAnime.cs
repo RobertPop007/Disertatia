@@ -12,6 +12,7 @@ using System.Xml;
 using Disertatie_backend.Entities.User;
 using AspNetCore.Identity.Mongo.Mongo;
 using System;
+using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -23,6 +24,15 @@ namespace Disertatie_backend.DatabaseContext
             var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
 
             var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.CollectionList["AnimeCollection"]);
+
+            var filter = Builders<Datum>.Filter.Empty; // Match all documents
+            var options = new FindOptions<Datum> { Sort = Builders<Datum>.Sort.Descending("_id"), Limit = 4254 };
+            var cursor = await _animeCollection.FindAsync(filter, options);
+            await cursor.ForEachAsync(async doc =>
+            {
+                // Delete each document
+                await _animeCollection.DeleteOneAsync(Builders<Datum>.Filter.Eq("_id", doc.Id));
+            });
 
             //var document = _animeCollection.Find(x => x.Id == new MongoDB.Bson.ObjectId("6611a0727b2649a4fd4e6ec0"));
 

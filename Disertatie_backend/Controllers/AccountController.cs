@@ -7,7 +7,6 @@ using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using Disertatie_backend.Entities.User;
 using System.Net.Http;
-using Microsoft.Extensions.Options;
 using Disertatie_backend.Configurations;
 using Newtonsoft.Json;
 

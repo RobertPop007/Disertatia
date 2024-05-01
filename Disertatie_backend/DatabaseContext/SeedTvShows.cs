@@ -12,19 +12,34 @@ using Disertatie_backend.Entities.Movies;
 using System.Collections.Generic;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
+using System.Net.Http;
+using Disertatie_backend.Entities.Games.GamesIds;
+using System;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedTvShows
     {
-        public static async Task SeedAllTvShows(IOptions<DatabaseSettings> databaseSettings)
+        private static List<int> tvShowsIds = new List<int>();
+        public static async Task SeedAllTvShows(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            for (var i = 251; i <= 500; i++)
+            {
+                var endpoint = $"https://api.themoviedb.org/3/tv/popular?language=en-US&page={i}";
+                tvShowsIds.AddRange(await SeedTvShowsIds(endpoint));
+            }
 
-            var _tvShowsCollection = mongoDb.GetCollection<TvShow>(databaseSettings.Value.CollectionList["TVShowsCollection"]);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
 
-            var documents = await _tvShowsCollection.Find(_ => true).ToListAsync();
+            var _tvShowsCollection = mongoDb.GetCollection<TvShow>(databaseSettings.CollectionList["TVShowsCollection"]);
+
+            foreach (var id in tvShowsIds)
+            {
+                await SeedTrueTvShowList(_tvShowsCollection, $"https://api.themoviedb.org/3/tv/{id}?&append_to_response=videos,similar,images,credits&api_key=ff82c60470d3f2939794a05f8e248a89");
+            }
+
+            //var documents = await _tvShowsCollection.Find(_ => true).ToListAsync();
 
             //var defaultReviews = new List<ReviewDto>();
             //var update = Builders<TvShow>.Update.Set(x => x.Reviews, defaultReviews);
@@ -97,21 +112,63 @@ namespace Disertatie_backend.DatabaseContext
 
         public static async Task SeedTrueTvShowList(IMongoCollection<TvShow> _tvShowsCollection, string url)
         {
+            var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZjgyYzYwNDcwZDNmMjkzOTc5NGEwNWY4ZTI0OGE4OSIsInN1YiI6IjYxNGY5YzdmMTQwYmFkMDAyNTNiNzE0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-daJoGBoJfNzeJSJPl9bd47IzN5RZanP3eiC235gFLI";
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
+            using (HttpClient client = new HttpClient())
             {
-                string returnedUrl = reader.ReadToEnd();
-                var tvShow = JsonConvert.DeserializeObject<TvShow>(returnedUrl);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-                await _tvShowsCollection.InsertOneAsync(tvShow);
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var tvShow = JsonConvert.DeserializeObject<TvShow>(responseBody);
 
+                        tvShow.Videos.Results = tvShow.Videos.Results.Take(5).ToList();
+                        tvShow.Similar.Results = tvShow.Similar.Results.Take(10).ToList();
+                        tvShow.Images.Backdrops = tvShow.Images.Backdrops.Take(10).ToList();
+                        tvShow.Images.Logos = tvShow.Images.Logos.Take(10).ToList();
+                        tvShow.Images.Posters = tvShow.Images.Posters.Take(10).ToList();
+                        tvShow.Credits.Cast = tvShow.Credits.Cast.Take(15).ToList();
+                        tvShow.Credits.Crew = tvShow.Credits.Crew.Take(10).ToList();
+
+                        await _tvShowsCollection.InsertOneAsync(tvShow);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
             }
+        }
+
+        public static async Task<List<int>> SeedTvShowsIds(string url)
+        {
+            var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZjgyYzYwNDcwZDNmMjkzOTc5NGEwNWY4ZTI0OGE4OSIsInN1YiI6IjYxNGY5YzdmMTQwYmFkMDAyNTNiNzE0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-daJoGBoJfNzeJSJPl9bd47IzN5RZanP3eiC235gFLI";
+            var listToReturn = new List<int>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var tvShow = JsonConvert.DeserializeObject<Root>(responseBody);
+
+                    foreach (var item in tvShow.Results.Select(x => x.Id))
+                    {
+                        listToReturn.Add(item);
+                    };
+                }
+            }
+
+            return listToReturn;
         }
     }
 }

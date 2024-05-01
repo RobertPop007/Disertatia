@@ -34,9 +34,8 @@ namespace Disertatie_backend.Repositories
             _tvshowsCollectionHelper = tvshowsCollectionHelper;
             _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(_databaseSettings);
 
-            _tvshowsCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            _tvshowsCollectionHelper.CreateIndexAscending(u => u.FullTitle, titleFullIndex);
-            _tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
+            _tvshowsCollectionHelper.CreateIndexAscending(u => u.Name, titleIndex);
+            _tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalName, titleFullIndex);
 
             _mapper = mapper;
         }
@@ -59,7 +58,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<TvShow> GetTvShowByFullTitleAsync(string title)
         {
-            var filterByName = Builders<TvShow>.Filter.Eq(p => p.Title, title);
+            var filterByName = Builders<TvShow>.Filter.Eq(p => p.Name, title);
             return await _tvshowsCollection.Find(filterByName).FirstOrDefaultAsync();
         }
 
@@ -77,9 +76,8 @@ namespace Disertatie_backend.Repositories
 
             if (!(string.IsNullOrEmpty(tvShowParams.SearchedTvShow) || string.IsNullOrWhiteSpace(tvShowParams.SearchedTvShow)))
             {
-                filterByTitle = Builders<TvShow>.Filter.Regex(x => x.Title, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
-                filterByFullTitle = Builders<TvShow>.Filter.Regex(x => x.FullTitle, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
-                filterByOriginalTitle = Builders<TvShow>.Filter.Regex(x => x.OriginalTitle, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
+                filterByTitle = Builders<TvShow>.Filter.Regex(x => x.Name, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
+                filterByFullTitle = Builders<TvShow>.Filter.Regex(x => x.OriginalName, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
 
                 filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
             }

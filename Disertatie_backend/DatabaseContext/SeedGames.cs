@@ -13,6 +13,7 @@ using Disertatie_backend.Entities;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Anime;
 using System;
+using System.Net.Http;
 
 namespace Disertatie_backend.DatabaseContext
 {
@@ -30,26 +31,42 @@ namespace Disertatie_backend.DatabaseContext
             //var defaultReviews = new List<ReviewDto>();
             //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
             //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
-            var update = Builders<Game>.Update.Set(x => x.ReviewsIds, new List<Guid>());
-            _gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
+            //var filter = Builders<Game>.Filter.Empty; // Match all documents
+            //var options = new FindOptions<Game> { Sort = Builders<Game>.Sort.Descending("Rating"), Limit = 10000 };
+            //var cursor = await _gamesCollection.FindAsync(filter, options);
+            //await cursor.ForEachAsync(async doc =>
+            //{
+            //    // Delete each document
+            //    await _gamesCollection.DeleteOneAsync(Builders<Game>.Filter.Eq("Rating", doc.Rating));
+            //});
             //var defaultReviews = new List<Review>();
             //var update = Builders<Game>.Update.Set(x => x.Reviews, defaultReviews);
             //_gamesCollection.UpdateMany(FilterDefinition<Game>.Empty, update);
 
-            //var gamesIds = new List<int>();
+            var gamesIds = new List<int>();
 
-            //SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
+            SeedGameId(gamesIds, "https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960");
 
-            ////for (var i = 2; i <= 3; i++)
-            ////{
-            ////    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
-            ////}
+            for (var i = 462; i <= 502; i++)
+            {
+                try
+                {
+                    if(i!=62 && i!=352)
+                    SeedGameId(gamesIds, $@"https://api.rawg.io/api/games?key=9818629e6e0e4f71871839141551f960&page={i}");
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
+            }
 
 
-            //foreach (var gameId in gamesIds)
-            //{
-            //    await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
-            //}
+            foreach (var gameId in gamesIds)
+            {
+                await SeedGame(_gamesCollection, $@"https://api.rawg.io/api/games/{gameId}?key=9818629e6e0e4f71871839141551f960");
+            }
         }
 
         public static void SeedGameId(List<int> gamesIds, string url)
@@ -73,19 +90,33 @@ namespace Disertatie_backend.DatabaseContext
 
         public static async Task SeedGame(IMongoCollection<Game> _gamesCollection, string url)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
+            using (HttpClient client = new HttpClient())
             {
-                string returnedUrl = reader.ReadToEnd();
-                var game = JsonConvert.DeserializeObject<Game>(returnedUrl);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-                await _gamesCollection.InsertOneAsync(game);
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var game = JsonConvert.DeserializeObject<Game>(responseBody);
+
+                    await _gamesCollection.InsertOneAsync(game);
+                }
             }
+
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+
+            //using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            //using (Stream stream = response.GetResponseStream())
+            //using (StreamReader reader = new StreamReader(stream))
+            //{
+            //    string returnedUrl = reader.ReadToEnd();
+            //    var game = JsonConvert.DeserializeObject<Game>(returnedUrl);
+
+            //    await _gamesCollection.InsertOneAsync(game);
+            //}
         }
     }
 }

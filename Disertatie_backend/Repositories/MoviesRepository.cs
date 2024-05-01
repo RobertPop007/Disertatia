@@ -34,7 +34,6 @@ namespace Disertatie_backend.Repositories
             _moviesCollection = _moviesCollectionHelper.CreateCollection(_databaseSettings);
 
             _moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            _moviesCollectionHelper.CreateIndexAscending(u => u.FullTitle, titleFullIndex);
             _moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
@@ -66,7 +65,6 @@ namespace Disertatie_backend.Repositories
             {
                 filterByTitle = Builders<Movie>.Filter.Regex(x => x.Title, new BsonRegularExpression(movieParams.SearchedMovie, "i"));
                 filterByFullTitle = Builders<Movie>.Filter.Regex(x => x.OriginalTitle, new BsonRegularExpression(movieParams.SearchedMovie, "i"));
-                filterByOriginalTitle = Builders<Movie>.Filter.Regex(x => x.FullTitle, new BsonRegularExpression(movieParams.SearchedMovie, "i"));
 
                 filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
             }

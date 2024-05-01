@@ -1,10 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using Disertatie_backend.Entities.User;
-using Disertatie_backend.DTO;
 using System;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.TvShows
 {
@@ -14,46 +12,110 @@ namespace Disertatie_backend.Entities.TvShows
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
 #nullable enable
-        [JsonProperty("Id")]
-        public string? TvShow_Id { get; set; }
-        public string? Title { get; set; }
-        public string? OriginalTitle { get; set; }
-        public string? FullTitle { get; set; }
-        public string? Type { get; set; }
-        public string? Year { get; set; }
-        public string? Image { get; set; }
-        public string? ReleaseDate { get; set; }
-        public string? RuntimeMins { get; set; }
-        public string? RuntimeStr { get; set; }
-        public string? Plot { get; set; }
-        public string? PlotLocal { get; set; }
-        public bool? PlotLocalIsRtl { get; set; }
-        public string? Awards { get; set; }
-        public string? Directors { get; set; }
-        public string? Writers { get; set; }
-        public string? Stars { get; set; }
-        public List<TvShowStarList>? StarList { get; set; }
-        public List<TvShowActorList>? ActorList { get; set; }
-        public string? Genres { get; set; }
-        public List<TvShowGenreList>? GenreList { get; set; }
-        public string? Companies { get; set; }
-        public List<TvShowCompanyList>? CompanyList { get; set; }
-        public string? Countries { get; set; }
-        public List<TvShowCountryList>? CountryList { get; set; }
-        public string? Languages { get; set; }
-        public List<TvShowLanguageList>? LanguageList { get; set; }
-        public string? ContentRating { get; set; }
-        public string? ImDbRating { get; set; }
-        public string? ImDbRatingVotes { get; set; }
-        public string? MetacriticRating { get; set; }
-        public TvShowRatings? Ratings { get; set; }
-        public TvShowWikipedia? Wikipedia { get; set; }
-        public TvShowImages? Images { get; set; }
-        public TvShowTrailer? Trailer { get; set; }
-        public TvShowBoxOffice? BoxOffice { get; set; }
-        public string? Keywords { get; set; }
-        public List<TvShowSimilar>? Similars { get; set; }
-        public TvSeriesInfo? TvSeriesInfo { get; set; }
+        [JsonProperty("adult")]
+        public bool? Adult;
+
+        [JsonProperty("backdrop_path")]
+        public string? BackdropPath;
+
+        [JsonProperty("created_by")]
+        public List<CreatedBy>? CreatedBy;
+
+        [JsonProperty("episode_run_time")]
+        public List<int?>? EpisodeRunTime;
+
+        [JsonProperty("first_air_date")]
+        public string? FirstAirDate;
+
+        [JsonProperty("genres")]
+        public List<Genre>? Genres;
+
+        [JsonProperty("homepage")]
+        public string? Homepage;
+
+        [JsonProperty("id")]
+        public int? MovieId;
+
+        [JsonProperty("in_production")]
+        public bool? InProduction;
+
+        [JsonProperty("languages")]
+        public List<string>? Languages;
+
+        [JsonProperty("last_air_date")]
+        public string? LastAirDate;
+
+        [JsonProperty("last_episode_to_air")]
+        public LastEpisodeToAir? LastEpisodeToAir;
+
+        [JsonProperty("name")]
+        public string? Name;
+
+        [JsonProperty("networks")]
+        public List<Network>? Networks;
+
+        [JsonProperty("number_of_episodes")]
+        public int? NumberOfEpisodes;
+
+        [JsonProperty("number_of_seasons")]
+        public int? NumberOfSeasons;
+
+        [JsonProperty("origin_country")]
+        public List<string>? OriginCountry;
+
+        [JsonProperty("original_language")]
+        public string? OriginalLanguage;
+
+        [JsonProperty("original_name")]
+        public string? OriginalName;
+
+        [JsonProperty("overview")]
+        public string? Overview;
+
+        [JsonProperty("popularity")]
+        public double? Popularity;
+
+        [JsonProperty("poster_path")]
+        public string? PosterPath;
+
+        [JsonProperty("production_companies")]
+        public List<ProductionCompany>? ProductionCompanies;
+
+        [JsonProperty("production_countries")]
+        public List<ProductionCountry>? ProductionCountries;
+
+        [JsonProperty("seasons")]
+        public List<Season>? Seasons;
+
+        [JsonProperty("spoken_languages")]
+        public List<SpokenLanguage>? SpokenLanguages;
+
+        [JsonProperty("status")]
+        public string? Status;
+
+        [JsonProperty("tagline")]
+        public string? Tagline;
+
+        [JsonProperty("type")]
+        public string? Type;
+
+        [JsonProperty("vote_average")]
+        public double? VoteAverage;
+
+        [JsonProperty("vote_count")]
+        public int? VoteCount;
+
+        [JsonProperty("videos")]
+        public Videos? Videos;
+
+        [JsonProperty("similar")]
+        public Similar? Similar;
+
+        [JsonProperty("images")]
+        public Images? Images;
+
+        [JsonProperty("credits")]
+        public Credits? Credits;
         public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
     }
 }

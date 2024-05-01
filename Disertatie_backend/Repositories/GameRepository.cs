@@ -22,8 +22,6 @@ namespace Disertatie_backend.Repositories
         private readonly IMongoCollection<Game> _gamesCollection;
         private readonly IMongoDBCollectionHelper<Game> _gamesCollectionHelper;
         private readonly string nameIndex = "Name_index";
-        private readonly string nameOriginalIndex = "NameOriginal_index";
-        private readonly string nameRedditIndex = "NameReddit_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -37,8 +35,6 @@ namespace Disertatie_backend.Repositories
             _gamesCollection = _gamesCollectionHelper.CreateCollection(_databaseSettings);
 
             _gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
-            _gamesCollectionHelper.CreateIndexAscending(u => u.Name_original, nameOriginalIndex);
-            _gamesCollectionHelper.CreateIndexAscending(u => u.Reddit_name, nameRedditIndex);
 
             _mapper = mapper;
         }
@@ -73,16 +69,10 @@ namespace Disertatie_backend.Repositories
         public async Task<IEnumerable<GameCard>> GetGamesAsync(GameParams gameParams)
         {
             var filterByName = Builders<Game>.Filter.Empty;
-            var filterByNameOriginal = Builders<Game>.Filter.Empty;
-            var filterByRedditName = Builders<Game>.Filter.Empty;
 
             if (!(string.IsNullOrEmpty(gameParams.SearchedGame) || string.IsNullOrWhiteSpace(gameParams.SearchedGame)))
             {
                 filterByName = Builders<Game>.Filter.Regex(x => x.Name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
-                filterByNameOriginal = Builders<Game>.Filter.Regex(x => x.Name_original, new BsonRegularExpression(gameParams.SearchedGame, "i"));
-                filterByRedditName = Builders<Game>.Filter.Regex(x => x.Reddit_name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
-
-                filterByName = filterByName & filterByNameOriginal & filterByRedditName;
             }
 
             var query = await _gamesCollection.Find(filterByName).ToListAsync();

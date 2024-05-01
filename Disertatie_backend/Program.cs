@@ -38,11 +38,12 @@ namespace Disertatie_backend
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                 //await context.Database.MigrateAsync();
                 //await Seed.SeedUsers(userManager, roleManager);
-                //await SeedMovies.SeedAllMovies(context);
-                //await SeedTvShows.SeedAllTvShows(context);
+                //await SeedMovies.SeedAllMovies(settings);
+                //await SeedTvShows.SeedAllTvShows(settings);
                 //await SeedAnime.SeedAllAnime(settings);
                 //await SeedManga.SeedAllManga(settings);
                 //await SeedGames.SeedAllGamesIds(settings);
+                //await SeedBooks.SeedAllBooks(settings);
             }
             catch (Exception ex)
             {

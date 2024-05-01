@@ -10,20 +10,46 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
+using Disertatie_backend.Entities.Movies.MovieIds;
+using System.Net.Http;
+using System;
+using System.Linq;
+using Disertatie_backend.Entities.Games.Game;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace Disertatie_backend.DatabaseContext
 {
     public class SeedMovies
     {
-
-        public static async Task SeedAllMovies(IOptions<DatabaseSettings> databaseSettings)
+        private static List<int> moviesIds = new List<int>();
+        public static async Task SeedAllMovies(DatabaseSettings databaseSettings)
         {
-            var mongoDbClient = new MongoClient(databaseSettings.Value.ConnectionString);
-            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.Value.DatabaseName);
+            //for (var i = 251; i <= 500; i++)
+            //{
+            //    var endpoint = $"https://api.themoviedb.org/3/movie/top_rated?language=en-US&page={i}";
+            //    moviesIds.AddRange(await SeedMoviesIds(endpoint));
+            //}
 
-            var _moviesCollection = mongoDb.GetCollection<Movie>(databaseSettings.Value.CollectionList["MoviesCollection"]);
+            var mongoDbClient = new MongoClient(databaseSettings.ConnectionString);
+            var mongoDb = mongoDbClient.GetDatabase(databaseSettings.DatabaseName);
+            
+            var _moviesCollection = mongoDb.GetCollection<Movie>(databaseSettings.CollectionList["MoviesCollection"]);
+            var filter = Builders<Movie>.Filter.Empty; // Match all documents
+            var options = new FindOptions<Movie> { Sort = Builders<Movie>.Sort.Descending("VoteAverage"), Limit = 324 };
+            var cursor = await _moviesCollection.FindAsync(filter, options);
+            await cursor.ForEachAsync(async doc =>
+            {
+                // Delete each document
+                await _moviesCollection.DeleteOneAsync(Builders<Movie>.Filter.Eq("_id", doc.Id));
+            });
+            //foreach (var id in moviesIds)
+            //{
+            //    await SeedTrueMoviesList(_moviesCollection, $"https://api.themoviedb.org/3/movie/{id}?&append_to_response=videos,similar,images,credits&api_key=ff82c60470d3f2939794a05f8e248a89");
+            //}
 
-            var documents = await _moviesCollection.Find(_ => true).ToListAsync();
+            //var documents = await _moviesCollection.Find(_ => true).ToListAsync();
 
             //var defaultReviews = new List<ReviewDto>();
             //var update = Builders<Movie>.Update.Set(x => x.Reviews, defaultReviews);
@@ -52,7 +78,6 @@ namespace Disertatie_backend.DatabaseContext
 
             //    foreach (var id in idList)
             //    {
-            //        await SeedTrueMoviesList(context, "https://imdb-api.com/en/API/Title/k_jac24n9w/" + id + "/FullActor,Images,Trailer,Ratings,Wikipedia,");
             //    }
 
             //    foreach (var movie in context.Movies
@@ -94,21 +119,87 @@ namespace Disertatie_backend.DatabaseContext
 
         public static async Task SeedTrueMoviesList(IMongoCollection<Movie> _moviesCollection, string url)
         {
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
+            var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZjgyYzYwNDcwZDNmMjkzOTc5NGEwNWY4ZTI0OGE4OSIsInN1YiI6IjYxNGY5YzdmMTQwYmFkMDAyNTNiNzE0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-daJoGBoJfNzeJSJPl9bd47IzN5RZanP3eiC235gFLI";
+            using (HttpClient client = new HttpClient())
             {
-                string returnedUrl = reader.ReadToEnd();
-                var movie = JsonConvert.DeserializeObject<Movie>(returnedUrl);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-                await _moviesCollection.InsertOneAsync(movie);
+                if (response.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var movie = JsonConvert.DeserializeObject<Movie>(responseBody);
 
+                        movie.Videos.Results = movie.Videos.Results.Take(5).ToList();
+                        movie.Similar.Results = movie.Similar.Results.Take(10).ToList();
+                        movie.Images.Backdrops = movie.Images.Backdrops.Take(5).ToList();
+                        movie.Images.Logos = movie.Images.Logos.Take(5).ToList();
+                        movie.Images.Posters = movie.Images.Posters.Take(5).ToList();
+                        movie.Credits.Cast = movie.Credits.Cast.Take(15).ToList();
+                        movie.Credits.Crew = movie.Credits.Crew.Take(10).ToList();
+
+                        //foreach(var property in typeof(Movie).GetProperties())
+                        //{
+                        //    var value = property.GetValue(movie);
+                        //    if(value != null)
+                        //    {
+                        //        movieWithoutNullValues.Add(property.Name, BsonValue.Create(value));
+                        //        _moviesCollection.
+                        //    }
+                        //}
+
+                        await _moviesCollection.InsertOneAsync(movie);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                }
             }
+        }
+
+        public static async Task<List<int>> SeedMoviesIds(string url)
+        {
+            var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZjgyYzYwNDcwZDNmMjkzOTc5NGEwNWY4ZTI0OGE4OSIsInN1YiI6IjYxNGY5YzdmMTQwYmFkMDAyNTNiNzE0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-daJoGBoJfNzeJSJPl9bd47IzN5RZanP3eiC235gFLI";
+            var listToReturn = new List<int>();
+
+            using(HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    var movie = JsonConvert.DeserializeObject<Root>(responseBody);
+
+                    foreach (var item in movie.Results.Select(x => x.Id))
+                    {
+                        listToReturn.Add(item);
+                    };
+                }
+            }
+
+            return listToReturn;
+
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            //request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            //using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            //using (Stream stream = response.GetResponseStream())
+            //using (StreamReader reader = new StreamReader(stream))
+            //{
+            //    string returnedUrl = reader.ReadToEnd();
+            //    var movie = JsonConvert.DeserializeObject<Result>(returnedUrl);
+
+            //    listToReturn.Add(movie.Id);
+            //}
+
+            //return listToReturn;
         }
     }
 }

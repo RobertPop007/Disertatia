@@ -22,12 +22,12 @@ namespace Disertatie_backend.DatabaseContext
         public DbSet<Group> Groups { get; init; }
         public DbSet<Connection> Connections { get; init; }
         public DbSet<Friendships> Friends { get; init; }
-        public virtual DbSet<Review> Reviews { get; init; }
-        public virtual DbSet<AppUserAnimeItem> UserAnimes { get; init; }
-        public virtual DbSet<AppUserMangaItem> UserMangas { get; init; }
-        public virtual DbSet<AppUserGameItem> UserGames { get; init; }
-        public virtual DbSet<AppUserMovieItem> UserMovies { get; init; }
-        public virtual DbSet<AppUserTvShowItem> UserTvShows { get; init; }
+        public DbSet<Review> Reviews { get; init; }
+        public DbSet<AppUserAnimeItem> UserAnimes { get; init; }
+        public DbSet<AppUserMangaItem> UserMangas { get; init; }
+        public DbSet<AppUserGameItem> UserGames { get; init; }
+        public DbSet<AppUserMovieItem> UserMovies { get; init; }
+        public DbSet<AppUserTvShowItem> UserTvShows { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
