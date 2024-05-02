@@ -1,13 +1,13 @@
 ﻿using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Books;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -25,13 +25,15 @@ namespace Disertatie_backend.Repositories
         private readonly IMoviesRepository _moviesRepository;
         private readonly ITvShowsRepository _tvShowsRepository;
         private readonly IGamesRepository _gamesRepository;
+        private readonly IBooksRepository _booksRepository;
 
         public ReviewRepository(DataContext context,
             IAnimeRepository animeRepository,
             IMangaRepository mangaRepository,
             IMoviesRepository moviesRepository,
             ITvShowsRepository tvShowsRepository,
-            IGamesRepository gamesRepository)
+            IGamesRepository gamesRepository,
+            IBooksRepository booksRepository)
         {
             _context = context;
             _animeRepository = animeRepository;
@@ -39,6 +41,7 @@ namespace Disertatie_backend.Repositories
             _moviesRepository = moviesRepository;
             _tvShowsRepository = tvShowsRepository;
             _gamesRepository = gamesRepository;
+            _booksRepository = booksRepository;
         }
 
         public async Task AddReviewToItem<T>(Guid userId, ObjectId itemId, ReviewDto reviewDto)
@@ -75,6 +78,9 @@ namespace Disertatie_backend.Repositories
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
                     await _tvShowsRepository.AddReviewAsync(itemId, reviewDto);
+                    break;
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    await _booksRepository.AddReviewAsync(itemId, reviewDto);
                     break;
                 default:
                     break;
@@ -117,6 +123,9 @@ namespace Disertatie_backend.Repositories
                     case Type t when typeof(TvShow).IsAssignableFrom(t):
                         await _tvShowsRepository.DeleteReviewAsync(itemId, reviewDto);
                         break;
+                    case Type t when typeof(Book).IsAssignableFrom(t):
+                        await _booksRepository.DeleteReviewAsync(itemId, reviewDto);
+                        break;
                     default:
                         break;
                 }
@@ -153,6 +162,11 @@ namespace Disertatie_backend.Repositories
                     var tvShow = await _tvShowsRepository.GetTvShowByIdAsync(itemId);
                     var tvShowReviews = tvShow.ReviewsIds.Select(x => GetReview(x));
                     return tvShowReviews;
+
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    var book = await _booksRepository.GetBookByIdAsync(itemId);
+                    var booksReviews = book.ReviewsIds.Select(x => GetReview(x));
+                    return booksReviews;
 
                 default:
                     break;

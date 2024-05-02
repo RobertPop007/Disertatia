@@ -52,6 +52,6 @@ namespace Disertatie_backend.Entities.Anime
         public IList<Theme>? Themes { get; set; }
         public IList<Demographic>? Demographics { get; set; }
 
-        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
+        public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }

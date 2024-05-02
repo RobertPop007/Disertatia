@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
 using System.Linq;
+using Disertatie_backend.Entities.Books;
 
 namespace Disertatie_backend.Repositories
 {
@@ -24,6 +25,7 @@ namespace Disertatie_backend.Repositories
         private readonly IMoviesRepository _moviesRepository;
         private readonly ITvShowsRepository _tvShowsRepository;
         private readonly IGamesRepository _gamesRepository;
+        private readonly IBooksRepository _booksRepository;
 
         public UserItemsRepository(DataContext context,
             IUserRepository userRepository,
@@ -31,7 +33,8 @@ namespace Disertatie_backend.Repositories
             IMangaRepository mangaRepository,
             IMoviesRepository moviesRepository,
             ITvShowsRepository tvShowsRepository,
-            IGamesRepository gamesRepository)
+            IGamesRepository gamesRepository,
+            IBooksRepository booksRepository)
         {
             _context = context;
             _userRepository = userRepository;
@@ -40,6 +43,7 @@ namespace Disertatie_backend.Repositories
             _moviesRepository = moviesRepository;
             _tvShowsRepository = tvShowsRepository;
             _gamesRepository = gamesRepository;
+            _booksRepository = booksRepository;
         }
 
         public async Task AddItemToUser<T>(AppUser user, ObjectId itemId)
@@ -100,6 +104,17 @@ namespace Disertatie_backend.Repositories
                     _context.UserTvShows.Add(tvShowItem);
                     user.AppUserTvShow.Add(tvShowItem);
                     break;
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    var bookItem = new AppUserBookItem()
+                    {
+                        BookId = itemId.ToString(),
+                        AppUser = user,
+                        AppUserId = user.Id
+                    };
+
+                    _context.UserBooks.Add(bookItem);
+                    user.AppUserBook.Add(bookItem);
+                    break;
                 default:
                     break;
             }
@@ -135,6 +150,11 @@ namespace Disertatie_backend.Repositories
                     var tvShowItem = _context.UserTvShows.FirstOrDefault(u => u.TvShowId == itemId.ToString() && u.AppUserId == user.Id);
                     _context.UserTvShows.Remove(tvShowItem);
                     user.AppUserTvShow.Remove(tvShowItem);
+                    break;
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    var bookItem = _context.UserBooks.FirstOrDefault(u => u.BookId == itemId.ToString() && u.AppUserId == user.Id);
+                    _context.UserBooks.Remove(bookItem);
+                    user.AppUserBook.Remove(bookItem);
                     break;
                 default:
                     break;
@@ -199,6 +219,16 @@ namespace Disertatie_backend.Repositories
                     }
                     break;
 
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    var userBook = await _context.Users.Include(u => u.AppUserBook).SingleOrDefaultAsync(u => u.Id == userId);
+                    foreach (var bookId in userBook.AppUserBook.Select(t => t.BookId))
+                    {
+                        var book = await _tvShowsRepository.GetTvShowByIdAsync(new ObjectId(bookId));
+
+                        if (book != null) listOfItemsForUser.Add((T)Convert.ChangeType(book, typeof(T)));
+                    }
+                    break;
+
                 default:
                     break;
             }
@@ -227,6 +257,9 @@ namespace Disertatie_backend.Repositories
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
                     isItemAlreadyAdded = user.AppUserTvShow.Any(u => u.TvShowId == itemId.ToString());
+                    break;
+                case Type t when typeof(Book).IsAssignableFrom(t):
+                    isItemAlreadyAdded = user.AppUserBook.Any(u => u.BookId == itemId.ToString());
                     break;
                 default:
                     break;

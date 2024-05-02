@@ -95,6 +95,6 @@ namespace Disertatie_backend.Entities.Movies
         public MovieImages? Images { get; set; }
         [JsonProperty("credits")]
         public Credits? Credits { get; set; }
-        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
+        public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }

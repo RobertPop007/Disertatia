@@ -24,6 +24,7 @@ namespace Disertatie_backend_Tests.Repositories_Tests
         private readonly Mock<IGamesRepository> _mockGamesRepository;
         private readonly Mock<IMoviesRepository> _mockMoviesRepository;
         private readonly Mock<ITvShowsRepository> _mockTvShowsRepository;
+        private readonly Mock<IBooksRepository> _mockBooksRepository;
         private readonly Mock<DataContext> _mockContext;
 
         private readonly AppUser user = UserMockData.ValidUser();
@@ -56,6 +57,7 @@ namespace Disertatie_backend_Tests.Repositories_Tests
             _mockMoviesRepository = new Mock<IMoviesRepository>();
             _mockTvShowsRepository = new Mock<ITvShowsRepository>();
             _mockGamesRepository = new Mock<IGamesRepository>();
+            _mockBooksRepository = new Mock<IBooksRepository>();
             
             _userItemsRepository = new UserItemsRepository<Datum>(_mockContext.Object,
                                                             _mockUserRepository.Object,     
@@ -63,7 +65,8 @@ namespace Disertatie_backend_Tests.Repositories_Tests
                                                             _mockMangaRepository.Object,
                                                             _mockMoviesRepository.Object,
                                                             _mockTvShowsRepository.Object,
-                                                            _mockGamesRepository.Object);
+                                                            _mockGamesRepository.Object,
+                                                            _mockBooksRepository.Object);
         }
 
         [Fact]

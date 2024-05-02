@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MongoDB.Bson;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -30,6 +28,7 @@ namespace Disertatie_backend.Entities.User
         public ICollection<AppUserAnimeItem>? AppUserAnime { get; set; } = new List<AppUserAnimeItem>();
         public ICollection<AppUserMangaItem>? AppUserManga { get; set; } = new List<AppUserMangaItem>();
         public ICollection<AppUserGameItem>? AppUserGame { get; set; } = new List<AppUserGameItem>();
+        public ICollection<AppUserBookItem>? AppUserBook { get; set; } = new List<AppUserBookItem>();
 
         public bool IsSubscribedToNewsletter { get; set; }
         public bool HasDarkMode { get; set; }

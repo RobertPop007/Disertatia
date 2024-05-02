@@ -1,5 +1,6 @@
 ﻿using Disertatie_backend.Configurations;
 using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Books;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
@@ -27,11 +28,13 @@ namespace Disertatie_backend.Helpers
             {typeof(Movie), "MoviesCollection" },
             {typeof(TvShow), "TVShowsCollection" },
             {typeof(Game), "GamesCollection" },
+            {typeof(Book), "BooksCollection" },
             {typeof(AppUserAnimeItem), "UserAnimeCollection" },
             {typeof(AppUserMangaItem), "UserMangaCollection" },
             {typeof(AppUserMovieItem), "UserMoviesCollection" },
             {typeof(AppUserTvShowItem), "UserTVShowsCollection" },
-            {typeof(AppUserGameItem), "UserGamesCollection" }
+            {typeof(AppUserGameItem), "UserGamesCollection" },
+            {typeof(AppUserBookItem), "UserBooksCollection" }
         };
 
         public IMongoCollection<T> CreateCollection(DatabaseSettings databaseSettings)

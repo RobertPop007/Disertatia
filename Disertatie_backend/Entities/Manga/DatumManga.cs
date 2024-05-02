@@ -45,6 +45,6 @@ namespace Disertatie_backend.Entities.Manga
         public IList<GenreManga>? Genres { get; set; }
         public IList<ThemeManga>? Themes { get; set; }
         public IList<DemographicManga>? Demographics { get; set; }
-        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
+        public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }

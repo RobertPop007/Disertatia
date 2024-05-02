@@ -28,6 +28,7 @@ namespace Disertatie_backend.DatabaseContext
         public DbSet<AppUserGameItem> UserGames { get; init; }
         public DbSet<AppUserMovieItem> UserMovies { get; init; }
         public DbSet<AppUserTvShowItem> UserTvShows { get; init; }
+        public DbSet<AppUserBookItem> UserBooks { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -108,6 +109,14 @@ namespace Disertatie_backend.DatabaseContext
             builder.Entity<AppUserTvShowItem>()
                 .HasOne(ua => ua.AppUser)
                 .WithMany(u => u.AppUserTvShow)
+                .HasForeignKey(ua => ua.AppUserId);
+
+            builder.Entity<AppUserBookItem>()
+                .HasKey(ua => new { ua.AppUserId, ua.BookId });
+
+            builder.Entity<AppUserBookItem>()
+                .HasOne(ua => ua.AppUser)
+                .WithMany(u => u.AppUserBook)
                 .HasForeignKey(ua => ua.AppUserId);
 
             builder.Entity<Review>()

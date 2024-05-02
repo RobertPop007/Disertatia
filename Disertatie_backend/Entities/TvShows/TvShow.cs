@@ -116,6 +116,6 @@ namespace Disertatie_backend.Entities.TvShows
 
         [JsonProperty("credits")]
         public Credits? Credits;
-        public ICollection<Guid>? ReviewsIds { get; set; } = new List<Guid>();
+        public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }

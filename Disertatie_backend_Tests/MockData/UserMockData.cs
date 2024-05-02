@@ -11,6 +11,7 @@ namespace Disertatie_backend_Tests.MockData
                 AccessFailedCount = 0,
                 AppUserAnime = new List<AppUserAnimeItem>(),
                 AppUserGame = new List<AppUserGameItem>(),
+                AppUserBook = new List<AppUserBookItem>(),
                 AppUserManga = new List<AppUserMangaItem>(),
                 AppUserMovie = new List<AppUserMovieItem>(),
                 AppUserTvShow = new List<AppUserTvShowItem>(),

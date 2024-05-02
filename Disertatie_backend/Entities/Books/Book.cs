@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.Books
 {
@@ -46,5 +47,8 @@ namespace Disertatie_backend.Entities.Books
 
         [JsonProperty("publisher", NullValueHandling = NullValueHandling.Ignore)]
         public string Publisher { get; set; }
+
+        public string CoverUrl { get; set; }
+        public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }
