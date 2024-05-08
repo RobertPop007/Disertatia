@@ -43,6 +43,7 @@ namespace Disertatie_backend.Helpers
             CreateMap<MemberUpdateDto, AppUser>().ReverseMap();
 
             CreateMap<RegisterDto, AppUser>().ReverseMap();
+            CreateMap<RegisterWithFacebookDto, AppUser>().ReverseMap();
 
             CreateMap<Message, MessageDto>()
                 .ForMember(dest => dest.SenderPhotoUrl, opt => opt.MapFrom(src =>

@@ -110,10 +110,12 @@ namespace Disertatie_backend.Controllers
             if(userObj.Data.IsValid == false) return Unauthorized();
 
             HttpResponseMessage meResponse = await _httpClient.CreateClient()
-                .GetAsync("https://graph.facebook.com/me?fields=first_name,last_name,email,id&access_token=" + credential);
+                .GetAsync("https://graph.facebook.com/me?fields=id,name,email,gender,birthday,hometown&access_token=" + credential);
 
             var userContent = await meResponse.Content.ReadAsStringAsync();
-            var userContentObj = JsonConvert.DeserializeObject<RegisterDto>(userContent);
+            var userContentObj = JsonConvert.DeserializeObject<RegisterWithFacebookDto>(userContent);
+
+            userContentObj.KnownAs = userContentObj.Username;
 
             if (await UserExists(userContentObj.Username)) return BadRequest("Username already exists");
 

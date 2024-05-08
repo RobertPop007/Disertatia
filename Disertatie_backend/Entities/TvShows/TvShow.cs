@@ -10,7 +10,7 @@ namespace Disertatie_backend.Entities.TvShows
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public ObjectId TvShowId { get; set; }
 #nullable enable
         [JsonProperty("adult")]
         public bool? Adult { get; set; }
@@ -34,7 +34,7 @@ namespace Disertatie_backend.Entities.TvShows
         public string? Homepage { get; set; }
 
         [JsonProperty("id")]
-        public int? MovieId { get; set; }
+        public int? Id { get; set; }
 
         [JsonProperty("in_production")]
         public bool? InProduction { get; set; }

@@ -19,9 +19,8 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<TvShow> _tvshowsCollection;
         private readonly IMongoDBCollectionHelper<TvShow> _tvshowsCollectionHelper;
-        private readonly string titleIndex = "Title_index";
-        private readonly string titleOriginalIndex = "TitleOriginal_index";
-        private readonly string titleFullIndex = "TitleFull_index";
+        private readonly string titleIndex = "TvShow_Title_index";
+        private readonly string titleFullIndex = "TvShow_TitleFull_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -42,7 +41,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
-            var filter = Builders<TvShow>.Filter.Eq(x => x.Id, id);
+            var filter = Builders<TvShow>.Filter.Eq(x => x.TvShowId, id);
             var update = Builders<TvShow>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _tvshowsCollection.UpdateOneAsync(filter, update);
@@ -50,7 +49,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
         {
-            var filter = Builders<TvShow>.Filter.Eq(x => x.Id, id);
+            var filter = Builders<TvShow>.Filter.Eq(x => x.TvShowId, id);
             var update = Builders<TvShow>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
 
             await _tvshowsCollection.UpdateOneAsync(filter, update);
@@ -64,7 +63,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<TvShow> GetTvShowByIdAsync(ObjectId id)
         {
-            var filterById = Builders<TvShow>.Filter.Eq(p => p.Id, id);
+            var filterById = Builders<TvShow>.Filter.Eq(p => p.TvShowId, id);
             return await _tvshowsCollection.Find(filterById).FirstOrDefaultAsync();
         }
 

@@ -9,12 +9,6 @@ using Disertatie_backend.Helpers;
 using MongoDB.Driver;
 using AutoMapper.QueryableExtensions;
 using System;
-using MongoDB.Bson;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Manga;
-using Disertatie_backend.Entities.Games.Game;
-using Disertatie_backend.Entities.Movies;
-using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
 

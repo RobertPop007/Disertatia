@@ -15,7 +15,7 @@ namespace Disertatie_backend.Entities.Games.Game
         public ObjectId Id { get; set; }
 
 #nullable enable
-        [JsonProperty("id")]
+        //[JsonProperty("id")]
         public int Game_Id { get; set; }
         public string? Slug { get; set; }
         public string? Name { get; set; }
