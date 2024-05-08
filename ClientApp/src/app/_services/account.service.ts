@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, ReplaySubject } from 'rxjs';
+import { map, Observable, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { PresenceService } from './presence.service';
@@ -68,5 +68,10 @@ export class AccountService {
 
   getDecodedToken(token: string){
     return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  LoginWithFacebook(credentials: string): Observable<any>{
+    const header = new HttpHeaders().set('Content-type', 'application/json');
+    return this.http.post(this.baseUrl + "Account/LoginWithFacebook", JSON.stringify(credentials), {headers: header, withCredentials: true});
   }
 }

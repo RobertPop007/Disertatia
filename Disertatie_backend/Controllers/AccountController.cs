@@ -119,7 +119,7 @@ namespace Disertatie_backend.Controllers
 
             var user = _mapper.Map<AppUser>(userContentObj);
 
-            user.UserName = userContentObj.Username.ToLower();
+            //user.UserName = userContentObj.Username.ToLower();
 
             var result = await _userManager.CreateAsync(user, userContentObj.Password);
 

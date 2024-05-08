@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
-import { MovieItem } from 'model/movieItem';
 import { ToastrService } from 'ngx-toastr';
 import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 import { EventEmitter } from '@angular/core';

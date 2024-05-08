@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
-import { MovieItem } from 'model/movieItem';
 import { ObjectId } from 'model/objectId';
 import { Similar } from 'model/similar';
 import { listenToTriggers } from 'ngx-bootstrap/utils';
@@ -29,7 +28,7 @@ export class MovieCardComponent implements OnInit {
 
   addMovie(movie: Movie){
     this.movieAngularService.addMovie(movie.id!).subscribe(() => {
-      this.toastr.success("You have added " + movie.fullTitle);
+      //this.toastr.success("You have added " + movie.fullTitle);
     })
   }
 

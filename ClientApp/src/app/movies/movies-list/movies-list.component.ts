@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
-import { MovieItem } from 'model/movieItem';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MovieCard } from 'src/app/_models/movieCard';
 import { MovieParams } from 'src/app/_models/movieParams';

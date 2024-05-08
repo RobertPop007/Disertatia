@@ -13,109 +13,109 @@ namespace Disertatie_backend.Entities.TvShows
         public ObjectId Id { get; set; }
 #nullable enable
         [JsonProperty("adult")]
-        public bool? Adult;
+        public bool? Adult { get; set; }
 
         [JsonProperty("backdrop_path")]
-        public string? BackdropPath;
+        public string? BackdropPath { get; set; }
 
         [JsonProperty("created_by")]
-        public List<CreatedBy>? CreatedBy;
+        public List<TvShowCreatedBy>? CreatedBy { get; set; }
 
         [JsonProperty("episode_run_time")]
-        public List<int?>? EpisodeRunTime;
+        public List<int?>? EpisodeRunTime { get; set; }
 
         [JsonProperty("first_air_date")]
-        public string? FirstAirDate;
+        public string? FirstAirDate { get; set; }
 
         [JsonProperty("genres")]
-        public List<Genre>? Genres;
+        public List<TvShowGenre>? Genres { get; set; }
 
         [JsonProperty("homepage")]
-        public string? Homepage;
+        public string? Homepage { get; set; }
 
         [JsonProperty("id")]
-        public int? MovieId;
+        public int? MovieId { get; set; }
 
         [JsonProperty("in_production")]
-        public bool? InProduction;
+        public bool? InProduction { get; set; }
 
         [JsonProperty("languages")]
-        public List<string>? Languages;
+        public List<string>? Languages { get; set; }
 
         [JsonProperty("last_air_date")]
-        public string? LastAirDate;
+        public string? LastAirDate { get; set; }
 
         [JsonProperty("last_episode_to_air")]
-        public LastEpisodeToAir? LastEpisodeToAir;
+        public TvShowLastEpisodeToAir? LastEpisodeToAir { get; set; }
 
         [JsonProperty("name")]
-        public string? Name;
+        public string? Name { get; set; }
 
         [JsonProperty("networks")]
-        public List<Network>? Networks;
+        public List<TvShowNetwork>? Networks { get; set; }
 
         [JsonProperty("number_of_episodes")]
-        public int? NumberOfEpisodes;
+        public int? NumberOfEpisodes { get; set; }
 
         [JsonProperty("number_of_seasons")]
-        public int? NumberOfSeasons;
+        public int? NumberOfSeasons { get; set; }
 
         [JsonProperty("origin_country")]
-        public List<string>? OriginCountry;
+        public List<string>? OriginCountry { get; set; }
 
         [JsonProperty("original_language")]
-        public string? OriginalLanguage;
+        public string? OriginalLanguage { get; set; }
 
         [JsonProperty("original_name")]
-        public string? OriginalName;
+        public string? OriginalName { get; set; }
 
         [JsonProperty("overview")]
-        public string? Overview;
+        public string? Overview { get; set; }
 
         [JsonProperty("popularity")]
-        public double? Popularity;
+        public double? Popularity { get; set; }
 
         [JsonProperty("poster_path")]
-        public string? PosterPath;
+        public string? PosterPath { get; set; }
 
         [JsonProperty("production_companies")]
-        public List<ProductionCompany>? ProductionCompanies;
+        public List<TvShowProductionCompany>? ProductionCompanies { get; set; }
 
         [JsonProperty("production_countries")]
-        public List<ProductionCountry>? ProductionCountries;
+        public List<TvShowProductionCountry>? ProductionCountries { get; set; }
 
         [JsonProperty("seasons")]
-        public List<Season>? Seasons;
+        public List<TvShowSeason>? Seasons { get; set; }
 
         [JsonProperty("spoken_languages")]
-        public List<SpokenLanguage>? SpokenLanguages;
+        public List<TvShowSpokenLanguage>? SpokenLanguages { get; set; }
 
         [JsonProperty("status")]
-        public string? Status;
+        public string? Status { get; set; }
 
         [JsonProperty("tagline")]
-        public string? Tagline;
+        public string? Tagline { get; set; }
 
         [JsonProperty("type")]
-        public string? Type;
+        public string? Type { get; set; }
 
         [JsonProperty("vote_average")]
-        public double? VoteAverage;
+        public double? VoteAverage { get; set; }
 
         [JsonProperty("vote_count")]
-        public int? VoteCount;
+        public int? VoteCount { get; set; }
 
         [JsonProperty("videos")]
-        public Videos? Videos;
+        public TvShowVideos? Videos { get; set; }
 
         [JsonProperty("similar")]
-        public Similar? Similar;
+        public TvShowSimilar? Similar { get; set; }
 
         [JsonProperty("images")]
-        public Images? Images;
+        public TvShowImages? Images { get; set; }
 
         [JsonProperty("credits")]
-        public Credits? Credits;
+        public TvShowCredits? Credits { get; set; }
         public HashSet<Guid>? ReviewsIds { get; set; } = new HashSet<Guid>();
     }
 }

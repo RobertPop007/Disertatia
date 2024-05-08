@@ -12,7 +12,6 @@ import { MoviesService } from 'api/movies.service';
 import { TvShowsService } from 'api/tvShows.service';
 import { Datum } from 'model/datum';
 import { Movie } from 'model/movie';
-import { MovieItem } from 'model/movieItem';
 import { TvShow } from 'model/tvShow';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';

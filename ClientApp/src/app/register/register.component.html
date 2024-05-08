@@ -49,4 +49,12 @@
         <button [disabled]="!registerForm.valid" class="btn btn-success mr-2" type="submit">Register</button>
         <button class="btn btn-default mr-2" (click)="cancel()" type="submit">Cancel</button>
     </div>
+
+    <mat-card class="cardStyle">
+        <h4 class="card-header">Facebook Authentication</h4>
+        <button class="btn btn-facebook" (click)="login()">
+            <i class="fa fa-facebook me-1"></i>
+            Login with Facebook
+        </button>
+    </mat-card>
 </form>

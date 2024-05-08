@@ -43,25 +43,25 @@ export class TvShowDetailComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      this.tvShow = data['tvShow'];
+    // this.route.data.subscribe(data => {
+    //   this.tvShow = data['tvShow'];
       
-      this.tvShow.actorList = this.tvShow.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
+    //   this.tvShow.actorList = this.tvShow.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
-      this.images = this.tvShow.actorList?.map((n) => n.image);
+    //   this.images = this.tvShow.actorList?.map((n) => n.image);
 
-      this.tvShowService.apiTvShowsTvShowAlreadyAddedGet(this.tvShow.id!).pipe(take(1)).subscribe(res => {
-        this.res = res;
-      })
-    })
+    //   this.tvShowService.apiTvShowsTvShowAlreadyAddedGet(this.tvShow.id!).pipe(take(1)).subscribe(res => {
+    //     this.res = res;
+    //   })
+    // })
   }
 
   deleteTvShow(tvShow: Movie){
-    this.tvShowAngularService.deleteTvShowForUser(tvShow.id!).subscribe(() => {
-      this.toastr.success("You have deleted " + tvShow.fullTitle);
-    })
+  //   this.tvShowAngularService.deleteTvShowForUser(tvShow.id!).subscribe(() => {
+  //     this.toastr.success("You have deleted " + tvShow.fullTitle);
+  //   })
 
-    this.res = false;
+  //   this.res = false;
   };
 
   loadTvShow(){
@@ -71,11 +71,11 @@ export class TvShowDetailComponent implements OnInit {
   }
 
   addTvShow(tvShow: TvShow){
-    this.tvShowAngularService.addTvShow(tvShow.id!).subscribe(() => {
-      this.toastr.success("You have added " + tvShow.fullTitle);
-    })
+    // this.tvShowAngularService.addTvShow(tvShow.id!).subscribe(() => {
+    //   this.toastr.success("You have added " + tvShow.);
+    // })
 
-    this.res = true;
+    // this.res = true;
   }
 
   toggleVideo() {

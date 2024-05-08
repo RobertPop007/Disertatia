@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{game.name}} ({{game.nameOriginal}})</h1>
+    <h1 style="size: 15rem;">{{game.name}}</h1>
 
     <div class="d-flex justify-content-between">
       <div>
@@ -121,11 +121,6 @@
 
     <hr style="width:50%;text-align:left;margin-left:0">
 </div>
-
-<div *ngIf="game.redditUrl">
-  <h1>External links</h1>
-  <a style="color: #0096FF;" target="_blank" href="{{game.redditUrl}}">
-  {{game.redditUrl}} Reddit</a>
 
   <a style="color: #0096FF;" target="_blank" href="{{game.metacriticUrl}}">
     {{game.metacriticUrl}} Metacritic</a>

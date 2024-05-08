@@ -25,11 +25,11 @@ export class TvShowCardAddedComponent implements OnInit {
   }
 
   deleteTvShowForUser(tvShow: TvShow){
-    this.tvShowAngularService.deleteTvShowForUser(tvShow.id!).subscribe(() => {
-      this.toastr.success("You have deleted " + tvShow.title);
+    // this.tvShowAngularService.deleteTvShowForUser(tvShow.id!).subscribe(() => {
+    //   this.toastr.success("You have deleted " + tvShow.title);
 
-      this.deleteEvent.emit("This value is coming from child");
-    });
+    //   this.deleteEvent.emit("This value is coming from child");
+    // });
   }
 
 }

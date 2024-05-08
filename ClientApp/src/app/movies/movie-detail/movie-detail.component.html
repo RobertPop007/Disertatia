@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <h1 style="size: 15rem;">{{movie.title}} ({{movie.fullTitle}})</h1>
 
     <div class="d-flex justify-content-between">
@@ -48,8 +48,9 @@
     <div class="col-8">
 
     <div *ngIf="movie.trailer!.linkEmbed!" class="embed-responsive embed-responsive-4by3">
-        <iframe allowfullscreen class="embed-responsive-item" [src]="movie.trailer?.linkEmbed! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
-        </div>
+        <iframe allowfullscreen class="embed-responsive-item" [src]="movie.trailer?.linkEmbed! | safe"></iframe>  -->
+        <!-- +'?autoplay=true'  allow="autoplay" --> 
+        <!-- </div>
     </div>
 </div>
   
@@ -158,10 +159,10 @@
 <h1>Similar movies</h1>
 <div class="container">
   <div class="row">
-    <div *ngFor="let similar of movie.similars" class="col-3 mb-2">
+    <div *ngFor="let similar of movie.similar" class="col-3 mb-2">
         <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
         <p class="card-text text-muted text-center">{{similar.title}}</p>
         <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
     </div>
   </div>
-</div>
+</div> -->

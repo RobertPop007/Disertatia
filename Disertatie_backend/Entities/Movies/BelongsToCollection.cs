@@ -11,9 +11,9 @@ namespace Disertatie_backend.Entities.Movies
         public string Name { get; set; }
 
         [JsonProperty("poster_path")]
-        public object PosterPath { get; set; }
+        public string PosterPath { get; set; }
 
         [JsonProperty("backdrop_path")]
-        public object BackdropPath { get; set; }
+        public string BackdropPath { get; set; }
     }
 }

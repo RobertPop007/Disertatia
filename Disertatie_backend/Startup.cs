@@ -1,22 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Disertatie_backend.Configurations;
+using Disertatie_backend.Extensions;
+using Disertatie_backend.Hangfire;
+using Disertatie_backend.Interfaces;
+using Disertatie_backend.Middleware;
+using Disertatie_backend.SignalR;
+using Hangfire;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Disertatie_backend.Extensions;
-using Disertatie_backend.Middleware;
-using Disertatie_backend.SignalR;
-using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities.Movies;
-using Disertatie_backend.Interfaces;
-using Disertatie_backend.Configurations;
-using MongoDB.Bson;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Hangfire;
-using Disertatie_backend.Hangfire;
-using Microsoft.AspNetCore.Identity;
-using System.Linq;
 
 namespace Disertatie_backend
 {
@@ -84,8 +78,7 @@ namespace Disertatie_backend
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect_disertatie", Version = "v1" });
-                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Proiect disertație", Version = "v1" });
                 c.AddServer(new OpenApiServer()
                 {
                     Url = "https://localhost:5001"

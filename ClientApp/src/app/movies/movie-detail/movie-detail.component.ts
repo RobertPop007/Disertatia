@@ -3,7 +3,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, ActivationStart, ChildActivationEnd, NavigationEnd, ResolveStart, Router } from '@angular/router';
 import { MoviesService } from 'api/movies.service';
 import { Movie } from 'model/movie';
-import { MovieItem } from 'model/movieItem';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
@@ -49,9 +48,9 @@ export class MovieDetailComponent implements OnInit {
       console.log(this.movie);
       
       
-      this.movie.actorList = this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
+      // this.movie.actorList = this.movie.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
-      this.images = this.movie.actorList?.map((n) => n.image);
+      // this.images = this.movie.actorList?.map((n) => n.image);
 
       this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
@@ -61,7 +60,7 @@ export class MovieDetailComponent implements OnInit {
 
   deleteMovie(movie: Movie){
     this.movieAngularService.deleteMovieForUser(movie.id!).subscribe(() => {
-      this.toastr.success("You have deleted " + movie.fullTitle);
+      this.toastr.success("You have deleted " + movie.title);
     })
 
     this.res = false;
@@ -75,7 +74,7 @@ export class MovieDetailComponent implements OnInit {
 
   addMovie(movie: Movie){
     this.movieAngularService.addMovie(movie.id!).subscribe(() => {
-      this.toastr.success("You have added " + movie.fullTitle);
+      this.toastr.success("You have added " + movie.title);
     })
 
     this.res = true;

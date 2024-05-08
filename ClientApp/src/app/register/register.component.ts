@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
+
+declare const FB: any;
 
 @Component({
   selector: 'app-register',
@@ -19,6 +21,7 @@ export class RegisterComponent implements OnInit {
   constructor(private accountService: AccountService,
               private toastr: ToastrService,
               private fb: FormBuilder,
+              private _ngZone: NgZone,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -67,4 +70,19 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister.emit(false);
   }
 
+  async login(){
+    FB.login(async (result:any) => {
+      console.log(result)
+      this.accountService.LoginWithFacebook(result.authResponse.accessToken).subscribe(
+        (x:any) => {
+          this._ngZone.run(() => {
+            this.router.navigate(['logout']);
+          })
+        },
+        (error:any) => {
+          console.log(error);
+        }
+      );
+    }, {scope : 'email'});
+  }
 }
