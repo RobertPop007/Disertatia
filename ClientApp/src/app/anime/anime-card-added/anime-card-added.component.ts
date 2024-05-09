@@ -18,7 +18,9 @@ export class AnimeCardAddedComponent implements OnInit {
   animeAlreadyAdded!: boolean;
   
   constructor(private animeAngularService: AnimeAngularService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService) {
+      
+     }
 
   ngOnInit(): void {
   }

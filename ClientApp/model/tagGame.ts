@@ -15,6 +15,6 @@ export interface TagGame {
     name?: string;
     slug?: string;
     language?: string;
-    gamesCount?: number;
-    imageBackground?: string;
+    games_count?: number;
+    image_background?: string;
 }

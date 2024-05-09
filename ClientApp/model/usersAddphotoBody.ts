@@ -10,11 +10,6 @@
  * Do not edit the class manually.
  */
 
-export interface FriendsDto { 
-    id?: string;
-    username?: string;
-    age?: number;
-    known_as?: string;
-    photo_url?: string;
-    city?: string;
+export interface UsersAddphotoBody { 
+    file?: Blob;
 }

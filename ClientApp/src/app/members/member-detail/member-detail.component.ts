@@ -100,7 +100,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       this.watchedManga = response;
     })
 
-    this.gamesService.apiGameGetGamesForUsernameGet(this.member.userName).subscribe(response => {
+    this.gamesService.apiGameGetGamesForUsernameGet(this.member.userName).subscribe((response: GameCard[] | undefined) => {
       this.watchedGame = response;
     })
   }

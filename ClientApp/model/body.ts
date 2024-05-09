@@ -11,5 +11,5 @@
  */
 
 export interface Body { 
-    file?: Blob;
+    file?: string;
 }

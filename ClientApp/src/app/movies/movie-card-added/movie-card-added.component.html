@@ -1,6 +1,6 @@
 <div class="card mb-3">
     <div class="card-img-wrapper">
-        <img src="{{movie.backdropPath || './assets/user.png'}}" alt="{{movie.title}}" class="card-img-top">
+        <img src="{{movie.backdrop_path || './assets/user.png'}}" alt="{{movie.title}}" class="card-img-top">
         
         <ul class="list-inline member-icons animate text-center">
 
@@ -14,6 +14,6 @@
 
     <div class="card-body p-1">
         <p class="card-text text-muted text-center">{{movie.title}}</p>
-        <p class="card-text text-muted text-center">{{movie.voteAverage}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+        <p class="card-text text-muted text-center">{{movie.vote_average}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
     </div>
 </div>

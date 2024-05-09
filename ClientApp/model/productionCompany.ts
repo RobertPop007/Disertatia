@@ -12,7 +12,7 @@
 
 export interface ProductionCompany { 
     id?: number;
-    logoPath?: string;
+    logo_path?: string;
     name?: string;
-    originCountry?: string;
+    origin_country?: string;
 }

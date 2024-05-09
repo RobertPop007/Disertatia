@@ -13,6 +13,6 @@
 export interface BelongsToCollection { 
     id?: number;
     name?: string;
-    posterPath?: string;
-    backdropPath?: string;
+    poster_path?: string;
+    backdrop_path?: string;
 }

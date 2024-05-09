@@ -30,6 +30,8 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
 import { MangaAngularService } from 'src/app/_services/manga_angular.service';
 import { GamesAngularService } from 'src/app/_services/games_angular.service';
+import { DatumManga } from 'model/datumManga';
+import { Game } from 'model/game';
 
 @Component({
   selector: 'app-member-edit',
@@ -49,9 +51,9 @@ export class MemberEditComponent implements OnInit {
   theme: Theme = 'light-theme';
   watchedMovies?: Movie[];
   watchedTvShows?: TvShow[];
-  watchedAnime?: AnimeCard[];
-  watchedManga?: MangaCard[];
-  watchedGame?: GameCard[];
+  watchedAnime?: Datum[];
+  watchedManga?: DatumManga[];
+  watchedGame?: Game[];
   predicate = 'added';
   pageNumber = 1;
   isDarkMode!: boolean;

@@ -11,9 +11,9 @@
  */
 
 export interface ReviewDto { 
-    reviewId?: string;
+    review_id?: string;
     username?: string;
-    shortDescription?: string;
-    mainDescription?: string;
+    short_description?: string;
+    main_description?: string;
     stars?: number;
 }

@@ -11,7 +11,7 @@
  */
 
 export interface SpokenLanguage { 
-    englishName?: string;
+    english_name?: string;
     iso6391?: string;
     name?: string;
 }

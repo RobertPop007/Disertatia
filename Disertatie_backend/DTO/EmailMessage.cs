@@ -12,7 +12,7 @@ namespace Disertatie_backend.DTO
         public EmailMessage(IEnumerable<string> to, string subject, string content)
         {
             To = new List<MailboxAddress>();
-            To.AddRange(to.Select(x => new MailboxAddress("test", x)));
+            To.AddRange(to.Select(x => new MailboxAddress("Disertatie", x)));
             Subject = subject;
             Content = content;
         }

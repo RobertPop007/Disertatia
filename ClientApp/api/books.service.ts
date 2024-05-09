@@ -17,7 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { Datum } from '../model/datum';
+import { Book } from '../model/book';
 import { ObjectId } from '../model/objectId';
 import { ReviewDto } from '../model/reviewDto';
 
@@ -26,7 +26,7 @@ import { Configuration }                                     from '../configurat
 
 
 @Injectable()
-export class AnimeService {
+export class BooksService {
 
     protected basePath = 'https://localhost:5001';
     public defaultHeaders = new HttpHeaders();
@@ -60,17 +60,17 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeAddAnimeToUserAnimeIdPost(anime_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeAddAnimeToUserAnimeIdPost(anime_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeAddAnimeToUserAnimeIdPost(anime_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeAddAnimeToUserAnimeIdPost(anime_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (anime_id === null || anime_id === undefined) {
-            throw new Error('Required parameter anime_id was null or undefined when calling apiAnimeAddAnimeToUserAnimeIdPost.');
+        if (book_id === null || book_id === undefined) {
+            throw new Error('Required parameter book_id was null or undefined when calling apiBooksAddBookToUserBookIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -87,7 +87,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Anime/AddAnimeToUser/${encodeURIComponent(String(anime_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddBookToUser/${encodeURIComponent(String(book_id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -100,18 +100,18 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeAddReviewForAnimeIdPost(anime_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeAddReviewForAnimeIdPost(anime_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeAddReviewForAnimeIdPost(anime_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeAddReviewForAnimeIdPost(anime_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (anime_id === null || anime_id === undefined) {
-            throw new Error('Required parameter anime_id was null or undefined when calling apiAnimeAddReviewForAnimeIdPost.');
+        if (book_id === null || book_id === undefined) {
+            throw new Error('Required parameter book_id was null or undefined when calling apiBooksAddReviewForBookIdPost.');
         }
 
 
@@ -137,7 +137,7 @@ export class AnimeService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Anime/AddReviewFor/${encodeURIComponent(String(anime_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddReviewFor/${encodeURIComponent(String(book_id))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -151,19 +151,19 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeAnimeAlreadyAddedGet(anime_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public apiAnimeAnimeAlreadyAddedGet(anime_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public apiAnimeAnimeAlreadyAddedGet(anime_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public apiAnimeAnimeAlreadyAddedGet(anime_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (anime_id !== undefined && anime_id !== null) {
-            queryParameters = queryParameters.set('animeId', <any>anime_id);
+        if (book_id !== undefined && book_id !== null) {
+            queryParameters = queryParameters.set('bookId', <any>book_id);
         }
 
         let headers = this.defaultHeaders;
@@ -183,7 +183,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<boolean>('get',`${this.basePath}/api/Anime/AnimeAlreadyAdded`,
+        return this.httpClient.request<boolean>('get',`${this.basePath}/api/Books/BookAlreadyAdded`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -197,17 +197,17 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeDeleteAnimeFromUserAnimeIdDelete(anime_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeDeleteAnimeFromUserAnimeIdDelete(anime_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeDeleteAnimeFromUserAnimeIdDelete(anime_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeDeleteAnimeFromUserAnimeIdDelete(anime_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (anime_id === null || anime_id === undefined) {
-            throw new Error('Required parameter anime_id was null or undefined when calling apiAnimeDeleteAnimeFromUserAnimeIdDelete.');
+        if (book_id === null || book_id === undefined) {
+            throw new Error('Required parameter book_id was null or undefined when calling apiBooksDeleteBookFromUserBookIdDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -224,7 +224,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Anime/DeleteAnimeFromUser/${encodeURIComponent(String(anime_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteBookFromUser/${encodeURIComponent(String(book_id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -237,18 +237,18 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param review_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeDeleteReviewForAnimeIdDelete(anime_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeDeleteReviewForAnimeIdDelete(anime_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeDeleteReviewForAnimeIdDelete(anime_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeDeleteReviewForAnimeIdDelete(anime_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (anime_id === null || anime_id === undefined) {
-            throw new Error('Required parameter anime_id was null or undefined when calling apiAnimeDeleteReviewForAnimeIdDelete.');
+        if (book_id === null || book_id === undefined) {
+            throw new Error('Required parameter book_id was null or undefined when calling apiBooksDeleteReviewForBookIdDelete.');
         }
 
 
@@ -271,7 +271,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Anime/DeleteReviewFor/${encodeURIComponent(String(anime_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteReviewFor/${encodeURIComponent(String(book_id))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -285,25 +285,25 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param searched_anime 
+     * @param searched_book 
      * @param order_by 
      * @param page_number 
      * @param page_size 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeGetAllAnimesGet(searched_anime?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeGetAllAnimesGet(searched_anime?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeGetAllAnimesGet(searched_anime?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeGetAllAnimesGet(searched_anime?: string, order_by?: string, page_number?: number, page_size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (searched_anime !== undefined && searched_anime !== null) {
-            queryParameters = queryParameters.set('SearchedAnime', <any>searched_anime);
+        if (searched_book !== undefined && searched_book !== null) {
+            queryParameters = queryParameters.set('SearchedBook', <any>searched_book);
         }
         if (order_by !== undefined && order_by !== null) {
             queryParameters = queryParameters.set('OrderBy', <any>order_by);
@@ -329,7 +329,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Anime/GetAllAnimes`,
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Books/GetAllBooks`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -347,13 +347,13 @@ export class AnimeService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeGetAnimesForUsernameGet(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAnimeGetAnimesForUsernameGet(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAnimeGetAnimesForUsernameGet(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAnimeGetAnimesForUsernameGet(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksGetBooksForUsernameGet(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksGetBooksForUsernameGet(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksGetBooksForUsernameGet(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksGetBooksForUsernameGet(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (username === null || username === undefined) {
-            throw new Error('Required parameter username was null or undefined when calling apiAnimeGetAnimesForUsernameGet.');
+            throw new Error('Required parameter username was null or undefined when calling apiBooksGetBooksForUsernameGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -370,7 +370,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/api/Anime/GetAnimesFor/${encodeURIComponent(String(username))}`,
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Books/GetBooksFor/${encodeURIComponent(String(username))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -383,17 +383,17 @@ export class AnimeService {
     /**
      * 
      * 
-     * @param anime_id 
+     * @param book_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAnimeGetReviewsForAnimeIdGet(anime_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
-    public apiAnimeGetReviewsForAnimeIdGet(anime_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
-    public apiAnimeGetReviewsForAnimeIdGet(anime_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
-    public apiAnimeGetReviewsForAnimeIdGet(anime_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
+    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
+    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
+    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (anime_id === null || anime_id === undefined) {
-            throw new Error('Required parameter anime_id was null or undefined when calling apiAnimeGetReviewsForAnimeIdGet.');
+        if (book_id === null || book_id === undefined) {
+            throw new Error('Required parameter book_id was null or undefined when calling apiBooksGetReviewsForBookIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -413,7 +413,7 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Anime/GetReviewsFor/${encodeURIComponent(String(anime_id))}`,
+        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Books/GetReviewsFor/${encodeURIComponent(String(book_id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -426,17 +426,24 @@ export class AnimeService {
     /**
      * 
      * 
+     * @param name 
      * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAnime(title: string, observe?: 'body', reportProgress?: boolean): Observable<Datum>;
-    public getAnime(title: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Datum>>;
-    public getAnime(title: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Datum>>;
-    public getAnime(title: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBook(name: string, title?: string, observe?: 'body', reportProgress?: boolean): Observable<Book>;
+    public getBook(name: string, title?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Book>>;
+    public getBook(name: string, title?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Book>>;
+    public getBook(name: string, title?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (title === null || title === undefined) {
-            throw new Error('Required parameter title was null or undefined when calling getAnime.');
+        if (name === null || name === undefined) {
+            throw new Error('Required parameter name was null or undefined when calling getBook.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (title !== undefined && title !== null) {
+            queryParameters = queryParameters.set('title', <any>title);
         }
 
         let headers = this.defaultHeaders;
@@ -456,8 +463,9 @@ export class AnimeService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Datum>('get',`${this.basePath}/api/Anime/${encodeURIComponent(String(title))}`,
+        return this.httpClient.request<Book>('get',`${this.basePath}/api/Books/${encodeURIComponent(String(name))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

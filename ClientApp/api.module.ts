@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from './api/account.service';
 import { AdminService } from './api/admin.service';
 import { AnimeService } from './api/anime.service';
+import { BooksService } from './api/books.service';
 import { BuggyService } from './api/buggy.service';
 import { FriendsService } from './api/friends.service';
 import { GameService } from './api/game.service';
@@ -23,6 +24,7 @@ import { UsersService } from './api/users.service';
     AccountService,
     AdminService,
     AnimeService,
+    BooksService,
     BuggyService,
     FriendsService,
     GameService,

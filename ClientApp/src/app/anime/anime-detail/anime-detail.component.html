@@ -1,5 +1,5 @@
 <div class="row">
-    <h1 style="size: 15rem;">{{anime.title}} ({{anime.titleJapanese}})</h1>
+    <h1 style="size: 15rem;">{{anime.title}} ({{anime.title_japanese}})</h1>
 
     <div class="d-flex justify-content-between">
       <div>
@@ -35,7 +35,7 @@
         <p style="font-size: 20px;">Rating</p>
           <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
           <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{anime.score}}</span>/10<br>{{anime.scoredBy}} votes</p>
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{anime.score}}</span>/10<br>{{anime.scored_by}} votes</p>
           </div>
 
     </div>
@@ -43,11 +43,11 @@
       
     </div>
 
-    <div class="col-4"><img src="{{anime.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{anime.title}}" class="img-fluid"></div>
+    <div class="col-4"><img src="{{anime.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{anime.title}}" class="img-fluid"></div>
     <div class="col-8">
 
-    <div *ngIf="anime.trailer!.embedUrl!" class="embed-responsive embed-responsive-4by3">
-        <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embedUrl! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
+    <div *ngIf="anime.trailer!.embed_url!" class="embed-responsive embed-responsive-4by3">
+        <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embed_url! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
         </div>
     </div>
 </div>

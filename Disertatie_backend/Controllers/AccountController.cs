@@ -9,6 +9,11 @@ using Disertatie_backend.Entities.User;
 using System.Net.Http;
 using Disertatie_backend.Configurations;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System;
 
 namespace Disertatie_backend.Controllers
 {
@@ -56,11 +61,15 @@ namespace Disertatie_backend.Controllers
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            //var confirmationLink = Url.Action("ConfirmEmail", "Account", new {UserId = user.Id, Token = token}, Request.Scheme);
+
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", "Your account has been created! Welcome to our community!");
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", $"Your account has been created! Welcome to our community! Use this link to activate your email: {token}");
             await _emailSender.SendEmailAsync(message, user.UserName);
 
             return new UserDto
@@ -71,6 +80,25 @@ namespace Disertatie_backend.Controllers
                 Gender = user.Gender,
                 Email = user.Email
             };
+        }
+        [HttpPost("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(Guid userId, string token)
+        {
+            if (userId == Guid.Empty || token == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return NotFound("The user was not found");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded) return Ok("Your account has been confirmed");
+
+            return UnprocessableEntity("Something went wrong");
         }
 
         [HttpPost("login")]
@@ -115,13 +143,15 @@ namespace Disertatie_backend.Controllers
             var userContent = await meResponse.Content.ReadAsStringAsync();
             var userContentObj = JsonConvert.DeserializeObject<RegisterWithFacebookDto>(userContent);
 
+            userContentObj.Username = userContentObj.Username.Replace(" ", "");
             userContentObj.KnownAs = userContentObj.Username;
+            userContentObj.Password = "Random_password1!";
 
             if (await UserExists(userContentObj.Username)) return BadRequest("Username already exists");
 
             var user = _mapper.Map<AppUser>(userContentObj);
 
-            //user.UserName = userContentObj.Username.ToLower();
+            user.UserName = userContentObj.Username.ToLower();
 
             var result = await _userManager.CreateAsync(user, userContentObj.Password);
 
@@ -131,7 +161,7 @@ namespace Disertatie_backend.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", "Your account has been created! Welcome to our community!");
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", $"Your account has been created! Welcome to our community! Please note that your username is: {user.UserName} and your password is: {userContentObj.Password}. You are advised to change your password after you login into your account!");
             await _emailSender.SendEmailAsync(message, user.UserName);
 
             return new UserDto
@@ -165,60 +195,112 @@ namespace Disertatie_backend.Controllers
             _context.SaveChanges();
         }
 
+        [HttpPost("forgotPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([Required] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new {token, email = user.Email}, Request.Scheme);
+
+                var message = new EmailMessage(new string[] { user.Email }, "Forgot password link", forgotPasswordLink);
+                await _emailSender.SendEmailAsync(message, user.UserName);
+
+                return Ok("The email was sent, please verify your inbox");
+            }
+
+            return BadRequest("The user was not found");
+        }
+
+        [HttpGet("reset-password")]
+        public async Task<IActionResult> ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordModel{ Token = token, Email = email };
+
+            return Ok(model);
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+            if (user != null)
+            {
+                var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
+
+                if(!resetPasswordResult.Succeeded) 
+                {
+                    foreach(var error in resetPasswordResult.Errors)
+                    {
+                        ModelState.AddModelError(error.Code, error.Description);
+                    }
+
+                    return Ok(ModelState);
+                }
+
+                return Ok("Password has been changed");
+            }
+
+            return BadRequest("Could not send the link");
+        }
+
         [HttpDelete("deleteUser/{username}")]
         public async Task DeleteUser([FromRoute] string username)
         {
             var user = await _userManager.FindByNameAsync(username);
 
-            //foreach (var item in _context.AppUserAnimeItems)
-            //{
-            //    if(item.AppUser == user) _context.AppUserAnimeItems.Remove(item);
-            //}
+            foreach (var item in _context.UserAnimes)
+            {
+                if(item.AppUser == user) _context.UserAnimes.Remove(item);
+            }
 
-            //foreach (var item in _context.AppUserGameItems)
-            //{
-            //    if (item.AppUser == user) _context.AppUserGameItems.Remove(item);
-            //}
+            foreach (var item in _context.UserGames)
+            {
+                if (item.AppUser == user) _context.UserGames.Remove(item);
+            }
 
-            //foreach (var item in _context.AppUserMangaItems)
-            //{
-            //    if (item.AppUser == user) _context.AppUserMangaItems.Remove(item);
-            //}
+            foreach (var item in _context.UserMangas)
+            {
+                if (item.AppUser == user) _context.UserMangas.Remove(item);
+            }
 
-            //foreach (var item in _context.AppUserMovieItems)
-            //{
-            //    if (item.AppUser == user) _context.AppUserMovieItems.Remove(item);
-            //}
+            foreach (var item in _context.UserMovies)
+            {
+                if (item.AppUser == user) _context.UserMovies.Remove(item);
+            }
 
-            //foreach (var item in _context.AppUserTvShowItems)
-            //{
-            //    if (item.AppUser == user) _context.AppUserTvShowItems.Remove(item);
-            //}
+            foreach (var item in _context.UserTvShows)
+            {
+                if (item.AppUser == user) _context.UserTvShows.Remove(item);
+            }
 
-            //foreach (var item in _context.UserRoles)
-            //{
-            //    if (item.User == user) _context.UserRoles.Remove(item);
-            //}
+            foreach (var item in _context.UserRoles)
+            {
+                if (item.User == user) _context.UserRoles.Remove(item);
+            }
 
-            //foreach (var item in _context.UserLogins)
-            //{
-            //    if (item.UserId == user.Id) _context.UserLogins.Remove(item);
-            //}
+            foreach (var item in _context.UserLogins)
+            {
+                if (item.UserId == user.Id) _context.UserLogins.Remove(item);
+            }
 
-            //foreach (var item in _context.UserClaims)
-            //{
-            //    if (item.UserId == user.Id) _context.UserClaims.Remove(item);
-            //}
+            foreach (var item in _context.UserClaims)
+            {
+                if (item.UserId == user.Id) _context.UserClaims.Remove(item);
+            }
 
-            //foreach (var item in _context.Friends)
-            //{
-            //    if (item.AddedByUser == user || item.AddedUser == user) _context.Friends.Remove(item);
-            //}
+            foreach (var item in _context.Friends)
+            {
+                if (item.User1 == user || item.User2 == user) _context.Friends.Remove(item);
+            }
 
-            //foreach (var item in _context.Messages)
-            //{
-            //    if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
-            //}
+            foreach (var item in _context.Messages)
+            {
+                if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
+            }
 
             await _userManager.DeleteAsync(user);
             await _context.SaveChangesAsync();

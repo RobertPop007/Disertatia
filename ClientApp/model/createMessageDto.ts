@@ -11,6 +11,6 @@
  */
 
 export interface CreateMessageDto { 
-    recipientUsername?: string;
+    recipient_username?: string;
     content?: string;
 }

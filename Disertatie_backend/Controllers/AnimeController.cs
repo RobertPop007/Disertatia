@@ -73,7 +73,7 @@ namespace Disertatie_backend.Controllers
         [HttpPost("AddAnimeToUser/{animeId}")]
         public async Task<IActionResult> AddAnimeForUser(ObjectId animeId)
         {
-            var username = "rae";
+            var username = User.GetUsername();
 
             if (username == null) return BadRequest("User does not exist");
 
@@ -92,7 +92,7 @@ namespace Disertatie_backend.Controllers
         [HttpPost("AddReviewFor/{animeId}")]
         public async Task<IActionResult> AddReviewForAnime(ObjectId animeId, ReviewDto reviewDto)
         {
-            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");//User.GetUserId();
+            var userId = User.GetUserId();
 
             await _reviewRepository.AddReviewToItem<Datum>(userId, animeId, reviewDto);
 
@@ -102,7 +102,7 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("DeleteAnimeFromUser/{animeId}")]
         public async Task<IActionResult> DeleteAnimeForUser(ObjectId animeId)
         {
-            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");  //User.GetUserId();
+            var userId = User.GetUserId();
             var user = await _userRepository.GetUserByIdAsync(userId);
 
             var anime = await _animesRepository.GetAnimeByIdAsync(animeId);
@@ -119,7 +119,7 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("DeleteReviewFor/{animeId}")]
         public async Task<IActionResult> DeleteReviewForAnime(ObjectId animeId, Guid reviewId)
         {
-            var userId = new Guid("72AA3B78-C662-4173-9356-08DC612A1505");  //User.GetUserId();
+            var userId = User.GetUserId();
 
             await _reviewRepository.DeleteReviewFromItem<Datum>(userId, animeId, reviewId);
 

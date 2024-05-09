@@ -11,7 +11,7 @@
  */
 
 export interface Studio { 
-    malId?: number;
+    mal_id?: number;
     type?: string;
     name?: string;
     url?: string;

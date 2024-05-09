@@ -15,8 +15,8 @@ export interface PlatformGame {
     slug?: string;
     id?: number;
     image?: string;
-    yearEnd?: number;
-    yearStart?: number;
-    gamesCount?: number;
-    imageBackground?: string;
+    year_end?: number;
+    year_start?: number;
+    games_count?: number;
+    image_background?: string;
 }

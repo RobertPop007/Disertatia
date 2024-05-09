@@ -14,6 +14,6 @@ export interface PublisherGame {
     id?: number;
     name?: string;
     slug?: string;
-    gamesCount?: number;
-    imageBackground?: string;
+    games_count?: number;
+    image_background?: string;
 }

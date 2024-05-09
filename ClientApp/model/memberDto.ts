@@ -12,16 +12,16 @@
 
 export interface MemberDto { 
     id?: string;
-    userName?: string;
-    photoUrl?: string;
+    user_name?: string;
+    photo_url?: string;
     age?: number;
-    knownAs?: string;
+    known_as?: string;
     created?: Date;
-    lastActive?: Date;
+    last_active?: Date;
     gender?: string;
     introduction?: string;
     interests?: string;
     city?: string;
     country?: string;
-    isSubscribedToNewsletter?: boolean;
+    is_subscribed_to_newsletter?: boolean;
 }
