@@ -42,10 +42,10 @@ namespace Disertatie_backend.Repositories
             _animeCollectionHelper = animeCollectionHelper;
             _animeCollection = _animeCollectionHelper.CreateCollection(_databaseSettings);
 
-            _animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            _animeCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
-            _animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
-            _animeCollectionHelper.CreateIndexAscending(u => u.Score, "Score");
+            //_animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            //_animeCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
+            //_animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
+            //_animeCollectionHelper.CreateIndexAscending(u => u.Score, "Score");
 
             _mapper = mapper;
         }

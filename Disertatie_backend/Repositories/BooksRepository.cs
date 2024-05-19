@@ -33,7 +33,7 @@ namespace Disertatie_backend.Repositories
             _booksCollectionHelper = booksCollectionHelper;
             _booksCollection = _booksCollectionHelper.CreateCollection(_databaseSettings);
 
-            _booksCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            //_booksCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
 
             _mapper = mapper;
         }

@@ -39,9 +39,9 @@ namespace Disertatie_backend.Repositories
             _mangaCollectionHelper = mangaCollectionHelper;
             _mangaCollection = _mangaCollectionHelper.CreateCollection(_databaseSettings);
 
-            _mangaCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            _mangaCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
-            _mangaCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
+            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
+            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
 
             _mapper = mapper;
         }

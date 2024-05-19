@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
   initializeForm(){
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      gender: ['male'],
+      gender: ['Male'],
       knownAs: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       dateOfBirth: ['', Validators.required],
@@ -53,10 +53,11 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.registerForm.value);
-    
     this.accountService.register(this.registerForm.value).subscribe(response =>{
-      this.router.navigateByUrl('/members');
+      //this.router.navigateByUrl('/home');
+      this.toastr.success("Your account has been created, please confirm your email before log in!");
+      this.registerForm.reset();
+      this.logout();
     }, error => {
       this.validationErrors = error;
     })
@@ -68,6 +69,11 @@ export class RegisterComponent implements OnInit {
 
   cancel(){
     this.cancelRegister.emit(false);
+  }
+
+  logout(){
+    this.accountService.logout();
+    this.goToSignIn();
   }
 
   async login(){

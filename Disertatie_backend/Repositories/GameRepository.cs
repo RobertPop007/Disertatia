@@ -34,7 +34,7 @@ namespace Disertatie_backend.Repositories
             _gamesCollectionHelper = gamesCollectionHelper;
             _gamesCollection = _gamesCollectionHelper.CreateCollection(_databaseSettings);
 
-            _gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
+            //_gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
 
             _mapper = mapper;
         }

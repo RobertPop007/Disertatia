@@ -63,6 +63,35 @@
         }
       }
     },
+    "/api/Account/ConfirmEmail": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Account/login": {
       "post": {
         "tags": [
@@ -206,6 +235,90 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Account/forgotPassword": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Account/reset-password": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordModel"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -4730,7 +4843,7 @@
       "Movie": {
         "type": "object",
         "properties": {
-          "id": {
+          "movieId": {
             "$ref": "#/components/schemas/ObjectId"
           },
           "backdropPath": {
@@ -4756,7 +4869,7 @@
             "type": "string",
             "nullable": true
           },
-          "movieId": {
+          "id": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -5301,6 +5414,31 @@
         },
         "additionalProperties": false
       },
+      "ResetPasswordModel": {
+        "required": [
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Result": {
         "type": "object",
         "properties": {
@@ -5411,6 +5549,14 @@
             "type": "string",
             "format": "uuid"
           },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_photo": {
+            "type": "string",
+            "nullable": true
+          },
           "user": {
             "$ref": "#/components/schemas/AppUser"
           },
@@ -5440,6 +5586,11 @@
         "additionalProperties": false
       },
       "ReviewDto": {
+        "required": [
+          "main_description",
+          "short_description",
+          "stars"
+        ],
         "type": "object",
         "properties": {
           "reviewId": {
@@ -5450,15 +5601,21 @@
             "type": "string",
             "nullable": true
           },
-          "short_description": {
+          "user_photo": {
             "type": "string",
             "nullable": true
+          },
+          "short_description": {
+            "minLength": 1,
+            "type": "string"
           },
           "main_description": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "stars": {
+            "maximum": 10,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           }
@@ -5748,7 +5905,7 @@
       "TvShow": {
         "type": "object",
         "properties": {
-          "id": {
+          "tvShowId": {
             "$ref": "#/components/schemas/ObjectId"
           },
           "adult": {
@@ -5789,7 +5946,7 @@
             "type": "string",
             "nullable": true
           },
-          "movieId": {
+          "id": {
             "type": "integer",
             "format": "int32",
             "nullable": true

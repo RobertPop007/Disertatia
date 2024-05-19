@@ -1,8 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from 'api/anime.service';
+import { UsersService } from 'api/users.service';
 import { Datum } from 'model/datum';
+import { MemberDto } from 'model/memberDto';
+import { Review } from 'model/review';
+import { ReviewDto } from 'model/reviewDto';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +16,7 @@ import { User } from 'src/app/_models/user';
 import { AnimeDetailedResolver } from 'src/app/_resolvers/anime-detailed.resolver';
 import { AccountService } from 'src/app/_services/account.service';
 import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
+import { StarRatingComponent } from 'src/app/helpers/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-anime-detail',
@@ -19,13 +25,15 @@ import { AnimeAngularService } from 'src/app/_services/anime_angular.service';
   providers: [
     AnimeDetailedResolver,
     AnimeService,
-    AnimeAngularService
+    AnimeAngularService,
+    UsersService
   ]
 })
 export class AnimeDetailComponent implements OnInit {
 
   @ViewChild('memberTabs', {static: true}) memberTabs!: TabsetComponent;
   @ViewChild('videoPlayer') videoplayer!: ElementRef;
+  @ViewChild('starRating') starRating!: StarRatingComponent;
   
   images : any;
 
@@ -34,27 +42,46 @@ export class AnimeDetailComponent implements OnInit {
   activeTabs!: TabDirective;
   user!: User;
   res!: boolean;
+  userReview!: MemberDto;
+  reviews!: Review[];
+  reviewDto: ReviewDto = {
+    short_description: '',
+    main_description: '',
+    stars: 0
+  };
+  shortDescription: string = '';
+  mainDescription: string = '';
+  stars: number = 0;
+  myForm!: FormGroup;
   
   constructor(private animeService: AnimeService, 
     private route: ActivatedRoute, 
     private accountService: AccountService,
     private router: Router,
     private animeAngularService: AnimeAngularService,
+    private userService: UsersService,
     private toastr: ToastrService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private fb: FormBuilder) {
       this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
      }
 
   ngOnInit(): void {
+    this.myForm = this.fb.group({
+      short_description: ['', Validators.required],
+      main_description: ['', [Validators.required]],
+      stars: ['', Validators.required]
+    });
+    
     this.route.data.subscribe(data => {
       this.anime = data['anime'];
       
       // this.anime.actorList = this.anime.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
       // this.images = this.anime.actorList?.map((n) => n.image);
-
+      this.getReviews();
       this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
@@ -89,6 +116,61 @@ export class AnimeDetailComponent implements OnInit {
 
   cleanURL(oldURL: string): SafeResourceUrl {
     return this.sanit.bypassSecurityTrustResourceUrl(oldURL);
+  }
+
+  getReviews(){
+    this.animeService.apiAnimeGetReviewsForAnimeIdGet(this.anime.id!).subscribe(reviews => {
+      this.reviews = reviews;
+    }) 
+  }
+
+  getUserFromReview(username: string): MemberDto{
+    this.userService.getUser(username).subscribe(user => {
+      this.userReview = user;
+    })
+    return this.userReview;
+  }
+
+  generateArray(length: number): any[] {
+    return Array.from({ length }, (_, i) => i);
+  }
+
+  onSubmit(){
+    this.stars = this.myForm.get('stars')?.value;
+    this.mainDescription = this.myForm.get('main_description')?.value;
+    this.shortDescription = this.myForm.get('short_description')?.value;
+    this.addReview(this.shortDescription, this.mainDescription, this.stars);
+    this.resetForm();
+  }
+
+  addReview(short_description: string, mainDescription: string, stars: number){
+    this.reviewDto.main_description = mainDescription;
+    this.reviewDto.short_description = short_description;
+    this.reviewDto.stars = stars;
+    this.reviewDto.username = this.user.username;
+    this.reviewDto.user_photo = this.user.photoUrl;
+
+    this.animeService.apiAnimeAddReviewForAnimeIdPost(this.anime.id!, this.reviewDto).subscribe((response: Review) => {
+      response.reviewDate = new Date();
+      this.reviews.push(response);
+      console.log(this.reviews);
+      
+      this.toastr.success("Review added successfully");
+    },
+    (error) => {
+      this.toastr.error("Error adding review: " + error);
+    });
+  }
+
+  onRatingChanged(rating: number): void {
+    this.myForm.controls['stars'].setValue(rating); 
+  }
+
+  resetForm(): void {
+    // Reset form fields after submission
+    this.starRating.resetStars();
+    this.myForm.controls['main_description'].setValue(''); 
+    this.myForm.controls['short_description'].setValue(''); 
   }
 
   customOptions: OwlOptions = {

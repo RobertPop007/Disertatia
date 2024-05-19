@@ -8,6 +8,7 @@ using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -46,7 +47,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task AddReviewToItem<T>(Guid userId, ObjectId itemId, ReviewDto reviewDto)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            var user = _context.Users.Where(x => x.Id == userId).Include(u => u.Photos).FirstOrDefault();
 
             var review = new Review()
             {
@@ -57,6 +58,8 @@ namespace Disertatie_backend.Repositories
                 ReviewId = Guid.NewGuid(),
                 Stars = reviewDto.Stars,
                 User = user,
+                Username = reviewDto.Username,
+                User_photo = user.Photos != null ? user.Photos.Url : string.Empty,
                 UserId = user.Id
             };
 

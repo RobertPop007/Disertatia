@@ -53,6 +53,8 @@ namespace Disertatie_backend.Controllers
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username already exists");
 
+            if (await EmailExists(registerDto.Email)) return BadRequest("Email already exists");
+
             var user = _mapper.Map<AppUser>(registerDto);
 
             user.UserName = registerDto.Username.ToLower();
@@ -203,6 +205,12 @@ namespace Disertatie_backend.Controllers
             if (user != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                /*
+                 * Fără acel forgotPasswordLink
+                 * Aici ceva de genul: To change your password use the link below: "https://4200/pagina-de-schimbat-parola?token=avemToken&email=avemEmail
+                 * Și facem o pagina in angular care sa ia din url acele 2 valori, parola o ia din ceva formular si apelam resetPassword cu ele
+                 */
                 var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new {token, email = user.Email}, Request.Scheme);
 
                 var message = new EmailMessage(new string[] { user.Email }, "Forgot password link", forgotPasswordLink);
@@ -309,6 +317,11 @@ namespace Disertatie_backend.Controllers
         private async Task<bool> UserExists(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username) != null;
+        }
+
+        private async Task<bool> EmailExists(string email)
+        {
+            return await _userRepository.GetUserByEmailAsync(email) != null;
         }
     }
 }

@@ -78,6 +78,7 @@ import { MoviesService } from 'api/movies.service';
 import { TvShowsService } from 'api/tvShows.service';
 import { GameService } from 'api/game.service';
 import { PaginationComponent } from './_pagination/pagination/pagination.component';
+import { StarRatingComponent } from './helpers/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import { PaginationComponent } from './_pagination/pagination/pagination.compone
     GameDetailComponent,
     ConfirmDialogComponent,
     MemberCardAddedComponent,
-    PaginationComponent
+    PaginationComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule,

@@ -30,3 +30,110 @@
 p.indent {
     text-indent: 30px;
 }
+
+.background-image{
+    background-image: url("/../assets/anime-background.png");
+    // background-size: cover;
+    background-position: center;
+    margin-left: -50px;
+    margin-right: -20px;
+    display: grid;
+}
+
+.container{
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+h1{
+    text-align: center;
+}
+
+.indent-paragraph{
+    text-indent: 0.1em;
+}
+
+.indent-paragraph::first-letter {
+    font-size: 2.5em; /* Adjust the font size of the first letter */
+    font-weight: bold; /* Optionally, make the first letter bold */
+    float: left; /* Float the first letter to the left to create the indentation effect */
+    margin-right: 0.1em; /* Add some spacing between the first letter and the rest of the text */
+  }
+
+  .line {
+    border-bottom: 1px solid black; /* Adjust color and thickness as needed */
+    margin-bottom: 10px;
+  }
+
+  .review-box {
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+  }
+  
+  .left-column, .right-column {
+    flex: 1;
+  }
+  
+  .left-column {
+    padding-right: 20px; /* Adjust spacing between columns */
+  }
+  
+  .right-column {
+    flex: 8; /* Adjust the width of the second column */
+  }  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column; /* Display items vertically */
+    align-items: flex-start; /* Center items horizontally */
+  }
+  
+  .user-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px; /* Add space between photo and user details */
+  }
+  
+    .date {
+    margin: 0; /* Reset default margin */
+    font-size: 14px;
+    color: #666;
+    text-align: left; /* Center text */
+  }
+
+  .username {
+    margin: 0; /* Reset default margin */
+    font-size: 14px;
+    color: #666;
+    text-align: left; /* Center text */
+    width: 100%; /* Ensure text takes full width */
+    text-transform: capitalize; /* Capitalize the first letter */
+  }
+  
+  
+  .rating {
+    margin-bottom: 10px;
+  }
+  
+  .fa-star {
+    color: orange;
+  }
+  
+  .short-description {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .main-description {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+  }

@@ -33,8 +33,8 @@ namespace Disertatie_backend.Repositories
             _tvshowsCollectionHelper = tvshowsCollectionHelper;
             _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(_databaseSettings);
 
-            _tvshowsCollectionHelper.CreateIndexAscending(u => u.Name, titleIndex);
-            _tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalName, titleFullIndex);
+            //_tvshowsCollectionHelper.CreateIndexAscending(u => u.Name, titleIndex);
+            //_tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalName, titleFullIndex);
 
             _mapper = mapper;
         }

@@ -21,13 +21,13 @@ import { SpokenLanguage } from './spokenLanguage';
 import { Videos } from './videos';
 
 export interface Movie { 
-    id?: ObjectId;
+    movie_id?: ObjectId;
     backdrop_path?: string;
     belongs_to_collection?: BelongsToCollection;
     budget?: number;
     genres?: Array<MovieGenre>;
     homepage?: string;
-    movie_id?: number;
+    id?: number;
     imdb_id?: string;
     origin_country?: Array<string>;
     original_language?: string;

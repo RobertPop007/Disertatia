@@ -1,0 +1,8 @@
+<div class="star-rating" (mouseleave)="onMouseLeave()">
+    <span *ngFor="let star of stars" class="star" 
+          [class.checked]="star <= currentRating" 
+          (mouseover)="onStarHover(star)" 
+          (click)="onStarClick(star)">
+      <i class="fa fa-star"></i>
+    </span>
+  </div>

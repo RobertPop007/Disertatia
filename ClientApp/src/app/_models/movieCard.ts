@@ -1,7 +1,7 @@
 import { ObjectId } from "model/objectId";
 
 export interface MovieCard{
-    id: ObjectId;
+    movie_id: ObjectId;
     fullTitle: string;
     year: string;
     image: string;

@@ -54,6 +54,11 @@ namespace Disertatie_backend.Repositories
                 userParams.PageNumber, userParams.PageSize);
         }
 
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<AppUser> GetUserByIdAsync(Guid id)
         {
             return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);

@@ -33,8 +33,8 @@ namespace Disertatie_backend.Repositories
             _moviesCollectionHelper = moviesCollectionHelper;
             _moviesCollection = _moviesCollectionHelper.CreateCollection(_databaseSettings);
 
-            _moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            _moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
+            //_moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
+            //_moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
         }

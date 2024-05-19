@@ -11,6 +11,8 @@ namespace Disertatie_backend.Entities.User
         [Key]
         public Guid ReviewId { get; set; }
         public Guid UserId { get; set; }
+        public string Username { get; set; }
+        public string? User_photo { get; set; } = null;
 
         [ForeignKey("UserId")]
         public AppUser User { get; set; }

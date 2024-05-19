@@ -9,17 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AppUser } from './appUser';
 
-export interface Review { 
-    review_id?: string;
-    user_id?: string;
-    username?: string;
-    user_photo?: string;
-    user?: AppUser;
-    item_id?: string;
-    short_description?: string;
-    main_description?: string;
-    stars?: number;
-    reviewDate?: Date;
+export interface ResetPasswordModel { 
+    password: string;
+    confirm_password?: string;
+    email?: string;
+    token?: string;
 }

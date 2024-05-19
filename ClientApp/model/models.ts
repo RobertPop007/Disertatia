@@ -62,6 +62,7 @@ export * from './publisherGame';
 export * from './ratingGame';
 export * from './registerDto';
 export * from './requirementsGame';
+export * from './resetPasswordModel';
 export * from './result';
 export * from './review';
 export * from './reviewDto';

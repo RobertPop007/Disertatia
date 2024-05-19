@@ -1,21 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+//@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
-.light-theme {
-  --background-color: #f5f5f5;
-  --text-color: #1a1a1a;
-  --box-color: #fff;
-  --button-color: #fff;
+// .light-theme {
+//   --background-color: #f5f5f5;
+//   --text-color: #1a1a1a;
+//   --box-color: #fff;
+//   --button-color: #fff;
 
-  --box-shadow: 0 15px 25px rgba(0, 0, 0, .1);
-}
+//   --box-shadow: 0 15px 25px rgba(0, 0, 0, .1);
+//   z-index: 0;
+// }
 
-.dark-theme {
-  --background-color: #1a1a1a;
-  --text-color: #f5f5f5;
-  --box-color: #2b2b2b;
-  --button-color: #1a1a1a;
-}
+// .dark-theme {
+//   --background-color: #1a1a1a;
+//   --text-color: #f5f5f5;
+//   --box-color: #2b2b2b;
+//   --button-color: #1a1a1a;
+// }
 
 .tab-panel {
     border: 1px solid #ddd;
@@ -27,7 +28,7 @@
   body {
     padding: 20px;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--background-color);
+    //background-color: var(--background-color);
     position: relative;
     transition: all .3s ease-in-out;
   }

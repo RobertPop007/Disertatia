@@ -1,136 +1,183 @@
-<div class="row">
-    <h1 style="size: 15rem;">{{anime.title}} ({{anime.title_japanese}})</h1>
+<main class="background-image">
+  <div class="container">
+    <br>
+    <h1 style="size: 20rem;" class="text-align font-weight-bold">{{anime.title_english}} ({{anime.title}})</h1>
 
-    <div class="d-flex justify-content-between">
-      <div>
-        <p>{{anime.year}} <span *ngIf="anime.duration"><i class="far fa-dot-circle"></i> </span> {{anime.duration}}
-          <span *ngIf="anime.rating"><i class="far fa-dot-circle"></i></span> {{anime.rating}}
-          <span *ngIf="anime.status"><i class="far fa-dot-circle"></i></span> {{anime.status}}</p>
-          
-
+    <div class="row">
+      <div class="col">
         <div class="d-inline-block" *ngFor="let genre of anime.genres">
-          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+          <p class="m-1 p-1 border border-primary rounded">{{genre.name}}</p>
         </div>
-
-        <!-- <div *ngIf="movie.tagline">
-          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
-        </div> -->
-
-        <br>
-
-        <div *ngIf="res == false">
-          <li class="list-inline-item"><button (click)="addAnime(anime)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> <p>Add anime</p></li>
-        </div>
-        
-        <div *ngIf="res == true">
-          <li class="list-inline-item"><button (click)="deleteAnime(anime)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> <p>Delete movie</p></li>
-        </div>
-        <br>
       </div>
-      
-    <div>
-      <div class="text-end">
-        <p style="font-size: 20px;">Rating</p>
-          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
-          <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{anime.score}}</span>/10<br>{{anime.scored_by}} votes</p>
+      <div *ngIf="res == false" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="addAnime(anime)" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Add anime</p>
           </div>
-
-    </div>
-  </div>
-      
-    </div>
-
-    <div class="col-4"><img src="{{anime.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{anime.title}}" class="img-fluid"></div>
-    <div class="col-8">
-
-    <div *ngIf="anime.trailer!.embed_url!" class="embed-responsive embed-responsive-4by3">
-        <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embed_url! | safe"></iframe> <!-- +'?autoplay=true'  allow="autoplay" --> 
         </div>
-    </div>
-</div>
-  
-<br><br>
-
-<h1>Plot</h1>
-<p class="indent">{{anime.synopsis}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-
-<div *ngIf="anime.producers!.length > 0">
-<h1>Producers</h1>
-<div *ngFor="let producer of anime.producers">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{producer.name}}</span></p>
-  </div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="anime.licensors!.length > 0">
-<h1>Licensors</h1>
-<div *ngFor="let licensor of anime.licensors">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{licensor.name}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="anime.studios!.length > 0">
-<h1>Studios</h1>
-<div *ngFor="let studio of anime.studios">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{studio.name}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="anime.themes">
-<h1>Themes</h1>
-<div *ngFor="let theme of anime.themes">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
-  </div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="anime.rank">
-  <h1>Additional informations</h1>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Rank: {{anime.rank}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Popularity: {{anime.popularity}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Members: {{anime.members}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Favorites: {{anime.favorites}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Episodes: {{anime.episodes}}</span></p>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
-<div *ngIf="anime.url">
-  <h1>External links</h1>
-  <a style="color: #0096FF;" target="_blank" href="{{anime.url}}">
-  {{anime.title}} MyAnimeList</a>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
-  <div *ngIf="anime.broadcast!.string !== 'Unknow' && anime.broadcast!.string">
-    <h1>Broadcast</h1>
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">
-      {{anime.broadcast!.string}}</span></p>
-
-      <hr style="width:50%;text-align:left;margin-left:0">
-    </div>
-
-    <div *ngIf="anime.demographics!.length > 0">
-      <h1>Similar animes on MyAnimeList</h1>
-
-      <h2>Links:</h2>
-
-      <div *ngFor="let demographic of anime.demographics">
-      <a style="color: #0096FF;" target="_blank" href="{{demographic.url}}">
-      Similar {{demographic.name}} on MyAnimeList</a>
-    </div>
-      
-      <hr style="width:50%;text-align:left;margin-left:0">
       </div>
+
+      <div *ngIf="res == true" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="deleteAnime(anime)" class="btn btn-primary">
+            <i class="fa fa-minus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Delete movie</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Background</h2>
+    <p class="indent">{{anime.background}}</p>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Plot</h2>
+    <p class="indent-paragraph">{{anime.synopsis}}</p>
+
+    <div class="row">
+      <div class="col-4">
+        <img src="{{anime.images!.jpg!.large_image_url || './assets/user.png'}}" alt="{{anime.title}}"
+          class="img-fluid">
+      </div>
+      <div class="col-8">
+
+        <div *ngIf="anime.trailer!.embed_url!" class="embed-responsive embed-responsive-4by3">
+          <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embed_url! | safe"></iframe>
+          <!-- +'?autoplay=true'  allow="autoplay" -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="d-flex justify-content-between"> -->
+    <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>
+    <h5>Type of transmission: {{anime.type}}</h5>
+    <h5>Source: {{anime.source}}</h5>
+    <h5>Episodes: {{anime.episodes}} episodes</h5>
+    <h5>Duration: {{anime.duration}}</h5>
+    <h5>Status: {{anime.status}}</h5>
+    <h5>Aired: {{anime.aired?.string}}</h5>
+    <h5>Broadcast: {{anime.broadcast?.string}}</h5>
+    <h5>Rating: {{anime.rating}}</h5>
+    <div *ngIf="anime.producers && anime.producers.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Producers: </h5>
+        <div class="d-inline-block" *ngFor="let producer of anime.producers">
+          <a href="{{producer.url}}" target="_blank">
+            <h5 class="d-inline">{{producer.name}},</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="anime.licensors && anime.licensors.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Licensors: </h5>
+        <div class="d-inline-block" *ngFor="let licensor of anime.licensors">
+          <a href="{{licensor.url}}" target="_blank">
+            <h5 class="d-inline">{{licensor.name}},</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="anime.studios && anime.studios.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Studios: </h5>
+        <div class="d-inline-block" *ngFor="let studio of anime.studios">
+          <a href="{{studio.url}}" target="_blank">
+            <h5 class="d-inline">{{studio.name}},</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="anime.themes && anime.themes.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let theme of anime.themes">
+          <a href="{{theme.url}}" target="_blank">
+            <h5 class="d-inline">{{theme.name}},</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="anime.demographics && anime.demographics.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let demographic of anime.demographics">
+          <a href="{{demographic.url}}" target="_blank">
+            <h5 class="d-inline">{{demographic.name}},</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <h5>Score: {{anime.score}}/10 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i> (scored by {{anime.scored_by}} users)</h5>
+    <h5>Ranked: #{{anime.rank}}</h5>
+    <h5>Popularity: #{{anime.popularity}}</h5>
+    <h5>Members: {{anime.members}}</h5>
+    <div class="row">
+      <div class="col">
+        <h5 class="d-inline">MAL (My Anime List): </h5>
+        <a href="{{anime.url}}" target="_blank">
+          <h5 class="d-inline">{{anime.url}}</h5>
+        </a>
+      </div>
+    </div>
+    <br>
+  </div>
+
+  <div class="container mt-5" style="margin-bottom: 120px;">
+    <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+    <div *ngIf="reviews.length > 0">
+      <div *ngFor="let review of reviews">
+        <div class="review-box">
+          <div class="left-column">
+            <div class="user-info">
+              <img src="{{review.user_photo || './assets/user.png'}}" alt="User Photo" class="user-photo">
+              <div class="user-details">
+                <h5 class="username">{{ review.username }}</h5>
+                <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="review-content">
+              <h4 class="short-description">{{ review.short_description }}</h4>
+              <div class="rating">
+                <ng-container *ngIf="review.stars">
+                  <ng-container *ngFor="let _ of generateArray(review.stars)">
+                    <span class="fa fa-star checked"></span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <p class="main-description">{{ review.main_description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="reviews.length === 0">
+      <p>No reviews available. Be the first to leave a review!</p>
+    </div>
+    <br>
+    
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+      <div class="form-group">
+        <label for="shortDescription">Short Description:</label>
+        <input type="text" class="form-control" id="shortDescription" name="shortDescription" formControlName="short_description">
+      </div>
+      <div class="form-group">
+        <label for="mainDescription">Main Description:</label>
+        <textarea class="form-control" id="mainDescription" name="mainDescription" rows="5" formControlName="main_description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="stars">Stars: </label>
+        <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>

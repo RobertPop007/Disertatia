@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { LoginDto } from '../model/loginDto';
 import { RegisterDto } from '../model/registerDto';
+import { ResetPasswordModel } from '../model/resetPasswordModel';
 import { UserDto } from '../model/userDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -56,6 +57,54 @@ export class AccountService {
         return false;
     }
 
+
+    /**
+     * 
+     * 
+     * @param user_id 
+     * @param token 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (user_id !== undefined && user_id !== null) {
+            queryParameters = queryParameters.set('userId', <any>user_id);
+        }
+        if (token !== undefined && token !== null) {
+            queryParameters = queryParameters.set('token', <any>token);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Account/ConfirmEmail`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * 
@@ -129,6 +178,52 @@ export class AccountService {
 
         return this.httpClient.request<any>('delete',`${this.basePath}/api/Account/deleteUser/${encodeURIComponent(String(username))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param email 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAccountForgotPasswordPost(email: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountForgotPasswordPost(email: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountForgotPasswordPost(email: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountForgotPasswordPost(email: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (email === null || email === undefined) {
+            throw new Error('Required parameter email was null or undefined when calling apiAccountForgotPasswordPost.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (email !== undefined && email !== null) {
+            queryParameters = queryParameters.set('email', <any>email);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Account/forgotPassword`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -314,6 +409,100 @@ export class AccountService {
         }
 
         return this.httpClient.request<UserDto>('post',`${this.basePath}/api/Account/register`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param token 
+     * @param email 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAccountResetPasswordGet(token?: string, email?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountResetPasswordGet(token?: string, email?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountResetPasswordGet(token?: string, email?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountResetPasswordGet(token?: string, email?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (token !== undefined && token !== null) {
+            queryParameters = queryParameters.set('token', <any>token);
+        }
+        if (email !== undefined && email !== null) {
+            queryParameters = queryParameters.set('email', <any>email);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Account/reset-password`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAccountResetPasswordPost(body?: ResetPasswordModel, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountResetPasswordPost(body?: ResetPasswordModel, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountResetPasswordPost(body?: ResetPasswordModel, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountResetPasswordPost(body?: ResetPasswordModel, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json-patch+json',
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Account/reset-password`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
