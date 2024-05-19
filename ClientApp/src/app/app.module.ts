@@ -79,6 +79,7 @@ import { TvShowsService } from 'api/tvShows.service';
 import { GameService } from 'api/game.service';
 import { PaginationComponent } from './_pagination/pagination/pagination.component';
 import { StarRatingComponent } from './helpers/star-rating/star-rating.component';
+import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { StarRatingComponent } from './helpers/star-rating/star-rating.component
     ConfirmDialogComponent,
     MemberCardAddedComponent,
     PaginationComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    ConfirmEmailComponent
   ],
   imports: [
     BrowserModule,

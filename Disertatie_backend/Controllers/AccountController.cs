@@ -14,6 +14,10 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System;
+using Disertatie_backend.EmailTemplates;
+using Org.BouncyCastle.Bcpg;
+using System.Web;
+using System.Text;
 
 namespace Disertatie_backend.Controllers
 {
@@ -71,8 +75,9 @@ namespace Disertatie_backend.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", $"Your account has been created! Welcome to our community! Use this link to activate your email: {token}");
-            await _emailSender.SendEmailAsync(message, user.UserName);
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", RecommandationEmailTemplate.GetConfirmationEmailTemplate(user.Id, token));
+
+            await _emailSender.SendHtmlEmailAsync(message, user.UserName);
 
             return new UserDto
             {
@@ -96,6 +101,8 @@ namespace Disertatie_backend.Controllers
             {
                 return NotFound("The user was not found");
             }
+
+            token = token.Replace(" ", "+");
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded) return Ok("Your account has been confirmed");

@@ -82,6 +82,7 @@ export class AnimeDetailComponent implements OnInit {
 
       // this.images = this.anime.actorList?.map((n) => n.image);
       this.getReviews();
+      console.log(this.reviews);
       this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
@@ -171,6 +172,31 @@ export class AnimeDetailComponent implements OnInit {
     this.starRating.resetStars();
     this.myForm.controls['main_description'].setValue(''); 
     this.myForm.controls['short_description'].setValue(''); 
+  }
+
+  likeReview(review: Review){
+    console.log(review);
+    this.animeService.apiAnimeLikeReviewForReviewIdPost(review.reviewId!, this.anime.id).subscribe(
+      () => {
+        review.likes!++; 
+      }
+    );
+  }
+
+  dislikeReview(review: Review){
+    this.animeService.apiAnimeDislikeReviewForReviewIdPost(review.reviewId!, this.anime.id).subscribe(
+      () => {
+        review.dislikes!++;
+      }
+    );
+  }
+
+  getReviewLikes(review: Review){
+    this.animeService.apiAnimeGetLikesForReviewIdGet(review.reviewId!, this.anime.id).subscribe(
+      (likes: number) => {
+        review.likes = likes;
+      }
+    );
   }
 
   customOptions: OwlOptions = {

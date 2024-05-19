@@ -137,3 +137,21 @@ h1{
     font-size: 14px;
     color: #333;
   }
+
+  .like-label {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    border: 1px solid #ccc; /* Add border style */
+  }
+  
+  .like-count {
+    font-weight: bold;
+  }
+  
+  .like-label-text {
+    margin-left: 4px;
+    color: #333;
+  }

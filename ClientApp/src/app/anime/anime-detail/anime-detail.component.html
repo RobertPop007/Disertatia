@@ -130,7 +130,7 @@
 
   <div class="container mt-5" style="margin-bottom: 120px;">
     <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
-    <div *ngIf="reviews.length > 0">
+    <div *ngIf="reviews?.length !== 0">
       <div *ngFor="let review of reviews">
         <div class="review-box">
           <div class="left-column">
@@ -153,13 +153,25 @@
                 </ng-container>
               </div>
               <p class="main-description">{{ review.main_description }}</p>
+              <div class="like-dislike">
+                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                  <span class="fa fa-thumbs-up"></span> Like
+                </button>
+                <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                  <span class="fa fa-thumbs-down"></span> Dislike
+                </button>
+                <div class="like-label">
+                  <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                  <span class="like-label-text">Likes</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div *ngIf="reviews.length === 0">
+    <div *ngIf="reviews?.length === 0">
       <p>No reviews available. Be the first to leave a review!</p>
     </div>
     <br>

@@ -713,6 +713,96 @@
         }
       }
     },
+    "/api/Anime/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Anime"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Anime/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Anime"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Anime/GetLikesFor/{reviewId}": {
+      "get": {
+        "tags": [
+          "Anime"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Books/GetBooksFor/{username}": {
       "get": {
         "tags": [
@@ -5581,6 +5671,14 @@
           "reviewDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "likes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dislikes": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -7,12 +7,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.EmailTemplates
 {
     public class RecommandationEmailTemplate
     {
+        public static string GetConfirmationEmailTemplate(Guid userId, string token)
+        {
+            var sb = new StringBuilder();
+            string confirmationLink = $"https://localhost:4200/confirmEmail?userId={userId}&token={token}";
+            var body = $@"
+                    <html>
+                    <body>
+                        <p>Your account has been created! Welcome to our community!</p>
+                        <p>Use this link to activate your email: <a href=""{confirmationLink}"">Confirm email</a></p>
+                    </body>
+                    </html>";
+
+            sb.Append(body);
+            
+
+            return sb.ToString();
+
+            
+        }
+
         public static string GetEmailTemplate(AppUser user, DataContext context)
         {
             var sb = new StringBuilder();

@@ -144,6 +144,8 @@ namespace Disertatie_backend.Repositories
                 case Type t when typeof(Datum).IsAssignableFrom(t):
                     var anime = await _animeRepository.GetAnimeByIdAsync(itemId);
                     var animeReviews = anime.ReviewsIds.Select(x => GetReview(x));
+
+                    if(anime.ReviewsIds.Count != 0) animeReviews = animeReviews.OrderByDescending(u => u.Likes - u.Dislikes);
                     return animeReviews;
 
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
@@ -185,6 +187,34 @@ namespace Disertatie_backend.Repositories
             if (reviewsForUser == null) return Enumerable.Empty<Review>();
 
             return reviewsForUser;
+        }
+
+        public async Task LikeReview(ObjectId itemId, Guid reviewId)
+        {
+            var review = await _context.Reviews.Where(x => x.ItemId == itemId.ToString() && x.ReviewId == reviewId).FirstOrDefaultAsync();
+            if(review != null)
+            {
+                review.Likes++;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DislikeReview(ObjectId itemId, Guid reviewId)
+        {
+            var review = await _context.Reviews.Where(x => x.ItemId == itemId.ToString() && x.ReviewId == reviewId).FirstOrDefaultAsync();
+            if (review != null)
+            {
+                review.Dislikes++;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetLikes(ObjectId itemId, Guid reviewId)
+        {
+            var review = await _context.Reviews.Where(x => x.ItemId == itemId.ToString() && x.ReviewId == reviewId).FirstOrDefaultAsync();
+            return review.Likes - review.Dislikes;
         }
 
         public Task UpdateReviewItem<T>(Guid userId, ObjectId itemId, Review review)

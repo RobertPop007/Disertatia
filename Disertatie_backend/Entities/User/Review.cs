@@ -24,5 +24,7 @@ namespace Disertatie_backend.Entities.User
         [Range(1, 10, ErrorMessage = "Value must be between 1 and 10")]
         public byte Stars { get; set; }
         public DateTime ReviewDate { get; set; }
+        public int Likes { get; set; }
+        public int Dislikes { get; set; }
     }
 }

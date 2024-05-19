@@ -14,5 +14,8 @@ namespace Disertatie_backend.Interfaces
         Task UpdateReviewItem<T>(Guid userId, ObjectId itemId, Review review);
         Task<IEnumerable<Review>> GetReviewsForItem<T>(ObjectId itemId);
         Task<IEnumerable<Review>> GetReviewsForUserAsync(Guid userId);
+        Task LikeReview(ObjectId itemId, Guid reviewId);
+        Task DislikeReview(ObjectId itemId, Guid reviewId);
+        Task<int> GetLikes(ObjectId itemId, Guid reviewId);
     }
 }

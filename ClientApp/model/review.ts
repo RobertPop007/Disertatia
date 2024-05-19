@@ -12,7 +12,7 @@
 import { AppUser } from './appUser';
 
 export interface Review { 
-    review_id?: string;
+    reviewId?: string;
     user_id?: string;
     username?: string;
     user_photo?: string;
@@ -22,4 +22,6 @@ export interface Review {
     main_description?: string;
     stars?: number;
     reviewDate?: Date;
+    likes?: number;
+    dislikes?: number;
 }

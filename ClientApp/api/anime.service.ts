@@ -285,6 +285,54 @@ export class AnimeService {
     /**
      * 
      * 
+     * @param review_id 
+     * @param anime_id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAnimeDislikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAnimeDislikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAnimeDislikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAnimeDislikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (review_id === null || review_id === undefined) {
+            throw new Error('Required parameter review_id was null or undefined when calling apiAnimeDislikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (anime_id !== undefined && anime_id !== null) {
+            queryParameters = queryParameters.set('animeId', <any>anime_id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Anime/DislikeReviewFor/${encodeURIComponent(String(review_id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param searched_anime 
      * @param order_by 
      * @param page_number 
@@ -383,6 +431,54 @@ export class AnimeService {
     /**
      * 
      * 
+     * @param review_id 
+     * @param anime_id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAnimeGetLikesForReviewIdGet(review_id: string, anime_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAnimeGetLikesForReviewIdGet(review_id: string, anime_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAnimeGetLikesForReviewIdGet(review_id: string, anime_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAnimeGetLikesForReviewIdGet(review_id: string, anime_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (review_id === null || review_id === undefined) {
+            throw new Error('Required parameter review_id was null or undefined when calling apiAnimeGetLikesForReviewIdGet.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (anime_id !== undefined && anime_id !== null) {
+            queryParameters = queryParameters.set('animeId', <any>anime_id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('get',`${this.basePath}/api/Anime/GetLikesFor/${encodeURIComponent(String(review_id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param anime_id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -415,6 +511,54 @@ export class AnimeService {
 
         return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Anime/GetReviewsFor/${encodeURIComponent(String(anime_id))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param review_id 
+     * @param anime_id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiAnimeLikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAnimeLikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAnimeLikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAnimeLikeReviewForReviewIdPost(review_id: string, anime_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (review_id === null || review_id === undefined) {
+            throw new Error('Required parameter review_id was null or undefined when calling apiAnimeLikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (anime_id !== undefined && anime_id !== null) {
+            queryParameters = queryParameters.set('animeId', <any>anime_id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Anime/LikeReviewFor/${encodeURIComponent(String(review_id))}`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

@@ -32,9 +32,11 @@ import { MangaDetailedResolver } from './_resolvers/manga-detailed.resolver';
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { MovieDetailedResolver } from './_resolvers/movie-detailed.resolver';
 import { TvShowDetailedResolver } from './_resolvers/tvShow-detailed.resolver';
+import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'confirmEmail', component: ConfirmEmailComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',
