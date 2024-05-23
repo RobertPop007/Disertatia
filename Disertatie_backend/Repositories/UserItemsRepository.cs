@@ -244,22 +244,22 @@ namespace Disertatie_backend.Repositories
             switch (typeof(T))
             {
                 case Type t when typeof(Datum).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserAnime.Any(u => u.AnimeId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserAnimes.Any(u => u.AnimeId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserManga.Any(u => u.MangaId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserMangas.Any(u => u.MangaId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserGame.Any(u => u.GameId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserGames.Any(u => u.GameId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserMovie.Any(u => u.MovieId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserMovies.Any(u => u.MovieId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserTvShow.Any(u => u.TvShowId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserTvShows.Any(u => u.TvShowId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 case Type t when typeof(Book).IsAssignableFrom(t):
-                    isItemAlreadyAdded = user.AppUserBook.Any(u => u.BookId == itemId.ToString());
+                    isItemAlreadyAdded = _context.UserBooks.Any(u => u.BookId == itemId.ToString() && u.AppUserId == userId);
                     break;
                 default:
                     break;

@@ -23,13 +23,13 @@ import { Trailer } from './trailer';
 
 export interface Datum { 
     id?: ObjectId;
-    mal_id?: number;
+    malId?: number;
     url?: string;
     images?: Images;
     trailer?: Trailer;
     title?: string;
-    title_english?: string;
-    title_japanese?: string;
+    titleEnglish?: string;
+    titleJapanese?: string;
     type?: string;
     source?: string;
     episodes?: number;
@@ -39,7 +39,7 @@ export interface Datum {
     duration?: string;
     rating?: string;
     score?: number;
-    scored_by?: number;
+    scoredBy?: number;
     rank?: number;
     popularity?: number;
     members?: number;
@@ -55,5 +55,5 @@ export interface Datum {
     genres?: Array<Genre>;
     themes?: Array<Theme>;
     demographics?: Array<Demographic>;
-    reviews_ids?: Array<string>;
+    reviewsIds?: Array<string>;
 }

@@ -60,17 +60,17 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
+     * @param mangaId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaAddMangaToUserMangaIdPost(manga_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMangaAddMangaToUserMangaIdPost(manga_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMangaAddMangaToUserMangaIdPost(manga_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMangaAddMangaToUserMangaIdPost(manga_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaAddMangaToUserMangaIdPost(mangaId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaAddMangaToUserMangaIdPost(mangaId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaAddMangaToUserMangaIdPost(mangaId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaAddMangaToUserMangaIdPost(mangaId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (manga_id === null || manga_id === undefined) {
-            throw new Error('Required parameter manga_id was null or undefined when calling apiMangaAddMangaToUserMangaIdPost.');
+        if (mangaId === null || mangaId === undefined) {
+            throw new Error('Required parameter mangaId was null or undefined when calling apiMangaAddMangaToUserMangaIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -87,7 +87,7 @@ export class MangaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/AddMangaToUser/${encodeURIComponent(String(manga_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/AddMangaToUser/${encodeURIComponent(String(mangaId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -100,18 +100,18 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
+     * @param mangaId 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaAddReviewForMangaIdPost(manga_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMangaAddReviewForMangaIdPost(manga_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMangaAddReviewForMangaIdPost(manga_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMangaAddReviewForMangaIdPost(manga_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaAddReviewForMangaIdPost(mangaId: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaAddReviewForMangaIdPost(mangaId: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaAddReviewForMangaIdPost(mangaId: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaAddReviewForMangaIdPost(mangaId: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (manga_id === null || manga_id === undefined) {
-            throw new Error('Required parameter manga_id was null or undefined when calling apiMangaAddReviewForMangaIdPost.');
+        if (mangaId === null || mangaId === undefined) {
+            throw new Error('Required parameter mangaId was null or undefined when calling apiMangaAddReviewForMangaIdPost.');
         }
 
 
@@ -137,7 +137,7 @@ export class MangaService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/AddReviewFor/${encodeURIComponent(String(manga_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/AddReviewFor/${encodeURIComponent(String(mangaId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -151,17 +151,17 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
+     * @param mangaId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaDeleteMangaFromMangaIdDelete(manga_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMangaDeleteMangaFromMangaIdDelete(manga_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMangaDeleteMangaFromMangaIdDelete(manga_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMangaDeleteMangaFromMangaIdDelete(manga_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaDeleteMangaFromUserMangaIdDelete(mangaId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaDeleteMangaFromUserMangaIdDelete(mangaId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaDeleteMangaFromUserMangaIdDelete(mangaId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaDeleteMangaFromUserMangaIdDelete(mangaId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (manga_id === null || manga_id === undefined) {
-            throw new Error('Required parameter manga_id was null or undefined when calling apiMangaDeleteMangaFromMangaIdDelete.');
+        if (mangaId === null || mangaId === undefined) {
+            throw new Error('Required parameter mangaId was null or undefined when calling apiMangaDeleteMangaFromUserMangaIdDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -178,7 +178,7 @@ export class MangaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Manga/DeleteMangaFrom/${encodeURIComponent(String(manga_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Manga/DeleteMangaFromUser/${encodeURIComponent(String(mangaId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -191,24 +191,24 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
-     * @param review_id 
+     * @param mangaId 
+     * @param reviewId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaDeleteReviewForMangaIdDelete(manga_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMangaDeleteReviewForMangaIdDelete(manga_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMangaDeleteReviewForMangaIdDelete(manga_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMangaDeleteReviewForMangaIdDelete(manga_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaDeleteReviewForMangaIdDelete(mangaId: ObjectId, reviewId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaDeleteReviewForMangaIdDelete(mangaId: ObjectId, reviewId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaDeleteReviewForMangaIdDelete(mangaId: ObjectId, reviewId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaDeleteReviewForMangaIdDelete(mangaId: ObjectId, reviewId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (manga_id === null || manga_id === undefined) {
-            throw new Error('Required parameter manga_id was null or undefined when calling apiMangaDeleteReviewForMangaIdDelete.');
+        if (mangaId === null || mangaId === undefined) {
+            throw new Error('Required parameter mangaId was null or undefined when calling apiMangaDeleteReviewForMangaIdDelete.');
         }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (review_id !== undefined && review_id !== null) {
-            queryParameters = queryParameters.set('reviewId', <any>review_id);
+        if (reviewId !== undefined && reviewId !== null) {
+            queryParameters = queryParameters.set('reviewId', <any>reviewId);
         }
 
         let headers = this.defaultHeaders;
@@ -225,7 +225,7 @@ export class MangaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Manga/DeleteReviewFor/${encodeURIComponent(String(manga_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Manga/DeleteReviewFor/${encodeURIComponent(String(mangaId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -239,24 +239,82 @@ export class MangaService {
     /**
      * 
      * 
-     * @param searched_manga 
-     * @param order_by 
+     * @param reviewId 
+     * @param mangaId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaGetAllMangasGet(searched_manga?: string, order_by?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMangaGetAllMangasGet(searched_manga?: string, order_by?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMangaGetAllMangasGet(searched_manga?: string, order_by?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMangaGetAllMangasGet(searched_manga?: string, order_by?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaDislikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaDislikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaDislikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaDislikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiMangaDislikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (mangaId !== undefined && mangaId !== null) {
+            queryParameters = queryParameters.set('mangaId', <any>mangaId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/DislikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param searchedManga 
+     * @param orderBy 
+     * @param pageNumber 
+     * @param pageSize 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiMangaGetAllMangasGet(searchedManga?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaGetAllMangasGet(searchedManga?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaGetAllMangasGet(searchedManga?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaGetAllMangasGet(searchedManga?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (searched_manga !== undefined && searched_manga !== null) {
-            queryParameters = queryParameters.set('SearchedManga', <any>searched_manga);
+        if (searchedManga !== undefined && searchedManga !== null) {
+            queryParameters = queryParameters.set('SearchedManga', <any>searchedManga);
         }
-        if (order_by !== undefined && order_by !== null) {
-            queryParameters = queryParameters.set('OrderBy', <any>order_by);
+        if (orderBy !== undefined && orderBy !== null) {
+            queryParameters = queryParameters.set('OrderBy', <any>orderBy);
+        }
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
         }
 
         let headers = this.defaultHeaders;
@@ -327,17 +385,17 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
+     * @param mangaId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaGetReviewsForMangaIdGet(manga_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
-    public apiMangaGetReviewsForMangaIdGet(manga_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
-    public apiMangaGetReviewsForMangaIdGet(manga_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
-    public apiMangaGetReviewsForMangaIdGet(manga_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaGetReviewsForMangaIdGet(mangaId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
+    public apiMangaGetReviewsForMangaIdGet(mangaId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
+    public apiMangaGetReviewsForMangaIdGet(mangaId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
+    public apiMangaGetReviewsForMangaIdGet(mangaId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (manga_id === null || manga_id === undefined) {
-            throw new Error('Required parameter manga_id was null or undefined when calling apiMangaGetReviewsForMangaIdGet.');
+        if (mangaId === null || mangaId === undefined) {
+            throw new Error('Required parameter mangaId was null or undefined when calling apiMangaGetReviewsForMangaIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -357,7 +415,7 @@ export class MangaService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Manga/GetReviewsFor/${encodeURIComponent(String(manga_id))}`,
+        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Manga/GetReviewsFor/${encodeURIComponent(String(mangaId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -370,19 +428,67 @@ export class MangaService {
     /**
      * 
      * 
-     * @param manga_id 
+     * @param reviewId 
+     * @param mangaId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMangaMangaAlreadyAddedGet(manga_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public apiMangaMangaAlreadyAddedGet(manga_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public apiMangaMangaAlreadyAddedGet(manga_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public apiMangaMangaAlreadyAddedGet(manga_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMangaLikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMangaLikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMangaLikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMangaLikeReviewForReviewIdPost(reviewId: string, mangaId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiMangaLikeReviewForReviewIdPost.');
+        }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (manga_id !== undefined && manga_id !== null) {
-            queryParameters = queryParameters.set('mangaId', <any>manga_id);
+        if (mangaId !== undefined && mangaId !== null) {
+            queryParameters = queryParameters.set('mangaId', <any>mangaId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Manga/LikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param mangaId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiMangaMangaAlreadyAddedGet(mangaId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiMangaMangaAlreadyAddedGet(mangaId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiMangaMangaAlreadyAddedGet(mangaId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public apiMangaMangaAlreadyAddedGet(mangaId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (mangaId !== undefined && mangaId !== null) {
+            queryParameters = queryParameters.set('mangaId', <any>mangaId);
         }
 
         let headers = this.defaultHeaders;

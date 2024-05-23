@@ -16,7 +16,7 @@ using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class FriendsController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
@@ -60,6 +60,17 @@ namespace Disertatie_backend.Controllers
             return false;
         }
 
+        [HttpGet("GetUserFriendRequests")]
+        public async Task<ActionResult<IEnumerable<FriendsRequestsDto>>> GetUserFriendsRequests([FromQuery] AddFriendParams addFriendRequestsParams)
+        {
+            addFriendRequestsParams.UserId = User.GetUserId();
+            var users = await _addFriendsRepository.GetUserFriendsRequests(addFriendRequestsParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+            return Ok(users);
+        }
+
         [HttpPost("AcceptFriendRequest/{username}")]
         public async Task<ActionResult> AddFriend(string username)
         {
@@ -75,11 +86,11 @@ namespace Disertatie_backend.Controllers
 
             if (isUserFriend != null) return BadRequest("You are already friend with this user");
 
-            var isUserInFriendRequestList = addedByUser.FriendRequests.FirstOrDefault(x => x == addedUser.Id);
+            var isUserInFriendRequestList = await _addFriendsRepository.IsUserInFriendRequests(addedUser.Id, addedByUserId);
 
-            if (isUserInFriendRequestList == Guid.Empty) return BadRequest("This user is not in your friend request list");
+            if (isUserInFriendRequestList == null) return BadRequest("This user is not in your friend request list");
 
-            addedByUser.FriendRequests.Remove(addedUser.Id);
+            await _addFriendsRepository.RemoveFriendRequest(addedUser.Id, addedByUserId);
 
             _context.Friends.Add(new Friendships()
             {
@@ -88,9 +99,9 @@ namespace Disertatie_backend.Controllers
                 UserID2 = addedByUser.Id,
             });
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return Ok($"Successfully added {username} as a friend");
+            return Ok(addedUser);
         }
 
         [HttpPost("SendFriendRequest/{username}")]
@@ -104,13 +115,18 @@ namespace Disertatie_backend.Controllers
 
             if (addedByUser.UserName == username) return BadRequest("You cannot request yourself");
 
-            var isUserAlreadyInFriendRequestList = addedUser.FriendRequests.FirstOrDefault(x => x == addedByUserId);
-            if (isUserAlreadyInFriendRequestList != Guid.Empty) return BadRequest("You aready sent an friend request to this user");
+            var isUserAlreadyInFriendRequestList = await _addFriendsRepository.IsUserInFriendRequests(addedUser.Id, addedByUserId);
+            if (isUserAlreadyInFriendRequestList != null) return BadRequest("You already sent an friend request to this user");
 
             var isUserFriend = await _addFriendsRepository.IsUserFriend(addedByUserId, addedUser.Id);
             if (isUserFriend != null) return BadRequest("You are already friend with this user");
-
-            addedUser.FriendRequests.Add(addedByUserId);
+            
+            _context.FriendsRequests.Add(new FriendRequest()
+            {
+                SinceDate= DateTime.Now,
+                FromUserId = addedByUserId,
+                ToUserId = addedUser.Id,
+            });
 
             await _context.SaveChangesAsync();
 
@@ -138,9 +154,9 @@ namespace Disertatie_backend.Controllers
             removedUser.Friends.Remove(friendship);
             removedByUser.Friends.Remove(friendship);
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return Ok($"Successfully removed friend request to {username}");
+            return Ok();
         }
 
         [HttpDelete("CancelFriendRequest/{username}")]
@@ -154,15 +170,15 @@ namespace Disertatie_backend.Controllers
 
             if (currentUser.UserName == username) return BadRequest("You cannot remove yourself");
 
-            var sendRequestToUser = userWithFriendRequest.FriendRequests.FirstOrDefault(x => x == currentUserId);
+            var sendRequestToUser = await _addFriendsRepository.IsUserInFriendRequests(currentUserId, userWithFriendRequest.Id);
 
-            if (sendRequestToUser == Guid.Empty) return BadRequest("You are not in this user friend requests");
+            if (sendRequestToUser == null) return BadRequest("You are not in this user friend requests");
 
             userWithFriendRequest.FriendRequests.Remove(sendRequestToUser);
 
             await _context.SaveChangesAsync();
 
-            return Ok("Successfully cancelled friend request");
+            return Ok();
         }
 
         [HttpDelete("RefuseFriendRequest/{username}")]
@@ -176,9 +192,9 @@ namespace Disertatie_backend.Controllers
 
             if (currentUser.UserName == username) return BadRequest("You cannot remove yourself");
 
-            var friendRequest = currentUser.FriendRequests.FirstOrDefault(x => x == userInFriendRequestList.Id);
+            var friendRequest = await _addFriendsRepository.IsUserInFriendRequests(userInFriendRequestList.Id, currentUserId);
 
-            if (friendRequest == Guid.Empty) return BadRequest("This user is not in your friend request list");
+            if (friendRequest == null) return BadRequest("This user is not in your friend request list");
 
             currentUser.FriendRequests.Remove(friendRequest);
 

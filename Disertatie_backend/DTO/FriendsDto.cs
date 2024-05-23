@@ -5,7 +5,7 @@ namespace Disertatie_backend.DTO
     public class FriendsDto
     {
         public Guid Id { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
         public int Age { get; set; }
         public string KnownAs { get; set; }
         public string PhotoUrl { get; set; }

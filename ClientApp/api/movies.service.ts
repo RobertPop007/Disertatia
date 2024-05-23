@@ -60,17 +60,17 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
+     * @param movieId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesAddMovieToUserMovieIdPost(movie_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMoviesAddMovieToUserMovieIdPost(movie_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMoviesAddMovieToUserMovieIdPost(movie_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMoviesAddMovieToUserMovieIdPost(movie_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesAddMovieToUserMovieIdPost(movieId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesAddMovieToUserMovieIdPost(movieId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesAddMovieToUserMovieIdPost(movieId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesAddMovieToUserMovieIdPost(movieId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (movie_id === null || movie_id === undefined) {
-            throw new Error('Required parameter movie_id was null or undefined when calling apiMoviesAddMovieToUserMovieIdPost.');
+        if (movieId === null || movieId === undefined) {
+            throw new Error('Required parameter movieId was null or undefined when calling apiMoviesAddMovieToUserMovieIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -87,7 +87,7 @@ export class MoviesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/AddMovieToUser/${encodeURIComponent(String(movie_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/AddMovieToUser/${encodeURIComponent(String(movieId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -100,18 +100,18 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
+     * @param movieId 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesAddReviewForMovieIdPost(movie_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMoviesAddReviewForMovieIdPost(movie_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMoviesAddReviewForMovieIdPost(movie_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMoviesAddReviewForMovieIdPost(movie_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesAddReviewForMovieIdPost(movieId: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesAddReviewForMovieIdPost(movieId: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesAddReviewForMovieIdPost(movieId: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesAddReviewForMovieIdPost(movieId: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (movie_id === null || movie_id === undefined) {
-            throw new Error('Required parameter movie_id was null or undefined when calling apiMoviesAddReviewForMovieIdPost.');
+        if (movieId === null || movieId === undefined) {
+            throw new Error('Required parameter movieId was null or undefined when calling apiMoviesAddReviewForMovieIdPost.');
         }
 
 
@@ -137,7 +137,7 @@ export class MoviesService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/AddReviewFor/${encodeURIComponent(String(movie_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/AddReviewFor/${encodeURIComponent(String(movieId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -151,17 +151,17 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
+     * @param movieId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesDeleteMovieFromUserMovieIdDelete(movie_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMoviesDeleteMovieFromUserMovieIdDelete(movie_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMoviesDeleteMovieFromUserMovieIdDelete(movie_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMoviesDeleteMovieFromUserMovieIdDelete(movie_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesDeleteMovieFromUserMovieIdDelete(movieId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesDeleteMovieFromUserMovieIdDelete(movieId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesDeleteMovieFromUserMovieIdDelete(movieId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesDeleteMovieFromUserMovieIdDelete(movieId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (movie_id === null || movie_id === undefined) {
-            throw new Error('Required parameter movie_id was null or undefined when calling apiMoviesDeleteMovieFromUserMovieIdDelete.');
+        if (movieId === null || movieId === undefined) {
+            throw new Error('Required parameter movieId was null or undefined when calling apiMoviesDeleteMovieFromUserMovieIdDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -178,7 +178,7 @@ export class MoviesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Movies/DeleteMovieFromUser/${encodeURIComponent(String(movie_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Movies/DeleteMovieFromUser/${encodeURIComponent(String(movieId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -191,24 +191,24 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
-     * @param review_id 
+     * @param movieId 
+     * @param reviewId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesDeleteReviewForMovieIdDelete(movie_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMoviesDeleteReviewForMovieIdDelete(movie_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMoviesDeleteReviewForMovieIdDelete(movie_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMoviesDeleteReviewForMovieIdDelete(movie_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesDeleteReviewForMovieIdDelete(movieId: ObjectId, reviewId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesDeleteReviewForMovieIdDelete(movieId: ObjectId, reviewId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesDeleteReviewForMovieIdDelete(movieId: ObjectId, reviewId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesDeleteReviewForMovieIdDelete(movieId: ObjectId, reviewId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (movie_id === null || movie_id === undefined) {
-            throw new Error('Required parameter movie_id was null or undefined when calling apiMoviesDeleteReviewForMovieIdDelete.');
+        if (movieId === null || movieId === undefined) {
+            throw new Error('Required parameter movieId was null or undefined when calling apiMoviesDeleteReviewForMovieIdDelete.');
         }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (review_id !== undefined && review_id !== null) {
-            queryParameters = queryParameters.set('reviewId', <any>review_id);
+        if (reviewId !== undefined && reviewId !== null) {
+            queryParameters = queryParameters.set('reviewId', <any>reviewId);
         }
 
         let headers = this.defaultHeaders;
@@ -225,7 +225,7 @@ export class MoviesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Movies/DeleteReviewFor/${encodeURIComponent(String(movie_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Movies/DeleteReviewFor/${encodeURIComponent(String(movieId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -239,34 +239,34 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param searched_movie 
-     * @param order_by 
-     * @param page_number 
-     * @param page_size 
+     * @param searchedMovie 
+     * @param orderBy 
+     * @param pageNumber 
+     * @param pageSize 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesGetAllMoviesGet(searched_movie?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiMoviesGetAllMoviesGet(searched_movie?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiMoviesGetAllMoviesGet(searched_movie?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiMoviesGetAllMoviesGet(searched_movie?: string, order_by?: string, page_number?: number, page_size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesGetAllMoviesGet(searchedMovie?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesGetAllMoviesGet(searchedMovie?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesGetAllMoviesGet(searchedMovie?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesGetAllMoviesGet(searchedMovie?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (searched_movie !== undefined && searched_movie !== null) {
-            queryParameters = queryParameters.set('SearchedMovie', <any>searched_movie);
+        if (searchedMovie !== undefined && searchedMovie !== null) {
+            queryParameters = queryParameters.set('SearchedMovie', <any>searchedMovie);
         }
-        if (order_by !== undefined && order_by !== null) {
-            queryParameters = queryParameters.set('OrderBy', <any>order_by);
+        if (orderBy !== undefined && orderBy !== null) {
+            queryParameters = queryParameters.set('OrderBy', <any>orderBy);
         }
-        if (page_number !== undefined && page_number !== null) {
-            queryParameters = queryParameters.set('PageNumber', <any>page_number);
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
         }
-        if (page_size !== undefined && page_size !== null) {
-            queryParameters = queryParameters.set('PageSize', <any>page_size);
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
         }
 
         let headers = this.defaultHeaders;
@@ -337,17 +337,17 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
+     * @param movieId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesGetReviewsForMovieIdGet(movie_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
-    public apiMoviesGetReviewsForMovieIdGet(movie_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
-    public apiMoviesGetReviewsForMovieIdGet(movie_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
-    public apiMoviesGetReviewsForMovieIdGet(movie_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesGetReviewsForMovieIdGet(movieId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
+    public apiMoviesGetReviewsForMovieIdGet(movieId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
+    public apiMoviesGetReviewsForMovieIdGet(movieId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
+    public apiMoviesGetReviewsForMovieIdGet(movieId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (movie_id === null || movie_id === undefined) {
-            throw new Error('Required parameter movie_id was null or undefined when calling apiMoviesGetReviewsForMovieIdGet.');
+        if (movieId === null || movieId === undefined) {
+            throw new Error('Required parameter movieId was null or undefined when calling apiMoviesGetReviewsForMovieIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -367,7 +367,7 @@ export class MoviesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Movies/GetReviewsFor/${encodeURIComponent(String(movie_id))}`,
+        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Movies/GetReviewsFor/${encodeURIComponent(String(movieId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -380,19 +380,19 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param movie_id 
+     * @param movieId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMoviesMovieAlreadyAddedGet(movie_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public apiMoviesMovieAlreadyAddedGet(movie_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public apiMoviesMovieAlreadyAddedGet(movie_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public apiMoviesMovieAlreadyAddedGet(movie_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiMoviesMovieAlreadyAddedGet(movieId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiMoviesMovieAlreadyAddedGet(movieId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiMoviesMovieAlreadyAddedGet(movieId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public apiMoviesMovieAlreadyAddedGet(movieId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (movie_id !== undefined && movie_id !== null) {
-            queryParameters = queryParameters.set('movieId', <any>movie_id);
+        if (movieId !== undefined && movieId !== null) {
+            queryParameters = queryParameters.set('movieId', <any>movieId);
         }
 
         let headers = this.defaultHeaders;

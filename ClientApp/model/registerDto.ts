@@ -13,9 +13,9 @@
 export interface RegisterDto { 
     username: string;
     email: string;
-    known_as: string;
+    knownAs: string;
     gender: string;
-    date_of_birth: Date;
+    dateOfBirth: Date;
     city: string;
     country: string;
     password: string;

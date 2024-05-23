@@ -52,14 +52,14 @@ namespace Disertatie_backend.Repositories
             var review = new Review()
             {
                 ItemId = itemId.ToString(),
-                Main_description = reviewDto.Main_description,
-                Short_description = reviewDto.Short_description,
+                MainDescription = reviewDto.MainDescription,
+                ShortDescription = reviewDto.ShortDescription,
                 ReviewDate = DateTime.Now,
                 ReviewId = Guid.NewGuid(),
                 Stars = reviewDto.Stars,
                 User = user,
                 Username = reviewDto.Username,
-                User_photo = user.Photos != null ? user.Photos.Url : string.Empty,
+                UserPhoto = user.Photos != null ? user.Photos.Url : string.Empty,
                 UserId = user.Id
             };
 
@@ -71,19 +71,19 @@ namespace Disertatie_backend.Repositories
                     await _animeRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                    await _mangaRepository.AddReviewAsync(itemId, reviewDto);
+                    await _mangaRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(Game).IsAssignableFrom(t):
-                    await _gamesRepository.AddReviewAsync(itemId, reviewDto);
+                    await _gamesRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(Movie).IsAssignableFrom(t):
-                    await _moviesRepository.AddReviewAsync(itemId, reviewDto);
+                    await _moviesRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(TvShow).IsAssignableFrom(t):
-                    await _tvShowsRepository.AddReviewAsync(itemId, reviewDto);
+                    await _tvShowsRepository.AddReviewAsync(itemId, review);
                     break;
                 case Type t when typeof(Book).IsAssignableFrom(t):
-                    await _booksRepository.AddReviewAsync(itemId, reviewDto);
+                    await _booksRepository.AddReviewAsync(itemId, review);
                     break;
                 default:
                     break;
@@ -101,8 +101,8 @@ namespace Disertatie_backend.Repositories
             {
                 var reviewDto = new ReviewDto()
                 {
-                    Main_description = review.Main_description,
-                    Short_description = review.Short_description,
+                    MainDescription = review.MainDescription,
+                    ShortDescription = review.ShortDescription,
                     Stars = review.Stars,
                     Username = review.User.UserName
                 };
@@ -115,19 +115,19 @@ namespace Disertatie_backend.Repositories
                         await _animeRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     case Type t when typeof(DatumManga).IsAssignableFrom(t):
-                        await _mangaRepository.DeleteReviewAsync(itemId, reviewDto);
+                        await _mangaRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     case Type t when typeof(Game).IsAssignableFrom(t):
-                        await _gamesRepository.DeleteReviewAsync(itemId, reviewDto);
+                        await _gamesRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     case Type t when typeof(Movie).IsAssignableFrom(t):
-                        await _moviesRepository.DeleteReviewAsync(itemId, reviewDto);
+                        await _moviesRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     case Type t when typeof(TvShow).IsAssignableFrom(t):
-                        await _tvShowsRepository.DeleteReviewAsync(itemId, reviewDto);
+                        await _tvShowsRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     case Type t when typeof(Book).IsAssignableFrom(t):
-                        await _booksRepository.DeleteReviewAsync(itemId, reviewDto);
+                        await _booksRepository.DeleteReviewAsync(itemId, review.ReviewId);
                         break;
                     default:
                         break;
@@ -151,6 +151,8 @@ namespace Disertatie_backend.Repositories
                 case Type t when typeof(DatumManga).IsAssignableFrom(t):
                     var manga = await _mangaRepository.GetMangaByIdAsync(itemId);
                     var mangaReviews = manga.ReviewsIds.Select(x => GetReview(x));
+
+                    if (manga.ReviewsIds.Count != 0) mangaReviews = mangaReviews.OrderByDescending(u => u.Likes - u.Dislikes);
                     return mangaReviews;
 
                 case Type t when typeof(Game).IsAssignableFrom(t):

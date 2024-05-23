@@ -11,11 +11,11 @@
  */
 
 export interface Logo { 
-    aspect_ratio?: number;
+    aspectRatio?: number;
     height?: number;
     iso6391?: string;
-    file_path?: string;
-    vote_average?: number;
-    vote_count?: number;
+    filePath?: string;
+    voteAverage?: number;
+    voteCount?: number;
     width?: number;
 }

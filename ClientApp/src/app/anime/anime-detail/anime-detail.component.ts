@@ -45,9 +45,10 @@ export class AnimeDetailComponent implements OnInit {
   userReview!: MemberDto;
   reviews!: Review[];
   reviewDto: ReviewDto = {
-    short_description: '',
-    main_description: '',
-    stars: 0
+    shortDescription: '',
+    mainDescription: '',
+    stars: 0,
+    score: 0
   };
   shortDescription: string = '';
   mainDescription: string = '';
@@ -70,8 +71,8 @@ export class AnimeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
-      short_description: ['', Validators.required],
-      main_description: ['', [Validators.required]],
+      Short_description: ['', Validators.required],
+      Main_description: ['', [Validators.required]],
       stars: ['', Validators.required]
     });
     
@@ -82,7 +83,6 @@ export class AnimeDetailComponent implements OnInit {
 
       // this.images = this.anime.actorList?.map((n) => n.image);
       this.getReviews();
-      console.log(this.reviews);
       this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.id!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
@@ -138,23 +138,25 @@ export class AnimeDetailComponent implements OnInit {
 
   onSubmit(){
     this.stars = this.myForm.get('stars')?.value;
-    this.mainDescription = this.myForm.get('main_description')?.value;
-    this.shortDescription = this.myForm.get('short_description')?.value;
+    this.mainDescription = this.myForm.get('Main_description')?.value;
+    this.shortDescription = this.myForm.get('Short_description')?.value;
     this.addReview(this.shortDescription, this.mainDescription, this.stars);
     this.resetForm();
   }
 
-  addReview(short_description: string, mainDescription: string, stars: number){
-    this.reviewDto.main_description = mainDescription;
-    this.reviewDto.short_description = short_description;
+  addReview(short_description: string, main_description: string, stars: number){
+    this.reviewDto.mainDescription = main_description;
+    this.reviewDto.shortDescription = short_description;
     this.reviewDto.stars = stars;
+    this.reviewDto.score = 0;
     this.reviewDto.username = this.user.username;
-    this.reviewDto.user_photo = this.user.photoUrl;
+    this.reviewDto.userPhoto = this.user.photoUrl;
 
     this.animeService.apiAnimeAddReviewForAnimeIdPost(this.anime.id!, this.reviewDto).subscribe((response: Review) => {
       response.reviewDate = new Date();
+      response.likes = 0
+      response.dislikes = 0
       this.reviews.push(response);
-      console.log(this.reviews);
       
       this.toastr.success("Review added successfully");
     },
@@ -170,12 +172,11 @@ export class AnimeDetailComponent implements OnInit {
   resetForm(): void {
     // Reset form fields after submission
     this.starRating.resetStars();
-    this.myForm.controls['main_description'].setValue(''); 
-    this.myForm.controls['short_description'].setValue(''); 
+    this.myForm.controls['Main_description'].setValue(''); 
+    this.myForm.controls['Short_description'].setValue(''); 
   }
 
   likeReview(review: Review){
-    console.log(review);
     this.animeService.apiAnimeLikeReviewForReviewIdPost(review.reviewId!, this.anime.id).subscribe(
       () => {
         review.likes!++; 
@@ -186,13 +187,13 @@ export class AnimeDetailComponent implements OnInit {
   dislikeReview(review: Review){
     this.animeService.apiAnimeDislikeReviewForReviewIdPost(review.reviewId!, this.anime.id).subscribe(
       () => {
-        review.dislikes!++;
+        review.likes!--;
       }
     );
   }
 
   getReviewLikes(review: Review){
-    this.animeService.apiAnimeGetLikesForReviewIdGet(review.reviewId!, this.anime.id).subscribe(
+    this.animeService.apiAnimeLikeReviewForReviewIdPost(review.reviewId!, this.anime.id).subscribe(
       (likes: number) => {
         review.likes = likes;
       }

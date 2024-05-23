@@ -1,86 +1,175 @@
-<div class="row">
-    <h1 style="size: 15rem;">{{manga.title}} ({{manga.title_japanese}})</h1>
+<main class="background-image">
+  <div class="container">
+    <br>
+    <h1 style="size: 20rem;" class="text-align font-weight-bold">{{manga.titleEnglish}} ({{manga.title}})</h1>
 
-    <div class="d-flex justify-content-between">
-      <div>
-        <p>{{manga.published?.string}}
-          <span *ngIf="manga.rank"><i class="far fa-dot-circle"></i></span> {{manga.volumes}}
-          <span *ngIf="manga.status"><i class="far fa-dot-circle"></i></span> {{manga.status}}</p>
-
+    <div class="row">
+      <div class="col">
         <div class="d-inline-block" *ngFor="let genre of manga.genres">
-          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+          <p class="m-1 p-1 border border-primary rounded">{{genre.name}}</p>
         </div>
-
-        <br>
-
-        <div *ngIf="res == false">
-          <li class="list-inline-item"><button (click)="addManga(manga)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> <p>Add manga</p></li>
-        </div>
-        
-        <div *ngIf="res == true">
-          <li class="list-inline-item"><button (click)="deleteManga(manga)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> <p>Delete manga</p></li>
-        </div>
-        <br>
       </div>
-      
-    <div>
-      <div class="text-end">
-        <p style="font-size: 20px;">Rating</p>
-          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
-          <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{manga.score}}</span>/10<br>{{manga.scored_by}} votes</p>
+      <div *ngIf="res == false" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="addManga(manga)" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Add manga</p>
           </div>
+        </div>
+      </div>
+
+      <div *ngIf="res == true" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="deleteManga(manga)" class="btn btn-primary">
+            <i class="fa fa-minus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Delete manga</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-      
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Background</h2>
+    <p class="indent">{{manga.background}}</p>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Plot</h2>
+    <p class="indent-paragraph">{{manga.synopsis}}</p>
+
+    <div class="row">
+      <div class="col-4">
+        <img src="{{manga.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{manga.title}}"
+          class="img-fluid">
+      </div>
     </div>
 
-    <div class="col-4"></div>
-    <div class="col-4"><img src="{{manga.images!.jpg!.image_url || './assets/user.png'}}" alt="{{manga.title}}" class="img-fluid"></div>
-  
-<br><br>
 
-<h1>Plot</h1>
-<p class="indent">{{manga.synopsis}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-
-<div *ngIf="manga.authors!.length > 0">
-<h1>  Authors</h1>
-<div *ngFor="let author of manga.authors">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{author.name}}</span></p>
+    <!-- <div class="d-flex justify-content-between"> -->
+    <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>
+    <h5>Type: <strong>{{manga.type}}</strong></h5>
+    <h5 *ngIf="manga.chapters">Chapters: <strong>{{manga.chapters}}</strong></h5><h5 *ngIf="!manga.chapters">Chapters: <strong>Not finished yet.</strong></h5>
+    <h5 *ngIf="manga.volumes">Volumes: <strong>{{manga.volumes}} episodes</strong></h5><h5 *ngIf="!manga.volumes">Volumes: <strong>Not finished yet.</strong></h5>
+    <h5>Status: <strong>{{manga.status}}</strong></h5>
+    <h5>Published: <strong>{{manga.published?.string}}</strong></h5>
+    <div *ngIf="manga.authors && manga.authors.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Authors: </h5>
+        <div class="d-inline-block" *ngFor="let author of manga.authors">
+          <a href="{{author.url}}" target="_blank">
+            <h5 class="d-inline"><strong>{{author.name}},</strong></h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="manga.serializations && manga.serializations.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Serializations: </h5>
+        <div class="d-inline-block" *ngFor="let licensor of manga.serializations">
+          <a href="{{licensor.url}}" target="_blank">
+            <h5 class="d-inline"><strong>{{licensor.name}},</strong></h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="manga.themes && manga.themes.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let theme of manga.themes">
+          <a href="{{theme.url}}" target="_blank">
+            <h5 class="d-inline"><strong>{{theme.name}},</strong></h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="manga.demographics && manga.demographics.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let demographic of manga.demographics">
+          <a href="{{demographic.url}}" target="_blank">
+            <h5 class="d-inline"><strong>{{demographic.name}},</strong></h5>
+          </a>
+        </div>
+      </div>
+    </div>
+    <h5>Score: <strong>{{manga.score}}/10 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i> (scored by {{manga.scoredBy}} users)</strong></h5>
+    <h5>Ranked: #<strong>{{manga.rank}}</strong></h5>
+    <h5>Popularity: #<strong>{{manga.popularity}}</strong></h5>
+    <h5>Members: <strong>{{manga.members}}</strong></h5>
+    <div class="row">
+      <div class="col">
+        <h5 class="d-inline">MAL (My Manga List): </h5>
+        <a href="{{manga.url}}" target="_blank">
+          <h5 class="d-inline"><strong>{{manga.url}}</strong></h5>
+        </a>
+      </div>
+    </div>
+    <br>
   </div>
 
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
+  <div class="container mt-5" style="margin-bottom: 120px;">
+    <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+    <div *ngIf="reviews?.length !== 0">
+      <div *ngFor="let review of reviews">
+        <div class="review-box">
+          <div class="left-column">
+            <div class="user-info">
+              <img src="{{review.userPhoto || './assets/user.png'}}" alt="User Photo" class="user-photo">
+              <div class="user-details">
+                <h5 class="username">{{ review.username }}</h5>
+                <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="review-content">
+              <h4 class="short-description">{{ review.shortDescription }}</h4>
+              <div class="rating">
+                <ng-container *ngIf="review.stars">
+                  <ng-container *ngFor="let _ of generateArray(review.stars)">
+                    <span class="fa fa-star checked"></span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <p class="main-description">{{ review.mainDescription }}</p>
+              <div class="like-dislike">
+                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                  <span class="fa fa-thumbs-up"></span> Like
+                </button>
+                <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                  <span class="fa fa-thumbs-down"></span> Dislike
+                </button>
+                <div class="like-label">
+                  <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                  <span class="like-label-text">Likes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div *ngIf="manga.themes">
-<h1>Themes</h1>
-<div *ngFor="let theme of manga.themes">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{theme.name}}</span></p>
-  </div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="manga.rank">
-  <h1>Additional informations</h1>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Rank: {{manga.rank}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Popularity: {{manga.popularity}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Members: {{manga.members}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Favorites: {{manga.favorites}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Chapters: {{manga.chapters}}</span></p>
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">Volumes: {{manga.volumes}}</span></p>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
-  <div *ngIf="manga.url">
-    <h1>External links</h1>
-    <a style="color: #0096FF;" target="_blank" href="{{manga.url}}">
-    {{manga.title}} MyAnimeList</a>
+    <div *ngIf="reviews?.length === 0">
+      <p>No reviews available. Be the first to leave a review!</p>
+    </div>
+    <br>
     
-    <hr style="width:50%;text-align:left;margin-left:0">
-    </div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+      <div class="form-group">
+        <label for="shortDescription">Short Description:</label>
+        <input type="text" class="form-control" id="Short_description" name="short_Description" formControlName="Short_description">
+      </div>
+      <div class="form-group">
+        <label for="mainDescription">Main Description:</label>
+        <textarea class="form-control" id="Main_description" name="Main_description" rows="5" formControlName="Main_description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="stars">Stars: </label>
+        <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>

@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { FriendsDto } from '../model/friendsDto';
+import { FriendsRequestsDto } from '../model/friendsRequestsDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -221,34 +222,34 @@ export class FriendsService {
     /**
      * 
      * 
-     * @param user_id 
+     * @param userId 
      * @param predicate 
-     * @param page_number 
-     * @param page_size 
+     * @param pageNumber 
+     * @param pageSize 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiFriendsGet(user_id?: string, predicate?: string, page_number?: number, page_size?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<FriendsDto>>;
-    public apiFriendsGet(user_id?: string, predicate?: string, page_number?: number, page_size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<FriendsDto>>>;
-    public apiFriendsGet(user_id?: string, predicate?: string, page_number?: number, page_size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<FriendsDto>>>;
-    public apiFriendsGet(user_id?: string, predicate?: string, page_number?: number, page_size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiFriendsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<FriendsDto>>;
+    public apiFriendsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<FriendsDto>>>;
+    public apiFriendsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<FriendsDto>>>;
+    public apiFriendsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (user_id !== undefined && user_id !== null) {
-            queryParameters = queryParameters.set('UserId', <any>user_id);
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('UserId', <any>userId);
         }
         if (predicate !== undefined && predicate !== null) {
             queryParameters = queryParameters.set('Predicate', <any>predicate);
         }
-        if (page_number !== undefined && page_number !== null) {
-            queryParameters = queryParameters.set('PageNumber', <any>page_number);
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
         }
-        if (page_size !== undefined && page_size !== null) {
-            queryParameters = queryParameters.set('PageSize', <any>page_size);
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
         }
 
         let headers = this.defaultHeaders;
@@ -269,6 +270,67 @@ export class FriendsService {
         ];
 
         return this.httpClient.request<Array<FriendsDto>>('get',`${this.basePath}/api/Friends`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param userId 
+     * @param predicate 
+     * @param pageNumber 
+     * @param pageSize 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiFriendsGetUserFriendRequestsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<FriendsRequestsDto>>;
+    public apiFriendsGetUserFriendRequestsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<FriendsRequestsDto>>>;
+    public apiFriendsGetUserFriendRequestsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<FriendsRequestsDto>>>;
+    public apiFriendsGetUserFriendRequestsGet(userId?: string, predicate?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('UserId', <any>userId);
+        }
+        if (predicate !== undefined && predicate !== null) {
+            queryParameters = queryParameters.set('Predicate', <any>predicate);
+        }
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/plain',
+            'application/json',
+            'text/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<FriendsRequestsDto>>('get',`${this.basePath}/api/Friends/GetUserFriendRequests`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

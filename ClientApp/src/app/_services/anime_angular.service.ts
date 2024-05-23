@@ -89,6 +89,6 @@ export class AnimeAngularService {
   }
 
   deleteAnimeForUser(animeId: ObjectId){
-    return this.http.delete(this.baseUrl + 'Anime/' + animeId);
+    return this.http.delete(this.baseUrl + 'Anime/DeleteAnimeFromUser/' + animeId, {responseType: 'text'});
   }
 }

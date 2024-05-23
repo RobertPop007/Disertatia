@@ -14,6 +14,6 @@ import { Result } from './result';
 export interface Similar { 
     page?: number;
     results?: Array<Result>;
-    total_pages?: number;
-    total_results?: number;
+    totalPages?: number;
+    totalResults?: number;
 }

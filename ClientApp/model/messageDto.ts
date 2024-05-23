@@ -12,13 +12,13 @@
 
 export interface MessageDto { 
     id?: number;
-    sender_id?: number;
-    sender_username?: string;
-    sender_photo_url?: string;
-    recipient_id?: number;
-    recipient_username?: string;
-    recipient_photo_url?: string;
+    senderId?: number;
+    senderUsername?: string;
+    senderPhotoUrl?: string;
+    recipientId?: number;
+    recipientUsername?: string;
+    recipientPhotoUrl?: string;
     content?: string;
-    date_read?: Date;
-    message_sent?: Date;
+    dateRead?: Date;
+    messageSent?: Date;
 }

@@ -52,14 +52,14 @@ export class MovieDetailComponent implements OnInit {
 
       // this.images = this.movie.actorList?.map((n) => n.image);
 
-      this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.movie_id!).pipe(take(1)).subscribe(res => {
+      this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.movieId!).pipe(take(1)).subscribe(res => {
         this.res = res;
       })
     })
   }
 
   deleteMovie(movie: Movie){
-    this.movieAngularService.deleteMovieForUser(movie.movie_id!).subscribe(() => {
+    this.movieAngularService.deleteMovieForUser(movie.movieId!).subscribe(() => {
       this.toastr.success("You have deleted " + movie.title);
     })
 
@@ -73,7 +73,7 @@ export class MovieDetailComponent implements OnInit {
   }
 
   addMovie(movie: Movie){
-    this.movieAngularService.addMovie(movie.movie_id!).subscribe(() => {
+    this.movieAngularService.addMovie(movie.movieId!).subscribe(() => {
       this.toastr.success("You have added " + movie.title);
     })
 

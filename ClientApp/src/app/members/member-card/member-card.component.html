@@ -7,8 +7,15 @@
             <li class="list-inline-item"><button routerLink="/members/{{member.userName}}" class="btn btn-primary">
                 <i class="fa fa-user"></i></button></li>
 
-            <li class="list-inline-item"><button (click)="addFriend(member)" class="btn btn-primary">
-                <i class="fa fa-plus"></i></button></li>
+            <div *ngIf="!isFriend" class="list-inline-item">
+                <li class="list-inline-item"><button (click)="sendFriendRequest(member)" class="btn btn-primary">
+                    <i class="fa fa-plus"></i></button></li>
+            </div>
+
+            <div *ngIf="isFriend" class="list-inline-item">
+                <li class="list-inline-item"><button (click)="removeFriend(member)" class="btn btn-primary">
+                    <i class="fa fa-minus"></i></button></li>
+            </div>
 
             <li class="list-inline-item"><button routerLink="/members/{{member.userName}}" [queryParams]="{tab: 2}" class="btn btn-primary">
                 <i class="fa fa-envelope"></i></button></li>

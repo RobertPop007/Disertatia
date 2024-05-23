@@ -15,6 +15,6 @@ export interface StoreGame {
     name?: string;
     slug?: string;
     domain?: string;
-    games_count?: number;
-    image_background?: string;
+    gamesCount?: number;
+    imageBackground?: string;
 }

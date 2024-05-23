@@ -33,7 +33,12 @@ namespace Disertatie_backend.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src =>
                     src.DateOfBirth.CalculateAge()));
 
+            CreateMap<AppUser, FriendsRequestsDto>()
+                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src =>
+                    src.Photos.Url));
+
             CreateMap<FriendsDto, Friendships>().ReverseMap();
+            CreateMap<FriendsRequestsDto, FriendRequest>().ReverseMap();
 
             CreateMap<IFindFluent<AppUser, AppUser>, List<MemberDto>>().ReverseMap();
             CreateMap<MemberDto, MemberDto>().ReverseMap();
@@ -59,14 +64,17 @@ namespace Disertatie_backend.Helpers
 
             CreateMap<Datum, AnimeCard>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src =>
-                    src.Images.Jpg.Image_url))
+                    src.Images.Jpg.ImageUrl))
                 .ReverseMap();
-            CreateMap<DatumManga, MangaCard>().ReverseMap();
+            CreateMap<DatumManga, MangaCard>().ForMember(dest => dest.Image, opt => opt.MapFrom(src =>
+                    src.Images.Jpg.ImageUrl))
+                .ReverseMap();
             CreateMap<Game, GameCard>().ReverseMap();
             CreateMap<Movie, MovieCard>().ReverseMap();
             CreateMap<TvShow, TvShowCard>().ReverseMap();
 
             CreateMap<AppUser, FriendsDto>().ReverseMap();
+            CreateMap<AppUser, FriendsRequestsDto>().ReverseMap();
         }
     }
 }

@@ -25,6 +25,7 @@ export class MemberCardAddedComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    console.log(this.member)
   }
 
   removeFriend(member: Member){

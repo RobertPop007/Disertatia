@@ -19,19 +19,19 @@ export interface Result {
     size?: number;
     type?: string;
     official?: boolean;
-    published_at?: Date;
+    publishedAt?: Date;
     id?: string;
     adult?: boolean;
-    backdrop_path?: string;
-    genre_ids?: Array<number>;
-    original_language?: string;
-    original_title?: string;
+    backdropPath?: string;
+    genreIds?: Array<number>;
+    originalLanguage?: string;
+    originalTitle?: string;
     overview?: string;
     popularity?: number;
-    poster_path?: string;
-    release_date?: string;
+    posterPath?: string;
+    releaseDate?: string;
     title?: string;
     video?: boolean;
-    vote_average?: number;
-    vote_count?: number;
+    voteAverage?: number;
+    voteCount?: number;
 }

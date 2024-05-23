@@ -15,9 +15,9 @@ import { Webp } from './webp';
 export interface Images { 
     jpg?: Jpg;
     webp?: Webp;
-    image_url?: string;
-    small_image_url?: string;
-    medium_image_url?: string;
-    large_image_url?: string;
-    maximum_image_url?: string;
+    imageUrl?: string;
+    smallImageUrl?: string;
+    mediumImageUrl?: string;
+    largeImageUrl?: string;
+    maximumImageUrl?: string;
 }

@@ -5,6 +5,7 @@ using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -38,18 +39,18 @@ namespace Disertatie_backend.Repositories
 
             _mapper = mapper;
         }
-        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task AddReviewAsync(ObjectId id, Review review)
         {
             var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Game>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<Game>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _gamesCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
             var filter = Builders<Game>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Game>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<Game>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _gamesCollection.UpdateOneAsync(filter, update);
         }

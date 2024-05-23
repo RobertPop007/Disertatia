@@ -13,15 +13,15 @@ import { AppUser } from './appUser';
 
 export interface Message { 
     id?: number;
-    sender_id?: number;
-    sender_username?: string;
+    senderId?: number;
+    senderUsername?: string;
     sender?: AppUser;
-    recipient_id?: number;
-    recipient_username?: string;
+    recipientId?: number;
+    recipientUsername?: string;
     recipient?: AppUser;
     content?: string;
-    date_read?: Date;
-    message_sent?: Date;
-    sender_deleted?: boolean;
-    recipient_deleted?: boolean;
+    dateRead?: Date;
+    messageSent?: Date;
+    senderDeleted?: boolean;
+    recipientDeleted?: boolean;
 }

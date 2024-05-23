@@ -1,4 +1,7 @@
+import { ObjectId } from "model/objectId";
+
 export interface AnimeCard{
+    id: ObjectId;
     Mal_id: number;
     fullTitle: string;
     year: number;

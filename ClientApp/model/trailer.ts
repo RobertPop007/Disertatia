@@ -12,8 +12,8 @@
 import { Images } from './images';
 
 export interface Trailer { 
-    youtube_id?: string;
+    youtubeId?: string;
     url?: string;
-    embed_url?: string;
+    embedUrl?: string;
     images?: Images;
 }

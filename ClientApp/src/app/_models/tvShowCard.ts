@@ -1,7 +1,7 @@
 import { ObjectId } from "model/objectId";
 
 export interface TvShowCard{
-    tv_show_id: ObjectId;
+    tvShowId: ObjectId;
     fullTitle: string;
     year: string;
     image: string;

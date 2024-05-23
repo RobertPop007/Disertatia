@@ -3,8 +3,8 @@
     public class Jpg
     {
 #nullable enable
-        public string? Image_url { get; set; }
-        public string? Small_image_url { get; set; }
-        public string? Large_image_url { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? SmallImageUrl { get; set; }
+        public string? LargeImageUrl { get; set; }
     }
 }

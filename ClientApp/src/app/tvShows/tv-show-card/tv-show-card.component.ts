@@ -23,7 +23,7 @@ export class TvShowCardComponent implements OnInit {
   }
 
   addTvShow(tvShow: TvShow){
-    this.tvShowAngularService.addTvShow(tvShow.tv_show_id!).subscribe(() => {
+    this.tvShowAngularService.addTvShow(tvShow.tvShowId!).subscribe(() => {
       this.toastr.success("You have added " + tvShow.name);
     })
   }

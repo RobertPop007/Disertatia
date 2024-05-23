@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of, take } from 'rxjs';
+import { Observable, map, of, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
@@ -8,6 +8,8 @@ import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { FriendRequest } from 'model/friendRequest';
+import { FriendsRequestsDto } from 'model/friendsRequestsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -86,18 +88,37 @@ export class MembersService {
   }
 
   addFriend(username: string){
+    return this.http.post(this.baseUrl + 'friends/AcceptFriendRequest/' + username, {responseType: 'text'});
+  }
+
+  declineFriendRequest(username: string){
+    return this.http.post(this.baseUrl + "friends/RefuseFriendRequest/" + username, {})
+  }
+
+  sendFriendRequest(username: string){
     return this.http.post(this.baseUrl + 'friends/SendFriendRequest/' + username, {});
   }
 
   removeFriend(username: string){
-    return this.http.delete(this.baseUrl + 'friends/DeleteFriend/' + username);
+    return this.http.delete(this.baseUrl + 'friends/DeleteFriend/' + username, {responseType: 'text'});
   }
 
   getFriends(predicate: string, pageNumber: number, pageSize: number){
     let params = getPaginationHeaders(pageNumber, pageSize);
 
     params = params.append('predicate', predicate);
-
     return getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'friends', params, this.http);
+  }
+
+  getFriendRequests(predicate: string, pageNumber: number, pageSize: number){
+    let params = getPaginationHeaders(pageNumber, pageSize);
+
+    params = params.append('predicate', predicate);
+
+    return getPaginatedResult<Partial<FriendsRequestsDto[]>>(this.baseUrl + 'friends/GetUserFriendRequests', params, this.http);
+  }
+
+  checkFriendship(username: string): Observable<boolean>{
+    return this.http.get<boolean>(this.baseUrl + 'friends/CheckFriendship/' + username);
   }
 }

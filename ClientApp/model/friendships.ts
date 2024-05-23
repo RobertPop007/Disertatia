@@ -12,10 +12,10 @@
 import { AppUser } from './appUser';
 
 export interface Friendships { 
-    user_id1?: string;
+    userID1?: string;
     user1?: AppUser;
-    user_id2?: string;
+    userID2?: string;
     user2?: AppUser;
-    since_date?: Date;
-    readonly days_of_friendships?: number;
+    sinceDate?: Date;
+    readonly daysOfFriendships?: number;
 }

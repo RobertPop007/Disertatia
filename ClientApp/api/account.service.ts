@@ -61,21 +61,21 @@ export class AccountService {
     /**
      * 
      * 
-     * @param user_id 
+     * @param userId 
      * @param token 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAccountConfirmEmailPost(user_id?: string, token?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiAccountConfirmEmailPost(userId?: string, token?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountConfirmEmailPost(userId?: string, token?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountConfirmEmailPost(userId?: string, token?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountConfirmEmailPost(userId?: string, token?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (user_id !== undefined && user_id !== null) {
-            queryParameters = queryParameters.set('userId', <any>user_id);
+        if (userId !== undefined && userId !== null) {
+            queryParameters = queryParameters.set('userId', <any>userId);
         }
         if (token !== undefined && token !== null) {
             queryParameters = queryParameters.set('token', <any>token);

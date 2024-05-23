@@ -11,7 +11,7 @@
  */
 
 export interface AuthorManga { 
-    mal_id?: number;
+    malId?: number;
     type?: string;
     name?: string;
     url?: string;

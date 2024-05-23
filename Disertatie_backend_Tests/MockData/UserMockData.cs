@@ -22,7 +22,7 @@ namespace Disertatie_backend_Tests.MockData
                 DateOfBirth = DateTime.Now,
                 Email = "Random Email",
                 EmailConfirmed = false,
-                FriendRequests = new List<Guid>(),
+                FriendRequests = new List<FriendRequest>(),
                 Friends = new List<Friendships>(),
                 Gender = "Random Gender",
                 HasDarkMode = true,

@@ -33,6 +33,7 @@ export class MangaListComponent implements OnInit {
     this.mangaAngularService.setMangaParams(this.mangaParams);
 
     this.mangaAngularService.getMangas(this.mangaParams).subscribe(response => {
+      console.log(response)
       this.mangas = response.result!;
       this.pagination = response.pagination!;
     })

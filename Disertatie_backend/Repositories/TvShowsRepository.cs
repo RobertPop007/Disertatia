@@ -13,6 +13,8 @@ using AutoMapper;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.User;
+using System;
 namespace Disertatie_backend.Repositories
 {
     public class TvShowsRepository : ITvShowsRepository
@@ -39,18 +41,18 @@ namespace Disertatie_backend.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task AddReviewAsync(ObjectId id, Review review)
         {
             var filter = Builders<TvShow>.Filter.Eq(x => x.TvShowId, id);
-            var update = Builders<TvShow>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<TvShow>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _tvshowsCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
             var filter = Builders<TvShow>.Filter.Eq(x => x.TvShowId, id);
-            var update = Builders<TvShow>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<TvShow>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _tvshowsCollection.UpdateOneAsync(filter, update);
         }

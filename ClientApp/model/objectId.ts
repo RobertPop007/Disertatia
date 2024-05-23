@@ -15,5 +15,5 @@ export interface ObjectId {
     readonly machine?: number;
     readonly pid?: number;
     readonly increment?: number;
-    readonly creation_time?: Date;
+    readonly creationTime?: Date;
 }

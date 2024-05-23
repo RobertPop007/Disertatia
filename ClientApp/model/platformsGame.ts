@@ -14,6 +14,6 @@ import { RequirementsGame } from './requirementsGame';
 
 export interface PlatformsGame { 
     platform?: PlatformGame;
-    released_at?: string;
+    releasedAt?: string;
     requirements?: RequirementsGame;
 }

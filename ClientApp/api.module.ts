@@ -8,6 +8,7 @@ import { AdminService } from './api/admin.service';
 import { AnimeService } from './api/anime.service';
 import { BooksService } from './api/books.service';
 import { BuggyService } from './api/buggy.service';
+import { ChatGPTService } from './api/chatGPT.service';
 import { FriendsService } from './api/friends.service';
 import { GameService } from './api/game.service';
 import { MangaService } from './api/manga.service';
@@ -26,6 +27,7 @@ import { UsersService } from './api/users.service';
     AnimeService,
     BooksService,
     BuggyService,
+    ChatGPTService,
     FriendsService,
     GameService,
     MangaService,

@@ -12,9 +12,9 @@
 
 export interface FriendsDto { 
     id?: string;
-    username?: string;
+    userName?: string;
     age?: number;
-    known_as?: string;
-    photo_url?: string;
+    knownAs?: string;
+    photoUrl?: string;
     city?: string;
 }

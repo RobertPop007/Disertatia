@@ -13,13 +13,13 @@ import { AppUser } from './appUser';
 
 export interface Review { 
     reviewId?: string;
-    user_id?: string;
+    userId?: string;
     username?: string;
-    user_photo?: string;
+    userPhoto?: string;
     user?: AppUser;
-    item_id?: string;
-    short_description?: string;
-    main_description?: string;
+    itemId?: string;
+    shortDescription?: string;
+    mainDescription?: string;
     stars?: number;
     reviewDate?: Date;
     likes?: number;

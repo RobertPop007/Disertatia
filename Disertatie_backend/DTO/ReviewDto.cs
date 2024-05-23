@@ -7,16 +7,17 @@ namespace Disertatie_backend.DTO
     {
         public Guid ReviewId { get; set; }
         public string Username { get; set; }
-        public string User_photo { get; set; }
+        public string UserPhoto { get; set; }
 
         [Required]
-        public string Short_description { get; set; }
+        public string ShortDescription { get; set; }
 
         [Required]
-        public string Main_description { get; set; }
+        public string MainDescription { get; set; }
 
         [Required]
         [Range(1, 10, ErrorMessage = "Value must be between 1 and 10")]
         public byte Stars { get; set; }
+        public int Score { get; set; }
     }
 }

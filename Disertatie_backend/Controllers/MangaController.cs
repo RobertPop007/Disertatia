@@ -108,7 +108,7 @@ namespace Disertatie_backend.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteMangaFrom/{mangaId}")]
+        [HttpDelete("DeleteMangaFromUser/{mangaId}")]
         public async Task<IActionResult> DeleteMangaForUser(ObjectId mangaId)
         {
             var userId = User.GetUserId();
@@ -120,7 +120,23 @@ namespace Disertatie_backend.Controllers
                 return NotFound();
             }
 
-            await _userItemsRepository.DeleteItemFromUser<Datum>(user, mangaId);
+            await _userItemsRepository.DeleteItemFromUser<DatumManga>(user, mangaId);
+
+            return Ok();
+        }
+
+        [HttpPost("LikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> LikeReview(ObjectId mangaId, Guid reviewId)
+        {
+            await _reviewRepository.LikeReview(mangaId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("DislikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> DislikeReview(ObjectId mangaId, Guid reviewId)
+        {
+            await _reviewRepository.DislikeReview(mangaId, reviewId);
 
             return Ok();
         }

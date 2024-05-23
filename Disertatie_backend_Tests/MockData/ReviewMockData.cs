@@ -9,8 +9,8 @@ namespace Disertatie_backend_Tests.MockData
         {
             return new Review()
             {
-                Main_description = "Main description",
-                Short_description = "Short description",
+                MainDescription = "Main description",
+                ShortDescription = "Short description",
                 Stars = 5,
                 ItemId = anime.Id.ToString(),
                 ReviewDate = DateTime.Now,

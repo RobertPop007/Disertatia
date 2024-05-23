@@ -16,6 +16,8 @@ using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.User;
+using Disertatie_backend.DTO.Anime;
+using AutoMapper.QueryableExtensions;
 
 namespace Disertatie_backend.Repositories
 {
@@ -46,18 +48,18 @@ namespace Disertatie_backend.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task AddReviewAsync(ObjectId id, Review review)
         {
             var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
-            var update = Builders<DatumManga>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<DatumManga>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _mangaCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
             var filter = Builders<DatumManga>.Filter.Eq(x => x.Id, id);
-            var update = Builders<DatumManga>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<DatumManga>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _mangaCollection.UpdateOneAsync(filter, update);
         }
@@ -74,7 +76,7 @@ namespace Disertatie_backend.Repositories
             return await _mangaCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MangaCard>> GetMangasAsync(MangaParams mangaParams)
+        public async Task<PagedList<MangaCard>> GetMangasAsync(MangaParams mangaParams)
         {
             var filterByTitle = Builders<DatumManga>.Filter.Empty;
             var filterByTitleEnglish = Builders<DatumManga>.Filter.Empty;
@@ -83,32 +85,24 @@ namespace Disertatie_backend.Repositories
             if (!(string.IsNullOrEmpty(mangaParams.SearchedManga) || string.IsNullOrWhiteSpace(mangaParams.SearchedManga)))
             {
                 filterByTitle = Builders<DatumManga>.Filter.Regex(x => x.Title, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
-                filterByTitleEnglish = Builders<DatumManga>.Filter.Regex(x => x.Title_english, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
-                filterByTitleJapanese = Builders<DatumManga>.Filter.Regex(x => x.Title_japanese, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
+                filterByTitleEnglish = Builders<DatumManga>.Filter.Regex(x => x.TitleEnglish, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
+                filterByTitleJapanese = Builders<DatumManga>.Filter.Regex(x => x.TitleJapanese, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
 
                 filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
             }
 
-            var query = await _mangaCollection.Find(filterByTitle).ToListAsync();
+            var query = _mangaCollection.AsQueryable().AsQueryable();
 
-            var queryList = new List<MangaCard>();
-
-            foreach (var document in query)
+            query = mangaParams.OrderBy switch
             {
-                queryList.Add(_mapper.Map<MangaCard>(document));
-            }
-
-            var mappedQuery = queryList.AsEnumerable();
-
-            mappedQuery = mangaParams.OrderBy switch
-            {
-                "title" => mappedQuery.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
-                "score" => mappedQuery.OrderByDescending(u => u.Score),
-                _ => mappedQuery.OrderByDescending(u => u.Year)
+                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
+                "score" => query.OrderByDescending(u => u.Score),
+                _ => query.OrderByDescending(u => u.Published.Prop.From.Year)
 
             };
 
-            return mappedQuery;
+            return await PagedList<MangaCard>.CreateAsync(query.ProjectTo<MangaCard>(_mapper.ConfigurationProvider).AsNoTracking(),
+                mangaParams.PageNumber, mangaParams.PageSize);
         }
     }
 }

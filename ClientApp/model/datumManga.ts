@@ -20,12 +20,12 @@ import { ThemeManga } from './themeManga';
 
 export interface DatumManga { 
     id?: ObjectId;
-    mal_id?: number;
+    malId?: number;
     url?: string;
     images?: ImagesManga;
     title?: string;
-    title_english?: string;
-    title_japanese?: string;
+    titleEnglish?: string;
+    titleJapanese?: string;
     type?: string;
     chapters?: number;
     volumes?: number;
@@ -34,7 +34,7 @@ export interface DatumManga {
     published?: PublishedManga;
     score?: number;
     scored?: number;
-    scored_by?: number;
+    scoredBy?: number;
     rank?: number;
     popularity?: number;
     members?: number;
@@ -46,5 +46,5 @@ export interface DatumManga {
     genres?: Array<GenreManga>;
     themes?: Array<ThemeManga>;
     demographics?: Array<DemographicManga>;
-    reviews_ids?: Array<string>;
+    reviewsIds?: Array<string>;
 }

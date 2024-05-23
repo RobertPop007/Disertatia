@@ -22,6 +22,7 @@ namespace Disertatie_backend.DatabaseContext
         public DbSet<Group> Groups { get; init; }
         public DbSet<Connection> Connections { get; init; }
         public DbSet<Friendships> Friends { get; init; }
+        public DbSet<FriendRequest> FriendsRequests { get; init; }
         public DbSet<Review> Reviews { get; init; }
         public DbSet<AppUserAnimeItem> UserAnimes { get; init; }
         public DbSet<AppUserMangaItem> UserMangas { get; init; }
@@ -64,6 +65,21 @@ namespace Disertatie_backend.DatabaseContext
                 .HasOne(f => f.User2)
                 .WithMany()
                 .HasForeignKey(f => f.UserID2)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<FriendRequest>()
+                .HasKey(f => new { f.FromUserId, f.ToUserId });
+
+            builder.Entity<FriendRequest>()
+                .HasOne(f => f.FromUser)
+                .WithMany(s => s.FriendRequests)
+                .HasForeignKey(f => f.FromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<FriendRequest>()
+                .HasOne(f => f.ToUser)
+                .WithMany()
+                .HasForeignKey(f => f.ToUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Review>()

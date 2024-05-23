@@ -102,8 +102,8 @@ namespace Disertatie_backend_Tests.Repositories_Tests
             mappedReviewsFromUser.Should().ContainEquivalentOf(reviewDto);
 
             var newCreatedReview = user.Reviews.FirstOrDefault(x =>
-                    x.Main_description == reviewDto.Main_description &&
-                    x.Short_description == reviewDto.Short_description &&
+                    x.MainDescription == reviewDto.MainDescription &&
+                    x.ShortDescription == reviewDto.ShortDescription &&
                     x.Stars == reviewDto.Stars &&
                     x.User.UserName == reviewDto.Username
                     );

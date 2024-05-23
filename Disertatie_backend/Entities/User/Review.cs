@@ -12,14 +12,14 @@ namespace Disertatie_backend.Entities.User
         public Guid ReviewId { get; set; }
         public Guid UserId { get; set; }
         public string Username { get; set; }
-        public string? User_photo { get; set; } = null;
+        public string? UserPhoto { get; set; } = null;
 
         [ForeignKey("UserId")]
         public AppUser User { get; set; }
 
         public string ItemId { get; set; }
-        public string Short_description { get; set; }
-        public string Main_description { get; set; }
+        public string ShortDescription { get; set; }
+        public string MainDescription { get; set; }
 
         [Range(1, 10, ErrorMessage = "Value must be between 1 and 10")]
         public byte Stars { get; set; }

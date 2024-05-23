@@ -87,8 +87,8 @@ namespace Disertatie_backend.Repositories
             if (!(string.IsNullOrEmpty(animeParams.SearchedAnime) || string.IsNullOrWhiteSpace(animeParams.SearchedAnime)))
             {
                 filterByTitle = Builders<Datum>.Filter.Regex(x => x.Title, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
-                filterByTitleEnglish = Builders<Datum>.Filter.Regex(x => x.Title_english, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
-                filterByTitleJapanese = Builders<Datum>.Filter.Regex(x => x.Title_japanese, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
+                filterByTitleEnglish = Builders<Datum>.Filter.Regex(x => x.TitleEnglish, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
+                filterByTitleJapanese = Builders<Datum>.Filter.Regex(x => x.TitleJapanese, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
 
                 filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
             }

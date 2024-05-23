@@ -12,7 +12,7 @@
 
 export interface ResetPasswordModel { 
     password: string;
-    confirm_password?: string;
+    confirmPassword?: string;
     email?: string;
     token?: string;
 }

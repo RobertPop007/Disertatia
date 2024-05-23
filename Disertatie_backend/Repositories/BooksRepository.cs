@@ -6,10 +6,12 @@ using Disertatie_backend.DTO.Books;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities.Books;
 using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,18 +40,18 @@ namespace Disertatie_backend.Repositories
             _mapper = mapper;
         }
 
-        public async Task AddReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task AddReviewAsync(ObjectId id, Review review)
         {
             var filter = Builders<Book>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Book>.Update.Push(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<Book>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _booksCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto)
+        public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
             var filter = Builders<Book>.Filter.Eq(x => x.Id, id);
-            var update = Builders<Book>.Update.Pull(x => x.ReviewsIds, reviewDto.ReviewId);
+            var update = Builders<Book>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _booksCollection.UpdateOneAsync(filter, update);
         }

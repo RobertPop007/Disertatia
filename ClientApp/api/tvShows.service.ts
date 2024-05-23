@@ -60,18 +60,18 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
+     * @param tvShowId 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsAddReviewForTvShowIdPost(tv_show_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiTvShowsAddReviewForTvShowIdPost(tv_show_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiTvShowsAddReviewForTvShowIdPost(tv_show_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiTvShowsAddReviewForTvShowIdPost(tv_show_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsAddReviewForTvShowIdPost(tvShowId: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiTvShowsAddReviewForTvShowIdPost(tvShowId: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiTvShowsAddReviewForTvShowIdPost(tvShowId: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiTvShowsAddReviewForTvShowIdPost(tvShowId: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tv_show_id === null || tv_show_id === undefined) {
-            throw new Error('Required parameter tv_show_id was null or undefined when calling apiTvShowsAddReviewForTvShowIdPost.');
+        if (tvShowId === null || tvShowId === undefined) {
+            throw new Error('Required parameter tvShowId was null or undefined when calling apiTvShowsAddReviewForTvShowIdPost.');
         }
 
 
@@ -97,7 +97,7 @@ export class TvShowsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/TvShows/AddReviewFor/${encodeURIComponent(String(tv_show_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/TvShows/AddReviewFor/${encodeURIComponent(String(tvShowId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -111,17 +111,17 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
+     * @param tvShowId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsAddTvShowToUserTvShowIdPost(tv_show_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiTvShowsAddTvShowToUserTvShowIdPost(tv_show_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiTvShowsAddTvShowToUserTvShowIdPost(tv_show_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiTvShowsAddTvShowToUserTvShowIdPost(tv_show_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsAddTvShowToUserTvShowIdPost(tvShowId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiTvShowsAddTvShowToUserTvShowIdPost(tvShowId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiTvShowsAddTvShowToUserTvShowIdPost(tvShowId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiTvShowsAddTvShowToUserTvShowIdPost(tvShowId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tv_show_id === null || tv_show_id === undefined) {
-            throw new Error('Required parameter tv_show_id was null or undefined when calling apiTvShowsAddTvShowToUserTvShowIdPost.');
+        if (tvShowId === null || tvShowId === undefined) {
+            throw new Error('Required parameter tvShowId was null or undefined when calling apiTvShowsAddTvShowToUserTvShowIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -138,7 +138,7 @@ export class TvShowsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/TvShows/AddTvShowToUser/${encodeURIComponent(String(tv_show_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/TvShows/AddTvShowToUser/${encodeURIComponent(String(tvShowId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -151,24 +151,24 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
-     * @param review_id 
+     * @param tvShowId 
+     * @param reviewId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsDeleteReviewForTvShowIdDelete(tv_show_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiTvShowsDeleteReviewForTvShowIdDelete(tv_show_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiTvShowsDeleteReviewForTvShowIdDelete(tv_show_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiTvShowsDeleteReviewForTvShowIdDelete(tv_show_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsDeleteReviewForTvShowIdDelete(tvShowId: ObjectId, reviewId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiTvShowsDeleteReviewForTvShowIdDelete(tvShowId: ObjectId, reviewId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiTvShowsDeleteReviewForTvShowIdDelete(tvShowId: ObjectId, reviewId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiTvShowsDeleteReviewForTvShowIdDelete(tvShowId: ObjectId, reviewId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tv_show_id === null || tv_show_id === undefined) {
-            throw new Error('Required parameter tv_show_id was null or undefined when calling apiTvShowsDeleteReviewForTvShowIdDelete.');
+        if (tvShowId === null || tvShowId === undefined) {
+            throw new Error('Required parameter tvShowId was null or undefined when calling apiTvShowsDeleteReviewForTvShowIdDelete.');
         }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (review_id !== undefined && review_id !== null) {
-            queryParameters = queryParameters.set('reviewId', <any>review_id);
+        if (reviewId !== undefined && reviewId !== null) {
+            queryParameters = queryParameters.set('reviewId', <any>reviewId);
         }
 
         let headers = this.defaultHeaders;
@@ -185,7 +185,7 @@ export class TvShowsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/TvShows/DeleteReviewFor/${encodeURIComponent(String(tv_show_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/TvShows/DeleteReviewFor/${encodeURIComponent(String(tvShowId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -199,17 +199,17 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
+     * @param tvShowId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tv_show_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tv_show_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tv_show_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tv_show_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tvShowId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tvShowId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tvShowId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiTvShowsDeleteTvShowFromUserTvShowIdDelete(tvShowId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tv_show_id === null || tv_show_id === undefined) {
-            throw new Error('Required parameter tv_show_id was null or undefined when calling apiTvShowsDeleteTvShowFromUserTvShowIdDelete.');
+        if (tvShowId === null || tvShowId === undefined) {
+            throw new Error('Required parameter tvShowId was null or undefined when calling apiTvShowsDeleteTvShowFromUserTvShowIdDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -226,7 +226,7 @@ export class TvShowsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/TvShows/DeleteTvShowFromUser/${encodeURIComponent(String(tv_show_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/TvShows/DeleteTvShowFromUser/${encodeURIComponent(String(tvShowId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -239,24 +239,24 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param searched_tv_show 
-     * @param order_by 
+     * @param searchedTvShow 
+     * @param orderBy 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsGetAllTvShowsGet(searched_tv_show?: string, order_by?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiTvShowsGetAllTvShowsGet(searched_tv_show?: string, order_by?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiTvShowsGetAllTvShowsGet(searched_tv_show?: string, order_by?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiTvShowsGetAllTvShowsGet(searched_tv_show?: string, order_by?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsGetAllTvShowsGet(searchedTvShow?: string, orderBy?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiTvShowsGetAllTvShowsGet(searchedTvShow?: string, orderBy?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiTvShowsGetAllTvShowsGet(searchedTvShow?: string, orderBy?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiTvShowsGetAllTvShowsGet(searchedTvShow?: string, orderBy?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (searched_tv_show !== undefined && searched_tv_show !== null) {
-            queryParameters = queryParameters.set('SearchedTvShow', <any>searched_tv_show);
+        if (searchedTvShow !== undefined && searchedTvShow !== null) {
+            queryParameters = queryParameters.set('SearchedTvShow', <any>searchedTvShow);
         }
-        if (order_by !== undefined && order_by !== null) {
-            queryParameters = queryParameters.set('OrderBy', <any>order_by);
+        if (orderBy !== undefined && orderBy !== null) {
+            queryParameters = queryParameters.set('OrderBy', <any>orderBy);
         }
 
         let headers = this.defaultHeaders;
@@ -287,17 +287,17 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
+     * @param tvShowId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsGetReviewsForTvShowIdGet(tv_show_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
-    public apiTvShowsGetReviewsForTvShowIdGet(tv_show_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
-    public apiTvShowsGetReviewsForTvShowIdGet(tv_show_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
-    public apiTvShowsGetReviewsForTvShowIdGet(tv_show_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsGetReviewsForTvShowIdGet(tvShowId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
+    public apiTvShowsGetReviewsForTvShowIdGet(tvShowId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
+    public apiTvShowsGetReviewsForTvShowIdGet(tvShowId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
+    public apiTvShowsGetReviewsForTvShowIdGet(tvShowId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tv_show_id === null || tv_show_id === undefined) {
-            throw new Error('Required parameter tv_show_id was null or undefined when calling apiTvShowsGetReviewsForTvShowIdGet.');
+        if (tvShowId === null || tvShowId === undefined) {
+            throw new Error('Required parameter tvShowId was null or undefined when calling apiTvShowsGetReviewsForTvShowIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -317,7 +317,7 @@ export class TvShowsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/TvShows/GetReviewsFor/${encodeURIComponent(String(tv_show_id))}`,
+        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/TvShows/GetReviewsFor/${encodeURIComponent(String(tvShowId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -370,19 +370,19 @@ export class TvShowsService {
     /**
      * 
      * 
-     * @param tv_show_id 
+     * @param tvShowId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTvShowsTvShowAlreadyAddedGet(tv_show_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public apiTvShowsTvShowAlreadyAddedGet(tv_show_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public apiTvShowsTvShowAlreadyAddedGet(tv_show_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public apiTvShowsTvShowAlreadyAddedGet(tv_show_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiTvShowsTvShowAlreadyAddedGet(tvShowId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiTvShowsTvShowAlreadyAddedGet(tvShowId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiTvShowsTvShowAlreadyAddedGet(tvShowId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public apiTvShowsTvShowAlreadyAddedGet(tvShowId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (tv_show_id !== undefined && tv_show_id !== null) {
-            queryParameters = queryParameters.set('tvShowId', <any>tv_show_id);
+        if (tvShowId !== undefined && tvShowId !== null) {
+            queryParameters = queryParameters.set('tvShowId', <any>tvShowId);
         }
 
         let headers = this.defaultHeaders;

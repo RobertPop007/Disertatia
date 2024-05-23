@@ -6,9 +6,12 @@
 
             <li class="list-inline-item"><button routerLink="/anime/{{anime.title}}" class="btn btn-primary">
                 <i class="fa fa-film"></i></button></li>
-                
-            <li class="list-inline-item"><button (click)="addAnime(anime)" class="btn btn-primary">
+            
+            <li *ngIf="res == false" class="list-inline-item"><button (click)="addAnime(anime)" class="btn btn-primary">
                 <i class="fa fa-plus"></i></button></li>
+
+            <li *ngIf="res == true" class="list-inline-item"><button (click)="deleteAnime(anime)" class="btn btn-primary">
+                <i class="fa fa-minus"></i></button></li>
         </ul>
     </div>
 

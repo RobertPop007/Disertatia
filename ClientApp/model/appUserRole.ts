@@ -13,8 +13,8 @@ import { AppRole } from './appRole';
 import { AppUser } from './appUser';
 
 export interface AppUserRole { 
-    user_id?: string;
-    role_id?: string;
+    userId?: string;
+    roleId?: string;
     user?: AppUser;
     role?: AppRole;
 }

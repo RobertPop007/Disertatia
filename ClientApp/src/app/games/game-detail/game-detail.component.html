@@ -3,7 +3,7 @@
 
     <div class="d-flex justify-content-between">
       <div>
-        <p>{{game.released}} <span *ngIf="game.esrb_rating"><i class="far fa-dot-circle"></i></span> {{game.esrb_rating?.name}}
+        <p>{{game.released}} <span *ngIf="game.esrbRating"><i class="far fa-dot-circle"></i></span> {{game.esrbRating?.name}}
           </p>
 
         <div class="d-inline-block" *ngFor="let genre of game.genres">
@@ -33,7 +33,7 @@
         <p style="font-size: 20px;">Rating</p>
           <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
           <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{game.rating}}</span>/5<br>{{game.ratings_count}} votes</p>
+            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{game.rating}}</span>/5<br>{{game.ratingsCount}} votes</p>
           </div>
 
           <div *ngIf="game.metacritic">
@@ -46,13 +46,13 @@
     <div class="col-4">
 
     </div>
-    <div class="col-4"><img src="{{game.background_image || './assets/user.png'}}" alt="{{game.name}}" class="img-fluid"></div>
+    <div class="col-4"><img src="{{game.backgroundImage || './assets/user.png'}}" alt="{{game.name}}" class="img-fluid"></div>
     
   
 <br><br>
 
 <h1>Plot</h1>
-<p class="indent">{{game.description_raw}}</p>
+<p class="indent">{{game.descriptionRaw}}</p>
 
 <hr style="width:50%;text-align:left;margin-left:0">
 
@@ -122,8 +122,8 @@
     <hr style="width:50%;text-align:left;margin-left:0">
 </div>
 
-  <a style="color: #0096FF;" target="_blank" href="{{game.metacritic_url}}">
-    {{game.metacritic_url}} Metacritic</a>
+  <a style="color: #0096FF;" target="_blank" href="{{game.metacriticUrl}}">
+    {{game.metacriticUrl}} Metacritic</a>
   
   <hr style="width:50%;text-align:left;margin-left:0">
   </div>

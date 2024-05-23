@@ -14,13 +14,13 @@ export interface Cast {
     adult?: boolean;
     gender?: number;
     id?: number;
-    known_for_department?: string;
+    knownForDepartment?: string;
     name?: string;
-    original_name?: string;
+    originalName?: string;
     popularity?: number;
-    profile_path?: string;
-    cast_id?: number;
+    profilePath?: string;
+    castId?: number;
     character?: string;
-    credit_id?: string;
+    creditId?: string;
     order?: number;
 }

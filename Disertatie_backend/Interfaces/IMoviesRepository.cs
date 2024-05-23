@@ -1,6 +1,7 @@
 ﻿using Disertatie_backend.DTO;
 using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using MongoDB.Bson;
 using System;
@@ -14,7 +15,7 @@ namespace Disertatie_backend.Interfaces
         Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams userParams);
         Task<Movie> GetMovieByIdAsync(ObjectId id);
         Task<Movie> GetMovieByTitleAsync(string title);
-        Task AddReviewAsync(ObjectId id, ReviewDto reviewDto);
-        Task DeleteReviewAsync(ObjectId id, ReviewDto reviewDto);
+        Task AddReviewAsync(ObjectId id, Review review);
+        Task DeleteReviewAsync(ObjectId id, Guid reviewId);
     }
 }

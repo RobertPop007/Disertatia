@@ -1,13 +1,9 @@
-<div class="text-center mt-3">
-    <h2>{{predicate === 'added' ? 'Members I added as friends' : 'Members who added me'}}</h2>
-</div>
-
-<div class="container mt-3">
-    <div class="row">
+<div class="mt-5 container">
+    <!-- <div class="row">
         <div class="btn-group" name="predicate">
-            <button class="btn btn-primary" btnRadio="added" [(ngModel)]="predicate" (click)="loadFriends()">Members I added</button>
-            <button class="btn btn-primary" btnRadio="addedBy" [(ngModel)]="predicate" (click)="loadFriends()">Members who added me</button>
-            <!-- <button class="btn btn-primary" btnRadio="friendRequest" [(ngModel)]="predicate" (click)="loadFriends()">Friend requests</button> -->
+            <button class="btn btn-primary" btnRadio="friends" [(ngModel)]="predicate" (click)="loadFriends()">Friends</button>
+            <button class="btn btn-primary" btnRadio="friendsRequests" [(ngModel)]="predicate" (click)="loadFriendsRequests()">Friends requests</button>
+            <button class="btn btn-primary" btnRadio="friendRequest" [(ngModel)]="predicate" (click)="loadFriends()">Friend requests</button>
         </div>
     </div>
 
@@ -15,10 +11,45 @@
         <div class="col-2" *ngFor="let member of members">
             <app-member-card-added [member]="member!"></app-member-card-added>
         </div>
+    </div> -->
+
+    <h2 style="margin-top: 100px;">Friends</h2>
+    <div *ngIf="members && members.length">
+        <div class="row">
+            <div class="col-2" *ngFor="let member of members">
+                <app-member-card-added [member]="member!"></app-member-card-added>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!members || members.length === 0">
+        <p>You haven't added any friends yet</p>
+    </div>
+
+    <h2>Friend requests</h2>
+    <div *ngIf="friendRequests && friendRequests.length" class="container">
+        <div class="list-group">
+            <div *ngFor="let friendRequest of friendRequests" class="list-group-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <img [src]="friendRequest?.photoUrl" alt="Profile Picture" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                  <span>{{ friendRequest?.knownAs }}</span>
+                </div>
+                <div>
+                  <button class="btn btn-success mr-2" (click)="acceptFriendRequest(friendRequest?.userName!)">Accept</button>
+                  <button class="btn btn-danger" (click)="declineFriendRequest(friendRequest?.userName!)">Decline</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!friendRequests || friendRequests.length === 0">
+        <p>You don't have any friend request yet</p>
     </div>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<!-- <div class="d-flex justify-content-center" *ngIf="pagination">
     <pagination 
         [boundaryLinks]="true" 
         [totalItems]="pagination.totalItems"
@@ -30,4 +61,4 @@
         firstText="&laquo;" 
         lastText="&raquo;">
     </pagination>
-</div>
+</div> -->

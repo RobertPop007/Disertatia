@@ -82,9 +82,6 @@ namespace Disertatie_backend.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FriendRequests")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
@@ -263,6 +260,24 @@ namespace Disertatie_backend.Migrations
                     b.ToTable("Connections");
                 });
 
+            modelBuilder.Entity("Disertatie_backend.Entities.User.FriendRequest", b =>
+                {
+                    b.Property<Guid>("FromUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ToUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SinceDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("FromUserId", "ToUserId");
+
+                    b.HasIndex("ToUserId");
+
+                    b.ToTable("FriendsRequests");
+                });
+
             modelBuilder.Entity("Disertatie_backend.Entities.User.Friendships", b =>
                 {
                     b.Property<Guid>("UserID1")
@@ -381,13 +396,13 @@ namespace Disertatie_backend.Migrations
                     b.Property<int>("Likes")
                         .HasColumnType("int");
 
-                    b.Property<string>("Main_description")
+                    b.Property<string>("MainDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Short_description")
+                    b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte>("Stars")
@@ -396,7 +411,7 @@ namespace Disertatie_backend.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("User_photo")
+                    b.Property<string>("UserPhoto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -589,6 +604,25 @@ namespace Disertatie_backend.Migrations
                         .HasForeignKey("GroupName");
                 });
 
+            modelBuilder.Entity("Disertatie_backend.Entities.User.FriendRequest", b =>
+                {
+                    b.HasOne("Disertatie_backend.Entities.User.AppUser", "FromUser")
+                        .WithMany("FriendRequests")
+                        .HasForeignKey("FromUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Disertatie_backend.Entities.User.AppUser", "ToUser")
+                        .WithMany()
+                        .HasForeignKey("ToUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FromUser");
+
+                    b.Navigation("ToUser");
+                });
+
             modelBuilder.Entity("Disertatie_backend.Entities.User.Friendships", b =>
                 {
                     b.HasOne("Disertatie_backend.Entities.User.AppUser", "User1")
@@ -701,6 +735,8 @@ namespace Disertatie_backend.Migrations
                     b.Navigation("AppUserMovie");
 
                     b.Navigation("AppUserTvShow");
+
+                    b.Navigation("FriendRequests");
 
                     b.Navigation("Friends");
 

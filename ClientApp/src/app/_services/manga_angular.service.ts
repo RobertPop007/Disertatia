@@ -57,7 +57,7 @@ export class MangaAngularService {
     params = params.append('searchedManga', mangaParams.searchedManga);
     params = params.append('orderBy', mangaParams.orderBy);
 
-    return getPaginatedResult<DatumManga[]>(this.baseUrl + 'Manga/GetAllmangas', params, this.http).
+    return getPaginatedResult<DatumManga[]>(this.baseUrl + 'Manga/GetAllMangas', params, this.http).
       pipe(map(response => {
         this.mangaCache.set(Object.values(mangaParams).join('-'), response);
         return response;
@@ -77,7 +77,7 @@ export class MangaAngularService {
   }
 
   addManga(mangaId: ObjectId){
-    return this.mangaService.apiMangaAddReviewForMangaIdPost(mangaId);
+    return this.mangaService.apiMangaAddMangaToUserMangaIdPost(mangaId);
   }
 
   getMangasForUser(predicate: string, pageNumber: number, pageSize: number){
@@ -89,6 +89,6 @@ export class MangaAngularService {
   }
 
   deleteMangaForUser(mangaId: ObjectId){
-    return this.http.delete(this.baseUrl + 'Manga/' + mangaId);
+    return this.http.delete(this.baseUrl + 'Manga/DeleteMangaFromUser/' + mangaId, {responseType: 'text'});
   }
 }

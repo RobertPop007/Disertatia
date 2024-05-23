@@ -12,7 +12,7 @@
 import { AppUser } from './appUser';
 
 export interface AppUserGameItem { 
-    app_user_id?: string;
-    app_user?: AppUser;
-    game_id?: string;
+    appUserId?: string;
+    appUser?: AppUser;
+    gameId?: string;
 }

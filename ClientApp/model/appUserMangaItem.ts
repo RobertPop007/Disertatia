@@ -12,7 +12,7 @@
 import { AppUser } from './appUser';
 
 export interface AppUserMangaItem { 
-    app_user_id?: string;
-    app_user?: AppUser;
-    manga_id?: string;
+    appUserId?: string;
+    appUser?: AppUser;
+    mangaId?: string;
 }

@@ -14,7 +14,7 @@ import { AppUserRole } from './appUserRole';
 export interface AppRole { 
     id?: string;
     name?: string;
-    normalized_name?: string;
-    concurrency_stamp?: string;
-    user_roles?: Array<AppUserRole>;
+    normalizedName?: string;
+    concurrencyStamp?: string;
+    userRoles?: Array<AppUserRole>;
 }

@@ -773,36 +773,6 @@
         }
       }
     },
-    "/api/Anime/GetLikesFor/{reviewId}": {
-      "get": {
-        "tags": [
-          "Anime"
-        ],
-        "parameters": [
-          {
-            "name": "animeId",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/ObjectId"
-            }
-          },
-          {
-            "name": "reviewId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        }
-      }
-    },
     "/api/Books/GetBooksFor/{username}": {
       "get": {
         "tags": [
@@ -1238,6 +1208,27 @@
         }
       }
     },
+    "/api/ChatGPT/AskChatGPT": {
+      "get": {
+        "tags": [
+          "ChatGPT"
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Friends": {
       "get": {
         "tags": [
@@ -1341,6 +1332,77 @@
               "text/json": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Friends/GetUserFriendRequests": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Predicate",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendsRequestsDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendsRequestsDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendsRequestsDto"
+                  }
                 }
               }
             }
@@ -1795,6 +1857,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -2028,7 +2106,7 @@
         }
       }
     },
-    "/api/Manga/DeleteMangaFrom/{mangaId}": {
+    "/api/Manga/DeleteMangaFromUser/{mangaId}": {
       "delete": {
         "tags": [
           "Manga"
@@ -2040,6 +2118,66 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/ObjectId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Manga/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Manga"
+        ],
+        "parameters": [
+          {
+            "name": "mangaId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Manga/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Manga"
+        ],
+        "parameters": [
+          {
+            "name": "mangaId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -3295,8 +3433,7 @@
           "friendRequests": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
+              "$ref": "#/components/schemas/FriendRequest"
             },
             "nullable": true
           },
@@ -3845,11 +3982,11 @@
             "type": "string",
             "nullable": true
           },
-          "title_english": {
+          "titleEnglish": {
             "type": "string",
             "nullable": true
           },
-          "title_japanese": {
+          "titleJapanese": {
             "type": "string",
             "nullable": true
           },
@@ -3890,7 +4027,7 @@
             "format": "double",
             "nullable": true
           },
-          "scored_by": {
+          "scoredBy": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -4010,11 +4147,11 @@
             "type": "string",
             "nullable": true
           },
-          "title_english": {
+          "titleEnglish": {
             "type": "string",
             "nullable": true
           },
-          "title_japanese": {
+          "titleJapanese": {
             "type": "string",
             "nullable": true
           },
@@ -4053,7 +4190,7 @@
             "format": "double",
             "nullable": true
           },
-          "scored_by": {
+          "scoredBy": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -4226,6 +4363,35 @@
         },
         "additionalProperties": false
       },
+      "FriendRequest": {
+        "type": "object",
+        "properties": {
+          "fromUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fromUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "toUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "toUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "sinceDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "daysOfRequestFriendships": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FriendsDto": {
         "type": "object",
         "properties": {
@@ -4233,7 +4399,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "username": {
+          "userName": {
             "type": "string",
             "nullable": true
           },
@@ -4250,6 +4416,28 @@
             "nullable": true
           },
           "city": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FriendsRequestsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "knownAs": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoUrl": {
             "type": "string",
             "nullable": true
           }
@@ -4649,15 +4837,15 @@
       "Jpg": {
         "type": "object",
         "properties": {
-          "image_url": {
+          "imageUrl": {
             "type": "string",
             "nullable": true
           },
-          "small_image_url": {
+          "smallImageUrl": {
             "type": "string",
             "nullable": true
           },
-          "large_image_url": {
+          "largeImageUrl": {
             "type": "string",
             "nullable": true
           }
@@ -4667,15 +4855,15 @@
       "JpgManga": {
         "type": "object",
         "properties": {
-          "image_url": {
+          "imageUrl": {
             "type": "string",
             "nullable": true
           },
-          "small_image_url": {
+          "smallImageUrl": {
             "type": "string",
             "nullable": true
           },
-          "large_image_url": {
+          "largeImageUrl": {
             "type": "string",
             "nullable": true
           }
@@ -5643,7 +5831,7 @@
             "type": "string",
             "nullable": true
           },
-          "user_photo": {
+          "userPhoto": {
             "type": "string",
             "nullable": true
           },
@@ -5654,11 +5842,11 @@
             "type": "string",
             "nullable": true
           },
-          "short_description": {
+          "shortDescription": {
             "type": "string",
             "nullable": true
           },
-          "main_description": {
+          "mainDescription": {
             "type": "string",
             "nullable": true
           },
@@ -5685,8 +5873,8 @@
       },
       "ReviewDto": {
         "required": [
-          "main_description",
-          "short_description",
+          "mainDescription",
+          "shortDescription",
           "stars"
         ],
         "type": "object",
@@ -5699,21 +5887,25 @@
             "type": "string",
             "nullable": true
           },
-          "user_photo": {
+          "userPhoto": {
             "type": "string",
             "nullable": true
           },
-          "short_description": {
+          "shortDescription": {
             "minLength": 1,
             "type": "string"
           },
-          "main_description": {
+          "mainDescription": {
             "minLength": 1,
             "type": "string"
           },
           "stars": {
             "maximum": 10,
             "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "score": {
             "type": "integer",
             "format": "int32"
           }
@@ -5982,7 +6174,7 @@
       "Trailer": {
         "type": "object",
         "properties": {
-          "youtube_id": {
+          "youtubeId": {
             "type": "string",
             "nullable": true
           },
@@ -5990,7 +6182,7 @@
             "type": "string",
             "nullable": true
           },
-          "embed_url": {
+          "embedUrl": {
             "type": "string",
             "nullable": true
           },
@@ -6290,15 +6482,15 @@
       "Webp": {
         "type": "object",
         "properties": {
-          "image_url": {
+          "imageUrl": {
             "type": "string",
             "nullable": true
           },
-          "small_image_url": {
+          "smallImageUrl": {
             "type": "string",
             "nullable": true
           },
-          "large_image_url": {
+          "largeImageUrl": {
             "type": "string",
             "nullable": true
           }
@@ -6308,15 +6500,15 @@
       "WebpManga": {
         "type": "object",
         "properties": {
-          "image_url": {
+          "imageUrl": {
             "type": "string",
             "nullable": true
           },
-          "small_image_url": {
+          "smallImageUrl": {
             "type": "string",
             "nullable": true
           },
-          "large_image_url": {
+          "largeImageUrl": {
             "type": "string",
             "nullable": true
           }

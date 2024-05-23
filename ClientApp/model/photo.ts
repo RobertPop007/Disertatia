@@ -14,7 +14,7 @@ import { AppUser } from './appUser';
 export interface Photo { 
     id?: number;
     url?: string;
-    public_id?: string;
-    app_user?: AppUser;
-    app_user_id?: string;
+    publicId?: string;
+    appUser?: AppUser;
+    appUserId?: string;
 }

@@ -14,12 +14,12 @@ export interface Crew {
     adult?: boolean;
     gender?: number;
     id?: number;
-    known_for_department?: string;
+    knownForDepartment?: string;
     name?: string;
-    original_name?: string;
+    originalName?: string;
     popularity?: number;
-    profile_path?: string;
-    credit_id?: string;
+    profilePath?: string;
+    creditId?: string;
     department?: string;
     job?: string;
 }

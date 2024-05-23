@@ -12,7 +12,7 @@
 import { AppUser } from './appUser';
 
 export interface AppUserTvShowItem { 
-    app_user_id?: string;
-    app_user?: AppUser;
-    tv_show_id?: string;
+    appUserId?: string;
+    appUser?: AppUser;
+    tvShowId?: string;
 }

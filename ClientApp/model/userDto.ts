@@ -13,10 +13,10 @@
 export interface UserDto { 
     username?: string;
     token?: string;
-    photo_url?: string;
-    known_as?: string;
+    photoUrl?: string;
+    knownAs?: string;
     gender?: string;
     email?: string;
-    is_subscribed?: boolean;
-    has_dark_mode?: boolean;
+    isSubscribed?: boolean;
+    hasDarkMode?: boolean;
 }

@@ -4,7 +4,7 @@ import { User } from "./user";
 export class MangaParams{
     username!: string;
     pageNumber = 1;
-    pageSize = 20;
+    pageSize = 72;
     searchedManga!: string;
     orderBy = "score";
 

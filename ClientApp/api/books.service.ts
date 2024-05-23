@@ -60,17 +60,17 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
+     * @param bookId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiBooksAddBookToUserBookIdPost(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksAddBookToUserBookIdPost(bookId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksAddBookToUserBookIdPost(bookId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksAddBookToUserBookIdPost(bookId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksAddBookToUserBookIdPost(bookId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (book_id === null || book_id === undefined) {
-            throw new Error('Required parameter book_id was null or undefined when calling apiBooksAddBookToUserBookIdPost.');
+        if (bookId === null || bookId === undefined) {
+            throw new Error('Required parameter bookId was null or undefined when calling apiBooksAddBookToUserBookIdPost.');
         }
 
         let headers = this.defaultHeaders;
@@ -87,7 +87,7 @@ export class BooksService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddBookToUser/${encodeURIComponent(String(book_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddBookToUser/${encodeURIComponent(String(bookId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -100,18 +100,18 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
+     * @param bookId 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiBooksAddReviewForBookIdPost(book_id: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksAddReviewForBookIdPost(bookId: ObjectId, body?: ReviewDto, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksAddReviewForBookIdPost(bookId: ObjectId, body?: ReviewDto, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksAddReviewForBookIdPost(bookId: ObjectId, body?: ReviewDto, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksAddReviewForBookIdPost(bookId: ObjectId, body?: ReviewDto, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (book_id === null || book_id === undefined) {
-            throw new Error('Required parameter book_id was null or undefined when calling apiBooksAddReviewForBookIdPost.');
+        if (bookId === null || bookId === undefined) {
+            throw new Error('Required parameter bookId was null or undefined when calling apiBooksAddReviewForBookIdPost.');
         }
 
 
@@ -137,7 +137,7 @@ export class BooksService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddReviewFor/${encodeURIComponent(String(book_id))}`,
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/AddReviewFor/${encodeURIComponent(String(bookId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -151,19 +151,19 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
+     * @param bookId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public apiBooksBookAlreadyAddedGet(book_id?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksBookAlreadyAddedGet(bookId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public apiBooksBookAlreadyAddedGet(bookId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public apiBooksBookAlreadyAddedGet(bookId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public apiBooksBookAlreadyAddedGet(bookId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (book_id !== undefined && book_id !== null) {
-            queryParameters = queryParameters.set('bookId', <any>book_id);
+        if (bookId !== undefined && bookId !== null) {
+            queryParameters = queryParameters.set('bookId', <any>bookId);
         }
 
         let headers = this.defaultHeaders;
@@ -197,17 +197,17 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
+     * @param bookId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiBooksDeleteBookFromUserBookIdDelete(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksDeleteBookFromUserBookIdDelete(bookId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksDeleteBookFromUserBookIdDelete(bookId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksDeleteBookFromUserBookIdDelete(bookId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksDeleteBookFromUserBookIdDelete(bookId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (book_id === null || book_id === undefined) {
-            throw new Error('Required parameter book_id was null or undefined when calling apiBooksDeleteBookFromUserBookIdDelete.');
+        if (bookId === null || bookId === undefined) {
+            throw new Error('Required parameter bookId was null or undefined when calling apiBooksDeleteBookFromUserBookIdDelete.');
         }
 
         let headers = this.defaultHeaders;
@@ -224,7 +224,7 @@ export class BooksService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteBookFromUser/${encodeURIComponent(String(book_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteBookFromUser/${encodeURIComponent(String(bookId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -237,24 +237,24 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
-     * @param review_id 
+     * @param bookId 
+     * @param reviewId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiBooksDeleteReviewForBookIdDelete(book_id: ObjectId, review_id?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksDeleteReviewForBookIdDelete(bookId: ObjectId, reviewId?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksDeleteReviewForBookIdDelete(bookId: ObjectId, reviewId?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksDeleteReviewForBookIdDelete(bookId: ObjectId, reviewId?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksDeleteReviewForBookIdDelete(bookId: ObjectId, reviewId?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (book_id === null || book_id === undefined) {
-            throw new Error('Required parameter book_id was null or undefined when calling apiBooksDeleteReviewForBookIdDelete.');
+        if (bookId === null || bookId === undefined) {
+            throw new Error('Required parameter bookId was null or undefined when calling apiBooksDeleteReviewForBookIdDelete.');
         }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (review_id !== undefined && review_id !== null) {
-            queryParameters = queryParameters.set('reviewId', <any>review_id);
+        if (reviewId !== undefined && reviewId !== null) {
+            queryParameters = queryParameters.set('reviewId', <any>reviewId);
         }
 
         let headers = this.defaultHeaders;
@@ -271,7 +271,7 @@ export class BooksService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteReviewFor/${encodeURIComponent(String(book_id))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/Books/DeleteReviewFor/${encodeURIComponent(String(bookId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -285,34 +285,34 @@ export class BooksService {
     /**
      * 
      * 
-     * @param searched_book 
-     * @param order_by 
-     * @param page_number 
-     * @param page_size 
+     * @param searchedBook 
+     * @param orderBy 
+     * @param pageNumber 
+     * @param pageSize 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiBooksGetAllBooksGet(searched_book?: string, order_by?: string, page_number?: number, page_size?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksGetAllBooksGet(searchedBook?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksGetAllBooksGet(searchedBook?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksGetAllBooksGet(searchedBook?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksGetAllBooksGet(searchedBook?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (searched_book !== undefined && searched_book !== null) {
-            queryParameters = queryParameters.set('SearchedBook', <any>searched_book);
+        if (searchedBook !== undefined && searchedBook !== null) {
+            queryParameters = queryParameters.set('SearchedBook', <any>searchedBook);
         }
-        if (order_by !== undefined && order_by !== null) {
-            queryParameters = queryParameters.set('OrderBy', <any>order_by);
+        if (orderBy !== undefined && orderBy !== null) {
+            queryParameters = queryParameters.set('OrderBy', <any>orderBy);
         }
-        if (page_number !== undefined && page_number !== null) {
-            queryParameters = queryParameters.set('PageNumber', <any>page_number);
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
         }
-        if (page_size !== undefined && page_size !== null) {
-            queryParameters = queryParameters.set('PageSize', <any>page_size);
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
         }
 
         let headers = this.defaultHeaders;
@@ -383,17 +383,17 @@ export class BooksService {
     /**
      * 
      * 
-     * @param book_id 
+     * @param bookId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
-    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
-    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
-    public apiBooksGetReviewsForBookIdGet(book_id: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiBooksGetReviewsForBookIdGet(bookId: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<Array<ReviewDto>>;
+    public apiBooksGetReviewsForBookIdGet(bookId: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<ReviewDto>>>;
+    public apiBooksGetReviewsForBookIdGet(bookId: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<ReviewDto>>>;
+    public apiBooksGetReviewsForBookIdGet(bookId: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (book_id === null || book_id === undefined) {
-            throw new Error('Required parameter book_id was null or undefined when calling apiBooksGetReviewsForBookIdGet.');
+        if (bookId === null || bookId === undefined) {
+            throw new Error('Required parameter bookId was null or undefined when calling apiBooksGetReviewsForBookIdGet.');
         }
 
         let headers = this.defaultHeaders;
@@ -413,7 +413,7 @@ export class BooksService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Books/GetReviewsFor/${encodeURIComponent(String(book_id))}`,
+        return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Books/GetReviewsFor/${encodeURIComponent(String(bookId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
