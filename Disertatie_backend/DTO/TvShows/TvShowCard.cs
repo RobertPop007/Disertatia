@@ -4,11 +4,11 @@ namespace Disertatie_backend.DTO.TvShows
 {
     public class TvShowCard
     {
-        public string FullTitle { get; set; }
-        public string Title { get; set; }
-        public ObjectId TvShowId { get; set; }
-        public string ImDbRating { get; set; }
-        public string Image { get; set; }
-        public string Year { get; set; }
+        public string OriginalName { get; set; }
+        public string Name { get; set; }
+        public int TvShowId { get; set; }
+        public double VoteAverage { get; set; }
+        public string PosterPath { get; set; }
+        public string FirstAirDate { get; set; }
     }
 }

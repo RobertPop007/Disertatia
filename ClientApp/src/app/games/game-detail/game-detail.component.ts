@@ -3,18 +3,27 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from 'api/account.service';
 import { GameService } from 'api/game.service';
+import { UsersService } from 'api/users.service';
 import { Game } from 'model/game';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { User } from 'src/app/_models/user';
+import { GameDetailedResolver } from 'src/app/_resolvers/game-detailed.resolver';
 import { GamesAngularService } from 'src/app/_services/games_angular.service';
 
 @Component({
   selector: 'app-game-detail',
   templateUrl: './game-detail.component.html',
-  styleUrls: ['./game-detail.component.scss']
+  styleUrls: ['./game-detail.component.scss'],
+  providers: [
+    GameDetailedResolver,
+    GameService,
+    GamesAngularService,
+    UsersService,
+    AccountService
+  ]
 })
 export class GameDetailComponent implements OnInit {
 

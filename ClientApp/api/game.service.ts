@@ -239,6 +239,54 @@ export class GameService {
     /**
      * 
      * 
+     * @param reviewId 
+     * @param animeId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiGameDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiGameDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiGameDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiGameDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiGameDislikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (animeId !== undefined && animeId !== null) {
+            queryParameters = queryParameters.set('animeId', <any>animeId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Game/DislikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param gameId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -287,13 +335,17 @@ export class GameService {
      * 
      * @param searchedGame 
      * @param orderBy 
+     * @param pageNumber 
+     * @param pageSize 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiGameGetAllGamesGet(searchedGame?: string, orderBy?: string, pageNumber?: number, pageSize?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
 
 
 
@@ -303,6 +355,12 @@ export class GameService {
         }
         if (orderBy !== undefined && orderBy !== null) {
             queryParameters = queryParameters.set('OrderBy', <any>orderBy);
+        }
+        if (pageNumber !== undefined && pageNumber !== null) {
+            queryParameters = queryParameters.set('PageNumber', <any>pageNumber);
+        }
+        if (pageSize !== undefined && pageSize !== null) {
+            queryParameters = queryParameters.set('PageSize', <any>pageSize);
         }
 
         let headers = this.defaultHeaders;
@@ -405,6 +463,54 @@ export class GameService {
 
         return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Game/GetReviewsFor/${encodeURIComponent(String(gameId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param reviewId 
+     * @param animeId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiGameLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiGameLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiGameLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiGameLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiGameLikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (animeId !== undefined && animeId !== null) {
+            queryParameters = queryParameters.set('animeId', <any>animeId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Game/LikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

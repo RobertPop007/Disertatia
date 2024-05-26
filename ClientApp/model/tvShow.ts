@@ -24,7 +24,7 @@ import { TvShowSpokenLanguage } from './tvShowSpokenLanguage';
 import { TvShowVideos } from './tvShowVideos';
 
 export interface TvShow { 
-    tvShowId?: ObjectId;
+    id?: ObjectId;
     adult?: boolean;
     backdropPath?: string;
     createdBy?: Array<TvShowCreatedBy>;
@@ -32,7 +32,7 @@ export interface TvShow {
     firstAirDate?: string;
     genres?: Array<TvShowGenre>;
     homepage?: string;
-    id?: number;
+    tvShowId?: number;
     inProduction?: boolean;
     languages?: Array<string>;
     lastAirDate?: string;

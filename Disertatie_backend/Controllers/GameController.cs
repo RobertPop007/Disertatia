@@ -43,6 +43,8 @@ namespace Disertatie_backend.Controllers
         {
             var games = await _gamesRepository.GetGamesAsync(gameParams);
 
+            Response.AddPaginationHeader(games.CurrentPage, games.PageSize, games.TotalCount, games.TotalPages);
+
             return Ok(games);
         }
 
@@ -119,6 +121,22 @@ namespace Disertatie_backend.Controllers
             var userId = User.GetUserId();
 
             await _reviewRepository.DeleteReviewFromItem<Game>(userId, gameId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("LikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> LikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.LikeReview(animeId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("DislikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> DislikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.DislikeReview(animeId, reviewId);
 
             return Ok();
         }

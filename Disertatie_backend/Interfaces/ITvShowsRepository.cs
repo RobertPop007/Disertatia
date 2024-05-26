@@ -12,7 +12,7 @@ namespace Disertatie_backend.Interfaces
 {
     public interface ITvShowsRepository
     {
-        Task<IEnumerable<TvShowCard>> GetTvShowsAsync(TvShowParams userParams);
+        Task<PagedList<TvShowCard>> GetTvShowsAsync(TvShowParams userParams);
         Task<TvShow> GetTvShowByIdAsync(ObjectId id);
         Task<TvShow> GetTvShowByFullTitleAsync(string title);
         Task AddReviewAsync(ObjectId id, Review review);

@@ -1092,6 +1092,66 @@
         }
       }
     },
+    "/api/Books/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Books/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Buggy/auth": {
       "get": {
         "tags": [
@@ -1561,6 +1621,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -1803,6 +1879,66 @@
           {
             "name": "reviewId",
             "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Game/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Game/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2446,7 +2582,7 @@
         }
       }
     },
-    "/api/Movies/{title}": {
+    "/api/Movies/{name}": {
       "get": {
         "tags": [
           "Movies"
@@ -2454,7 +2590,7 @@
         "operationId": "GetMovie",
         "parameters": [
           {
-            "name": "title",
+            "name": "name",
             "in": "path",
             "required": true,
             "schema": {
@@ -2692,6 +2828,66 @@
         }
       }
     },
+    "/api/Movies/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Movies/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/TvShows/GetTvShowsFor/{username}": {
       "get": {
         "tags": [
@@ -2732,6 +2928,22 @@
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -2975,6 +3187,66 @@
           {
             "name": "reviewId",
             "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TvShows/LikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/TvShows/DislikeReviewFor/{reviewId}": {
+      "post": {
+        "tags": [
+          "TvShows"
+        ],
+        "parameters": [
+          {
+            "name": "animeId",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ObjectId"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -4525,7 +4797,7 @@
           "id": {
             "$ref": "#/components/schemas/ObjectId"
           },
-          "game_Id": {
+          "gameId": {
             "type": "integer",
             "format": "int32"
           },
@@ -4559,11 +4831,11 @@
             "format": "date-time",
             "nullable": true
           },
-          "background_image": {
+          "backgroundImage": {
             "type": "string",
             "nullable": true
           },
-          "background_image_additional": {
+          "backgroundImageAdditional": {
             "type": "string",
             "nullable": true
           },
@@ -4576,7 +4848,7 @@
             "format": "double",
             "nullable": true
           },
-          "rating_top": {
+          "ratingTop": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -4593,64 +4865,64 @@
             "format": "int32",
             "nullable": true
           },
-          "added_by_status": {
+          "addedByStatus": {
             "$ref": "#/components/schemas/AddedByStatusGame"
           },
-          "movies_count": {
+          "moviesCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "creators_count": {
+          "creatorsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "achievements_count": {
+          "achievementsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "parent_achievements_count": {
+          "parentAchievementsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "twitch_count": {
+          "twitchCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "youtube_count": {
+          "youtubeCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "reviews_text_count": {
+          "reviewsTextCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "ratings_count": {
+          "ratingsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "suggestions_count": {
+          "suggestionsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "metacritic_url": {
+          "metacriticUrl": {
             "type": "string",
             "nullable": true
           },
-          "game_series_count": {
+          "gameSeriesCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "reviews_count": {
+          "reviewsCount": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -4697,10 +4969,10 @@
             },
             "nullable": true
           },
-          "esrb_rating": {
+          "esrbRating": {
             "$ref": "#/components/schemas/EsrbRatingGame"
           },
-          "description_raw": {
+          "descriptionRaw": {
             "type": "string",
             "nullable": true
           },
@@ -5121,7 +5393,7 @@
       "Movie": {
         "type": "object",
         "properties": {
-          "movieId": {
+          "id": {
             "$ref": "#/components/schemas/ObjectId"
           },
           "backdropPath": {
@@ -5147,7 +5419,7 @@
             "type": "string",
             "nullable": true
           },
-          "id": {
+          "movieId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -6195,7 +6467,7 @@
       "TvShow": {
         "type": "object",
         "properties": {
-          "tvShowId": {
+          "id": {
             "$ref": "#/components/schemas/ObjectId"
           },
           "adult": {
@@ -6236,7 +6508,7 @@
             "type": "string",
             "nullable": true
           },
-          "id": {
+          "tvShowId": {
             "type": "integer",
             "format": "int32",
             "nullable": true

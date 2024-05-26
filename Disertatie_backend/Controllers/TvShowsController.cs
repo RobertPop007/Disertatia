@@ -43,9 +43,12 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpGet("GetAllTvShows")]
-        public async Task<IActionResult> GetMovies([FromQuery] TvShowParams tvShowParams)
+        public async Task<IActionResult> GetTvShows([FromQuery] TvShowParams tvShowParams)
         {
             var tvShows = await _tvShowsRepository.GetTvShowsAsync(tvShowParams);
+
+            Response.AddPaginationHeader(tvShows.CurrentPage, tvShows.PageSize, tvShows.TotalCount, tvShows.TotalPages);
+
             return Ok(tvShows);
         }
 
@@ -121,6 +124,22 @@ namespace Disertatie_backend.Controllers
             var userId = User.GetUserId();
 
             await _reviewRepository.DeleteReviewFromItem<TvShow>(userId, tvShowId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("LikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> LikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.LikeReview(animeId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("DislikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> DislikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.DislikeReview(animeId, reviewId);
 
             return Ok();
         }

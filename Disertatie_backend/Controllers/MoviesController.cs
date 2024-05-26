@@ -46,13 +46,17 @@ namespace Disertatie_backend.Controllers
         public async Task<IActionResult> GetMovies([FromQuery] MovieParams movieParams)
         {
             var movies = await _moviesRepository.GetMoviesAsync(movieParams);
+
+            Response.AddPaginationHeader(movies.CurrentPage, movies.PageSize, movies.TotalCount, movies.TotalPages);
+
             return Ok(movies);
         }
 
-        [HttpGet("{title}", Name = "GetMovie")]
-        public async Task<ActionResult<Movie>> GetMovie(string title)
+        [HttpGet("{name}", Name = "GetMovie")]
+        public async Task<ActionResult<Movie>> GetMovie(string name)
         {
-            return await _moviesRepository.GetMovieByTitleAsync(title);
+            var movie = await _moviesRepository.GetMovieByTitleAsync(name);
+            return movie;
         }
 
         [HttpGet("MovieAlreadyAdded")]
@@ -121,6 +125,22 @@ namespace Disertatie_backend.Controllers
             var userId = User.GetUserId();
 
             await _reviewRepository.DeleteReviewFromItem<Movie>(userId, movieId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("LikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> LikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.LikeReview(animeId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("DislikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> DislikeReview(ObjectId animeId, Guid reviewId)
+        {
+            await _reviewRepository.DislikeReview(animeId, reviewId);
 
             return Ok();
         }

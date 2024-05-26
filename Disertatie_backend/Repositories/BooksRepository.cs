@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.DTO.Books;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities.Books;
@@ -9,6 +11,7 @@ using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -68,7 +71,7 @@ namespace Disertatie_backend.Repositories
             return await _booksCollection.Find(filterByName).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<BookCard>> GetBooksAsync(BookParams bookParams)
+        public async Task<PagedList<BookCard>> GetBooksAsync(BookParams bookParams)
         {
             var filterByName = Builders<Book>.Filter.Empty;
 
@@ -77,26 +80,18 @@ namespace Disertatie_backend.Repositories
                 filterByName = Builders<Book>.Filter.Regex(x => x.Title, new BsonRegularExpression(bookParams.SearchedBook, "i"));
             }
 
-            var query = await _booksCollection.Find(filterByName).ToListAsync();
+            var query = _booksCollection.AsQueryable().AsQueryable();
 
-            var queryList = new List<BookCard>();
-
-            foreach (var document in query)
+            query = bookParams.OrderBy switch
             {
-                queryList.Add(_mapper.Map<BookCard>(document));
-            }
-
-            var mappedQuery = queryList.AsEnumerable();
-
-            mappedQuery = bookParams.OrderBy switch
-            {
-                "title" => mappedQuery.OrderBy(u => u.Title).OrderByDescending(u => u.AverageRating),
-                "averageRating" => mappedQuery.OrderByDescending(u => u.AverageRating),
-                _ => mappedQuery.OrderByDescending(u => u.BookID)
+                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.AverageRating),
+                "averageRating" => query.OrderByDescending(u => u.AverageRating),
+                _ => query.OrderByDescending(u => u.BookID)
 
             };
 
-            return mappedQuery;
+            return await PagedList<BookCard>.CreateAsync(query.ProjectTo<BookCard>(_mapper.ConfigurationProvider).AsNoTracking(),
+                 bookParams.PageNumber, bookParams.PageSize);
         }
     }
 }

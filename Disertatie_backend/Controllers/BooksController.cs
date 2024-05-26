@@ -45,6 +45,8 @@ namespace Disertatie_backend.Controllers
         {
             var books = await _booksRepository.GetBooksAsync(bookParams);
 
+            Response.AddPaginationHeader(books.CurrentPage, books.PageSize, books.TotalCount, books.TotalPages);
+
             return Ok(books);
         }
 
@@ -64,13 +66,13 @@ namespace Disertatie_backend.Controllers
 
 
         [HttpGet("GetReviewsFor/{bookId}")]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForGame(ObjectId bookId)
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetAllReviewForBook(ObjectId bookId)
         {
             return Ok(await _reviewRepository.GetReviewsForItem<Book>(bookId));
         }
 
         [HttpPost("AddReviewFor/{bookId}")]
-        public async Task<IActionResult> AddReviewForGame(ObjectId bookId, ReviewDto reviewDto)
+        public async Task<IActionResult> AddReviewForBook(ObjectId bookId, ReviewDto reviewDto)
         {
             var userId = User.GetUserId();
 
@@ -80,7 +82,7 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpPost("AddBookToUser/{bookId}")]
-        public async Task<IActionResult> AddGameForUser(ObjectId bookId)
+        public async Task<IActionResult> AddBookForUser(ObjectId bookId)
         {
             var username = User.GetUsername();
 
@@ -99,7 +101,7 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpDelete("DeleteBookFromUser/{bookId}")]
-        public async Task<IActionResult> DeletegameForUser(ObjectId bookId)
+        public async Task<IActionResult> DeleteBookForUser(ObjectId bookId)
         {
             var userId = User.GetUserId();
             var user = await _userRepository.GetUserByIdAsync(userId);
@@ -116,11 +118,27 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpDelete("DeleteReviewFor/{bookId}")]
-        public async Task<IActionResult> DeleteReviewForGame(ObjectId bookId, Guid reviewId)
+        public async Task<IActionResult> DeleteReviewForBook(ObjectId bookId, Guid reviewId)
         {
             var userId = User.GetUserId();
 
             await _reviewRepository.DeleteReviewFromItem<Book>(userId, bookId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("LikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> LikeReview(ObjectId bookId, Guid reviewId)
+        {
+            await _reviewRepository.LikeReview(bookId, reviewId);
+
+            return Ok();
+        }
+
+        [HttpPost("DislikeReviewFor/{reviewId}")]
+        public async Task<IActionResult> DislikeReview(ObjectId bookId, Guid reviewId)
+        {
+            await _reviewRepository.DislikeReview(bookId, reviewId);
 
             return Ok();
         }

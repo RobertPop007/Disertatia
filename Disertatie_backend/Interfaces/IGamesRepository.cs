@@ -12,7 +12,7 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IGamesRepository
     {
-        Task<IEnumerable<GameCard>> GetGamesAsync(GameParams userParams);
+        Task<PagedList<GameCard>> GetGamesAsync(GameParams userParams);
         Task<Game> GetGameByIdAsync(ObjectId id);
         Task<Game> GetGameByNameAsync(string title);
         Task AddReviewAsync(ObjectId id, Review review);

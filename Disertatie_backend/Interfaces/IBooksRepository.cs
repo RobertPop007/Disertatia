@@ -12,7 +12,7 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IBooksRepository
     {
-        Task<IEnumerable<BookCard>> GetBooksAsync(BookParams bookParams);
+        Task<PagedList<BookCard>> GetBooksAsync(BookParams bookParams);
         Task<Book> GetBookByIdAsync(ObjectId id);
         Task<Book> GetBookByTitleAsync(string title);
         Task AddReviewAsync(ObjectId id, Review review);

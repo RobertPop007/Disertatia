@@ -1,10 +1,10 @@
 import { ObjectId } from "model/objectId";
 
 export interface MovieCard{
-    movie_id: ObjectId;
-    fullTitle: string;
-    year: string;
-    image: string;
-    imDbRating: string;
+    movieId: number;
+    originalTitle: string;
+    releaseDate: string;
+    posterPath: string;
     title: string;
+    voteAverage: number;
 }

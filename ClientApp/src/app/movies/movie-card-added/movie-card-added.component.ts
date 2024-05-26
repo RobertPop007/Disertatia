@@ -27,7 +27,7 @@ export class MovieCardAddedComponent implements OnInit {
   }
 
   deleteMovieForUser(movie: Movie){
-    this.movieAngularService.deleteMovieForUser(movie.movieId!).subscribe(() => {
+    this.movieAngularService.deleteMovieForUser(movie.id!).subscribe(() => {
       this.toastr.success("You have deleted " + movie.title);
 
       this.deleteEvent.emit("This value is coming from child");

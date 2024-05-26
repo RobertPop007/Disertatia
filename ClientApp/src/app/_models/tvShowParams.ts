@@ -3,9 +3,9 @@ import { User } from "./user";
 export class TvShowParams{
     username!: string;
     pageNumber = 1;
-    pageSize = 20;
+    pageSize = 72;
     searchedTvShow!: string;
-    orderBy = "imdbRating";
+    orderBy = "popularity";
 
     constructor(user: User, searchedTvShow: string){
         this.username = user.username;

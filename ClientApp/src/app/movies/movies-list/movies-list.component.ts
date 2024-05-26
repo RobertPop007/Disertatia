@@ -35,6 +35,7 @@ export class MoviesListComponent implements OnInit {
     this.moviesAngularService.setMovieParams(this.movieParams);
 
     this.moviesAngularService.getMovies(this.movieParams).subscribe(response => {
+      console.log(response)
       this.movies = response.result!;
       this.pagination = response.pagination!;
     })

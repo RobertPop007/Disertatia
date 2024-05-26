@@ -27,8 +27,8 @@ export class MovieCardComponent implements OnInit {
   }
 
   addMovie(movie: Movie){
-    this.movieAngularService.addMovie(movie.movieId!).subscribe(() => {
-      //this.toastr.success("You have added " + movie.fullTitle);
+    this.movieAngularService.addMovie(movie.id!).subscribe(() => {
+      this.toastr.success("You have added " + movie.title);
     })
   }
 

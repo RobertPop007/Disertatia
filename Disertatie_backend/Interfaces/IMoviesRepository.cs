@@ -12,9 +12,9 @@ namespace Disertatie_backend.Interfaces
 {
     public interface IMoviesRepository
     {
-        Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams userParams);
+        Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams userParams);
         Task<Movie> GetMovieByIdAsync(ObjectId id);
-        Task<Movie> GetMovieByTitleAsync(string title);
+        Task<Movie> GetMovieByTitleAsync(string name);
         Task AddReviewAsync(ObjectId id, Review review);
         Task DeleteReviewAsync(ObjectId id, Guid reviewId);
     }

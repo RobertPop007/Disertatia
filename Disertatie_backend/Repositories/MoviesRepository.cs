@@ -13,6 +13,8 @@ using AutoMapper;
 using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.User;
 using System;
+using AutoMapper.QueryableExtensions;
+using Disertatie_backend.DTO.Anime;
 
 namespace Disertatie_backend.Repositories
 {
@@ -43,7 +45,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task AddReviewAsync(ObjectId id, Review review)
         {
-            var filter = Builders<Movie>.Filter.Eq(x => x.MovieId, id);
+            var filter = Builders<Movie>.Filter.Eq(x => x.Id, id);
             var update = Builders<Movie>.Update.Push(x => x.ReviewsIds, review.ReviewId);
 
             await _moviesCollection.UpdateOneAsync(filter, update);
@@ -51,13 +53,13 @@ namespace Disertatie_backend.Repositories
 
         public async Task DeleteReviewAsync(ObjectId id, Guid reviewId)
         {
-            var filter = Builders<Movie>.Filter.Eq(x => x.MovieId, id);
+            var filter = Builders<Movie>.Filter.Eq(x => x.Id, id);
             var update = Builders<Movie>.Update.Pull(x => x.ReviewsIds, reviewId);
 
             await _moviesCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<IEnumerable<MovieCard>> GetMoviesAsync(MovieParams movieParams)
+        public async Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams movieParams)
         {
             var filterByTitle = Builders<Movie>.Filter.Empty;
             var filterByFullTitle = Builders<Movie>.Filter.Empty;
@@ -71,31 +73,23 @@ namespace Disertatie_backend.Repositories
                 filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
             }
 
-            var query = await _moviesCollection.Find(filterByTitle).ToListAsync();
+            var query = _moviesCollection.AsQueryable().AsQueryable();
 
-            var queryList = new List<MovieCard>();
-
-            foreach (var document in query)
+            query = movieParams.OrderBy switch
             {
-                queryList.Add(_mapper.Map<MovieCard>(document));
-            }
-
-            var mappedQuery = queryList.AsEnumerable();
-
-            mappedQuery = movieParams.OrderBy switch
-            {
-                "fulltitle" => mappedQuery.OrderBy(u => u.FullTitle).OrderByDescending(u => u.Year),
-                "imdbRating" => mappedQuery.OrderByDescending(u => u.ImDbRating),
-                _ => mappedQuery.OrderByDescending(u => u.Year)
+                "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.ReleaseDate),
+                "voteAverage" => query.OrderByDescending(u => u.VoteAverage),
+                _ => query.OrderByDescending(u => u.Popularity)
 
             };
 
-            return mappedQuery;
+            return await PagedList<MovieCard>.CreateAsync(query.ProjectTo<MovieCard>(_mapper.ConfigurationProvider).AsNoTracking(),
+                movieParams.PageNumber, pageSize: movieParams.PageSize);
         }
 
         public async Task<Movie> GetMovieByIdAsync(ObjectId id)
         {
-            var filterById = Builders<Movie>.Filter.Eq(p => p.MovieId, id);
+            var filterById = Builders<Movie>.Filter.Eq(p => p.Id, id);
             return await _moviesCollection.Find(filterById).FirstOrDefaultAsync();
         }
         public async Task<Movie> GetMovieByTitleAsync(string title)

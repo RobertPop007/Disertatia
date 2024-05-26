@@ -14,14 +14,41 @@
     </form>
 </div> 
 
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems" 
+        [(ngModel)]="pagination.currentPage" 
+        (pageChanged)="pageChanged($event)" 
+        [maxSize]="5" 
+        [itemsPerPage]="pagination.itemsPerPage"
+        previousText="Previous" 
+        nextText="Next" 
+        firstText="First" 
+        lastText="Last">
+    </pagination>
+</div>
+
 <div class="row">
-    <div *ngFor="let tvShow of tvShows | paginate: { itemsPerPage: 18, currentPage: p }" class="col-2">
+    <div *ngFor="let tvShow of tvShows | paginate: { itemsPerPage: 72, currentPage: p }" class="col-2">
         <app-tv-show-card [tvShow]="tvShow"></app-tv-show-card> 
     </div>
 </div>
 
-<div class="d-flex justify-content-center">
-    <div class="text-right">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems" 
+        [(ngModel)]="pagination.currentPage" 
+        (pageChanged)="pageChanged($event)" 
+        [maxSize]="5" 
+        [itemsPerPage]="pagination.itemsPerPage"
+        previousText="Previous" 
+        nextText="Next" 
+        firstText="First" 
+        lastText="Last">
+    </pagination>
 </div>
+
+<br><br>
+<br><br>

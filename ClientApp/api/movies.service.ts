@@ -239,6 +239,54 @@ export class MoviesService {
     /**
      * 
      * 
+     * @param reviewId 
+     * @param animeId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiMoviesDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesDislikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiMoviesDislikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (animeId !== undefined && animeId !== null) {
+            queryParameters = queryParameters.set('animeId', <any>animeId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/DislikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param searchedMovie 
      * @param orderBy 
      * @param pageNumber 
@@ -380,6 +428,54 @@ export class MoviesService {
     /**
      * 
      * 
+     * @param reviewId 
+     * @param animeId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiMoviesLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMoviesLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMoviesLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMoviesLikeReviewForReviewIdPost(reviewId: string, animeId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiMoviesLikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (animeId !== undefined && animeId !== null) {
+            queryParameters = queryParameters.set('animeId', <any>animeId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Movies/LikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param movieId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -426,17 +522,17 @@ export class MoviesService {
     /**
      * 
      * 
-     * @param title 
+     * @param name 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMovie(title: string, observe?: 'body', reportProgress?: boolean): Observable<Movie>;
-    public getMovie(title: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Movie>>;
-    public getMovie(title: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Movie>>;
-    public getMovie(title: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getMovie(name: string, observe?: 'body', reportProgress?: boolean): Observable<Movie>;
+    public getMovie(name: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Movie>>;
+    public getMovie(name: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Movie>>;
+    public getMovie(name: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (title === null || title === undefined) {
-            throw new Error('Required parameter title was null or undefined when calling getMovie.');
+        if (name === null || name === undefined) {
+            throw new Error('Required parameter name was null or undefined when calling getMovie.');
         }
 
         let headers = this.defaultHeaders;
@@ -456,7 +552,7 @@ export class MoviesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Movie>('get',`${this.basePath}/api/Movies/${encodeURIComponent(String(title))}`,
+        return this.httpClient.request<Movie>('get',`${this.basePath}/api/Movies/${encodeURIComponent(String(name))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

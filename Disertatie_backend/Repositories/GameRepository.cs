@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Disertatie_backend.Configurations;
 using Disertatie_backend.DTO;
+using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
@@ -67,7 +69,7 @@ namespace Disertatie_backend.Repositories
             return await _gamesCollection.Find(filterById).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<GameCard>> GetGamesAsync(GameParams gameParams)
+        public async Task<PagedList<GameCard>> GetGamesAsync(GameParams gameParams)
         {
             var filterByName = Builders<Game>.Filter.Empty;
 
@@ -76,26 +78,18 @@ namespace Disertatie_backend.Repositories
                 filterByName = Builders<Game>.Filter.Regex(x => x.Name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
             }
 
-            var query = await _gamesCollection.Find(filterByName).ToListAsync();
+            var query = _gamesCollection.AsQueryable().AsQueryable();
 
-            var queryList = new List<GameCard>();
-
-            foreach (var document in query)
+            query = gameParams.OrderBy switch
             {
-                queryList.Add(_mapper.Map<GameCard>(document));
-            }
-
-            var mappedQuery = queryList.AsEnumerable();
-
-            mappedQuery = gameParams.OrderBy switch
-            {
-                "name" => mappedQuery.OrderBy(u => u.Name).OrderByDescending(u => u.Released),
-                "rating" => mappedQuery.OrderByDescending(u => u.Rating),
-                _ => mappedQuery.OrderByDescending(u => u.Year)
+                "name" => query.OrderBy(u => u.Name).OrderByDescending(u => u.Released),
+                "rating" => query.OrderByDescending(u => u.Rating),
+                _ => query.OrderByDescending(u => u.Released)
 
             };
 
-            return mappedQuery;
+            return await PagedList<GameCard>.CreateAsync(query.ProjectTo<GameCard>(_mapper.ConfigurationProvider).AsNoTracking(),
+                gameParams.PageNumber, gameParams.PageSize);
         }
     }
 }

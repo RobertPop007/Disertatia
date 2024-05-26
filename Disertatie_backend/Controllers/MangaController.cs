@@ -46,6 +46,8 @@ namespace Disertatie_backend.Controllers
         {
             var mangas = await _mangasRepository.GetMangasAsync(mangaParams);
 
+            Response.AddPaginationHeader(mangas.CurrentPage, mangas.PageSize, mangas.TotalCount, mangas.TotalPages);
+
             return Ok(mangas);
         }
 

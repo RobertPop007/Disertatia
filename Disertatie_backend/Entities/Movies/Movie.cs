@@ -10,7 +10,8 @@ namespace Disertatie_backend.Entities.Movies
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId MovieId { get; set; }
+        [JsonProperty("id")]
+        public ObjectId Id { get; set; }
 #nullable enable
 
         [JsonProperty("backdrop_path")]
@@ -28,8 +29,8 @@ namespace Disertatie_backend.Entities.Movies
         [JsonProperty("homepage")]
         public string? Homepage { get; set; }
 
-        [JsonProperty("id")]
-        public int? Id { get; set; }
+        //[JsonProperty("id")]
+        public int? MovieId { get; set; }
 
         [JsonProperty("imdb_id")]
         public string? ImdbId { get; set; }

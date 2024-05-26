@@ -285,6 +285,54 @@ export class BooksService {
     /**
      * 
      * 
+     * @param reviewId 
+     * @param bookId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiBooksDislikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksDislikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksDislikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksDislikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiBooksDislikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (bookId !== undefined && bookId !== null) {
+            queryParameters = queryParameters.set('bookId', <any>bookId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/DislikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
      * @param searchedBook 
      * @param orderBy 
      * @param pageNumber 
@@ -415,6 +463,54 @@ export class BooksService {
 
         return this.httpClient.request<Array<ReviewDto>>('get',`${this.basePath}/api/Books/GetReviewsFor/${encodeURIComponent(String(bookId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param reviewId 
+     * @param bookId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiBooksLikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiBooksLikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiBooksLikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiBooksLikeReviewForReviewIdPost(reviewId: string, bookId?: ObjectId, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (reviewId === null || reviewId === undefined) {
+            throw new Error('Required parameter reviewId was null or undefined when calling apiBooksLikeReviewForReviewIdPost.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (bookId !== undefined && bookId !== null) {
+            queryParameters = queryParameters.set('bookId', <any>bookId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/Books/LikeReviewFor/${encodeURIComponent(String(reviewId))}`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

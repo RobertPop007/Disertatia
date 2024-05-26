@@ -16,7 +16,7 @@ namespace Disertatie_backend.Controllers
         [Route("AskChatGPT")]
         public async Task<IActionResult> AskChatGPT(string query)
         {
-            var endpoint = "https://api.openai.com/v1/chat/completions";
+            var endpoint = "https://api.openai.com/v1/chat/completions"; //Claude Kye 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
 
             var messages = new[]
             {
