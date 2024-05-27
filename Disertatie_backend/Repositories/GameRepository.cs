@@ -84,7 +84,7 @@ namespace Disertatie_backend.Repositories
             {
                 "name" => query.OrderBy(u => u.Name).OrderByDescending(u => u.Released),
                 "rating" => query.OrderByDescending(u => u.Rating),
-                _ => query.OrderByDescending(u => u.Released)
+                _ => query.OrderByDescending(u => u.RatingsCount)
 
             };
 

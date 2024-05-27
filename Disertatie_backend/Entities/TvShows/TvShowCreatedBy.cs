@@ -4,22 +4,20 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowCreatedBy
     {
-        [JsonProperty("id")]
-        public int? Id;
+        public int? Id { get; set; }
 
-        [JsonProperty("credit_id")]
-        public string CreditId;
+        public string CreditId { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
-        [JsonProperty("original_name")]
-        public string OriginalName;
 
-        [JsonProperty("gender")]
-        public int? Gender;
+        public string OriginalName { get; set; }
 
-        [JsonProperty("profile_path")]
-        public string ProfilePath;
+
+        public int? Gender { get; set; }
+
+
+        public string ProfilePath { get; set; }
+
     }
 }

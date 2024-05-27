@@ -5,6 +5,7 @@ import { ObjectId } from 'model/objectId';
 import { Similar } from 'model/similar';
 import { listenToTriggers } from 'ngx-bootstrap/utils';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 import { MovieCard } from 'src/app/_models/movieCard';
 import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 
@@ -15,6 +16,7 @@ import { MoviesAngularService } from 'src/app/_services/movies_angular.service';
 })
 export class MovieCardComponent implements OnInit {
   @Input() movie!: MovieCard;
+  res!: boolean;
 
   constructor(private movieAngularService: MoviesAngularService,
     private movieService: MoviesService,
@@ -22,14 +24,24 @@ export class MovieCardComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
-    
+    this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.id!).pipe(take(1)).subscribe(res => {
+      this.res = res;
+    })
   }
 
   addMovie(movie: Movie){
+    console.log(movie.movieId)
     this.movieAngularService.addMovie(movie.id!).subscribe(() => {
       this.toastr.success("You have added " + movie.title);
     })
+  }
+
+  deleteMovie(movie: Movie){
+    this.movieAngularService.deleteMovieForUser(movie.id!).subscribe(() => {
+      this.toastr.success("You have deleted " + movie.title);
+    })
+
+    this.res = false;
   }
 
   isMovieAlreadyAdded(movieId: ObjectId): boolean{

@@ -32,24 +32,23 @@
       </div>
     </div>
 
+    <div class="mt-5">
+      <img src="{{anime.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{anime.title}}"
+        class="img-fluid">
+    </div>
+
     <h2 class="ml-3 mt-5 font-weight-bold">Background</h2>
     <p class="indent">{{anime.background}}</p>
 
     <h2 class="ml-3 mt-5 font-weight-bold">Plot</h2>
     <p class="indent-paragraph">{{anime.synopsis}}</p>
 
-    <div class="row">
-      <div class="col-4">
-        <img src="{{anime.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{anime.title}}"
-          class="img-fluid">
-      </div>
-      <div class="col-8">
-
+    <div class="row mt-5">
+        <h2 class="ml-3 font-weight-bold">Trailer</h2>
         <div *ngIf="anime.trailer!.embedUrl!" class="embed-responsive embed-responsive-4by3">
           <iframe allowfullscreen class="embed-responsive-item" [src]="anime.trailer?.embedUrl! | safe"></iframe>
           <!-- +'?autoplay=true'  allow="autoplay" -->
         </div>
-      </div>
     </div>
 
 

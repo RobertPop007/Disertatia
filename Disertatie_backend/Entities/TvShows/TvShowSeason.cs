@@ -4,28 +4,20 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowSeason
     {
-        [JsonProperty("air_date")]
-        public string AirDate;
+        public string AirDate { get; set; }
 
-        [JsonProperty("episode_count")]
-        public int? EpisodeCount;
+        public int? EpisodeCount { get; set; }
 
-        [JsonProperty("id")]
-        public int? Id;
+        public int? Id { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
-        [JsonProperty("overview")]
-        public string Overview;
+        public string Overview { get; set; }
 
-        [JsonProperty("poster_path")]
-        public string PosterPath;
+        public string PosterPath { get; set; }
 
-        [JsonProperty("season_number")]
-        public int? SeasonNumber;
+        public int? SeasonNumber { get; set; }
 
-        [JsonProperty("vote_average")]
-        public double? VoteAverage;
+        public double? VoteAverage { get; set; }
     }
 }

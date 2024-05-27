@@ -9,6 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TvShowResult } from './tvShowResult';
 
 export interface TvShowSimilar { 
+    page?: number;
+    results?: Array<TvShowResult>;
+    totalPages?: number;
+    totalResults?: number;
 }

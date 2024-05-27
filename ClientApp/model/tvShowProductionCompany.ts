@@ -11,4 +11,8 @@
  */
 
 export interface TvShowProductionCompany { 
+    id?: number;
+    logoPath?: string;
+    name?: string;
+    originCountry?: string;
 }

@@ -20,6 +20,7 @@ export interface Crew {
     popularity?: number;
     profilePath?: string;
     creditId?: string;
+    character?: string;
     department?: string;
     job?: string;
 }

@@ -5,16 +5,12 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowSimilar
     {
-        [JsonProperty("page")]
-        public int? Page;
+        public int? Page { get; set; }
 
-        [JsonProperty("results")]
-        public List<TvShowResult> Results;
+        public List<TvShowResult> Results { get; set; }
 
-        [JsonProperty("total_pages")]
-        public int? TotalPages;
+        public int? TotalPages { get; set; }
 
-        [JsonProperty("total_results")]
-        public int? TotalResults;
+        public int? TotalResults { get; set; }
     }
 }

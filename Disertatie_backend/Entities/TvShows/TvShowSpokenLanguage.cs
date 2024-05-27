@@ -4,13 +4,10 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowSpokenLanguage
     {
-        [JsonProperty("english_name")]
-        public string EnglishName;
+        public string EnglishName { get; set; }
 
-        [JsonProperty("iso_639_1")]
-        public string Iso6391;
+        public string Iso6391 { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
     }
 }

@@ -32,19 +32,16 @@
       </div>
     </div>
 
+    <div class="mt-5">
+      <img src="{{manga.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{manga.title}}"
+        class="img-fluid">
+    </div>
+
     <h2 class="ml-3 mt-5 font-weight-bold">Background</h2>
     <p class="indent">{{manga.background}}</p>
 
     <h2 class="ml-3 mt-5 font-weight-bold">Plot</h2>
     <p class="indent-paragraph">{{manga.synopsis}}</p>
-
-    <div class="row">
-      <div class="col-4">
-        <img src="{{manga.images!.jpg!.largeImageUrl || './assets/user.png'}}" alt="{{manga.title}}"
-          class="img-fluid">
-      </div>
-    </div>
-
 
     <!-- <div class="d-flex justify-content-between"> -->
     <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>

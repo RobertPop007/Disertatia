@@ -11,4 +11,6 @@
  */
 
 export interface TvShowProductionCountry { 
+    iso31661?: string;
+    name?: string;
 }

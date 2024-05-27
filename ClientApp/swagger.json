@@ -4219,6 +4219,10 @@
             "type": "string",
             "nullable": true
           },
+          "character": {
+            "type": "string",
+            "nullable": true
+          },
           "department": {
             "type": "string",
             "nullable": true
@@ -4800,6 +4804,10 @@
           "gameId": {
             "type": "integer",
             "format": "int32"
+          },
+          "trailer": {
+            "type": "string",
+            "nullable": true
           },
           "slug": {
             "type": "string",
@@ -6654,52 +6662,654 @@
         },
         "additionalProperties": false
       },
+      "TvShowBackdrop": {
+        "type": "object",
+        "properties": {
+          "aspectRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "iso6391": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "voteCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowCast": {
+        "type": "object",
+        "properties": {
+          "adult": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "knownForDepartment": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "popularity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "profilePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "character": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditId": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "TvShowCreatedBy": {
         "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "creditId": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "profilePath": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowCredits": {
         "type": "object",
+        "properties": {
+          "cast": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowCast"
+            },
+            "nullable": true
+          },
+          "crew": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowCrew"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowCrew": {
+        "type": "object",
+        "properties": {
+          "adult": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "gender": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "knownForDepartment": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "popularity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "profilePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditId": {
+            "type": "string",
+            "nullable": true
+          },
+          "department": {
+            "type": "string",
+            "nullable": true
+          },
+          "job": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowGenre": {
         "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowImages": {
         "type": "object",
+        "properties": {
+          "backdrops": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowBackdrop"
+            },
+            "nullable": true
+          },
+          "logos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowLogo"
+            },
+            "nullable": true
+          },
+          "posters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowPoster"
+            },
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowLastEpisodeToAir": {
         "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "overview": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "voteCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "airDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "episodeNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "episodeType": {
+            "type": "string",
+            "nullable": true
+          },
+          "productionCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "runtime": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "seasonNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "showId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "stillPath": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowLogo": {
+        "type": "object",
+        "properties": {
+          "aspectRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "iso6391": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "voteCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowNetwork": {
         "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "logoPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "originCountry": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowPoster": {
+        "type": "object",
+        "properties": {
+          "aspectRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "iso6391": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "voteCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowProductionCompany": {
         "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "logoPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "originCountry": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowProductionCountry": {
         "type": "object",
+        "properties": {
+          "iso31661": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TvShowResult": {
+        "type": "object",
+        "properties": {
+          "iso6391": {
+            "type": "string",
+            "nullable": true
+          },
+          "iso31661": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "key": {
+            "type": "string",
+            "nullable": true
+          },
+          "site": {
+            "type": "string",
+            "nullable": true
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "official": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "adult": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "backdropPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "genreIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "originCountry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "originalLanguage": {
+            "type": "string",
+            "nullable": true
+          },
+          "originalName": {
+            "type": "string",
+            "nullable": true
+          },
+          "overview": {
+            "type": "string",
+            "nullable": true
+          },
+          "popularity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "posterPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstAirDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "voteCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowSeason": {
         "type": "object",
+        "properties": {
+          "airDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "episodeCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "overview": {
+            "type": "string",
+            "nullable": true
+          },
+          "posterPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "seasonNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "voteAverage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowSimilar": {
         "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowResult"
+            },
+            "nullable": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalResults": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowSpokenLanguage": {
         "type": "object",
+        "properties": {
+          "englishName": {
+            "type": "string",
+            "nullable": true
+          },
+          "iso6391": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "TvShowVideos": {
         "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TvShowResult"
+            },
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "UserDto": {

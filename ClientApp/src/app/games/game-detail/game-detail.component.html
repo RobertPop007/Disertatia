@@ -1,129 +1,171 @@
-<div class="row">
-    <h1 style="size: 15rem;">{{game.name}}</h1>
+<main class="background-image">
+  <div class="container">
+    <br>
+    <h1 style="size: 20rem;" class="text-align font-weight-bold">{{game.name}}</h1>
 
-    <div class="d-flex justify-content-between">
-      <div>
-        <p>{{game.released}} <span *ngIf="game.esrbRating"><i class="far fa-dot-circle"></i></span> {{game.esrbRating?.name}}
-          </p>
-
+    <div class="row">
+      <div class="col">
         <div class="d-inline-block" *ngFor="let genre of game.genres">
-          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.name}}</p>
+          <p class="m-1 p-1 border border-primary rounded">{{genre.name}}</p>
         </div>
-
-        <!-- <div *ngIf="movie.tagline">
-          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
-        </div> -->
-
-        <br>
-
-        <div *ngIf="res == false">
-          <li class="list-inline-item"><button (click)="addGame(game)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> <p>Add game</p></li>
-        </div>
-        
-        <div *ngIf="res == true">
-          <li class="list-inline-item"><button (click)="deleteGame(game)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> <p>Delete game</p></li>
-        </div>
-        <br>
       </div>
-      
-    <div>
-      <div class="text-end">
-        <p style="font-size: 20px;">Rating</p>
-          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
-          <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{game.rating}}</span>/5<br>{{game.ratingsCount}} votes</p>
+      <div *ngIf="res == false" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="addGame(game)" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Add game</p>
           </div>
+        </div>
+      </div>
 
-          <div *ngIf="game.metacritic">
-            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{game.metacritic}} metascore</span></p>
+      <div *ngIf="res == true" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="deleteGame(game)" class="btn btn-primary">
+            <i class="fa fa-minus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Delete game</p>
           </div>
-    </div>
-  </div>
-      
-    </div>
-    <div class="col-4">
-
-    </div>
-    <div class="col-4"><img src="{{game.backgroundImage || './assets/user.png'}}" alt="{{game.name}}" class="img-fluid"></div>
-    
-  
-<br><br>
-
-<h1>Plot</h1>
-<p class="indent">{{game.descriptionRaw}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-
-<div *ngIf="game.platforms!.length > 0">
-<h1>Platforms</h1>
-<div *ngFor="let platform of game.platforms">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{platform.platform?.name}}</span></p>
-  </div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="game.platforms!.length > 0">
-  <h1>Requirements for PC</h1>
-  <div>
-      <p>{{game!.platforms![0].requirements!.minimum}}</p>
-      <p>{{game!.platforms![0].requirements!.recommended}}</p>
-    </div>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
-<div *ngIf="game.stores">
-<h1>Online stores</h1>
-<div *ngFor="let store of game.stores">
-    <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{store.store?.name}}</span></p>
-  </div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="game.developers">
-    <h1>Developers</h1>
-    <div *ngFor="let developer of game.developers">
-        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{developer.name}}</span></p>
-      </div>
-    
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="game.genres">
-    <h1>Genres</h1>
-    <div *ngFor="let genre of game.genres">
-        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{genre.name}}</span></p>
-        </div>
-
-    <hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="game.tags">
-    <h1>Tags</h1>
-      <div class="row">
-    <div *ngFor="let tag of game.tags" class="col-3">
-        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tag.name}}</span></p>
         </div>
       </div>
+    </div>
 
-    <hr style="width:50%;text-align:left;margin-left:0">
-</div>
+    <div class="mt-5">
+      <img src="{{game.backgroundImage || './assets/user.png'}}" alt="{{game.name}}"
+        class="img-fluid">
+    </div>
+    <h2 class="ml-3 mt-5 font-weight-bold">Description</h2>
+    <p class="indent-paragraph">{{game.descriptionRaw}}</p>
 
-<div *ngIf="game.publishers">
-    <h1>Publishers</h1>
-    <div *ngFor="let publisher of game.publishers">
-        <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{publisher.name}}</span></p>
+    <div class="row mt-5">
+      <h2 class="ml-3 font-weight-bold">Trailer</h2>
+        <div *ngIf="game.trailer" class="embed-responsive embed-responsive-4by3">
+          <iframe allowfullscreen class="embed-responsive-item" [src]="game.trailer | safe"></iframe>
+          <!-- +'?autoplay=true'  allow="autoplay" -->
         </div>
+    </div>
 
-    <hr style="width:50%;text-align:left;margin-left:0">
-</div>
 
-  <a style="color: #0096FF;" target="_blank" href="{{game.metacriticUrl}}">
-    {{game.metacriticUrl}} Metacritic</a>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
+    <!-- <div class="d-flex justify-content-between"> -->
+    <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>
+    <h5>Released: <strong>{{game.released}}</strong></h5>
+    <h5>Website: <strong>{{game.website}}</strong></h5>
+    <h5>Movies count: <strong>{{game.moviesCount}} movies</strong></h5>
+    <h5>Game series count: <strong>{{game.gameSeriesCount}} games</strong></h5>
+    <h5>Score: <strong>{{game.rating}}/5 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i></strong></h5>
+    <h5>Esrb: <strong>{{game.esrbRating?.name}}</strong></h5>
+
+    <div *ngIf="game.publishers && game.publishers.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Producers: </h5>
+        <div class="d-inline-block" *ngFor="let publisher of game.publishers">
+            <h5 class="d-inline"><strong>{{publisher.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="game.tags && game.tags.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Licensors: </h5>
+        <div class="d-inline-block" *ngFor="let tag of game.tags">
+            <h5 class="d-inline"><strong>{{tag.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="game.platforms && game.platforms.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Studios: </h5>
+        <div class="d-inline-block" *ngFor="let platform of game.platforms">
+            <h5 class="d-inline"><strong>{{platform.platform?.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="game.stores && game.stores.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let store of game.stores">
+            <h5 class="d-inline"><strong>{{store.store?.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="game.developers && game.developers.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Themes: </h5>
+        <div class="d-inline-block" *ngFor="let developer of game.developers">
+            <h5 class="d-inline"><strong>{{developer.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <h5>Parent achievement count: <strong>{{game.parentAchievementsCount}} achievements</strong></h5>
+    <h5>Rating count: <strong>{{game.ratingsCount}} ratings<i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i></strong></h5>
+    <h5>Reviews count: <strong>{{game.reviewsCount}} reviews</strong></h5>
+    <h5>Creators count: <strong>{{game.creatorsCount}} creators</strong></h5>
+    <br>
   </div>
+
+  <div class="container mt-5" style="margin-bottom: 120px;">
+    <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+    <div *ngIf="reviews?.length !== 0">
+      <div *ngFor="let review of reviews">
+        <div class="review-box">
+          <div class="left-column">
+            <div class="user-info">
+              <img src="{{review.userPhoto || './assets/user.png'}}" alt="User Photo" class="user-photo">
+              <div class="user-details">
+                <h5 class="username">{{ review.username }}</h5>
+                <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="review-content">
+              <h4 class="short-description">{{ review.shortDescription }}</h4>
+              <div class="rating">
+                <ng-container *ngIf="review.stars">
+                  <ng-container *ngFor="let _ of generateArray(review.stars)">
+                    <span class="fa fa-star checked"></span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <p class="main-description">{{ review.mainDescription }}</p>
+              <div class="like-dislike">
+                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                  <span class="fa fa-thumbs-up"></span> Like
+                </button>
+                <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                  <span class="fa fa-thumbs-down"></span> Dislike
+                </button>
+                <div class="like-label">
+                  <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                  <span class="like-label-text">Likes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="reviews?.length === 0">
+      <p>No reviews available. Be the first to leave a review!</p>
+    </div>
+    <br>
+    
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+      <div class="form-group">
+        <label for="shortDescription">Short Description:</label>
+        <input type="text" class="form-control" id="Short_description" name="short_Description" formControlName="Short_description">
+      </div>
+      <div class="form-group">
+        <label for="mainDescription">Main Description:</label>
+        <textarea class="form-control" id="Main_description" name="Main_description" rows="5" formControlName="Main_description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="stars">Stars: </label>
+        <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>

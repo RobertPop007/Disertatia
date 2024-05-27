@@ -17,6 +17,7 @@ namespace Disertatie_backend.Entities.Games.Game
 #nullable enable
         //[JsonProperty("id")]
         public int GameId { get; set; }
+        public string Trailer { get; set; }
         public string? Slug { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }

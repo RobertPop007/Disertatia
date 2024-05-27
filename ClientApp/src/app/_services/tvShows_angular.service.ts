@@ -92,6 +92,6 @@ export class TvShowsAngularService{
   }
 
   deleteTvShowForUser(tvShowId: ObjectId){
-    return this.http.delete(this.baseUrl + 'TvShows/' + tvShowId);
+    return this.http.delete(this.baseUrl + 'TvShows/DeleteTvShowFromUser/' + tvShowId);
   }
 }

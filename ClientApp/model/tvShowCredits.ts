@@ -9,6 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TvShowCast } from './tvShowCast';
+import { TvShowCrew } from './tvShowCrew';
 
 export interface TvShowCredits { 
+    cast?: Array<TvShowCast>;
+    crew?: Array<TvShowCrew>;
 }

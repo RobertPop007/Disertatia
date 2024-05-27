@@ -76,8 +76,8 @@ export class MoviesAngularService{
     return this.http.get<Movie>(this.baseUrl + "Movies/" + fullTitle);
   }
 
-  addMovie(movieId: ObjectId){
-    return this.movieService.apiMoviesAddMovieToUserMovieIdPost(movieId);
+  addMovie(id: ObjectId){
+    return this.movieService.apiMoviesAddMovieToUserMovieIdPost(id);
   }
 
   getPaginatedMoviesForUser(predicate: string, pageNumber: number, pageSize: number){
@@ -93,6 +93,6 @@ export class MoviesAngularService{
   }
 
   deleteMovieForUser(movieId: ObjectId){
-    return this.http.delete(this.baseUrl + 'Movies/' + movieId);
+    return this.http.delete(this.baseUrl + 'Movies/DeleteMovieFromUser/' + movieId);
   }
 }

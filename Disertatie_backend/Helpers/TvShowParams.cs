@@ -3,6 +3,6 @@
     public class TvShowParams : PaginationParams
     {
         public string SearchedTvShow { get; set; }
-        public string OrderBy { get; set; } = "voteAverage";
+        public string OrderBy { get; set; } = "popularity";
     }
 }

@@ -80,7 +80,7 @@ export class GamesAngularService {
   }
 
   addGame(gameId: ObjectId){
-    return this.gameService.apiGameAddReviewForGameIdPost(gameId);
+    return this.gameService.apiGameAddGameToUserGameIdPost(gameId);
   }
 
   getGamesForUser(predicate: string, pageNumber: number, pageSize: number){
@@ -92,6 +92,6 @@ export class GamesAngularService {
   }
 
   deleteGameForUser(gameId: ObjectId){
-    return this.http.delete(this.baseUrl + 'Game/' + gameId);
+    return this.http.delete(this.baseUrl + 'Game/DeleteGameFromUser/' + gameId);
   }
 }

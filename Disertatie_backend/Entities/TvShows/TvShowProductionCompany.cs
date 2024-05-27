@@ -4,16 +4,12 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowProductionCompany
     {
-        [JsonProperty("id")]
-        public int? Id;
+        public int? Id { get; set; }
 
-        [JsonProperty("logo_path")]
-        public string LogoPath;
+        public string LogoPath { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
-        [JsonProperty("origin_country")]
-        public string OriginCountry;
+        public string OriginCountry { get; set; }
     }
 }

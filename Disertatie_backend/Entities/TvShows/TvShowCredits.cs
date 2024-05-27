@@ -5,10 +5,8 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowCredits
     {
-        [JsonProperty("cast")]
-        public List<TvShowCast> Cast;
+        public List<TvShowCast> Cast { get; set; }
 
-        [JsonProperty("crew")]
-        public List<TvShowCrew> Crew;
+        public List<TvShowCrew> Crew { get; set; }
     }
 }

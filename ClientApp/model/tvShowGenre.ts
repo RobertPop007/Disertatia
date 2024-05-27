@@ -11,4 +11,6 @@
  */
 
 export interface TvShowGenre { 
+    id?: number;
+    name?: string;
 }

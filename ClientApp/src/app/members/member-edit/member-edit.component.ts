@@ -210,6 +210,7 @@ export class MemberEditComponent implements OnInit {
 
     this.tvShowsService.apiTvShowsGetTvShowsForUsernameGet(this.user.username).subscribe(response => {
       this.watchedTvShows = response;
+      console.log(this.watchedTvShows)
     })
 
     this.animesService.apiAnimeGetAnimesForUsernameGet(this.user.username).subscribe(response => {

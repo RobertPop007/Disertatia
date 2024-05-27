@@ -6,7 +6,7 @@ export class GameParams{
     pageNumber = 1;
     pageSize = 20;
     searchedGame!: string;
-    orderBy = "rating";
+    orderBy = "ratingsCount";
 
     constructor(user: User, searchedGame: string){
         this.username = user.username;

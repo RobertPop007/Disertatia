@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace Disertatie_backend.DTO.Books
 {
     public class BookCard
     {
         public string Title { get; set; }
-        public int? BookID { get; set; }
+        public ObjectId Id { get; set; }
         public string Authors { get; set; }
         public double? AverageRating { get; set; }
         public int? RatingsCount { get; set; }

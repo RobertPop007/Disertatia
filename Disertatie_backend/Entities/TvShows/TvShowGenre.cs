@@ -4,10 +4,10 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowGenre
     {
-        [JsonProperty("id")]
-        public int? Id;
+        public int? Id { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+
+        public string Name { get; set; }
+
     }
 }

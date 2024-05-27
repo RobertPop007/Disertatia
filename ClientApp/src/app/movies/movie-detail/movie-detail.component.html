@@ -1,168 +1,219 @@
-<!-- <div class="row">
-    <h1 style="size: 15rem;">{{movie.title}} ({{movie.fullTitle}})</h1>
+<main class="background-image">
+  <div class="container">
+    <br>
+    <h1 style="size: 20rem;" class="text-align font-weight-bold">{{movie.title}}</h1>
 
-    <div class="d-flex justify-content-between">
-      <div>
-        <p>{{movie.year}} <span *ngIf="movie.runtimeStr"><i class="far fa-dot-circle"></i> </span> {{movie.runtimeStr}}
-          <span *ngIf="movie.contentRating"><i class="far fa-dot-circle"></i></span> {{movie.contentRating}}</p>
-
-        <div class="d-inline-block" *ngFor="let genre of movie.genreList">
-          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.value}}</p>
+    <div class="row">
+      <div class="col">
+        <div class="d-inline-block" *ngFor="let genre of movie.genres">
+          <p class="m-1 p-1 border border-primary rounded">{{genre.name}}</p>
         </div>
-
-        <div *ngIf="movie.tagline">
-          <i style="font-weight: initial;">"{{movie.tagline}}"</i>
-        </div>
-
-        <br>
-
-        <div *ngIf="res == false">
-          <li class="list-inline-item"><button (click)="addMovie(movie)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button> <p>Add movie</p></li>
-        </div>
-        
-        <div *ngIf="res == true">
-          <li class="list-inline-item"><button (click)="deleteMovie(movie)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button> <p>Delete movie</p></li>
-        </div>
-        <br>
       </div>
-      
-    <div>
-      <div class="text-end">
-        <p style="font-size: 20px;">Imdb Rating</p>
-          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
-          <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{movie.imDbRating}}</span>/10<br>{{movie.imDbRatingVotes}} votes</p>
+      <div *ngIf="res == false" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="addMovie(movie)" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Add movie</p>
           </div>
-
-          <div *ngIf="movie.metacriticRating">
-            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{movie.metacriticRating}} metascore</span></p>
-          </div>
-    </div>
-  </div>
-      
-    </div>
-
-    <div class="col-4"><img src="{{movie.image || './assets/user.png'}}" alt="{{movie.fullTitle}}" class="img-fluid"></div>
-    <div class="col-8">
-
-    <div *ngIf="movie.trailer!.linkEmbed!" class="embed-responsive embed-responsive-4by3">
-        <iframe allowfullscreen class="embed-responsive-item" [src]="movie.trailer?.linkEmbed! | safe"></iframe>  -->
-        <!-- +'?autoplay=true'  allow="autoplay" --> 
-        <!-- </div>
-    </div>
-</div>
-  
-<br><br>
-
-<h1>Plot</h1>
-<p class="indent">{{movie.plot}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-
-<div *ngIf="movie.directors">
-<h1>Director</h1>
-<p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{movie.directors}}</span></p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.writerList!.length > 0">
-<h1>Writers</h1>
-<div *ngFor="let writer of movie.writerList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{writer.name}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.starList!.length > 0">
-<h1>Stars</h1>
-<div *ngFor="let star of movie.starList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{star.name}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.awards">
-<h1>Awards</h1>
-<p>{{movie.awards}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.companies">
-<h1>Company</h1>
-<p>{{movie.companies}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.countryList!.length > 0">
-<h1>Countries</h1>
-<div *ngFor="let country of movie.countryList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{country.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.languageList!.length > 0">
-<h1>Languages</h1>
-<div *ngFor="let language of movie.languageList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{language.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.boxOffice">
-<h1>Box office</h1>
-<p *ngIf="movie.boxOffice.budget"><span style="font-weight: bolder;">Bugdet</span><br>{{movie.boxOffice!.budget}}</p>
-<p *ngIf="movie.boxOffice!.openingWeekendUSA"><span style="font-weight: bolder;">Opening weekend USA</span><br>{{movie.boxOffice!.openingWeekendUSA}}</p>
-<p *ngIf="movie.boxOffice!.grossUSA"><span style="font-weight: bolder;">Gross USA</span><br>{{movie.boxOffice!.grossUSA}}</p>
-<p *ngIf="movie.boxOffice!.cumulativeWorldwideGross"><span style="font-weight: bolder;">Cumulative worldwide gross</span><br>{{movie.boxOffice!.cumulativeWorldwideGross}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="movie.keywords">
-  <h1>Keywords</h1>
-  <p>{{movie.keywords}}</p>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
-  </div>
-
-  <div *ngIf="movie.wikipedia">
-    <h1>External links</h1>
-    <a style="color: #0096FF;" target="_blank" href="{{movie.wikipedia.url}}">
-    {{movie.title}} Wikipedia</a>
-    
-    <hr style="width:50%;text-align:left;margin-left:0">
-    </div>
-
-<h1>Actor list</h1>
-<owl-carousel-o [options]="customOptions">
-  
-    <ng-container *ngFor="let actor of movie.actorList">
-      <ng-template *ngIf="actor.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="actor.id!" style="margin-left: 20px;">
-        <img [src]="actor.image" width="100px" height="400px">
-        <div style="align-items: center;">
-            <p>{{actor.name}}<br><span style="color: gray;">as {{actor.asCharacter}}</span></p>
         </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o>
+      </div>
 
-<h1>Similar movies</h1>
-<div class="container">
-  <div class="row">
-    <div *ngFor="let similar of movie.similar" class="col-3 mb-2">
-        <img style="cursor: pointer;" [src]="similar.image" width="300px" height="300px" routerLink="/movies/{{similar.title}}">
-        <p class="card-text text-muted text-center">{{similar.title}}</p>
-        <p class="card-text text-muted text-center">{{similar.imDbRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+      <div *ngIf="res == true" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="deleteMovie(movie)" class="btn btn-primary">
+            <i class="fa fa-minus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Delete movie</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="mt-5">
+      <img src="https://image.tmdb.org/t/p/w500/{{movie.posterPath || './assets/user.png'}}" alt="{{movie.title}}"
+        class="img-fluid">
+    </div>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Tagline</h2>
+    <p class="indent">{{movie.tagline}}</p>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Overview</h2>
+    <p class="indent-paragraph">{{movie.overview}}</p>
+
+    <div class="row mt-5">
+        <h2 class="ml-3 font-weight-bold">Trailer</h2>
+        <div *ngIf="movie.videos?.results![0].key" class="embed-responsive embed-responsive-4by3">
+          <iframe allowfullscreen class="embed-responsive-item" [src]="videoUrl | safe"></iframe>
+          <!-- +'?autoplay=true'  allow="autoplay" -->
+        </div>
+    </div>
+
+
+    <!-- <div class="d-flex justify-content-between"> -->
+    <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>
+    <h5>Release date: <strong>{{movie.releaseDate}}</strong></h5>
+    <h5>Budget: <strong>{{movie.budget}}$</strong></h5>
+    <h5>Revenue: <strong>{{movie.revenue}}$</strong></h5>
+    <h5>Runtime: <strong>{{movie.runtime}} mins</strong></h5>
+    <h5>Collection: <strong *ngIf="movie.belongsToCollection?.name">{{movie.belongsToCollection?.name}}</strong>
+      <strong *ngIf="!movie.belongsToCollection">No collection</strong></h5>   
+    <h5>Status: <strong>{{movie.status}}</strong></h5>
+    <h5>Original language: <strong>{{movie.originalLanguage}}</strong></h5>
+    <div *ngIf="movie.originCountry && movie.originCountry.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Origin countries: </h5>
+        <div class="d-inline-block" *ngFor="let country of movie.originCountry">
+            <h5 class="d-inline"><strong>{{country}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="movie.productionCompanies && movie.productionCompanies.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Production companies: </h5>
+        <div class="d-inline-block" *ngFor="let productionCompany of movie.productionCompanies">
+            <h5 class="d-inline"><strong>{{productionCompany.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="movie.productionCountries && movie.productionCountries.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Production countries: </h5>
+        <div class="d-inline-block" *ngFor="let productionCountry of movie.productionCountries">
+            <h5 class="d-inline"><strong>{{productionCountry.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="movie.spokenLanguages && movie.spokenLanguages.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Spoken languages: </h5>
+        <div class="d-inline-block" *ngFor="let spokenLanguage of movie.spokenLanguages">
+            <h5 class="d-inline"><strong>{{spokenLanguage.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <h5>Vote average: <strong>{{movie.voteAverage}}/10 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i> (scored by {{movie.voteCount}} users)</strong></h5>
+    <h5>Popularity: <strong>{{movie.popularity}}</strong></h5>
+   
+    <h1>Images</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let image of movie.images?.posters">
+          <ng-template *ngIf="image.filePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + image.filePath || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+
+    <h1>Similar movies</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let similarMovie of movie.similar!.results">
+          <ng-template *ngIf="similarMovie.title" carouselSlide  style="margin-left: 20px;">
+            <a routerLink="/movies/{{similarMovie.title}}" target="_blank">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + similarMovie.posterPath || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{similarMovie.title}}<br><span style="color: gray;"></span></p>
+            </div>
+          </a>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+
+    <h1>Cast</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let actor of movie.credits!.cast">
+          <ng-template *ngIf="actor.profilePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="('https://image.tmdb.org/t/p/w500/' + actor.profilePath) || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{actor.name}}<br><span style="color: gray;"></span>as {{actor.character}}</p>
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+
+    <h1>Crew</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let member of movie.credits!.crew">
+          <ng-template *ngIf="member.profilePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="('https://image.tmdb.org/t/p/w500/' + member.profilePath) || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{member.name}}<br><span style="color: gray;"></span>as {{member.job | lowercase}}</p>
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+  <br>
   </div>
-</div> -->
+
+  <div class="container mt-5" style="margin-bottom: 120px;">
+    <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+    <div *ngIf="reviews?.length !== 0">
+      <div *ngFor="let review of reviews">
+        <div class="review-box">
+          <div class="left-column">
+            <div class="user-info">
+              <img src="{{review.userPhoto || './assets/user.png'}}" alt="User Photo" class="user-photo">
+              <div class="user-details">
+                <h5 class="username">{{ review.username }}</h5>
+                <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="review-content">
+              <h4 class="short-description">{{ review.shortDescription }}</h4>
+              <div class="rating">
+                <ng-container *ngIf="review.stars">
+                  <ng-container *ngFor="let _ of generateArray(review.stars)">
+                    <span class="fa fa-star checked"></span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <p class="main-description">{{ review.mainDescription }}</p>
+              <div class="like-dislike">
+                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                  <span class="fa fa-thumbs-up"></span> Like
+                </button>
+                <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                  <span class="fa fa-thumbs-down"></span> Dislike
+                </button>
+                <div class="like-label">
+                  <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                  <span class="like-label-text">Likes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="reviews?.length === 0">
+      <p>No reviews available. Be the first to leave a review!</p>
+    </div>
+    <br>
+    
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+      <div class="form-group">
+        <label for="shortDescription">Short Description:</label>
+        <input type="text" class="form-control" id="Short_description" name="short_Description" formControlName="Short_description">
+      </div>
+      <div class="form-group">
+        <label for="mainDescription">Main Description:</label>
+        <textarea class="form-control" id="Main_description" name="Main_description" rows="5" formControlName="Main_description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="stars">Stars: </label>
+        <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>

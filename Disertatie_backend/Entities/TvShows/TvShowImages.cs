@@ -6,13 +6,10 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowImages
     {
-        [JsonProperty("backdrops")]
-        public List<TvShowBackdrop> Backdrops;
+        public List<TvShowBackdrop> Backdrops { get; set; }
 
-        [JsonProperty("logos")]
-        public List<TvShowLogo> Logos;
+        public List<TvShowLogo> Logos { get; set; }
 
-        [JsonProperty("posters")]
-        public List<TvShowPoster> Posters;
+        public List<TvShowPoster> Posters { get; set; }
     }
 }

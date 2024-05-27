@@ -7,8 +7,11 @@
             <li class="list-inline-item"><button routerLink="/tvShows/{{tvShow.name}}" class="btn btn-primary">
                 <i class="fa fa-film"></i></button></li>
                 
-            <li class="list-inline-item"><button (click)="addTvShow(tvShow)" class="btn btn-primary">
+            <li *ngIf="res == false" class="list-inline-item"><button (click)="addTvShow(tvShow)" class="btn btn-primary">
                 <i class="fa fa-plus"></i></button></li>
+
+            <li *ngIf="res == true" class="list-inline-item"><button (click)="deleteTvShow(tvShow)" class="btn btn-primary">
+                <i class="fa fa-minus"></i></button></li>
         </ul>
     </div>
 

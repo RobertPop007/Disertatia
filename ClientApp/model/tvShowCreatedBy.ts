@@ -11,4 +11,10 @@
  */
 
 export interface TvShowCreatedBy { 
+    id?: number;
+    creditId?: string;
+    name?: string;
+    originalName?: string;
+    gender?: number;
+    profilePath?: string;
 }

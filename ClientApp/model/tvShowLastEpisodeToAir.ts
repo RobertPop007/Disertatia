@@ -11,4 +11,17 @@
  */
 
 export interface TvShowLastEpisodeToAir { 
+    id?: number;
+    overview?: string;
+    name?: string;
+    voteAverage?: number;
+    voteCount?: number;
+    airDate?: string;
+    episodeNumber?: number;
+    episodeType?: string;
+    productionCode?: string;
+    runtime?: number;
+    seasonNumber?: number;
+    showId?: number;
+    stillPath?: string;
 }

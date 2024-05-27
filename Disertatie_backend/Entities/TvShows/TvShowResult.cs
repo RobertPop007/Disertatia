@@ -6,70 +6,48 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowResult
     {
-        [JsonProperty("iso_639_1")]
-        public string Iso6391;
+        public string Iso6391 { get; set; }
 
-        [JsonProperty("iso_3166_1")]
-        public string Iso31661;
+        public string Iso31661 { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
-        [JsonProperty("key")]
-        public string Key;
+        public string Key { get; set; }
 
-        [JsonProperty("site")]
-        public string Site;
+        public string Site { get; set; }
 
-        [JsonProperty("size")]
-        public int? Size;
+        public int? Size { get; set; }
 
-        [JsonProperty("type")]
-        public string Type;
+        public string Type { get; set; }
 
-        [JsonProperty("official")]
-        public bool? Official;
+        public bool? Official { get; set; }
 
-        [JsonProperty("published_at")]
-        public DateTime? PublishedAt;
+        public DateTime? PublishedAt { get; set; }
 
-        [JsonProperty("id")]
-        public string Id;
+        public string Id { get; set; }
 
-        [JsonProperty("adult")]
-        public bool? Adult;
+        public bool? Adult { get; set; }
 
-        [JsonProperty("backdrop_path")]
-        public string BackdropPath;
+        public string BackdropPath { get; set; }
 
-        [JsonProperty("genre_ids")]
-        public List<int?> GenreIds;
+        public List<int?> GenreIds { get; set; }
 
-        [JsonProperty("origin_country")]
-        public List<string> OriginCountry;
+        public List<string> OriginCountry { get; set; }
 
-        [JsonProperty("original_language")]
-        public string OriginalLanguage;
+        public string OriginalLanguage { get; set; }
 
-        [JsonProperty("original_name")]
-        public string OriginalName;
+        public string OriginalName { get; set; }
 
-        [JsonProperty("overview")]
-        public string Overview;
+        public string Overview { get; set; }
 
-        [JsonProperty("popularity")]
-        public double? Popularity;
+        public double? Popularity { get; set; }
 
-        [JsonProperty("poster_path")]
-        public string PosterPath;
+        public string PosterPath { get; set; }
 
-        [JsonProperty("first_air_date")]
-        public string FirstAirDate;
+        public string FirstAirDate { get; set; }
 
-        [JsonProperty("vote_average")]
-        public double? VoteAverage;
+        public double? VoteAverage { get; set; }
 
-        [JsonProperty("vote_count")]
-        public int? VoteCount;
+        public int? VoteCount { get; set; }
     }
 }

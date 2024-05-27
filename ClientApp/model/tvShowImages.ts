@@ -9,6 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TvShowBackdrop } from './tvShowBackdrop';
+import { TvShowLogo } from './tvShowLogo';
+import { TvShowPoster } from './tvShowPoster';
 
 export interface TvShowImages { 
+    backdrops?: Array<TvShowBackdrop>;
+    logos?: Array<TvShowLogo>;
+    posters?: Array<TvShowPoster>;
 }

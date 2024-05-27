@@ -1,156 +1,242 @@
-<!-- <div class="row">
-    <h1 style="size: 15rem;">{{tvShow.title}} ({{tvShow.fullTitle}})</h1>
+<main class="background-image">
+  <div class="container">
+    <br>
+    <h1 style="size: 20rem;" class="text-align font-weight-bold">{{tvShow.name}}</h1>
 
-    <div class="d-flex justify-content-between">
-      <div>
-        <p>{{tvShow.year}} <span *ngIf="tvShow.runtimeStr"><i class="far fa-dot-circle"></i> </span> {{tvShow.runtimeStr}}
-          <span *ngIf="tvShow.contentRating"><i class="far fa-dot-circle"></i></span> {{tvShow.contentRating}}</p>
-
-        <div class="d-inline-block" *ngFor="let genre of tvShow.genreList">
-          <p class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{genre.value}}</p>
+    <div class="row">
+      <div class="col">
+        <div class="d-inline-block" *ngFor="let genre of tvShow.genres">
+          <p class="m-1 p-1 border border-primary rounded">{{genre.name}}</p>
         </div>
-
-        <br>
-
-        <div *ngIf="res == false">
-          <li class="list-inline-item"><button (click)="addTvShow(tvShow)" class="btn btn-primary">
-          <i class="fa fa-plus"></i></button><p>Add TV show</p></li>
-        </div>
-        
-        <div *ngIf="res == true">
-          <li class="list-inline-item"><button (click)="deleteTvShow(tvShow)" class="btn btn-primary">
-          <i class="fa fa-minus"></i></button><p>Delete TV show</p></li>
-        </div>
-        <br>
       </div>
-      
-    <div>
-      <div class="text-end">
-        <p style="font-size: 20px;">Imdb Rating</p>
-          <i class="d-inline-block fa fa-star fa-3x" style="color: orange;"></i>
-          <div class="d-inline-block">
-            <p><span style="font-size: 20px; font-weight: bolder; align-content: left;">{{tvShow.imDbRating}}</span>/10<br>{{tvShow.imDbRatingVotes}} votes</p>
+      <div *ngIf="res == false" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="addTvShow(tvShow)" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Add tv show</p>
           </div>
+        </div>
+      </div>
 
-          <div *ngIf="tvShow.metacriticRating">
-            <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{tvShow.metacriticRating}} metascore</span></p>
+      <div *ngIf="res == true" class="col">
+        <div class="d-flex justify-content-end align-items-center">
+          <button (click)="deleteTvShow(tvShow)" class="btn btn-primary">
+            <i class="fa fa-minus"></i>
+          </button>
+          <div class="ml-1">
+            <p class="mb-0">Delete tv show</p>
           </div>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <div class="mt-5">
+      <img src="https://image.tmdb.org/t/p/w500/{{tvShow.posterPath || './assets/user.png'}}" alt="{{tvShow.name}}"
+        class="img-fluid">
+    </div>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Tagline</h2>
+    <p class="indent">{{tvShow.tagline}}</p>
+
+    <h2 class="ml-3 mt-5 font-weight-bold">Overview</h2>
+    <p class="indent-paragraph">{{tvShow.overview}}</p>
+
+    <div class="row mt-5">
+        <h2 class="ml-3 font-weight-bold">Trailer</h2>
+        <div *ngIf="tvShow.videos?.results![0].key" class="embed-responsive embed-responsive-4by3">
+          <iframe allowfullscreen class="embed-responsive-item" [src]="videoUrl | safe"></iframe>
+          <!-- +'?autoplay=true'  allow="autoplay" -->
+        </div>
+    </div>
+
+
+    <!-- <div class="d-flex justify-content-between"> -->
+    <h2 class="ml-3 mt-5 font-weight-bold">Other informations</h2>
+    <h5>Created by: <strong>{{tvShow.createdBy![0].name}}</strong></h5>
+    <h5>First air date: <strong>{{tvShow.firstAirDate}}</strong></h5>
+    <h5>Last air date: <strong>{{tvShow.lastAirDate}}</strong></h5>
+    <h5>In production?: <strong *ngIf="tvShow.inProduction === true">Yes</strong>
+      <strong *ngIf="tvShow.inProduction === false">No</strong></h5>
+    <h5>Episodes: <strong>{{tvShow.numberOfEpisodes}}</strong></h5>
+    <h5>Seasons: <strong>{{tvShow.numberOfSeasons}}</strong></h5>
+    <h5>Episode runtime: <strong>{{tvShow.episodeRunTime![0]}} mins</strong></h5>
+    <h5>Status: <strong>{{tvShow.status}}</strong></h5>
+    <h5>Original language: <strong>{{tvShow.originalLanguage}}</strong></h5>
+    <div *ngIf="tvShow.networks && tvShow.networks.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Network: </h5>
+        <div class="d-inline-block" *ngFor="let network of tvShow.networks">
+            <h5 class="d-inline"><strong>{{network.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tvShow.originCountry && tvShow.originCountry.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Origin countries: </h5>
+        <div class="d-inline-block" *ngFor="let country of tvShow.originCountry">
+            <h5 class="d-inline"><strong>{{country}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tvShow.productionCompanies && tvShow.productionCompanies.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Production companies: </h5>
+        <div class="d-inline-block" *ngFor="let productionCompany of tvShow.productionCompanies">
+            <h5 class="d-inline"><strong>{{productionCompany.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tvShow.productionCountries && tvShow.productionCountries.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Production countries: </h5>
+        <div class="d-inline-block" *ngFor="let productionCountry of tvShow.productionCountries">
+            <h5 class="d-inline"><strong>{{productionCountry.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="tvShow.spokenLanguages && tvShow.spokenLanguages.length > 0" class="row">
+      <div class="col">
+        <h5 class="d-inline">Spoken languages: </h5>
+        <div class="d-inline-block" *ngFor="let spokenLanguage of tvShow.spokenLanguages">
+            <h5 class="d-inline"><strong>{{spokenLanguage.name}},</strong></h5>
+        </div>
+      </div>
+    </div>
+    <h5>Vote average: <strong>{{tvShow.voteAverage}}/10 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i> (scored by {{tvShow.voteCount}} users)</strong></h5>
+    <h5>Popularity: <strong>{{tvShow.popularity}}</strong></h5>
+   
+    <h1>Images</h1>
+    <owl-carousel-o [options]="customOptions">
       
-    </div>
+        <ng-container *ngFor="let image of tvShow.images?.posters">
+          <ng-template *ngIf="image.filePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + image.filePath || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
 
-    <div class="col-4"><img src="{{tvShow.image || './assets/user.png'}}" alt="{{tvShow.fullTitle}}" class="img-fluid"></div>
-    <div class="col-8">
+    <h1>Seasons</h1>
+    <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let season of tvShow.seasons">
+          <ng-template *ngIf="season.name" carouselSlide style="margin-left: 20px;">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + season.posterPath || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>Season {{season.seasonNumber}} - {{season.name}}<br><span style="color: gray;"></span></p>
+                <p>{{season.episodeCount}} episodes<br><span style="color: gray;"></span></p>
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
 
-    <div *ngIf="tvShow.trailer!.linkEmbed!" class="embed-responsive embed-responsive-4by3">
-        <iframe allowfullscreen class="embed-responsive-item" [src]="tvShow.trailer?.linkEmbed! | safe"></iframe> -->
-         <!-- +'?autoplay=true'  allow="autoplay" --> 
-        <!-- </div>
-    </div>
-</div>
-  
-<br><br>
+    <h1>Similar tv shows</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let similarTvShow of tvShow.similar!.results">
+          <ng-template *ngIf="similarTvShow.name" carouselSlide [id]="similarTvShow.id!" style="margin-left: 20px;">
+            <a routerLink="/tvShows/{{similarTvShow.name}}" target="_blank">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + similarTvShow.posterPath || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{similarTvShow.name}}<br><span style="color: gray;"></span></p>
+            </div>
+          </a>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
 
-<h1>Plot</h1>
-<p class="indent">{{tvShow.plot}}</p>
+    <h1>Cast</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let actor of tvShow.credits!.cast">
+          <ng-template *ngIf="actor.profilePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="('https://image.tmdb.org/t/p/w500/' + actor.profilePath) || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{actor.name}}<br><span style="color: gray;"></span>as {{actor.character}}</p>
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
 
-<hr style="width:50%;text-align:left;margin-left:0">
-
-<div *ngIf="tvShow.directors">
-<h1>Director</h1>
-<p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;">{{tvShow.directors}}</span></p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.starList!.length > 0">
-<h1>Stars</h1>
-<div *ngFor="let star of tvShow.starList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{star.name}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.awards">
-<h1>Awards</h1>
-<p>{{tvShow.awards}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.companies">
-<h1>Company</h1>
-<p>{{tvShow.companies}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.countryList!.length > 0">
-<h1>Countries</h1>
-<div *ngFor="let country of tvShow.countryList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{country.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.languageList!.length > 0">
-<h1>Languages</h1>
-<div *ngFor="let language of tvShow.languageList">
-  <p><span class="m-1 p-1 border border-primary rounded" style="text-align: center;" style="margin-top: -1em;">{{language.value}}</span></p>
-</div>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.boxOffice">
-<h1>Box office</h1>
-<p *ngIf="tvShow.boxOffice.budget"><span style="font-weight: bolder;">Bugdet</span><br>{{tvShow.boxOffice!.budget}}</p>
-<p *ngIf="tvShow.boxOffice!.openingWeekendUSA"><span style="font-weight: bolder;">Opening weekend USA</span><br>{{tvShow.boxOffice!.openingWeekendUSA}}</p>
-<p *ngIf="tvShow.boxOffice!.grossUSA"><span style="font-weight: bolder;">Gross USA</span><br>{{tvShow.boxOffice!.grossUSA}}</p>
-<p *ngIf="tvShow.boxOffice!.cumulativeWorldwideGross"><span style="font-weight: bolder;">Cumulative worldwide gross</span><br>{{tvShow.boxOffice!.cumulativeWorldwideGross}}</p>
-
-<hr style="width:50%;text-align:left;margin-left:0">
-</div>
-
-<div *ngIf="tvShow.keywords">
-  <h1>Keywords</h1>
-  <p>{{tvShow.keywords}}</p>
-  
-  <hr style="width:50%;text-align:left;margin-left:0">
+    <h1>Crew</h1>
+    <owl-carousel-o [options]="customOptions">
+      
+        <ng-container *ngFor="let member of tvShow.credits!.crew">
+          <ng-template *ngIf="member.profilePath" carouselSlide style="margin-left: 20px;">
+            <img [src]="('https://image.tmdb.org/t/p/w500/' + member.profilePath) || 'assets/user.png'" width="100px" height="400px">
+            <div style="align-items: center;">
+                <p>{{member.name}}<br><span style="color: gray;"></span>as {{member.job | lowercase}}</p>
+            </div>
+          </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+  <br>
   </div>
 
-  <div *ngIf="tvShow.wikipedia">
-    <h1>External links</h1>
-    <a style="color: #0096FF;" target="_blank" href="{{tvShow.wikipedia.url}}">
-    {{tvShow.title}} Wikipedia</a>
+  <div class="container mt-5" style="margin-bottom: 120px;">
+    <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+    <div *ngIf="reviews?.length !== 0">
+      <div *ngFor="let review of reviews">
+        <div class="review-box">
+          <div class="left-column">
+            <div class="user-info">
+              <img src="{{review.userPhoto || './assets/user.png'}}" alt="User Photo" class="user-photo">
+              <div class="user-details">
+                <h5 class="username">{{ review.username }}</h5>
+                <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="right-column">
+            <div class="review-content">
+              <h4 class="short-description">{{ review.shortDescription }}</h4>
+              <div class="rating">
+                <ng-container *ngIf="review.stars">
+                  <ng-container *ngFor="let _ of generateArray(review.stars)">
+                    <span class="fa fa-star checked"></span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <p class="main-description">{{ review.mainDescription }}</p>
+              <div class="like-dislike">
+                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                  <span class="fa fa-thumbs-up"></span> Like
+                </button>
+                <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                  <span class="fa fa-thumbs-down"></span> Dislike
+                </button>
+                <div class="like-label">
+                  <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                  <span class="like-label-text">Likes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="reviews?.length === 0">
+      <p>No reviews available. Be the first to leave a review!</p>
+    </div>
+    <br>
     
-    <hr style="width:50%;text-align:left;margin-left:0">
-    </div>
-
-<h1>Actor list</h1>
-<owl-carousel-o [options]="customOptions">
-  
-    <ng-container *ngFor="let actor of tvShow.actorList">
-      <ng-template *ngIf="actor.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="actor.id!" style="margin-left: 20px;">
-        <img [src]="actor.image" width="100px" height="400px">
-        <div style="align-items: center;">
-            <p>{{actor.name}}<br><span style="color: gray;">as {{actor.asCharacter}}</span></p>
-        </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o>
-
-<h1>Similar TV shows</h1>
-<owl-carousel-o [options]="customOptions">
-  
-    <ng-container *ngFor="let tvShow of tvShow.similars">
-      <ng-template *ngIf="tvShow.title && tvShow.image !== 'https://imdb-api.com/images/original/nopicture.jpg'" carouselSlide [id]="tvShow.tvShowId!" style="margin-left: 20px;">
-        <div class="d-flex justify-content-start" style="width: 18rem;">
-            <app-tv-show-card [tvShow]="tvShow"></app-tv-show-card>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+      <div class="form-group">
+        <label for="shortDescription">Short Description:</label>
+        <input type="text" class="form-control" id="Short_description" name="short_Description" formControlName="Short_description">
       </div>
-      </ng-template>
-    </ng-container>
-</owl-carousel-o> -->
+      <div class="form-group">
+        <label for="mainDescription">Main Description:</label>
+        <textarea class="form-control" id="Main_description" name="Main_description" rows="5" formControlName="Main_description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="stars">Stars: </label>
+        <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</main>

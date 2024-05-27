@@ -1,5 +1,7 @@
+import { ObjectId } from "model/objectId";
+
 export interface MangaCard{
-    Mal_id: number;
+    id: ObjectId;
     fullTitle: string;
     year: number;
     image: string;

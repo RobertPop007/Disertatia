@@ -23,6 +23,7 @@ import { TagGame } from './tagGame';
 export interface Game { 
     id?: ObjectId;
     gameId?: number;
+    trailer?: string;
     slug?: string;
     name?: string;
     description?: string;

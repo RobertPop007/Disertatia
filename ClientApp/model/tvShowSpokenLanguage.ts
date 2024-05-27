@@ -11,4 +11,7 @@
  */
 
 export interface TvShowSpokenLanguage { 
+    englishName?: string;
+    iso6391?: string;
+    name?: string;
 }

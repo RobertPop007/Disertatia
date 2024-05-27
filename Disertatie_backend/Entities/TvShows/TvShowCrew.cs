@@ -4,37 +4,26 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowCrew
     {
-        [JsonProperty("adult")]
-        public bool? Adult;
+        public bool? Adult { get; set; }
 
-        [JsonProperty("gender")]
-        public int? Gender;
+        public int? Gender { get; set; }
 
-        [JsonProperty("id")]
-        public int? Id;
+        public int? Id { get; set; }
 
-        [JsonProperty("known_for_department")]
-        public string KnownForDepartment;
+        public string KnownForDepartment { get; set; }
 
-        [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
-        [JsonProperty("original_name")]
-        public string OriginalName;
+        public string OriginalName { get; set; }
 
-        [JsonProperty("popularity")]
-        public double? Popularity;
+        public double? Popularity { get; set; }
 
-        [JsonProperty("profile_path")]
-        public string ProfilePath;
+        public string ProfilePath { get; set; }
 
-        [JsonProperty("credit_id")]
-        public string CreditId;
+        public string CreditId { get; set; }
 
-        [JsonProperty("department")]
-        public string Department;
+        public string Department { get; set; }
 
-        [JsonProperty("job")]
-        public string Job;
+        public string Job { get; set; }
     }
 }

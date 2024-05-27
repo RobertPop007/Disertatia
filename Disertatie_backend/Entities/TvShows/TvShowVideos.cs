@@ -5,7 +5,6 @@ namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowVideos
     {
-        [JsonProperty("results")]
-        public List<TvShowResult> Results;
+        public List<TvShowResult> Results { get; set; }
     }
 }
