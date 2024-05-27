@@ -223,7 +223,7 @@ namespace Disertatie_backend.Repositories
                     var userBook = await _context.Users.Include(u => u.AppUserBook).SingleOrDefaultAsync(u => u.Id == userId);
                     foreach (var bookId in userBook.AppUserBook.Select(t => t.BookId))
                     {
-                        var book = await _tvShowsRepository.GetTvShowByIdAsync(new ObjectId(bookId));
+                        var book = await _booksRepository.GetBookByIdAsync(new ObjectId(bookId));
 
                         if (book != null) listOfItemsForUser.Add((T)Convert.ChangeType(book, typeof(T)));
                     }

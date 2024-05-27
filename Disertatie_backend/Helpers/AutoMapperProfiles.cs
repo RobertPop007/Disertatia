@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Disertatie_backend.DTO;
 using Disertatie_backend.DTO.Anime;
+using Disertatie_backend.DTO.Books;
 using Disertatie_backend.DTO.Game;
 using Disertatie_backend.DTO.Manga;
 using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.DTO.TvShows;
 using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Books;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
@@ -72,6 +74,7 @@ namespace Disertatie_backend.Helpers
             CreateMap<Game, GameCard>().ReverseMap();
             CreateMap<Movie, MovieCard>().ReverseMap();
             CreateMap<TvShow, TvShowCard>().ReverseMap();
+            CreateMap<Book, BookCard> ().ReverseMap();
 
             CreateMap<AppUser, FriendsDto>().ReverseMap();
             CreateMap<AppUser, FriendsRequestsDto>().ReverseMap();

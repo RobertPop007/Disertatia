@@ -33,6 +33,8 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { MovieDetailedResolver } from './_resolvers/movie-detailed.resolver';
 import { TvShowDetailedResolver } from './_resolvers/tvShow-detailed.resolver';
 import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.component';
+import { BookDetailComponent } from './books/book-detail/book-detail.component';
+import { BookDetailedResolver } from './_resolvers/book-detailed.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -49,6 +51,7 @@ const routes: Routes = [
       {path: 'anime/:title', component: AnimeDetailComponent, resolve: {anime: AnimeDetailedResolver}},
       {path: 'manga/:title', component: MangaDetailComponent, resolve: {manga: MangaDetailedResolver}},
       {path: 'games/:name', component: GameDetailComponent, resolve: {game: GameDetailedResolver}},
+      {path: 'books/:title', component: BookDetailComponent, resolve: {book: BookDetailedResolver}},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},

@@ -1,0 +1,12 @@
+.background-image{
+    background-image: url("/../assets/book-background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Keeps the background image fixed while scrolling */
+    padding: 20px; /* Add padding to ensure content doesn't overlap with the background */
+    min-height: 100vh; /* Set minimum height to 100% of viewport height */
+    margin-left: -20px; /* Remove any default margins */
+    margin-right: -20px; /* Remove any default margins */
+    margin-top: -50px; /* Remove any default margins */
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,125 @@
+<main class="background-image">
+    <div class="container">
+      <br>
+      <h1 style="size: 20rem;" class="text-align font-weight-bold">{{book.title}}</h1>
+  
+      <div class="row">
+        <div *ngIf="res == false" class="col">
+          <div class="d-flex justify-content-end align-items-center">
+            <button (click)="addBook(book)" class="btn btn-primary">
+              <i class="fa fa-plus"></i>
+            </button>
+            <div class="ml-1">
+              <p class="mb-0">Add book</p>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="res == true" class="col">
+          <div class="d-flex justify-content-end align-items-center">
+            <button (click)="deleteBook(book)" class="btn btn-primary">
+              <i class="fa fa-minus"></i>
+            </button>
+            <div class="ml-1">
+              <p class="mb-0">Delete book</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="mt-5">
+        <img src="{{book.coverUrl || './assets/user.png'}}" alt="{{book.title}}"
+          class="img-fluid">
+      </div>
+  
+      <!-- <h2 class="ml-3 mt-5 font-weight-bold">Background</h2>
+      <p class="indent">{{book.background}}</p>
+  
+      <h2 class="ml-3 mt-5 font-weight-bold">Plot</h2>
+      <p class="indent-paragraph">{{book.synopsis}}</p>
+  
+      <div class="row mt-5">
+          <h2 class="ml-3 font-weight-bold">Trailer</h2>
+          <div *ngIf="book.trailer!.embedUrl!" class="embed-responsive embed-responsive-4by3">
+            <iframe allowfullscreen class="embed-responsive-item" [src]="book.trailer?.embedUrl! | safe"></iframe> -->
+            <!-- +'?autoplay=true'  allow="autoplay" -->
+          <!-- </div>
+      </div>
+   -->
+  
+      <!-- <div class="d-flex justify-content-between"> -->
+      <h2 class="ml-3 mt-5 font-weight-bold">Informations</h2>
+      <h5>Authors: <strong>{{book.authors}}</strong></h5>
+      <h5>Rating: <strong>{{book.averageRating}}/5 <i class="d-inline-block fa fa-star fa-1x" style="color: orange;"></i> (scored by {{book.ratingsCount}} users)</strong></h5>
+      <h5>Isbn: <strong>{{book.isbn}}</strong></h5>
+      <h5>Isbn13: <strong>{{book.isbn13}}</strong></h5>
+      <h5>Number of pages: <strong>{{book.numPages}} pages</strong></h5>
+      <h5>Publicated at: <strong>{{book.publicationDate}}</strong></h5>
+      <h5>Published by: <strong>{{book.publisher}}</strong></h5>
+    </div>
+  
+    <div class="container mt-5" style="margin-bottom: 120px;">
+      <h3 class="ml-3 mt-5 font-weight-bold ">Reviews</h3>
+      <div *ngIf="reviews?.length !== 0">
+        <div *ngFor="let review of reviews">
+          <div class="review-box">
+            <div class="left-column">
+              <div class="user-info">
+                <img src="{{review.userPhoto || './assets/user.png'}}" alt="User Photo" class="user-photo">
+                <div class="user-details">
+                  <h5 class="username">{{ review.username }}</h5>
+                  <h5 class="date">{{ review.reviewDate | date: 'd MMMM yyyy' }}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="right-column">
+              <div class="review-content">
+                <h4 class="short-description">{{ review.shortDescription }}</h4>
+                <div class="rating">
+                  <ng-container *ngIf="review.stars">
+                    <ng-container *ngFor="let _ of generateArray(review.stars)">
+                      <span class="fa fa-star checked"></span>
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <p class="main-description">{{ review.mainDescription }}</p>
+                <div class="like-dislike">
+                  <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                    <span class="fa fa-thumbs-up"></span> Like
+                  </button>
+                  <button (click)="dislikeReview(review)" class="btn btn-outline-danger">
+                    <span class="fa fa-thumbs-down"></span> Dislike
+                  </button>
+                  <div class="like-label">
+                    <span class="like-count">{{review.likes! - review.dislikes!}}</span>
+                    <span class="like-label-text">Likes</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="reviews?.length === 0">
+        <p>No reviews available. Be the first to leave a review!</p>
+      </div>
+      <br>
+      
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" style="margin-bottom: 50px;">
+        <div class="form-group">
+          <label for="shortDescription">Short Description:</label>
+          <input type="text" class="form-control" id="Short_description" name="short_Description" formControlName="Short_description">
+        </div>
+        <div class="form-group">
+          <label for="mainDescription">Main Description:</label>
+          <textarea class="form-control" id="Main_description" name="Main_description" rows="5" formControlName="Main_description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="stars">Stars: </label>
+          <app-star-rating #starRating [maxStars]="10" (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </main>

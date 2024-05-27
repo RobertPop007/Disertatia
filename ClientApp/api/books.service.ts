@@ -522,24 +522,17 @@ export class BooksService {
     /**
      * 
      * 
-     * @param name 
      * @param title 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBook(name: string, title?: string, observe?: 'body', reportProgress?: boolean): Observable<Book>;
-    public getBook(name: string, title?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Book>>;
-    public getBook(name: string, title?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Book>>;
-    public getBook(name: string, title?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBook(title: string, observe?: 'body', reportProgress?: boolean): Observable<Book>;
+    public getBook(title: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Book>>;
+    public getBook(title: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Book>>;
+    public getBook(title: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (name === null || name === undefined) {
-            throw new Error('Required parameter name was null or undefined when calling getBook.');
-        }
-
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (title !== undefined && title !== null) {
-            queryParameters = queryParameters.set('title', <any>title);
+        if (title === null || title === undefined) {
+            throw new Error('Required parameter title was null or undefined when calling getBook.');
         }
 
         let headers = this.defaultHeaders;
@@ -559,9 +552,8 @@ export class BooksService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Book>('get',`${this.basePath}/api/Books/${encodeURIComponent(String(name))}`,
+        return this.httpClient.request<Book>('get',`${this.basePath}/api/Books/${encodeURIComponent(String(title))}`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

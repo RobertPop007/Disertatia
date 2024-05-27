@@ -1,0 +1,19 @@
+<div class="card mb-3">
+    <div class="card-img-wrapper">
+        <img src="{{book.coverUrl}}" alt="{{book.title}}" class="card-img-top">
+        
+        <ul class="list-inline member-icons animate text-center">
+
+            <li class="list-inline-item"><button routerLink="/book/{{book.title}}" class="btn btn-primary">
+                <i class="fa fa-film"></i></button></li>
+
+                <li class="list-inline-item"><button (click)="deleteBookForUser(book)" class="btn btn-primary">
+                    <i class="fa fa-minus"></i></button></li>
+        </ul>
+    </div>
+
+    <div class="card-body p-1">
+        <p class="card-text text-muted text-center">{{book.title}}</p>
+        <p class="card-text text-muted text-center">{{book.averageRating}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+    </div>
+</div>

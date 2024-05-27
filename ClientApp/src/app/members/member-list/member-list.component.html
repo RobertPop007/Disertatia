@@ -1,8 +1,7 @@
-<div class="container" mt-3>
+<div class="container" style="margin-top: 70px;">
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
         <div class="form-group">
-            <label>Username: </label>
-            <input type="text" class="form-control ml-1" style="width: 70px;" name="searchedUsername" [(ngModel)]="userParams.searchedUsername">
+            <input placeholder="Search user" type="text" class="form-control ml-1" style="width: 170px;" name="searchedUsername" [(ngModel)]="userParams.searchedUsername">
         </div>
 
         <button class="btn btn-primary ml-1" type="submit">Search</button>

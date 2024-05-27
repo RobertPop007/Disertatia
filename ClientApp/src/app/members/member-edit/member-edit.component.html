@@ -105,7 +105,7 @@
                             </div>
                         </tab>
 
-                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Game">
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Games">
                             <div class="groups row">
                                 <!-- <div *ngIf="watchedGame!.length > 0"> -->
                                     <div *ngFor="let game of watchedGame" class="col-3">
@@ -115,6 +115,21 @@
 
                                 <div *ngIf="watchedGame?.length === 0">
                                     <p>No games added yet</p>
+                                </div>
+                                
+                            </div>
+                        </tab>
+
+                        <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="Books">
+                            <div class="groups row">
+                                <!-- <div *ngIf="watchedGame!.length > 0"> -->
+                                    <div *ngFor="let book of watchedBooks" class="col-3">
+                                        <app-book-card-added (deleteEvent)="updateWatchList()" [book]="book!"></app-book-card-added> 
+                                    </div>
+                                <!-- </div> -->
+
+                                <div *ngIf="watchedBooks?.length === 0">
+                                    <p>No books added yet</p>
                                 </div>
                                 
                             </div>

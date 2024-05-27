@@ -13,5 +13,6 @@ namespace Disertatie_backend.DTO.Books
         public int? TextReviewsCount { get; set; }
         public string PublicationDate { get; set; }
         public string Publisher { get; set; }
+        public string CoverUrl { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from 'api/anime.service';
+import { BooksService } from 'api/books.service';
 import { FriendsService } from 'api/friends.service';
 import { GameService } from 'api/game.service';
 import { MangaService } from 'api/manga.service';
@@ -12,6 +13,7 @@ import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { AnimeCard } from 'src/app/_models/animeCard';
+import { BookCard } from 'src/app/_models/bookCard';
 import { GameCard } from 'src/app/_models/gameCard';
 import { MangaCard } from 'src/app/_models/mangaCard';
 import { Member } from 'src/app/_models/member';
@@ -48,6 +50,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   watchedAnime?: AnimeCard[];
   watchedManga?: MangaCard[];
   watchedGame?: GameCard[];
+  watchedBooks?: BookCard[];
   messages: Message[] = [];
   user!: User;
   areUsersFriends!: boolean;
@@ -63,6 +66,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
               private mangaService: MangaService,
               private friendsService: FriendsService,
               private tvShowsService: TvShowsService,
+              private booksService: BooksService,
               private router: Router,
               private toastr: ToastrService) {
                 this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
@@ -102,6 +106,10 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
     this.gamesService.apiGameGetGamesForUsernameGet(this.member.userName).subscribe((response: GameCard[] | undefined) => {
       this.watchedGame = response;
+    })
+
+    this.booksService.apiBooksGetBooksForUsernameGet(this.member.userName).subscribe(response => {
+      this.watchedBooks = response;
     })
   }
 

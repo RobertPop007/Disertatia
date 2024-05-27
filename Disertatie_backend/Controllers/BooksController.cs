@@ -50,7 +50,7 @@ namespace Disertatie_backend.Controllers
             return Ok(books);
         }
 
-        [HttpGet("{name}", Name = "GetBook")]
+        [HttpGet("{title}", Name = "GetBook")]
         public async Task<ActionResult<Book>> GetBook(string title)
         {
             return await _booksRepository.GetBookByTitleAsync(title);

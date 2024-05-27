@@ -839,7 +839,7 @@
         }
       }
     },
-    "/api/Books/{name}": {
+    "/api/Books/{title}": {
       "get": {
         "tags": [
           "Books"
@@ -848,13 +848,6 @@
         "parameters": [
           {
             "name": "title",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
             "in": "path",
             "required": true,
             "schema": {

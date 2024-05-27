@@ -80,6 +80,10 @@ import { GameService } from 'api/game.service';
 import { PaginationComponent } from './_pagination/pagination/pagination.component';
 import { StarRatingComponent } from './helpers/star-rating/star-rating.component';
 import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.component';
+import { BookCardComponent } from './books/book-card/book-card.component';
+import { BookCardAddedComponent } from './books/book-card-added/book-card-added.component';
+import { BookDetailComponent } from './books/book-detail/book-detail.component';
+import { BooksService } from 'api/books.service';
 
 @NgModule({
   declarations: [
@@ -135,7 +139,10 @@ import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.com
     MemberCardAddedComponent,
     PaginationComponent,
     StarRatingComponent,
-    ConfirmEmailComponent
+    ConfirmEmailComponent,
+    BookCardComponent,
+    BookCardAddedComponent,
+    BookDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -172,7 +179,8 @@ import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.com
     MangaService,
     MoviesService,
     TvShowsService,
-    GameService
+    GameService,
+    BooksService
   ],
 
   bootstrap: [AppComponent]

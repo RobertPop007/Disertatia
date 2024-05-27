@@ -1,3 +1,4 @@
+import { Images } from "model/images";
 import { ObjectId } from "model/objectId";
 
 export interface AnimeCard{
@@ -5,7 +6,7 @@ export interface AnimeCard{
     Mal_id: number;
     fullTitle: string;
     year: number;
-    image: string;
+    images?: Images;
     score: number;
     title: string;
     popularity: number;

@@ -32,6 +32,8 @@ import { MangaAngularService } from 'src/app/_services/manga_angular.service';
 import { GamesAngularService } from 'src/app/_services/games_angular.service';
 import { DatumManga } from 'model/datumManga';
 import { Game } from 'model/game';
+import { BooksService } from 'api/books.service';
+import { Book } from 'model/book';
 
 @Component({
   selector: 'app-member-edit',
@@ -54,6 +56,7 @@ export class MemberEditComponent implements OnInit {
   watchedAnime?: Datum[];
   watchedManga?: DatumManga[];
   watchedGame?: Game[];
+  watchedBooks?: Book[];
   predicate = 'added';
   pageNumber = 1;
   isDarkMode!: boolean;
@@ -83,6 +86,7 @@ export class MemberEditComponent implements OnInit {
               private toastr: ToastrService,
               private darkModeService: DarkModeService,
               private renderer: Renderer2,
+              private booksService: BooksService,
               @Inject(DOCUMENT) private document: Document) {
                 this.accountAngularService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
                }
@@ -223,6 +227,10 @@ export class MemberEditComponent implements OnInit {
 
     this.gamesService.apiGameGetGamesForUsernameGet(this.user.username).subscribe(response => {
       this.watchedGame = response;
+    })
+
+    this.booksService.apiBooksGetBooksForUsernameGet(this.user.username).subscribe(response => {
+      this.watchedBooks = response;
     })
   }
 }
