@@ -1,5 +1,5 @@
 <form [formGroup]='registerForm' (ngSubmit)="registerForm.valid && register()" autocomplete="off">
-    <h2 class="text-center text-primary">Sign up</h2>
+    <h2 class="text-center text-light">Sign up</h2>
     <hr>
 
     <label class="control-label" style="margin-right: 10px;">I am a: </label>
@@ -56,11 +56,10 @@
         <button class="btn btn-default mr-2" (click)="cancel()" type="submit">Cancel</button>
     </div>
 
-    <mat-card class="cardStyle">
-        <h4 class="card-header">Facebook Authentication</h4>
-        <button class="btn btn-facebook" (click)="login()">
-            <i class="fa fa-facebook me-1"></i>
-            Login with Facebook
-        </button>
-    </mat-card>
+            <div style="display: flex; justify-content: center;">
+          <button mat-raised-button color="primary" class="fb-button" (click)="login()">
+            <mat-icon class="fa-brands fa-facebook-f mt-2"></mat-icon>
+            <span>Connect with Facebook</span>
+          </button>
+        </div>
 </form>

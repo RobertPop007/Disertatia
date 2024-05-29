@@ -34,6 +34,7 @@ export class AnimeListComponent implements OnInit {
 
     this.animeAngularService.getAnimes(this.animeParams).subscribe(response => {
       this.animes = response.result!;
+      console.log(response)
       this.pagination = response.pagination!;
     })
   }

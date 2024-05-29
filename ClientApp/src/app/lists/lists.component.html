@@ -13,7 +13,7 @@
         </div>
     </div> -->
 
-    <h2 style="margin-top: 100px;">Friends</h2>
+    <h2 style="margin-top: 100px; color: aliceblue;">Friends</h2>
     <div *ngIf="members && members.length">
         <div class="row">
             <div class="col-2" *ngFor="let member of members">
@@ -23,10 +23,10 @@
     </div>
 
     <div *ngIf="!members || members.length === 0">
-        <p>You haven't added any friends yet</p>
+        <p style="color: aliceblue;">You haven't added any friends yet</p>
     </div>
 
-    <h2>Friend requests</h2>
+    <h2 style="color: aliceblue;">Friend requests</h2>
     <div *ngIf="friendRequests && friendRequests.length" class="container">
         <div class="list-group">
             <div *ngFor="let friendRequest of friendRequests" class="list-group-item">
@@ -45,7 +45,7 @@
     </div>
 
     <div *ngIf="!friendRequests || friendRequests.length === 0">
-        <p>You don't have any friend request yet</p>
+        <p style="color: aliceblue;">You don't have any friend request yet</p>
     </div>
 </div>
 

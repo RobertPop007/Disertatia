@@ -16,7 +16,7 @@
     </div>
 
     <div class="card-body p-1">
-        <p class="card-text text-muted text-center">{{tvShow.name}}</p>
-        <p class="card-text text-muted text-center">{{tvShow.voteAverage}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
+        <p class="card-text text-muted text-center text-body">{{tvShow.name}}</p>
+        <p class="card-text text-muted text-center">{{tvShow.voteAverage | number : '1.2-2'}}<i class="fa fa-star ml-1" style="color: orange;"></i></p>
     </div>
 </div>

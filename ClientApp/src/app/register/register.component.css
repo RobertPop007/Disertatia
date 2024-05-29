@@ -1,0 +1,22 @@
+label, p{
+    color: aliceblue;
+}
+
+  .fb-button {
+    display: flex;
+    align-items: center;
+    background-color: #3b5998; /* Facebook blue */
+  }
+  
+  .fb-button:hover {
+    background-color: #29487d; /* Darker Facebook blue on hover */
+  }
+  
+  mat-icon {
+    margin-right: 8px; /* Spacing between icon and text */
+  }
+
+  .centered {
+    display: flex;
+    align-items: center;
+  }

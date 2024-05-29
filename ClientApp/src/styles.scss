@@ -34,7 +34,7 @@
   }
  
   .header {
-    color: var(--text-color);
+    color: #333;
   }
  
   .box {
@@ -49,27 +49,27 @@
   }
  
   .paragraph {
-    color: var(--text-color);
+    color: #333;
     transition: all .1s ease;
   }
 
   .tab{
-    color: var(--text-color);
+    color: #333;
     transition: all .1s ease;
   }
 
   p{
-    color: var(--text-color);
+    color: #333;
     transition: all .1s ease;
   }
 
   h1,h2,h3,h4,h5,h6,hr, strong{
-    color: var(--text-color);
+    color: #333;
     transition: all .1s ease;
   }
 
   label{
-    color: var(--text-color);
+    color: #333;
     transition: all .1s ease;
   }
  
@@ -82,7 +82,7 @@
    cursor: pointer;
    padding: 10px 15px;
    border-radius: 9px;
-   background-color: var(--text-color);
+   background-color: #333;
    color: var(--button-color);
    transition: all .1s ease;
   }
