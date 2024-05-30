@@ -84,6 +84,7 @@ import { BookCardComponent } from './books/book-card/book-card.component';
 import { BookCardAddedComponent } from './books/book-card-added/book-card-added.component';
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
 import { BooksService } from 'api/books.service';
+import { ChangePasswordComponent } from './helpers/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,8 @@ import { BooksService } from 'api/books.service';
     ConfirmEmailComponent,
     BookCardComponent,
     BookCardAddedComponent,
-    BookDetailComponent
+    BookDetailComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

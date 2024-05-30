@@ -78,6 +78,7 @@ namespace Disertatie_backend.Repositories
             query = gameParams.OrderBy switch
             {
                 "name" => query.OrderBy(u => u.Name).OrderByDescending(u => u.Released),
+                "released" => query.OrderByDescending(u => u.Released),
                 "rating" => query.OrderByDescending(u => u.Rating),
                 _ => query.OrderByDescending(u => u.RatingsCount)
 

@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, ReplaySubject } from 'rxjs';
+import { map, Observable, pipe, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 import { PresenceService } from './presence.service';
+import { ResetPasswordModel } from 'model/resetPasswordModel';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,14 @@ export class AccountService {
 
   deleteAccount(username: string){
     return this.http.delete(this.baseUrl + 'Account/deleteUser/' + username).subscribe();
+  }
+
+  resetPassword(result: ResetPasswordModel){
+    return this.http.post(this.baseUrl + 'Account/reset-password', result)
+  }
+
+  resetPasswordEmail(){
+    return this.http.post(this.baseUrl + 'Account/forgotPassword', '')
   }
 
   setCurrentUser(user: User){

@@ -23,8 +23,24 @@ namespace Disertatie_backend.EmailTemplates
             
 
             return sb.ToString();
+        }
 
-            
+        public static string GetChangePasswordEmailTemplate(string email, string token)
+        {
+            var sb = new StringBuilder();
+            string changePasswordLink = $"https://localhost:4200/changePassword?email={email}&token={token}";
+            var body = $@"
+                    <html>
+                    <body>
+                        <p>You requested a password change.</p>
+                        <p>Use this link to change your password: <a href=""{changePasswordLink}"">Change password</a></p>
+                    </body>
+                    </html>";
+
+            sb.Append(body);
+
+
+            return sb.ToString();
         }
 
         public static string GetEmailTemplate(AppUser user, DataContext context)

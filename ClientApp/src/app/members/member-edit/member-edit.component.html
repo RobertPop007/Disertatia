@@ -163,7 +163,7 @@
             </tab>
 
             <tab style="background-color: skyblue; margin-top: -20px; margin-bottom: -20px; padding-top: 20px;" heading="General settings">
-                <div class="ml-2" style="display: flex;
+                <!-- <div class="ml-2" style="display: flex;
                 flex-direction: row;">
                     <p class="mr-3">Dark mode: </p>
                     <span>
@@ -174,7 +174,7 @@
                             [disabled]="disabled">
                         </mat-slide-toggle>
                     </span>
-                </div>
+                </div> -->
 
                 <div class="ml-2" style="display: flex;
                 flex-direction: row;">
@@ -192,8 +192,12 @@
 
                 <div class="ml-2" style="display: flex;
                 flex-direction: row;">
-                    <p class="mr-3">Delete account: </p>
-                    <button (click)="deleteAccount(member.userName)" class="bg-danger">Delete account</button>
+                    <button (click)="resetPassword()" class="btn btn-outline-light">Reset password</button>
+                </div>
+
+                <div class="ml-2 mt-2" style="display: flex;
+                flex-direction: row;">
+                    <button (click)="deleteAccount(member.userName)" class="btn btn-outline-light">Delete account</button>
                 </div>
             </tab>
         </tabset>

@@ -18,7 +18,6 @@ export class ConfirmEmailComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private accountService: AccountService) { 
-      console.log("tedt")
       this.route.queryParams.subscribe(params => {
         this.userId = params['userId'];
         this.token = params['token'];

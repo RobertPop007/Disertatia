@@ -17,5 +17,6 @@ namespace Disertatie_backend.Interfaces
         Task<AppUser> GetUserByEmailAsync(string email);
         Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
+        Task<bool> EnableNewsletterUserAsync(string username);
     }
 }

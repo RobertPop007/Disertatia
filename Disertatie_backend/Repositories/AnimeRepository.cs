@@ -86,7 +86,8 @@ namespace Disertatie_backend.Repositories
             {
                 "title" => query.OrderBy(u => u.Title).OrderByDescending(u => u.Popularity),
                 "score" => query.OrderByDescending(u => u.Score),
-                _ => query
+                "newest" => query.Where(u => u.Year <= DateTime.Today.Year).OrderByDescending(u => u.Year),
+                _ => query.OrderByDescending(u => u.ScoredBy)
             };
 
             return await PagedList<AnimeCard>.CreateAsync(query.ProjectTo<AnimeCard>(_mapper.ConfigurationProvider).AsNoTracking(),

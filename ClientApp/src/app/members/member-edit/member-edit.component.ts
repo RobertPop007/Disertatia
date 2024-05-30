@@ -134,6 +134,10 @@ export class MemberEditComponent implements OnInit {
 
     user['isSubscribed'] = boolValue;
     localStorage.setItem('user', JSON.stringify(user));
+
+    if(this.isSubscribed === true) this.toastr.info("Yes have been subscribed to our newsletter!");
+    else this.toastr.info("Yes have been unsubscribed from our newsletter!");
+
   }
 
   enabledDarkMode(username: string){
@@ -159,7 +163,7 @@ export class MemberEditComponent implements OnInit {
   deleteAccount(username: string){
     const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: "Confirm",
+        title: "Confirm delete account",
         message: "Are you sure you want to delete your own account?"
       }
     })
@@ -170,6 +174,24 @@ export class MemberEditComponent implements OnInit {
         this.accountAngularService.deleteAccount(username);
         this.accountAngularService.logout();
         this.router.navigateByUrl('/');
+      }
+    });
+  }
+
+  resetPassword(){
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: "Confirm reset password",
+        message: "Are you sure you want to reset your password?"
+      }
+    })
+
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.accountAngularService.resetPasswordEmail().subscribe((response) => {
+          console.log(response)
+          this.toastr.info("An email has been sent to your address. Check your inbox and change your password!")
+        }, () => this.toastr.error("Something went wrong, please try again"));
       }
     });
   }

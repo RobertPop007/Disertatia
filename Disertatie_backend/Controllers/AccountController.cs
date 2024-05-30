@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System;
 using Disertatie_backend.EmailTemplates;
+using System.Linq;
+using System.Security.Cryptography;
+using Disertatie_backend.Extensions;
 
 namespace Disertatie_backend.Controllers
 {
@@ -149,7 +152,7 @@ namespace Disertatie_backend.Controllers
 
             userContentObj.Username = userContentObj.Username.Replace(" ", "");
             userContentObj.KnownAs = userContentObj.Username;
-            userContentObj.Password = "Random_password1!";
+            userContentObj.Password = GenerateRandomString(12);
 
             if (await UserExists(userContentObj.Username)) return BadRequest("Username already exists");
 
@@ -179,14 +182,13 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpPost("newsletter/{username}")]
-        public async Task SubscribeToNewsletterUser([FromRoute] string username)
+        public async Task<IActionResult> SubscribeToNewsletterUser([FromRoute] string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            //var user = await _context.Users.Where(u => u.UserName == username).FirstOrDefaultAsync();
+            var result = await _userRepository.EnableNewsletterUserAsync(username);
 
-            user.IsSubscribedToNewsletter = !user.IsSubscribedToNewsletter;
+            if (result == false) return BadRequest("The user was not found");
 
-            _context.SaveChanges();
+            return Ok();
         }
 
         [HttpPost("darkMode/{username}")]
@@ -201,9 +203,10 @@ namespace Disertatie_backend.Controllers
 
         [HttpPost("forgotPassword")]
         [AllowAnonymous]
-        public async Task<IActionResult> ForgotPassword([Required] string email)
+        public async Task<IActionResult> ForgotPassword()
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var userId = User.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             if (user != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -215,10 +218,10 @@ namespace Disertatie_backend.Controllers
                  */
                 var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new {token, email = user.Email}, Request.Scheme);
 
-                var message = new EmailMessage(new string[] { user.Email }, "Forgot password link", forgotPasswordLink);
+                var message = new EmailMessage(new string[] { user.Email }, "Forgot password link", RecommandationEmailTemplate.GetChangePasswordEmailTemplate(user.Email, token));
                 await _emailSender.SendEmailAsync(message, user.UserName);
 
-                return Ok("The email was sent, please verify your inbox");
+                return Ok();
             }
 
             return BadRequest("The user was not found");
@@ -233,12 +236,12 @@ namespace Disertatie_backend.Controllers
         }
 
         [HttpPost("reset-password")]
-        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPassword)
         {
             var user = await _userManager.FindByEmailAsync(resetPassword.Email);
             if (user != null)
             {
+                resetPassword.Token = resetPassword.Token.Replace(" ", "+");
                 var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
 
                 if(!resetPasswordResult.Succeeded) 
@@ -248,10 +251,10 @@ namespace Disertatie_backend.Controllers
                         ModelState.AddModelError(error.Code, error.Description);
                     }
 
-                    return Ok(ModelState);
+                    //return Ok(ModelState);
                 }
 
-                return Ok("Password has been changed");
+                return Ok();
             }
 
             return BadRequest("Could not send the link");
@@ -324,6 +327,53 @@ namespace Disertatie_backend.Controllers
         private async Task<bool> EmailExists(string email)
         {
             return await _userRepository.GetUserByEmailAsync(email) != null;
+        }
+
+        private string GenerateRandomString(int length)
+        {
+            const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:',.<>?";
+            char[] chars = new char[length];
+
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] randomBytes = new byte[length];
+                rng.GetBytes(randomBytes);
+
+                for (int i = 0; i < length; i++)
+                {
+                    chars[i] = validChars[randomBytes[i] % validChars.Length];
+                }
+            }
+
+            // Ensure at least one lowercase letter
+            if (!chars.Any(char.IsLower))
+            {
+                int randomIndex = new Random().Next(length);
+                chars[randomIndex] = validChars[new Random().Next(26)]; // lowercase letters are from index 0 to 25
+            }
+
+            // Ensure at least one uppercase letter
+            if (!chars.Any(char.IsUpper))
+            {
+                int randomIndex = new Random().Next(length);
+                chars[randomIndex] = validChars[new Random().Next(26, 52)]; // uppercase letters are from index 26 to 51
+            }
+
+            // Ensure at least one number
+            if (!chars.Any(char.IsDigit))
+            {
+                int randomIndex = new Random().Next(length);
+                chars[randomIndex] = validChars[new Random().Next(52, 62)]; // numbers are from index 52 to 61
+            }
+
+            // Ensure at least one special character
+            if (!chars.Any(char.IsSymbol))
+            {
+                int randomIndex = new Random().Next(length);
+                chars[randomIndex] = validChars[new Random().Next(62, validChars.Length)]; // special characters are from index 62 to end
+            }
+
+            return new string(chars);
         }
     }
 }

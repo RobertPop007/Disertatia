@@ -11,6 +11,7 @@ using AutoMapper.QueryableExtensions;
 using System;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
+using Microsoft.AspNetCore.Identity;
 
 namespace Disertatie_backend.Repositories
 {
@@ -81,6 +82,19 @@ namespace Disertatie_backend.Repositories
             return await _context.Users
                 .Include(p => p.Photos)
                 .ToListAsync();
+        }
+
+        public async Task<bool> EnableNewsletterUserAsync(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+
+            if (user == null) return false;
+
+            user.IsSubscribedToNewsletter = !user.IsSubscribedToNewsletter;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> SaveAllAsync()

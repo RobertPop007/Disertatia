@@ -6,7 +6,7 @@ export class AnimeParams{
     pageNumber = 1;
     pageSize = 72;
     searchedAnime!: string;
-    orderBy = "score";
+    orderBy = "";
 
     constructor(user: User, searchedAnime: string){
         this.username = user.username;

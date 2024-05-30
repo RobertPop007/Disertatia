@@ -35,10 +35,12 @@ import { TvShowDetailedResolver } from './_resolvers/tvShow-detailed.resolver';
 import { ConfirmEmailComponent } from './helpers/confirm-email/confirm-email.component';
 import { BookDetailComponent } from './books/book-detail/book-detail.component';
 import { BookDetailedResolver } from './_resolvers/book-detailed.resolver';
+import { ChangePasswordComponent } from './helpers/change-password/change-password.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'confirmEmail', component: ConfirmEmailComponent},
+  {path: 'changePassword', component: ChangePasswordComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',

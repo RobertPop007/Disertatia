@@ -29,6 +29,7 @@ export class TvShowsListComponent implements OnInit {
   }
 
   loadTvShows(){
+    console.log(this.tvShowParams)
     this.tvShowsAngularService.setTvShowParams(this.tvShowParams);
 
     this.tvShowsAngularService.getTvShows(this.tvShowParams).subscribe(response => {

@@ -6,7 +6,7 @@ export class MovieParams{
     pageNumber = 1;
     pageSize = 72;
     searchedMovie!: string;
-    orderBy = "popularity";
+    orderBy = "";
 
     constructor(user: User, searchedMovie: string){
         this.username = user.username;

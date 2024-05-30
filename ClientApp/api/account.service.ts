@@ -189,23 +189,13 @@ export class AccountService {
     /**
      * 
      * 
-     * @param email 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiAccountForgotPasswordPost(email: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public apiAccountForgotPasswordPost(email: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public apiAccountForgotPasswordPost(email: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiAccountForgotPasswordPost(email: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (email === null || email === undefined) {
-            throw new Error('Required parameter email was null or undefined when calling apiAccountForgotPasswordPost.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (email !== undefined && email !== null) {
-            queryParameters = queryParameters.set('email', <any>email);
-        }
+    public apiAccountForgotPasswordPost(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiAccountForgotPasswordPost(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiAccountForgotPasswordPost(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiAccountForgotPasswordPost(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -223,7 +213,6 @@ export class AccountService {
 
         return this.httpClient.request<any>('post',`${this.basePath}/api/Account/forgotPassword`,
             {
-                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

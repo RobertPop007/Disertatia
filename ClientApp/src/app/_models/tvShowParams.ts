@@ -5,7 +5,7 @@ export class TvShowParams{
     pageNumber = 1;
     pageSize = 72;
     searchedTvShow!: string;
-    orderBy = "popularity";
+    orderBy = "";
 
     constructor(user: User, searchedTvShow: string){
         this.username = user.username;

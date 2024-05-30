@@ -6,7 +6,7 @@ export class MangaParams{
     pageNumber = 1;
     pageSize = 72;
     searchedManga!: string;
-    orderBy = "score";
+    orderBy = "";
 
     constructor(user: User, searchedManga: string){
         this.username = user.username;

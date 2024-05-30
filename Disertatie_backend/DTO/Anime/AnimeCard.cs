@@ -10,5 +10,6 @@ namespace Disertatie_backend.DTO.Anime
         public double? Score { get; set; }
         public string Image { get; set; }
         public string Year { get; set; }
+        public int Rank { get; set; }
     }
 }

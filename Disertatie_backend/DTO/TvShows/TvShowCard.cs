@@ -10,5 +10,6 @@ namespace Disertatie_backend.DTO.TvShows
         public double VoteAverage { get; set; }
         public string PosterPath { get; set; }
         public string FirstAirDate { get; set; }
+        public double Popularity { get; set; }
     }
 }
