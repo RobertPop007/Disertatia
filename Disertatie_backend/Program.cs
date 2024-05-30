@@ -8,8 +8,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
-using Microsoft.EntityFrameworkCore;
 using Disertatie_backend.Entities.User;
 
 namespace Disertatie_backend

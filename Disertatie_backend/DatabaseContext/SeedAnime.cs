@@ -5,14 +5,6 @@ using System.Net;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
-using Disertatie_backend.Entities;
-using System.Collections.Generic;
-using System.Xml;
-using Disertatie_backend.Entities.User;
-using AspNetCore.Identity.Mongo.Mongo;
-using System;
-using MongoDB.Bson;
 
 namespace Disertatie_backend.DatabaseContext
 {

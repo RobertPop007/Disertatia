@@ -1,14 +1,7 @@
 ﻿using Disertatie_backend.DatabaseContext;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Games.Game;
-using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.User;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
-using Z.EntityFramework.Plus;
 
 namespace Disertatie_backend.EmailTemplates
 {

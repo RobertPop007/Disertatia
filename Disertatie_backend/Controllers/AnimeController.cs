@@ -5,10 +5,8 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using Disertatie_backend.Entities.User;
 using Disertatie_backend.DTO;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Disertatie_backend.Controllers

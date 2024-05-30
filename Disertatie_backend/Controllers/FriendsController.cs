@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System;

@@ -1,6 +1,4 @@
-﻿using Disertatie_backend.Entities.Anime;
-
-namespace Disertatie_backend.DTO.Anime
+﻿namespace Disertatie_backend.DTO.Anime
 {
     public class ImagesDto
     {

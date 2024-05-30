@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.Books

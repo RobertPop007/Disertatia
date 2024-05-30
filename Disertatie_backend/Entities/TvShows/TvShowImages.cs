@@ -1,6 +1,4 @@
-﻿using Disertatie_backend.Entities.Movies;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Disertatie_backend.Entities.TvShows
 {

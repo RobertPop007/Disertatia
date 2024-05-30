@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Disertatie_backend.Entities.Movies
+﻿namespace Disertatie_backend.Entities.Movies
 {
     public class Cast
     {

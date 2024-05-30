@@ -9,11 +9,6 @@ using Disertatie_backend_Tests.MockData;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Disertatie_backend_Tests.Repositories_Tests
 {

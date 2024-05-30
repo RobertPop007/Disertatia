@@ -3,20 +3,14 @@ using Disertatie_backend.DTO.Manga;
 using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Configurations;
 using AutoMapper;
 using System;
-using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.User;
-using Disertatie_backend.DTO.Anime;
 using AutoMapper.QueryableExtensions;
 
 namespace Disertatie_backend.Repositories
@@ -25,9 +19,6 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<DatumManga> _mangaCollection;
         private readonly IMongoDBCollectionHelper<DatumManga> _mangaCollectionHelper;
-        private readonly string titleIndex = "Title_index";
-        private readonly string titleEnglishIndex = "TitleEnglish_index";
-        private readonly string titleJapaneseIndex = "TitleJapanese_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -40,10 +31,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _mangaCollectionHelper = mangaCollectionHelper;
             _mangaCollection = _mangaCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
-            //_mangaCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
 
             _mapper = mapper;
         }
@@ -78,6 +65,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<MangaCard>> GetMangasAsync(MangaParams mangaParams)
         {
+            var query = Enumerable.Empty<DatumManga>().AsQueryable();
             var filterByTitle = Builders<DatumManga>.Filter.Empty;
             var filterByTitleEnglish = Builders<DatumManga>.Filter.Empty;
             var filterByTitleJapanese = Builders<DatumManga>.Filter.Empty;
@@ -89,9 +77,11 @@ namespace Disertatie_backend.Repositories
                 filterByTitleJapanese = Builders<DatumManga>.Filter.Regex(x => x.TitleJapanese, new BsonRegularExpression(mangaParams.SearchedManga, "i"));
 
                 filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
-            }
 
-            var query = _mangaCollection.AsQueryable().AsQueryable();
+                query = _mangaCollection.Find(filterByTitle).ToList().AsQueryable();
+            }
+            else
+                query = _mangaCollection.AsQueryable().AsQueryable();
 
             query = mangaParams.OrderBy switch
             {

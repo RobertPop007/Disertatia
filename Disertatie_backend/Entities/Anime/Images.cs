@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Disertatie_backend.Entities.Anime
+﻿namespace Disertatie_backend.Entities.Anime
 {
 
     public class Images

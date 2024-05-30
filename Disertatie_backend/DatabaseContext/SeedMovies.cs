@@ -1,23 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Disertatie_backend.Entities.Movies;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
-using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using Disertatie_backend.Entities.User;
-using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Movies.MovieIds;
 using System.Net.Http;
 using System;
 using System.Linq;
-using Disertatie_backend.Entities.Games.Game;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 
 namespace Disertatie_backend.DatabaseContext
 {

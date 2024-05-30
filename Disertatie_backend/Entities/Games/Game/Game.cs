@@ -2,9 +2,6 @@
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Disertatie_backend.Entities.User;
-using Disertatie_backend.DTO;
 
 namespace Disertatie_backend.Entities.Games.Game
 {

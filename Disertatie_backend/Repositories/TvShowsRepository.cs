@@ -3,28 +3,21 @@ using Disertatie_backend.DTO.TvShows;
 using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
-using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.User;
 using System;
 using AutoMapper.QueryableExtensions;
-using Disertatie_backend.DTO.Anime;
 namespace Disertatie_backend.Repositories
 {
     public class TvShowsRepository : ITvShowsRepository
     {
         private readonly IMongoCollection<TvShow> _tvshowsCollection;
         private readonly IMongoDBCollectionHelper<TvShow> _tvshowsCollectionHelper;
-        private readonly string titleIndex = "TvShow_Title_index";
-        private readonly string titleFullIndex = "TvShow_TitleFull_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -36,9 +29,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _tvshowsCollectionHelper = tvshowsCollectionHelper;
             _tvshowsCollection = _tvshowsCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_tvshowsCollectionHelper.CreateIndexAscending(u => u.Name, titleIndex);
-            //_tvshowsCollectionHelper.CreateIndexAscending(u => u.OriginalName, titleFullIndex);
 
             _mapper = mapper;
         }
@@ -73,6 +63,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<TvShowCard>> GetTvShowsAsync(TvShowParams tvShowParams)
         {
+            var query = Enumerable.Empty<TvShow>().AsQueryable();
             var filterByTitle = Builders<TvShow>.Filter.Empty;
             var filterByFullTitle = Builders<TvShow>.Filter.Empty;
             var filterByOriginalTitle = Builders<TvShow>.Filter.Empty;
@@ -83,9 +74,11 @@ namespace Disertatie_backend.Repositories
                 filterByFullTitle = Builders<TvShow>.Filter.Regex(x => x.OriginalName, new BsonRegularExpression(tvShowParams.SearchedTvShow, "i"));
 
                 filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
-            }
 
-            var query = _tvshowsCollection.AsQueryable().AsQueryable();
+                query = _tvshowsCollection.Find(filterByTitle).ToList().AsQueryable();
+            }
+            else
+                query = _tvshowsCollection.AsQueryable().AsQueryable();
 
             query = tvShowParams.OrderBy switch
             {

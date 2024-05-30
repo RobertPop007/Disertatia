@@ -11,13 +11,8 @@ using Disertatie_backend.Configurations;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System;
 using Disertatie_backend.EmailTemplates;
-using Org.BouncyCastle.Bcpg;
-using System.Web;
-using System.Text;
 
 namespace Disertatie_backend.Controllers
 {

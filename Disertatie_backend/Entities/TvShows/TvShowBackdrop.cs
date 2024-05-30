@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Disertatie_backend.Entities.TvShows
+﻿namespace Disertatie_backend.Entities.TvShows
 {
     public class TvShowBackdrop
     {

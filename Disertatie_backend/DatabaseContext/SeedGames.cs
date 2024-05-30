@@ -5,14 +5,8 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Collections.Generic;
-using Disertatie_backend.Entities.Manga;
-using Disertatie_backend.Entities;
-using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Anime;
-using System;
 using System.Net.Http;
 using Disertatie_backend.Entities.Games.GameTrailer;
 

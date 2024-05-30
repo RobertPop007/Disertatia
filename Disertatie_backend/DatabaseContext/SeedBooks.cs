@@ -1,19 +1,11 @@
 ﻿using Disertatie_backend.Configurations;
-using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Books;
-using Disertatie_backend.Entities.Games.Game;
-using Disertatie_backend.Entities.User;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Disertatie_backend.DatabaseContext
 {

@@ -1,9 +1,4 @@
 ﻿using Disertatie_backend.Entities.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Disertatie_backend_Tests.MockData
 {

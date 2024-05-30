@@ -1,11 +1,5 @@
 ﻿using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Anime;
 using Disertatie_backend_Tests.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Disertatie_backend_Tests.MockData
 {

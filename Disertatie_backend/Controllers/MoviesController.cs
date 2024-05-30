@@ -1,12 +1,9 @@
 ﻿using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Games.Game;
-using Disertatie_backend.Entities.Manga;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Extensions;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
-using Disertatie_backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using System;

@@ -1,12 +1,4 @@
 ﻿using Disertatie_backend.Entities.User;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit.Sdk;
 
 namespace Disertatie_backend_Tests.DTOs
 {

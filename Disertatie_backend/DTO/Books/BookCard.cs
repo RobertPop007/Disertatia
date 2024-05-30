@@ -1,5 +1,4 @@
 ﻿using MongoDB.Bson;
-using Newtonsoft.Json;
 
 namespace Disertatie_backend.DTO.Books
 {

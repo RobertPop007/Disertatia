@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.DTO;
-using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.DTO.Books;
-using Disertatie_backend.DTO.Game;
 using Disertatie_backend.Entities.Books;
-using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
@@ -15,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +19,6 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<Book> _booksCollection;
         private readonly IMongoDBCollectionHelper<Book> _booksCollectionHelper;
-        private readonly string titleIndex = "Title_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -37,8 +30,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _booksCollectionHelper = booksCollectionHelper;
             _booksCollection = _booksCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_booksCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
 
             _mapper = mapper;
         }
@@ -73,14 +64,17 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<BookCard>> GetBooksAsync(BookParams bookParams)
         {
+            var query = Enumerable.Empty<Book>().AsQueryable();
             var filterByName = Builders<Book>.Filter.Empty;
 
             if (!(string.IsNullOrEmpty(bookParams.SearchedBook) || string.IsNullOrWhiteSpace(bookParams.SearchedBook)))
             {
                 filterByName = Builders<Book>.Filter.Regex(x => x.Title, new BsonRegularExpression(bookParams.SearchedBook, "i"));
-            }
 
-            var query = _booksCollection.AsQueryable().AsQueryable();
+                query = _booksCollection.Find(filterByName).ToList().AsQueryable();
+            }
+            else
+                query = _booksCollection.AsQueryable().AsQueryable();
 
             query = bookParams.OrderBy switch
             {

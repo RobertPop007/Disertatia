@@ -4,15 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities;
-using System.Collections.Generic;
-using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.TvShows;
-using Disertatie_backend.Entities.Games.Game;
-using System;
 
 namespace Disertatie_backend.DatabaseContext
 {

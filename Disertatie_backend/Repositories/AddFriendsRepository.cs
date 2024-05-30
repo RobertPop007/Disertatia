@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 using Microsoft.AspNetCore.Identity;
 using System;
-using MongoDB.Bson;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.Entities.User;
 

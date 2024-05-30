@@ -3,18 +3,15 @@ using Disertatie_backend.DTO.Movies;
 using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Disertatie_backend.Configurations;
 using AutoMapper;
-using Disertatie_backend.DTO;
 using Disertatie_backend.Entities.User;
 using System;
 using AutoMapper.QueryableExtensions;
-using Disertatie_backend.DTO.Anime;
 
 namespace Disertatie_backend.Repositories
 {
@@ -22,9 +19,6 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<Movie> _moviesCollection;
         private readonly IMongoDBCollectionHelper<Movie> _moviesCollectionHelper;
-        private readonly string titleIndex = "Title_index";
-        private readonly string titleOriginalIndex = "TitleOriginal_index";
-        private readonly string titleFullIndex = "TitleFull_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -36,9 +30,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _moviesCollectionHelper = moviesCollectionHelper;
             _moviesCollection = _moviesCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_moviesCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            //_moviesCollectionHelper.CreateIndexAscending(u => u.OriginalTitle, titleOriginalIndex);
 
             _mapper = mapper;
         }
@@ -61,6 +52,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<MovieCard>> GetMoviesAsync(MovieParams movieParams)
         {
+            var query = Enumerable.Empty<Movie>().AsQueryable();
             var filterByTitle = Builders<Movie>.Filter.Empty;
             var filterByFullTitle = Builders<Movie>.Filter.Empty;
             var filterByOriginalTitle = Builders<Movie>.Filter.Empty;
@@ -71,9 +63,12 @@ namespace Disertatie_backend.Repositories
                 filterByFullTitle = Builders<Movie>.Filter.Regex(x => x.OriginalTitle, new BsonRegularExpression(movieParams.SearchedMovie, "i"));
 
                 filterByTitle = filterByTitle & filterByFullTitle & filterByOriginalTitle;
-            }
 
-            var query = _moviesCollection.AsQueryable().AsQueryable();
+                query = _moviesCollection.Find(filterByTitle).ToList().AsQueryable();
+            }
+            else
+                query = _moviesCollection.AsQueryable().AsQueryable();
+
 
             query = movieParams.OrderBy switch
             {

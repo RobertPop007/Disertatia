@@ -1,17 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Disertatie_backend.Entities.TvShows;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
-using Disertatie_backend.Entities.Anime;
 using MongoDB.Driver;
-using Disertatie_backend.Entities.Movies;
 using System.Collections.Generic;
-using Disertatie_backend.Entities.User;
-using Disertatie_backend.DTO;
 using System.Net.Http;
 using Disertatie_backend.Entities.Games.GamesIds;
 using System;

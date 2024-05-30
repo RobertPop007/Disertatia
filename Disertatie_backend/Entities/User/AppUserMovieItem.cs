@@ -1,6 +1,4 @@
-﻿using Disertatie_backend.Entities.Movies;
-using MongoDB.Bson;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Disertatie_backend.Entities.User

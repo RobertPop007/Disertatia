@@ -1,24 +1,16 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CloudinaryDotNet.Actions;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.DTO;
 using Disertatie_backend.DTO.Anime;
-using Disertatie_backend.Entities;
 using Disertatie_backend.Entities.Anime;
-using Disertatie_backend.Entities.Movies;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Disertatie_backend.Repositories
@@ -27,9 +19,6 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<Datum> _animeCollection;
         private readonly IMongoDBCollectionHelper<Datum> _animeCollectionHelper;
-        private readonly string titleIndex = "Title_index";
-        private readonly string titleEnglishIndex = "TitleEnglish_index";
-        private readonly string titleJapaneseIndex = "TitleJapanese_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -41,11 +30,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _animeCollectionHelper = animeCollectionHelper;
             _animeCollection = _animeCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_animeCollectionHelper.CreateIndexAscending(u => u.Title, titleIndex);
-            //_animeCollectionHelper.CreateIndexAscending(u => u.Title_english, titleEnglishIndex);
-            //_animeCollectionHelper.CreateIndexAscending(u => u.Title_japanese, titleJapaneseIndex);
-            //_animeCollectionHelper.CreateIndexAscending(u => u.Score, "Score");
 
             _mapper = mapper;
         }
@@ -80,6 +64,7 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<AnimeCard>> GetAnimesAsync(AnimeParams animeParams)
         {
+            var query = Enumerable.Empty<Datum>().AsQueryable();
             var filterByTitle = Builders<Datum>.Filter.Empty;
             var filterByTitleEnglish = Builders<Datum>.Filter.Empty;
             var filterByTitleJapanese = Builders<Datum>.Filter.Empty;
@@ -91,9 +76,11 @@ namespace Disertatie_backend.Repositories
                 filterByTitleJapanese = Builders<Datum>.Filter.Regex(x => x.TitleJapanese, new BsonRegularExpression(animeParams.SearchedAnime, "i"));
 
                 filterByTitle = filterByTitle & filterByTitleEnglish & filterByTitleJapanese;
-            }
 
-            var query = _animeCollection.AsQueryable().AsQueryable();
+                query = _animeCollection.Find(filterByTitle).ToList().AsQueryable();
+            }
+            else
+                query = _animeCollection.AsQueryable().AsQueryable();
 
             query = animeParams.OrderBy switch
             {

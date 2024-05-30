@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
-using Disertatie_backend.Entities.Anime;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Disertatie_backend.Entities.User

@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Disertatie_backend.Configurations;
-using Disertatie_backend.DTO;
-using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.DTO.Game;
-using Disertatie_backend.Entities;
-using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.User;
 using Disertatie_backend.Helpers;
@@ -14,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +19,6 @@ namespace Disertatie_backend.Repositories
     {
         private readonly IMongoCollection<Game> _gamesCollection;
         private readonly IMongoDBCollectionHelper<Game> _gamesCollectionHelper;
-        private readonly string nameIndex = "Name_index";
         private readonly DatabaseSettings _databaseSettings;
 
         private readonly IMapper _mapper;
@@ -36,8 +30,6 @@ namespace Disertatie_backend.Repositories
             _databaseSettings = databaseSettings;
             _gamesCollectionHelper = gamesCollectionHelper;
             _gamesCollection = _gamesCollectionHelper.CreateCollection(_databaseSettings);
-
-            //_gamesCollectionHelper.CreateIndexAscending(u => u.Name, nameIndex);
 
             _mapper = mapper;
         }
@@ -71,14 +63,17 @@ namespace Disertatie_backend.Repositories
 
         public async Task<PagedList<GameCard>> GetGamesAsync(GameParams gameParams)
         {
+            var query = Enumerable.Empty<Game>().AsQueryable();
             var filterByName = Builders<Game>.Filter.Empty;
 
             if (!(string.IsNullOrEmpty(gameParams.SearchedGame) || string.IsNullOrWhiteSpace(gameParams.SearchedGame)))
             {
                 filterByName = Builders<Game>.Filter.Regex(x => x.Name, new BsonRegularExpression(gameParams.SearchedGame, "i"));
-            }
 
-            var query = _gamesCollection.AsQueryable().AsQueryable();
+                query = _gamesCollection.Find(filterByName).ToList().AsQueryable();
+            }
+            else
+                query = _gamesCollection.AsQueryable().AsQueryable();
 
             query = gameParams.OrderBy switch
             {

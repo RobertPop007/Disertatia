@@ -4,7 +4,6 @@ using Disertatie_backend.EmailTemplates;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Disertatie_backend.Entities.User;
 

@@ -85,10 +85,7 @@ export class TvShowDetailComponent implements OnInit {
         const videoKey = videoResults[0].key;
         this.videoUrl = `https://www.youtube.com/embed/${videoKey}?enablejsapi=1&wmode=opaque&autoplay=1`;
     }
-      // this.tvShow.actorList = this.tvShow.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
-      console.log(this.tvShow.seasons)
-      // this.images = this.tvShow.actorList?.map((n) => n.image);
       this.getReviews();
       this.tvShowService.apiTvShowsTvShowAlreadyAddedGet(this.tvShow.id!).pipe(take(1)).subscribe(res => {
         this.res = res;

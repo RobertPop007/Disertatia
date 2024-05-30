@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System;
 using Disertatie_backend.Configurations;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Disertatie_backend.Interfaces

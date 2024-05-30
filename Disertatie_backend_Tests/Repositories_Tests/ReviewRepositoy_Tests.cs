@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using Disertatie_backend.Configurations;
 using Disertatie_backend.DatabaseContext;
 using Disertatie_backend.DTO;
-using Disertatie_backend.DTO.Anime;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.Entities.User;
-using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using Disertatie_backend.Repositories;
 using Disertatie_backend_Tests.DTOs;

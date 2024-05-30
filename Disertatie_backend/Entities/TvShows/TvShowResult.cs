@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using Newtonsoft.Json;
 
 namespace Disertatie_backend.Entities.TvShows
 {

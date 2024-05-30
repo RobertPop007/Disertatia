@@ -23,7 +23,6 @@ export class AnimeCardComponent implements OnInit {
   ngOnInit(): void {
     this.animeService.apiAnimeAnimeAlreadyAddedGet(this.anime.id!).pipe(take(1)).subscribe(res => {
       this.res = res;
-      console.log(this.anime)
     })
   }
 

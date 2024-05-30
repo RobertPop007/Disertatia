@@ -5,11 +5,8 @@ using Disertatie_backend.Helpers;
 using Disertatie_backend.Interfaces;
 using System.Threading.Tasks;
 using MongoDB.Bson;
-using Disertatie_backend.Entities.Games.Game;
 using Disertatie_backend.Entities.Anime;
 using Disertatie_backend.DTO;
-using Disertatie_backend.Entities.Movies;
-using Disertatie_backend.Repositories;
 using System;
 using System.Collections.Generic;
 
