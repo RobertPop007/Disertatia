@@ -31,5 +31,33 @@ namespace Disertatie_backend_Tests.MockData
                 Title_japanese = "鋼の錬金術師 FULLMETAL ALCHEMIST"
             };
         }
+
+        public static AnimeModel FirstAnime()
+        {
+            return new AnimeModel
+            {
+                Id = new MongoDB.Bson.ObjectId("6611a0767b2649a4fd4e6f2d"),
+                Mal_id = 16498,
+                Url = "https://myanimelist.net/anime/16498/Shingeki_no_Kyojin",
+                Title = "Shingeki no Kyojin",
+                Title_english = "Attack on Titan",
+                Title_japanese = "進撃の巨人",
+                Reviews = new List<ReviewDto>()
+            };
+        }
+
+        public static AnimeModel SecondAnime()
+        {
+            return new AnimeModel
+            {
+                Id = new MongoDB.Bson.ObjectId("6611a0757b2649a4fd4e6f11"),
+                Mal_id = 1535,
+                Url = "https://myanimelist.net/anime/1535/Death_Note",
+                Title = "Death Note",
+                Title_english = "Death Note",
+                Title_japanese = "デスノート",
+                Reviews = new List<ReviewDto>()
+            };
+        }
     }
 }

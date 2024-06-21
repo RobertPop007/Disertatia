@@ -68,6 +68,7 @@ export class GameDetailComponent implements OnInit {
       this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      console.log(this.user)
      }
 
   ngOnInit(): void {
@@ -80,7 +81,7 @@ export class GameDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.game = data['game'];
       
-      console.log(this.game);
+      
       
       // this.anime.actorList = this.anime.actorList?.sort((a, b) => a.id!.localeCompare(b.id!)).slice(0, 20);
 
@@ -149,6 +150,7 @@ export class GameDetailComponent implements OnInit {
   }
 
   addReview(short_description: string, main_description: string, stars: number){
+    
     this.reviewDto.mainDescription = main_description;
     this.reviewDto.shortDescription = short_description;
     this.reviewDto.stars = stars;

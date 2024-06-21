@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header bg-light">
     <h4 class="modal-title pull-left">Edit roles for {{user.username}}</h4>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
@@ -16,7 +16,7 @@
                 (change)="role.checked =! role.checked"
                 [disabled]="role.name === 'Admin' && user.username === 'admin'"
             >
-            <label>{{role.name}}</label>
+            <label class="text-light">{{role.name}}</label>
         </div>
     </form>
   </div>

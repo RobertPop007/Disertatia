@@ -17,32 +17,13 @@ namespace Disertatie_backend.DatabaseContext
 
             var _animeCollection = mongoDb.GetCollection<Datum>(databaseSettings.CollectionList["AnimeCollection"]);
 
-            var filter = Builders<Datum>.Filter.Empty; // Match all documents
-            var options = new FindOptions<Datum> { Sort = Builders<Datum>.Sort.Descending("_id"), Limit = 4254 };
-            var cursor = await _animeCollection.FindAsync(filter, options);
-            await cursor.ForEachAsync(async doc =>
+            await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
+
+            for (var i = 2; i <= 1081; i++)
             {
-                // Delete each document
-                await _animeCollection.DeleteOneAsync(Builders<Datum>.Filter.Eq("_id", doc.Id));
-            });
-
-            //var document = _animeCollection.Find(x => x.Id == new MongoDB.Bson.ObjectId("6611a0727b2649a4fd4e6ec0"));
-
-            //var defaultReviews = new List<Review>();
-            //var update = Builders<Datum>.Update.Set(x => x.ReviewsIds, new List<Guid>());
-            //_animeCollection.UpdateMany(FilterDefinition<Datum>.Empty, update);
-
-
-            ////if (_animeCollection.CountDocuments(_ => true) >= 0)
-            ////{
-            //await SeedAnimeList(_animeCollection, "https://api.jikan.moe/v4/top/anime");
-
-            //    for (var i = 2; i <= 1081; i++)
-            //    {
-            //        System.Threading.Thread.Sleep(1000);
-            //        await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
-            //    }
-            ////}
+                System.Threading.Thread.Sleep(1000);
+                await SeedAnimeList(_animeCollection, $"https://api.jikan.moe/v4/top/anime?page={i}");
+            }
         }
 
         public static async Task SeedAnimeList(IMongoCollection<Datum> _animeCollection, string url)
@@ -59,11 +40,7 @@ namespace Disertatie_backend.DatabaseContext
 
                 foreach (var anime in allAnime.Data)
                 {
-                    //var animeAlreadyExists = _animeCollection.FindAsync(x => x.Mal_id == anime.Mal_id);
-                    //if (animeAlreadyExists == null)
-                    //{
-                        await _animeCollection.InsertOneAsync(anime);
-                    //}
+                    await _animeCollection.InsertOneAsync(anime);
                 }
             }
         }

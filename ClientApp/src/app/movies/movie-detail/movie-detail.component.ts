@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, ActivationStart, ChildActivationEnd, NavigationEnd, ResolveStart, Router } from '@angular/router';
@@ -8,10 +8,12 @@ import { MemberDto } from 'model/memberDto';
 import { Movie } from 'model/movie';
 import { Review } from 'model/review';
 import { ReviewDto } from 'model/reviewDto';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastrService } from 'ngx-toastr';
 import { filter, first, map, take } from 'rxjs';
+import { RewardModalComponent } from 'src/app/_modals/reward-modal/reward-modal.component';
 import { User } from 'src/app/_models/user';
 import { MovieDetailedResolver } from 'src/app/_resolvers/movie-detailed.resolver';
 import { AccountService } from 'src/app/_services/account.service';
@@ -34,6 +36,8 @@ export class MovieDetailComponent implements OnInit {
   @ViewChild('memberTabs', {static: true}) memberTabs!: TabsetComponent;
   @ViewChild('videoPlayer') videoplayer!: ElementRef;
   @ViewChild('starRating') starRating!: StarRatingComponent;
+  // @ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer: ViewContainerRef;
+  modalRef!: ComponentRef<RewardModalComponent>;
 
   images : any;
 
@@ -55,6 +59,7 @@ export class MovieDetailComponent implements OnInit {
   stars: number = 0;
   myForm!: FormGroup;
   videoUrl!: string;
+  bsModalRef!: BsModalRef;
   
   constructor(private movieService: MoviesService, 
     private route: ActivatedRoute, 
@@ -64,6 +69,7 @@ export class MovieDetailComponent implements OnInit {
     private userService: UsersService,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
+    private modalService: BsModalService,
     private fb: FormBuilder) {
       this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
@@ -79,6 +85,7 @@ export class MovieDetailComponent implements OnInit {
     
     this.route.data.subscribe(data => {
       this.movie = data['movie'];
+      console.log(this.movie)
 
       const videoResults = this.movie.videos?.results;
 
@@ -117,6 +124,14 @@ export class MovieDetailComponent implements OnInit {
     })
 
     this.res = true;
+
+    const config = {
+      class: 'modal-dialog-centered',
+      initialState: {
+      }
+    }
+
+    this.bsModalRef = this.modalService.show(RewardModalComponent, config);
   }
 
   toggleVideo() {

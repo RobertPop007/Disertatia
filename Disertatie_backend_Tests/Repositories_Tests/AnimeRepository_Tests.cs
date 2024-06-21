@@ -73,8 +73,8 @@ namespace Disertatie_backend_Tests.Repositories_Tests
 
             var mockedAnimes = new List<AnimeModel>()
             {
-                AnimeMockData.ValidAnime(),
-                AnimeMockData.AnotherValidAnime()
+                AnimeMockData.FirstAnime(),
+                AnimeMockData.SecondAnime()
             };
 
             mappedAnimes.Select(x => x.Title)

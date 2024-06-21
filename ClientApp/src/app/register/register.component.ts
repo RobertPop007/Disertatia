@@ -55,9 +55,10 @@ export class RegisterComponent implements OnInit {
   register(){
     this.accountService.register(this.registerForm.value).subscribe(response =>{
       //this.router.navigateByUrl('/home');
-      this.toastr.success("Your account has been created, please confirm your email before log in!");
+      
       this.registerForm.reset();
       this.logout();
+      this.toastr.success("Your account has been created, please confirm your email before log in!");
     }, error => {
       this.validationErrors = error;
     })
@@ -73,7 +74,7 @@ export class RegisterComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
-    this.goToSignIn();
+    //this.goToSignIn();
   }
 
   async login(){

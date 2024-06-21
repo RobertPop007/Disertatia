@@ -27,12 +27,9 @@ export class MovieCardComponent implements OnInit {
     this.movieService.apiMoviesMovieAlreadyAddedGet(this.movie.id!).pipe(take(1)).subscribe(res => {
       this.res = res;
     })
-
-    console.log(this.movie)
   }
 
   addMovie(movie: Movie){
-    console.log(movie.movieId)
     this.movieAngularService.addMovie(movie.id!).subscribe(() => {
       this.toastr.success("You have added " + movie.title);
     })

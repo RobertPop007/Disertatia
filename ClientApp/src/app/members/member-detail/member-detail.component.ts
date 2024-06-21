@@ -150,7 +150,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   addFriend(member: Member){
-    this.memberService.addFriend(member.userName).subscribe(() => {
+    this.memberService.sendFriendRequest(member.userName).subscribe(() => {
       this.toastr.success('You have send a friend request to ' + member.userName);
     })
   }

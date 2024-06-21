@@ -82,7 +82,7 @@ namespace Disertatie_backend.Repositories
                 {
                     Id = user.Id,
                     KnownAs = user.KnownAs,
-                    PhotoUrl = user.Photos.Url,
+                    PhotoUrl = user.Photos.Url != null ? user.Photos.Url : "./assets/user.png",
                     UserName = user.UserName
                 };
 

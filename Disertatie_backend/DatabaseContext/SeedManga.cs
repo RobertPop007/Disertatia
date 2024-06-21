@@ -17,30 +17,13 @@ namespace Disertatie_backend.DatabaseContext
 
             var _mangaCollection = mongoDb.GetCollection<DatumManga>(databaseSettings.CollectionList["MangaCollection"]);
 
-            //var documents = await _mangaCollection.Find(_ => true).ToListAsync();
-            var filter = Builders<DatumManga>.Filter.Empty; // Match all documents
-            var options = new FindOptions<DatumManga> { Sort = Builders<DatumManga>.Sort.Descending("_id"), Limit = 6025 };
-            var cursor = await _mangaCollection.FindAsync(filter, options);
-            await cursor.ForEachAsync(async doc =>
+            await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
+
+            for (var i = 2; i <= 1081; i++)
             {
-                // Delete each document
-                await _mangaCollection.DeleteOneAsync(Builders<DatumManga>.Filter.Eq("_id", doc.Id));
-            });
-            //var defaultReviews = new List<ReviewDto>();
-            //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
-            //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
-
-            //var defaultReviews = new List<Review>();
-            //var update = Builders<DatumManga>.Update.Set(x => x.Reviews, defaultReviews);
-            //_mangaCollection.UpdateMany(FilterDefinition<DatumManga>.Empty, update);
-
-            //await SeedMangaList(_mangaCollection, "https://api.jikan.moe/v4/top/manga");
-
-            //for (var i = 2; i <= 1081; i++)
-            //{
-            //    System.Threading.Thread.Sleep(1000);
-            //    await SeedMangaList(_mangaCollection, $"https://api.jikan.moe/v4/top/manga?page={i}");
-            //}
+                System.Threading.Thread.Sleep(1000);
+                await SeedMangaList(_mangaCollection, $"https://api.jikan.moe/v4/top/manga?page={i}");
+            }
         }
 
         public static async Task SeedMangaList(IMongoCollection<DatumManga> _mangaCollection, string url)

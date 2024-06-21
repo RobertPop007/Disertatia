@@ -58,10 +58,6 @@ namespace Disertatie_backend.Helpers
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src =>
                     src.Recipient.Photos.Url)).ReverseMap();
 
-            //CreateMap<MovieItem, Movie>().ReverseMap();
-
-            //CreateMap<Movie, MovieItem>().ReverseMap();
-
             CreateMap<Movie, MovieCard>().ReverseMap();
 
             CreateMap<Datum, AnimeCard>()

@@ -18,5 +18,6 @@ namespace Disertatie_backend.Interfaces
         Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
         Task<bool> EnableNewsletterUserAsync(string username);
+        Task DeleteUser(string username);
     }
 }

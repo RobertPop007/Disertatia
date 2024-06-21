@@ -100,9 +100,9 @@
     <h1>Images</h1>
     <owl-carousel-o [options]="customOptions">
       
-        <ng-container *ngFor="let image of movie.images?.posters">
+        <ng-container *ngFor="let image of movie.images?.backdrops">
           <ng-template *ngIf="image.filePath" carouselSlide style="margin-left: 20px;">
-            <img [src]="'https://image.tmdb.org/t/p/w500/' + image.filePath || 'assets/user.png'" width="100px" height="400px">
+            <img [src]="'https://image.tmdb.org/t/p/w500/' + image.filePath || 'assets/user.png'" width="200px" height="400px">
             <div style="align-items: center;">
             </div>
           </ng-template>
@@ -178,7 +178,7 @@
               </div>
               <p class="main-description">{{ review.mainDescription }}</p>
               <div class="like-dislike">
-                <button (click)="likeReview(review)" class="btn btn-outline-primary mr-2">
+                <button (click)="likeReview(review)" class="btn btn-outline-info mr-2">
                   <span class="fa fa-thumbs-up"></span> Like
                 </button>
                 <button (click)="dislikeReview(review)" class="btn btn-outline-danger">

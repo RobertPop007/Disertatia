@@ -67,8 +67,6 @@ namespace Disertatie_backend.Controllers
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            //var confirmationLink = Url.Action("ConfirmEmail", "Account", new {UserId = user.Id, Token = token}, Request.Scheme);
-
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
@@ -103,7 +101,7 @@ namespace Disertatie_backend.Controllers
             token = token.Replace(" ", "+");
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
-            if (result.Succeeded) return Ok("Your account has been confirmed");
+            if (result.Succeeded) return Ok();
 
             return UnprocessableEntity("Something went wrong");
         }
@@ -168,8 +166,10 @@ namespace Disertatie_backend.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", $"Your account has been created! Welcome to our community! Please note that your username is: {user.UserName} and your password is: {userContentObj.Password}. You are advised to change your password after you login into your account!");
-            await _emailSender.SendEmailAsync(message, user.UserName);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var message = new EmailMessage(new string[] { user.Email }, "Confirmation", RecommandationEmailTemplate.GetConfirmationEmailWithFacebookTemplate(user.Id, user.UserName, userContentObj.Password, token));
+            await _emailSender.SendHtmlEmailAsync(message, user.UserName);
 
             return new UserDto
             {
@@ -216,10 +216,10 @@ namespace Disertatie_backend.Controllers
                  * Aici ceva de genul: To change your password use the link below: "https://4200/pagina-de-schimbat-parola?token=avemToken&email=avemEmail
                  * Și facem o pagina in angular care sa ia din url acele 2 valori, parola o ia din ceva formular si apelam resetPassword cu ele
                  */
-                var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new {token, email = user.Email}, Request.Scheme);
+                //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new {token, email = user.Email}, Request.Scheme);
 
                 var message = new EmailMessage(new string[] { user.Email }, "Forgot password link", RecommandationEmailTemplate.GetChangePasswordEmailTemplate(user.Email, token));
-                await _emailSender.SendEmailAsync(message, user.UserName);
+                await _emailSender.SendHtmlEmailAsync(message, user.UserName);
 
                 return Ok();
             }
@@ -263,60 +263,7 @@ namespace Disertatie_backend.Controllers
         [HttpDelete("deleteUser/{username}")]
         public async Task DeleteUser([FromRoute] string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
-
-            foreach (var item in _context.UserAnimes)
-            {
-                if(item.AppUser == user) _context.UserAnimes.Remove(item);
-            }
-
-            foreach (var item in _context.UserGames)
-            {
-                if (item.AppUser == user) _context.UserGames.Remove(item);
-            }
-
-            foreach (var item in _context.UserMangas)
-            {
-                if (item.AppUser == user) _context.UserMangas.Remove(item);
-            }
-
-            foreach (var item in _context.UserMovies)
-            {
-                if (item.AppUser == user) _context.UserMovies.Remove(item);
-            }
-
-            foreach (var item in _context.UserTvShows)
-            {
-                if (item.AppUser == user) _context.UserTvShows.Remove(item);
-            }
-
-            foreach (var item in _context.UserRoles)
-            {
-                if (item.User == user) _context.UserRoles.Remove(item);
-            }
-
-            foreach (var item in _context.UserLogins)
-            {
-                if (item.UserId == user.Id) _context.UserLogins.Remove(item);
-            }
-
-            foreach (var item in _context.UserClaims)
-            {
-                if (item.UserId == user.Id) _context.UserClaims.Remove(item);
-            }
-
-            foreach (var item in _context.Friends)
-            {
-                if (item.User1 == user || item.User2 == user) _context.Friends.Remove(item);
-            }
-
-            foreach (var item in _context.Messages)
-            {
-                if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
-            }
-
-            await _userManager.DeleteAsync(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.DeleteUser(username);
         }
 
         private async Task<bool> UserExists(string username)

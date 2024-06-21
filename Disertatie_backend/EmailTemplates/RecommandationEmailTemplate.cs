@@ -1,7 +1,20 @@
-﻿using Disertatie_backend.DatabaseContext;
+﻿using Disertatie_backend.Configurations;
+using Disertatie_backend.DatabaseContext;
+using Disertatie_backend.Entities.Anime;
+using Disertatie_backend.Entities.Books;
+using Disertatie_backend.Entities.Games.Game;
+using Disertatie_backend.Entities.Manga;
+using Disertatie_backend.Entities.Movies;
+using Disertatie_backend.Entities.TvShows;
 using Disertatie_backend.Entities.User;
+using Disertatie_backend.Interfaces;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace Disertatie_backend.EmailTemplates
 {
@@ -25,6 +38,24 @@ namespace Disertatie_backend.EmailTemplates
             return sb.ToString();
         }
 
+        public static string GetConfirmationEmailWithFacebookTemplate(Guid userId, string username, string password, string token)
+        {
+            var sb = new StringBuilder();
+            string confirmationLink = $"https://localhost:4200/confirmEmail?userId={userId}&token={token}";
+            var body = $@"
+                    <html>
+                    <body>
+                        <p>Your account has been created! Welcome to our community! Please note that your username is: {username} and your password is: {password}</p>
+                        <p>You are advised to change your password after you login into your account! Use this link to activate your email: <a href=""{confirmationLink}"">Confirm email</a></p>
+                    </body>
+                    </html>";
+
+            sb.Append(body);
+
+
+            return sb.ToString();
+        }
+
         public static string GetChangePasswordEmailTemplate(string email, string token)
         {
             var sb = new StringBuilder();
@@ -43,7 +74,13 @@ namespace Disertatie_backend.EmailTemplates
             return sb.ToString();
         }
 
-        public static string GetEmailTemplate(AppUser user, DataContext context)
+        public static string GetEmailTemplate(AppUser user, 
+            IMongoCollection<Movie> movieCollection,
+            IMongoCollection<TvShow> tvShowCollection,
+            IMongoCollection<Datum> animeCollection,
+            IMongoCollection<DatumManga> mangaCollection,
+            IMongoCollection<Book> booksCollection,
+            IMongoCollection<Game> gamesCollection)
         {
             var sb = new StringBuilder();
             
@@ -55,34 +92,37 @@ namespace Disertatie_backend.EmailTemplates
                             </head>
                             <body>
                             <p>
-                            Stimate/ă {0}
+                            Dear  {0}
                             </p>
                             <p>
-                            Vă mulțumim că v-ați abonat la newsletter-ul nostru!<br>
+                            Thank you for subscribing to our newsletter!<br>
                             </p>
  
                             <p>
-                            Prin acest newsletter o să primiți recomandări zilnice în funcție de ce ați urmărit până acum. Așteptăm cu nreăbdare să vă revedem online în comunitatea noastră.<br>
+                            Through this newsletter, you will receive daily recommendations based on what you have watched so far. We look forward to seeing you online in our community.<br>
                             </p>
 
-                            <p>Dacă observați ceva neînregulă, vă rugăm să ne contactați pe email sau telefon, pe care le găsiți pe pagina de contact.</p>"
+                            <p>If you notice anything wrong, please contact us by email or phone, which you can find on the contact page.</p>"
                             , user.UserName);
 
 
-            var moviePart = GetMoviePartTemplate(user, context, random);
+            var moviePart = GetMoviePartTemplate(user, movieCollection, random);
             if (moviePart != String.Empty) sb.AppendFormat(moviePart);
 
-            var tvShowPart = GetTvShowPartTemplate(user, context, random);
+            var tvShowPart = GetTvShowPartTemplate(user, tvShowCollection, random);
             if (tvShowPart != String.Empty) sb.AppendFormat(tvShowPart);
 
-            var animePart = GetAnimePartTemplate(user, context, random);
+            var animePart = GetAnimePartTemplate(user, animeCollection, random);
             if (animePart != String.Empty) sb.AppendFormat(animePart);
 
-            var mangaPart = GetMangaPartTemplate(user, context, random);
+            var mangaPart = GetMangaPartTemplate(user, mangaCollection, random);
             if (mangaPart != String.Empty) sb.AppendFormat(mangaPart);
 
-            var gamePart = GetGamePartTemplate(user, context, random);
+            var gamePart = GetGamePartTemplate(user, gamesCollection, random);
             if (gamePart != String.Empty) sb.AppendFormat(gamePart);
+
+            var bookPart = GetBookPartTemplate(user, booksCollection, random);
+            if (bookPart != String.Empty) sb.AppendFormat(bookPart);
 
             sb.AppendFormat(@"</body>
                         </html>");
@@ -90,230 +130,408 @@ namespace Disertatie_backend.EmailTemplates
             return sb.ToString();
         }
 
-        public static string GetMoviePartTemplate(AppUser user, DataContext context, Random random)
+        public static string GetMoviePartTemplate(AppUser user, IMongoCollection<Movie> collection, Random random)
         {
-            //var movieTable = new StringBuilder();
-            //var randomMovie = new Movie();
+            var movieTable = new StringBuilder();
+            var randomMovie = new Movie();
 
-            //if (user.AppUserMovie.Count > 0)
-            //{
-            //    var countMovies = 0;
-            //    var moviesIdList = user.AppUserMovie;
+            if (user.AppUserMovie.Count > 0)
+            {
+                var countMovies = 0;
+                var moviesIdList = user.AppUserMovie;
 
-            //    var index = random.Next(moviesIdList.Count);
-            //    randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                var index = random.Next(moviesIdList.Count);
 
-            //    countMovies++;
+                randomMovie = collection.Find(u => u.Id.ToString() == moviesIdList.ElementAt(index).MovieId).FirstOrDefault();
+                countMovies++;
 
-            //    while (randomMovie.Similars == null)
-            //    {
-            //        index = random.Next(moviesIdList.Count);
-            //        randomMovie = context.Movies.Where(o => o.Id == moviesIdList.ElementAt(index).MovieId).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                while (randomMovie.Similar == null)
+                {
+                    index = random.Next(moviesIdList.Count);
+                    randomMovie = collection.Find(u => u.Id.ToString() == moviesIdList.ElementAt(index).MovieId).FirstOrDefault();
 
-            //        countMovies++;
+                    countMovies++;
 
-            //        if (countMovies == moviesIdList.Count)
-            //            break;
-            //    }
+                    if (countMovies == moviesIdList.Count)
+                        break;
+                }
 
+                var randomSimilarMovie = new Movie();
+                string movieTitle;
+                index = random.Next(randomMovie.Similar.Results.Count - 1);
 
-            //    index = random.Next(randomMovie.Similars.Count);
+                movieTitle = randomMovie.Similar.Results[index].Title;
+                randomSimilarMovie = collection.Find(o => o.Title == movieTitle).FirstOrDefault();
 
-            //    var movieId = randomMovie.Similars[index].Id;
-            //    var randomSimilarMovie = context.Movies.Where(o => o.Id == movieId).FirstOrDefault();
+                while(randomSimilarMovie == null)
+                {
+                    index = random.Next(randomMovie.Similar.Results.Count - 1);
 
-            //    movieTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-            //                    <tr>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p><br><p>'{3}'<p></td>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-            //                    </tr>
-            //                </table><br><br>", randomMovie.Title, randomSimilarMovie.Image, randomSimilarMovie.Title, randomSimilarMovie.Tagline, $"https://localhost:4200/movies/{randomSimilarMovie.Title}");
+                    movieTitle = randomMovie.Similar.Results[index].Title;
+                    randomSimilarMovie = collection.Find(o => o.Title == movieTitle).FirstOrDefault();
+                }
 
-            //    return movieTable.ToString();
-            //}
-            //else
+                movieTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                        <thead>
+                            <tr style='background-color: #f4f4f4;'>
+                                <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                    <h2 style='margin: 0; color: #333;'>{2}</h2>
+                                    <p style='margin: 10px 0; color: #666;'>{3}</p>
+                                    <p style='margin: 10px 0; color: #666;'>{5}</p>
+                                </td>
+                                <td style='border: 1px solid #ddd; padding: 10px; width: 30%; text-align: center;'>
+                                    <a href='{4}' style='text-decoration: none;'>
+                                        <img width='200' height='200' style='cursor: pointer; border: 0;' src='https://image.tmdb.org/t/p/w500/{1}' alt='{2}'>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><br><br>",
+                    randomMovie.Title,
+                    randomSimilarMovie.BackdropPath,
+                    randomSimilarMovie.Title,
+                    randomSimilarMovie.Tagline,
+                    $"https://localhost:4200/movies/{randomSimilarMovie.Title}",
+                    randomSimilarMovie.Overview);
+
+                return movieTable.ToString();
+            }
+            else
                 return String.Empty;
         }
 
-        public static string GetTvShowPartTemplate(AppUser user, DataContext context, Random random)
+        public static string GetTvShowPartTemplate(AppUser user, IMongoCollection<TvShow> collection, Random random)
         {
-            //var tvShowTable = new StringBuilder();
-            //var randomTvShow = new TvShow();
+            var tvShowTable = new StringBuilder();
+            var randomTvShow = new TvShow();
 
-            //if (user.AppUserTvShow.Count > 0)
-            //{
-            //    var countTvShows = 0;
-            //    var tvShowsIdList = user.AppUserTvShow;
+            if (user.AppUserTvShow.Count > 0)
+            {
+                var countTvShows = 0;
+                var tvShowsIdList = user.AppUserTvShow;
 
-            //    var index = random.Next(tvShowsIdList.Count);
-            //    randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index)).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                var index = random.Next(tvShowsIdList.Count);
+                randomTvShow = collection.Find(u => u.Id.ToString() == tvShowsIdList.ElementAt(index).TvShowId).FirstOrDefault();
 
-            //    countTvShows++;
+                countTvShows++;
 
-            //    while (randomTvShow.Similars == null)
-            //    {
-            //        index = random.Next(tvShowsIdList.Count);
-            //        randomTvShow = context.TrueTvShow.Where(o => o.Id == tvShowsIdList.ElementAt(index)).IncludeOptimized(o => o.Similars).FirstOrDefault();
+                while (randomTvShow.Similar == null)
+                {
+                    index = random.Next(tvShowsIdList.Count);
+                    randomTvShow = collection.Find(u => u.Id.ToString() == tvShowsIdList.ElementAt(index).TvShowId).FirstOrDefault();
 
-            //        countTvShows++;
+                    countTvShows++;
 
-            //        if (countTvShows == tvShowsIdList.Count)
-            //            break;
-            //    }
+                    if (countTvShows == tvShowsIdList.Count)
+                        break;
+                }
 
 
-            //    index = random.Next(randomTvShow.Similars.Count);
+                var randomSimilarTvShow = new TvShow();
+                string tvShowTitle;
 
-            //    var tvShowId = randomTvShow.Similars[index].Id;
-            //    var randomSimilarTvShow = context.TrueTvShow.Where(o => o.Id == tvShowId).FirstOrDefault();
+                index = random.Next(randomTvShow.Similar.Results.Count - 1);
 
-            //    tvShowTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-            //                    <tr>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-            //                    </tr>
-            //                </table><br><br>", randomTvShow.Title, randomSimilarTvShow.Image, randomSimilarTvShow.Title, string.Empty, $"https://localhost:4200/tvShows/{randomSimilarTvShow.Title}");
+                tvShowTitle = randomTvShow.Similar.Results[index].Name;
+                randomSimilarTvShow = collection.Find(o => o.Name == tvShowTitle).FirstOrDefault();
 
-            //    return tvShowTable.ToString();
-            //}
-            //else
+                while (randomSimilarTvShow == null)
+                {
+                    index = random.Next(randomTvShow.Similar.Results.Count - 1);
+
+                    tvShowTitle = randomTvShow.Similar.Results[index].Name;
+                    randomSimilarTvShow = collection.Find(o => o.Name == tvShowTitle).FirstOrDefault();
+                }
+
+                tvShowTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                        <thead>
+                            <tr style='background-color: #f4f4f4;'>
+                                <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                    <h2 style='margin: 0; color: #333;'>{2}</h2>
+                                    <p style='margin: 10px 0; color: #666;'>{3}</p>
+                                    <p style='margin: 10px 0; color: #666;'>{5}</p>
+                                </td>
+                                <td style='border: 1px solid #ddd; padding: 10px; width: 30%; text-align: center;'>
+                                    <a href='{4}' style='text-decoration: none;'>
+                                        <img width='200' height='200' style='cursor: pointer; border: 0;' src='https://image.tmdb.org/t/p/w500/{1}' alt='{2}'>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><br><br>",
+                    randomTvShow.Name,
+                    randomSimilarTvShow.BackdropPath,
+                    randomSimilarTvShow.Name,
+                    randomSimilarTvShow.Tagline,
+                    $"https://localhost:4200/tvShows/{randomSimilarTvShow.Name}",
+                    randomSimilarTvShow.Overview);
+
+                return tvShowTable.ToString();
+            }
+            else
                 return String.Empty;
         }
 
-        public static string GetAnimePartTemplate(AppUser user, DataContext context, Random random)
+        public static string GetAnimePartTemplate(AppUser user, IMongoCollection<Datum> collection, Random random)
         {
-            //var animeTable = new StringBuilder();
-            //var randomAnime = new Datum();
-            //var randomRecommendedAnimes = new List<Datum>();
+            var animeTable = new StringBuilder();
+            var randomAnime = new Datum();
+            var randomRecommendedAnimes = new List<Datum>();
 
-            //if (user.AppUserAnime.Count > 0)
-            //{
-            //    var countAnimes = 0;
-            //    var animesIdList = user.AppUserAnime;
+            if (user.AppUserAnime.Count > 0)
+            {
+                var countAnimes = 0;
+                var animesIdList = user.AppUserAnime;
 
-            //    var index = random.Next(animesIdList.Count);
-            //    randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+                var index = random.Next(animesIdList.Count);
+                randomAnime = collection.Find(u => u.Id.ToString() == animesIdList.ElementAt(index).AnimeId).FirstOrDefault();
 
-            //    countAnimes++;
+                countAnimes++;
 
-            //    while (randomAnime.Licensors == null)
-            //    {
-            //        index = random.Next(animesIdList.Count);
-            //        randomAnime = context.Anime.Where(o => o.Id == animesIdList.ElementAt(index)).IncludeOptimized(o => o.Licensors).FirstOrDefault();
+                while (randomAnime.Status == null)
+                {
+                    index = random.Next(animesIdList.Count);
+                    randomAnime = collection.Find(u => u.Id.ToString() == animesIdList.ElementAt(index).AnimeId).FirstOrDefault();
 
-            //        countAnimes++;
+                    countAnimes++;
 
-            //        if (countAnimes == animesIdList.Count)
-            //            break;
-            //    }
+                    if (countAnimes == animesIdList.Count)
+                        break;
+                }
 
-            //    index = random.Next(context.Anime.Count());
+                index = random.Next(Convert.ToInt32(collection.CountDocuments(Builders<Datum>.Filter.Empty)));
 
-            //    var randomSimilarAnime = context.Anime.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
+                var randomSimilarAnime = collection.Find(o => o != null).ToList().ElementAt(index);
 
-            //    animeTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-            //                    <tr>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-            //                    </tr>
-            //                </table><br><br>", randomAnime.Title, randomSimilarAnime.Images.Webp.Image_url, randomSimilarAnime.Title, string.Empty, $"https://localhost:4200/anime/{randomSimilarAnime.Title}");
+                animeTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                    <thead>
+                        <tr style='background-color: #f4f4f4;'>
+                            <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                <h2 style='margin: 0; color: #333;'>{2}</h2>
+                                <p style='margin: 10px 0; color: #666;'>{3}</p>
+                                <p style='margin: 10px 0; color: #666;'>{5}</p>
+                            </td>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 30%; text-align: center;'>
+                                <a href='{4}' style='text-decoration: none;'>
+                                    <img width='200' height='200' style='cursor: pointer; border: 0;' src='{1}' alt='{2}'>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br><br>",
+                randomAnime.Title,
+                randomSimilarAnime.Images.Jpg.ImageUrl,
+                randomSimilarAnime.Title,
+                randomSimilarAnime.Background,
+                $"https://localhost:4200/anime/{randomSimilarAnime.Title}",
+                randomSimilarAnime.Synopsis);
 
-            //    return animeTable.ToString();
-            //}
-            //else
+
+                return animeTable.ToString();
+            }
+            else
                 return String.Empty;
         }
 
-        public static string GetMangaPartTemplate(AppUser user, DataContext context, Random random)
+        public static string GetMangaPartTemplate(AppUser user, IMongoCollection<DatumManga> collection, Random random)
         {
-            //var mangaTable = new StringBuilder();
-            //var randomManga = new DatumManga();
-            //var randomRecommendedMangas = new List<DatumManga>();
+            var mangaTable = new StringBuilder();
+            var randomManga = new DatumManga();
+            var randomRecommendedMangas = new List<DatumManga>();
 
-            //if (user.AppUserManga.Count > 0)
-            //{
-            //    var countMangas = 0;
-            //    var mangasIdList = user.AppUserManga;
+            if (user.AppUserManga.Count > 0)
+            {
+                var countMangas = 0;
+                var mangasIdList = user.AppUserManga;
 
-            //    var index = random.Next(mangasIdList.Count);
-            //    randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
+                var index = random.Next(mangasIdList.Count);
+                randomManga = collection.Find(u => u.Id.ToString() == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
 
-            //    countMangas++;
+                countMangas++;
 
-            //    while (randomManga.Status == null)
-            //    {
-            //        index = random.Next(mangasIdList.Count);
-            //        randomManga = context.Manga.Where(o => o.Id == mangasIdList.ElementAt(index)).FirstOrDefault();
+                while (randomManga.Status == null)
+                {
+                    index = random.Next(mangasIdList.Count);
+                    randomManga = collection.Find(u => u.Id.ToString() == mangasIdList.ElementAt(index).MangaId).FirstOrDefault();
 
-            //        countMangas++;
 
-            //        if (countMangas == mangasIdList.Count)
-            //            break;
-            //    }
+                    countMangas++;
 
-            //    index = random.Next(context.Manga.Count());
+                    if (countMangas == mangasIdList.Count)
+                        break;
+                }
 
-            //    var randomSimilarManga = context.Manga.Where(o => o != null).IncludeOptimized(u => u.Images).IncludeOptimized(u => u.Images.Webp).ToList().ElementAt(index);
+                index = random.Next(Convert.ToInt32(collection.CountDocuments(Builders<DatumManga>.Filter.Empty)));
 
-            //    mangaTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-            //                    <tr>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-            //                    </tr>
-            //                </table><br><br>", randomManga.Title, randomSimilarManga.Images.Webp.Image_url, randomSimilarManga.Title, string.Empty, $"https://localhost:4200/manga/{randomSimilarManga.Title}");
+                var randomSimilarManga = collection.Find(o => o != null).ToList().ElementAt(index);
 
-            //    return mangaTable.ToString();
-            //}
-            //else
+                mangaTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                    <thead>
+                        <tr style='background-color: #f4f4f4;'>
+                            <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                <h2 style='margin: 0; color: #333;'>{2}</h2>
+                                <p style='margin: 10px 0; color: #666;'>{3}</p>
+                                <p style='margin: 10px 0; color: #666;'>{5}</p>
+                            </td>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 30%; text-align: center;'>
+                                <a href='{4}' style='text-decoration: none;'>
+                                    <img width='200' height='200' style='cursor: pointer; border: 0;' src='{1}' alt='{2}'>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br><br>",
+                 randomManga.Title,
+                 randomSimilarManga.Images.Jpg.ImageUrl,
+                 randomSimilarManga.Title,
+                 randomSimilarManga.Background,
+                 $"https://localhost:4200/manga/{randomSimilarManga.Title}",
+                 randomSimilarManga.Synopsis);
+
+
+                return mangaTable.ToString();
+            }
+            else
                 return String.Empty;
         }
 
-        public static string GetGamePartTemplate(AppUser user, DataContext context, Random random)
+        public static string GetGamePartTemplate(AppUser user, IMongoCollection<Game> collection, Random random)
         {
-            //var gameTable = new StringBuilder();
-            //var randomGame = new Game();
-            //var randomRecommendedGames = new List<Game>();
+            var gameTable = new StringBuilder();
+            var randomGame = new Game();
+            var randomRecommendedGames = new List<Game>();
 
-            //if (user.AppUserGame.Count > 0)
-            //{
-            //    var countGames = 0;
-            //    var gamesIdList = user.AppUserGame;
+            if (user.AppUserGame.Count > 0)
+            {
+                var countGames = 0;
+                var gamesIdList = user.AppUserGame;
 
-            //    var index = random.Next(gamesIdList.Count);
-            //    randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
+                var index = random.Next(gamesIdList.Count);
+                randomGame = collection.Find(u => u.Id.ToString() == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
 
-            //    countGames++;
+                countGames++;
 
-            //    while (randomGame.Description == null)
-            //    {
-            //        index = random.Next(gamesIdList.Count);
-            //        randomGame = context.Games.Where(o => o.Id == gamesIdList.ElementAt(index)).FirstOrDefault();
+                while (randomGame.Description == null)
+                {
+                    index = random.Next(gamesIdList.Count);
+                    randomGame = collection.Find(u => u.Id.ToString() == gamesIdList.ElementAt(index).GameId).FirstOrDefault();
 
-            //        countGames++;
+                    countGames++;
 
-            //        if (countGames == gamesIdList.Count)
-            //            break;
-            //    }
+                    if (countGames == gamesIdList.Count)
+                        break;
+                }
 
-            //    index = random.Next(context.Games.Count());
+                index = random.Next(Convert.ToInt32(collection.CountDocuments(Builders<Game>.Filter.Empty)));
 
-            //    var randomSimilarGame = context.Games.Where(o => o != null).IncludeOptimized(u => u.Background_image).ToList().ElementAt(index);
+                var randomSimilarGame = collection.Find(o => o != null).ToList().ElementAt(index);
 
-            //    gameTable.AppendFormat(@"<table style='width: 100 %; border: 1px solid black; border-collapse: collapse;'>
-            //                    <th colspan='2' style='border: 1px solid black; border-collapse: collapse;'> Pentru ca ți-a plăcut {0}, s-ar putea să îți placă și</th>
-            //                    <tr>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><p>{2}</p></td>
-            //                        <td style='border: 1px solid black; border-collapse: collapse;'><a href='{4}'><img width='200' style='cursor: pointer' height='200' margin='5' src='{1}'></a></td>
-            //                    </tr>
-            //                </table><br><br>", randomGame.Name, randomSimilarGame.Background_image, randomSimilarGame.Name, string.Empty, $"https://localhost:4200/games/{randomSimilarGame.Name}");
+                gameTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                    <thead>
+                        <tr style='background-color: #f4f4f4;'>
+                            <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                <h2 style='margin: 0; color: #333;'>{2}</h2>
+                                <p style='margin: 10px 0; color: #666;'>{3}</p>
+                            </td>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 30%; text-align: center;'>
+                                <a href='{4}' style='text-decoration: none;'>
+                                    <img width='200' height='200' style='cursor: pointer; border: 0;' src='{1}' alt='{2}'>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br><br>",
+                randomGame.Name,
+                randomSimilarGame.BackgroundImage,
+                randomSimilarGame.Name,
+                randomSimilarGame.DescriptionRaw,
+                $"https://localhost:4200/games/{randomSimilarGame.Name}");
 
-            //    return gameTable.ToString();
-            //}
-            //else
+                return gameTable.ToString();
+            }
+            else
+                return String.Empty;
+        }
+
+        public static string GetBookPartTemplate(AppUser user, IMongoCollection<Book> collection, Random random)
+        {
+            var bookTable = new StringBuilder();
+            var randomBook = new Book();
+            var randomRecommendedBooks = new List<Book>();
+
+            if (user.AppUserBook.Count > 0)
+            {
+                var countBooks = 0;
+                var booksIdList = user.AppUserBook;
+
+                var index = random.Next(booksIdList.Count);
+                randomBook = collection.Find(u => u.Id.ToString() == booksIdList.ElementAt(index).BookId).FirstOrDefault();
+
+                countBooks++;
+
+                while (randomBook.Isbn == null)
+                {
+                    index = random.Next(booksIdList.Count);
+                    randomBook = collection.Find(u => u.Id.ToString() == booksIdList.ElementAt(index).BookId).FirstOrDefault();
+
+                    countBooks++;
+
+                    if (countBooks == booksIdList.Count)
+                        break;
+                }
+
+                index = random.Next(Convert.ToInt32(collection.CountDocuments(Builders<Book>.Filter.Empty)));
+
+                var randomSimilarBook = collection.Find(o => o != null).ToList().ElementAt(index);
+
+                bookTable.AppendFormat(@"<table style='width: 100%; border: 1px solid #ddd; border-collapse: collapse; font-family: Arial, sans-serif;'>
+                    <thead>
+                        <tr style='background-color: #f4f4f4;'>
+                            <th colspan='2' style='border: 1px solid #ddd; padding: 10px; text-align: left;'>Because you liked {0}, you might also like</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='border: 1px solid #ddd; padding: 10px; width: 70%; vertical-align: top;'>
+                                <h2 style='margin: 0; color: #333;'>{1}</h2>
+                                <p style='margin: 10px 0; color: #666;'>Written by: {2}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br><br>",
+                randomBook.Title,
+                randomSimilarBook.Title,
+                randomSimilarBook.Authors,
+                $"https://localhost:4200/books/{randomSimilarBook.Title}");
+
+                return bookTable.ToString();
+            }
+            else
                 return String.Empty;
         }
     }

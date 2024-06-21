@@ -67,7 +67,8 @@ export class MangaDetailComponent implements OnInit {
       this.sanit = sanitizer;
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-     }
+      console.log(this.user) 
+    }
 
   ngOnInit(): void {
     this.myForm = this.fb.group({

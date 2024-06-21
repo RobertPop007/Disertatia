@@ -84,6 +84,8 @@ namespace Disertatie_backend.Repositories
 
             };
 
+            query = query.OrderBy(x => x.CoverUrl);
+
             return await PagedList<BookCard>.CreateAsync(query.ProjectTo<BookCard>(_mapper.ConfigurationProvider).AsNoTracking(),
                  bookParams.PageNumber, bookParams.PageSize);
         }

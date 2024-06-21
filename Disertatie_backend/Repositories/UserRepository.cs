@@ -97,6 +97,66 @@ namespace Disertatie_backend.Repositories
             return true;
         }
 
+        public async Task DeleteUser(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+
+            if(user == null) return;
+
+            foreach (var item in _context.UserAnimes)
+            {
+                if (item.AppUser == user) _context.UserAnimes.Remove(item);
+            }
+
+            foreach (var item in _context.UserGames)
+            {
+                if (item.AppUser == user) _context.UserGames.Remove(item);
+            }
+
+            foreach (var item in _context.UserMangas)
+            {
+                if (item.AppUser == user) _context.UserMangas.Remove(item);
+            }
+
+            foreach (var item in _context.UserMovies)
+            {
+                if (item.AppUser == user) _context.UserMovies.Remove(item);
+            }
+
+            foreach (var item in _context.UserTvShows)
+            {
+                if (item.AppUser == user) _context.UserTvShows.Remove(item);
+            }
+
+            foreach (var item in _context.UserRoles)
+            {
+                if (item.User == user) _context.UserRoles.Remove(item);
+            }
+
+            foreach (var item in _context.UserLogins)
+            {
+                if (item.UserId == user.Id) _context.UserLogins.Remove(item);
+            }
+
+            foreach (var item in _context.UserClaims)
+            {
+                if (item.UserId == user.Id) _context.UserClaims.Remove(item);
+            }
+
+            foreach (var item in _context.Friends)
+            {
+                if (item.User1 == user || item.User2 == user) _context.Friends.Remove(item);
+            }
+
+            foreach (var item in _context.Messages)
+            {
+                if (item.SenderUsername == user.UserName || item.RecipientUsername == user.UserName) _context.Messages.Remove(item);
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;

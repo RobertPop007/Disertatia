@@ -72,6 +72,9 @@ export class TvShowDetailComponent implements OnInit {
      }
 
   ngOnInit(): void {
+
+    window.scrollTo(0, 0);
+    
     this.myForm = this.fb.group({
       Short_description: ['', Validators.required],
       Main_description: ['', [Validators.required]],
